@@ -1,2 +1,5 @@
+venv
 .env
 .prod.env
+data
+jaci.*
