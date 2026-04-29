@@ -132,17 +132,22 @@
         {% if grouped_items %}
         {% for item_group in grouped_items %}
         <div class="card-jaci mb-3">
-            <div class="card-header d-flex align-items-center gap-2 p-1">
-                {% if item_group.category %}
-                <span class="rounded-circle d-inline-block" style="width: 12px; height: 12px; background: {{ item_group.category.color or '#D9C4B0' }};">
-                </span>
-                <span>{{ item_group.category.name }}</span>
-                {% else %}
-                <span>Sem Categoria</span>
-                {% endif %}
-                <span class="text-help small">({{ item_group.get('items')|length }} {% if item_group.get('items') | length > 1 %}itens{% else %}item{% endif %})</span>
+            <div class="card-header d-flex align-items-center justify-content-between gap-2 p-1">
+                <div>
+                    {% if item_group.category %}
+                    <span class="rounded-circle d-inline-block" style="width: 12px; height: 12px; background: {{ item_group.category.color or '#D9C4B0' }};">
+                    </span>
+                    <span>{{ item_group.category.name }}</span>
+                    {% else %}
+                    <span>Sem Categoria</span>
+                    {% endif %}
+                    <span class="text-help small">({{ item_group.get('items')|length }} {% if item_group.get('items') | length > 1 %}itens{% else %}item{% endif %})</span>
+                </div>
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}" aria-expanded="false">
+                    <i class="bi bi-chevron-expand"></i>
+                </button>
             </div>
-            <div class="list-group list-group-flush list-group-jaci">
+            <div class="list-group list-group-flush list-group-jaci collapse show" id="{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}">
                 {% for item in item_group.get('items') %}
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-3">
