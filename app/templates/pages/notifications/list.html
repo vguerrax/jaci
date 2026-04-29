@@ -28,15 +28,15 @@
         <!-- Icon -->
         <div class="flex-shrink-0 mt-1">
             {% if notification.type == 'execution_started' %}
-            <span style="font-size: 20px;">🟠</span>
+            <span style="font-size: 20px;"><i class="bi bi-cart"></i></span>
             {% elif notification.type == 'execution_completed' %}
-            <span style="font-size: 20px;">✅</span>
+            <span style="font-size: 20px;"><i class="bi bi-cart-check"></i></span>
             {% elif notification.type == 'budget_alert' %}
-            <span style="font-size: 20px;">💸</span>
+            <span style="font-size: 20px;"><i class="bi bi-cash-stack"></i></span>
             {% elif notification.type == 'reminder' %}
-            <span style="font-size: 20px;">📅</span>
+            <span style="font-size: 20px;"><i class="bi bi-calendar-heart"></i></span>
             {% else %}
-            <span style="font-size: 20px;">🔔</span>
+            <span style="font-size: 20px;"><i class="bi bi-bell-fill"></i></span>
             {% endif %}
         </div>
 

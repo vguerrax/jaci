@@ -884,3 +884,23 @@ button,
 .check-jaci {
     transition: all 0.2s ease-in-out;
 }
+
+.top-5 {
+    top: 5% !important
+}
+
+.top-25 {
+    top: 25% !important
+}
+
+.start-75 {
+    left: 75% !important;
+}
+
+.start-95 {
+    left: 95% !important;
+}
+
+.start-99 {
+    left: 99% !important;
+}

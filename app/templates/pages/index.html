@@ -19,13 +19,17 @@
 
         <div class="card-jaci p-4">
             {% if request.state.unread_count and request.state.unread_count > 0 %}
-            <div class="d-block d-lg-none mb-3">
-                <h2 class="h5 mb-3">Você possui {{ request.state.unread_count if request.state.unread_count < 10 else '9+' }} {% if request.state.unread_count > 1 %}notificações{% else %}notificação{% endif %}</h2>
-                <a href="/notifications" type="submit" class="btn btn-info w-100">
+            <div class="d-block d-block d-lg-none mb-3">
+                <h2 class="h5 mb-3">Você possui notificações</h2>
+                <a href="/notifications" type="submit" class="btn btn-info w-100 position-relative">
                     Notificações
                     <i class="bi bi-bell-fill"></i>
+                    <span class="position-absolute top-5 start-99 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                        {{ request.state.unread_count if request.state.unread_count < 10 else '9+' }} 
+                    </span>
                 </a>
             </div>
+            
             {% endif %}
             <h2 class="h5 mb-3">Comece agora</h2>
             <div class="vstack gap-1">
