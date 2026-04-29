@@ -83,7 +83,7 @@ def notify_execution_started(
         started_by.id,
         "execution_started",
         "Compra iniciada",
-        f"{started_by.email} iniciou a compra '{template_name}'.",
+        f"{started_by.name} iniciou a compra '{template_name}'.",
         execution.id,
     )
 
@@ -102,7 +102,7 @@ def notify_execution_completed(
         finished_by.id,
         "execution_completed",
         "Compra finalizada",
-        f"{finished_by.email} finalizou '{template_name}'. Total: R$ {total_spent:.2f}",
+        f"{finished_by.name} finalizou '{template_name}'. Total: R$ {total_spent:.2f}",
         execution.id,
     )
 

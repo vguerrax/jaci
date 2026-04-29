@@ -75,12 +75,16 @@ def get_execution_items_grouped(db: Session, execution_id: int) -> list[dict]:
                     "items": [],
                 }
             grouped[cat_name]["items"].append(item)
+            grouped[cat_name]["items"].sort(key=lambda x: x.name)
         else:
             no_category.append(item)
+            no_category.sort(key=lambda x: x.name)
 
     result = list(grouped.values())
     if no_category:
         result.append({"category": None, "items": no_category})
+        
+    result.sort(key=lambda x: x["category"].name if x["category"] else 'ZZZZZZZZZZZZZZ')
 
     return result
 
