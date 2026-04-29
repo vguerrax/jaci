@@ -338,8 +338,8 @@ async def complete_item_form(
             "item": item,
         },
     )
-    
-    
+
+
 @router.get("/{execution_id}/items/{item_id}/edit-form", include_in_schema=False)
 async def edit_item_form(
     request: Request,
@@ -377,8 +377,8 @@ async def edit_item_form(
             "active_group": active_group
         },
     )
-    
-    
+
+
 @router.get("/{execution_id}/sidebar-fragment", include_in_schema=False)
 async def execution_sidebar_fragment(
     request: Request,
@@ -406,6 +406,61 @@ async def execution_sidebar_fragment(
             "execution": execution,
             "totals": totals,
             "active_group": active_group,
+        },
+    )
+
+
+@router.get("/{execution_id}/close", include_in_schema=False)
+async def close_execution_page(
+    request: Request,
+    execution_id: int,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+):
+    """Close execution page — shows pending items if any."""
+    from app.main import templates
+
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    execution = get_execution_by_id(db, execution_id, user)
+    if not execution:
+        return RedirectResponse(url="/executions", status_code=303)
+
+    pending = get_pending_items(db, execution_id)
+    totals = get_execution_totals(db, execution_id)
+
+    # If no pending items, finalize directly
+    if not pending:
+        finalize_execution(db, execution, discard_pending=True)
+        from app.services.agenda_service import generate_next_execution
+
+        generate_next_execution(db, execution, user)
+
+        # Notificar membros
+        totals = get_execution_totals(db, execution.id)
+        template_name = execution.template.name if execution.template else "Compra Avulsa"
+        from app.services.notification_service import notify_execution_completed
+
+        notify_execution_completed(
+            db, execution, user, template_name, totals["total_spent"]
+        )
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    tomorrow_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+
+    return templates.TemplateResponse(
+        "pages/executions/close_pending.html",
+        {
+            "request": request,
+            "user": user,
+            "active_group": active_group,
+            "execution": execution,
+            "pending_items": pending,
+            "totals": totals,
+            "tomorrow": tomorrow_str,
+            "active_page": "executions",
         },
     )
 
@@ -790,61 +845,6 @@ async def handle_update_item(
     return await _get_items_fragment(request, execution_id, db, user, active_group)
 
 
-@router.get("/{execution_id}/close", include_in_schema=False)
-async def close_execution_page(
-    request: Request,
-    execution_id: int,
-    db: Session = Depends(get_db),
-    user: User | None = Depends(get_current_user),
-    active_group: Group | None = Depends(get_active_group),
-):
-    """Close execution page — shows pending items if any."""
-    from app.main import templates
-
-    if not user:
-        return RedirectResponse(url="/auth/login", status_code=303)
-
-    execution = get_execution_by_id(db, execution_id, user)
-    if not execution:
-        return RedirectResponse(url="/executions", status_code=303)
-
-    pending = get_pending_items(db, execution_id)
-    totals = get_execution_totals(db, execution_id)
-
-    # If no pending items, finalize directly
-    if not pending:
-        finalize_execution(db, execution, discard_pending=True)
-        from app.services.agenda_service import generate_next_execution
-
-        generate_next_execution(db, execution, user)
-
-        # Notificar membros
-        totals = get_execution_totals(db, execution.id)
-        template_name = execution.template.name if execution.template else "Compra Avulsa"
-        from app.services.notification_service import notify_execution_completed
-
-        notify_execution_completed(
-            db, execution, user, template_name, totals["total_spent"]
-        )
-        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
-
-    tomorrow_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
-
-    return templates.TemplateResponse(
-        "pages/executions/close_pending.html",
-        {
-            "request": request,
-            "user": user,
-            "active_group": active_group,
-            "execution": execution,
-            "pending_items": pending,
-            "totals": totals,
-            "tomorrow": tomorrow_str,
-            "active_page": "executions",
-        },
-    )
-
-
 @router.post("/{execution_id}/close")
 async def handle_close_execution(
     execution_id: int,
@@ -937,8 +937,6 @@ async def _get_items_fragment(
     if execution and execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    jwt_token = create_access_token(user.id, user.email)
-
     return templates.TemplateResponse(
         "pages/executions/_items_fragment.html",
         {
@@ -951,6 +949,5 @@ async def _get_items_fragment(
             "budget_alerts": alerts,
             "status_labels": STATUS_LABELS,
             "status_badge_class": STATUS_BADGE_CLASS,
-            "jwt_token": jwt_token,
         },
     )

@@ -47,7 +47,7 @@
                     {{ notification.title }}
                 </strong>
                 <small class="text-help ms-2 flex-shrink-0">
-                    {{ notification.created_at.strftime('%d/%m %H:%M') }}
+                    {{ notification.created_at | localdatetime }}
                 </small>
             </div>
             <p class="mb-0 small {% if not notification.is_read %}text-night{% else %}text-clay{% endif %}">

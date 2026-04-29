@@ -3,3 +3,4 @@ venv
 .prod.env
 data
 jaci.*
+*/__pycache__/*
