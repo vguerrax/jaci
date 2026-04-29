@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Erro — Jaci{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5 col-lg-4 text-center">
+
+        <div class="card-jaci p-5">
+            <div class="mb-3">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="30" fill="var(--jaci-error)" opacity="0.15"/>
+                    <path d="M32 20v16M32 44v2" stroke="var(--jaci-error)" stroke-width="3"
+                          stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <h2 class="h4 mb-2">Link inválido</h2>
+            <p class="text-clay mb-4">{{ message }}</p>
+
+            <a href="/auth/login" class="btn btn-primary w-100">
+                Solicitar novo link
+                <i class="bi bi-moon-stars-fill"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

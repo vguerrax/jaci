@@ -1,0 +1,15 @@
+services:
+  jaci:
+    build: .
+    container_name: jaci
+    restart: unless-stopped
+    ports:
+      - "8003:8000"
+    volumes:
+      # Volume para o banco SQLite
+      - ./data:/app/data
+    env_file:
+      - .prod.env
+    environment:
+      # Sobrescreve o caminho do banco para usar o volume
+      - DATABASE_URL=sqlite:///./data/jaci.db

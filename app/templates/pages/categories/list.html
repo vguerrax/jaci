@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Categorias — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h2">Categorias</h1>
+        <p class="text-clay">
+            {% if active_group %}
+            Grupo: <strong>{{ active_group.name }}</strong>
+            {% else %}
+            Nenhum grupo ativo
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-auto align-self-center">
+        {% if active_group %}
+        <a href="/categories/new" class="btn btn-primary">
+            <i class="bi bi-plus"></i>
+            Nova Categoria
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-warning alert-jaci mb-4">{{ error }}</div>
+{% endif %}
+
+{% if not active_group %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Selecione um grupo ativo para gerenciar categorias.</p>
+    <a href="/groups" class="btn btn-primary">Ver grupos</a>
+</div>
+{% elif categories %}
+<div class="row g-3">
+    {% for item in categories %}
+    {% set cat = item.category %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card-jaci p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+                <!-- Color indicator -->
+                <div class="flex-shrink-0">
+                    <div class="rounded-circle"
+                         style="width: 32px; height: 32px;
+                                background: {{ cat.color or '#D9C4B0' }};
+                                border: 2px solid var(--jaci-sand);">
+                    </div>
+                </div>
+                <!-- Name and item count -->
+                <div class="flex-grow-1 min-w-0">
+                    <h2 class="h6 mb-0 text-truncate">{{ cat.name }}</h2>
+                    <p class="text-help small mb-0">
+                        {{ item.item_count }} item(ns) vinculados
+                    </p>
+                </div>
+                <!-- Actions -->
+                <div class="flex-shrink-0">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            ⋯
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="/categories/{{ cat.id }}/edit">
+                                    Editar
+                                </a>
+                            </li>
+                            <li>
+                                <form method="post" action="/categories/{{ cat.id }}/delete"
+                                      onsubmit="return handleDelete(event, '{{ cat.name | e }}', {{ item.item_count }})">
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Nenhuma categoria cadastrada neste grupo.</p>
+    <a href="/categories/new" class="btn btn-primary">Criar primeira categoria</a>
+</div>
+{% endif %}
+
+<script>
+function handleDelete(event, categoryName, itemCount) {
+    if (itemCount > 0) {
+        // Will redirect to confirmation page
+        return true;
+    }
+    return confirm('Excluir a categoria "' + categoryName + '"? Esta ação não pode ser desfeita.');
+}
+</script>
+{% endblock %}

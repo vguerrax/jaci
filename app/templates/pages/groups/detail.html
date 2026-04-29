@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}{{ group.name }} — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/groups" class="text-night">Grupos</a></li>
+                <li class="breadcrumb-item active text-clay">{{ group.name }}</li>
+            </ol>
+        </nav>
+        <h1 class="h2">{{ group.name }}</h1>
+        <p class="text-clay">
+            {{ members | length }} membro(s) &middot;
+            {% if is_owner %}Você é o criador{% endif %}
+        </p>
+    </div>
+    <div class="col-auto align-self-end">
+        <form method="post" action="/groups/{{ group.id }}/switch">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                {% if active_group and active_group.id == group.id %}
+                Grupo ativo <i class="bi bi-check"></i>
+                {% else %}
+                Usar este grupo
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+{% if message %}
+<div class="alert alert-success alert-jaci mb-3">{{ message }}</div>
+{% endif %}
+
+{% if error %}
+<div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+{% endif %}
+
+<div class="row g-4">
+    <!-- Membros -->
+    <div class="col-lg-7">
+        <div class="card-jaci">
+            <div class="card-header d-flex justify-content-between align-items-center p-2">
+                <h2 class="h5 mb-0">Membros</h2>
+                {% if is_owner %}
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inviteModal">
+                    <i class="bi bi-plus"></i>
+                    Convidar
+                </button>
+                {% endif %}
+            </div>
+            <div class="list-group list-group-flush list-group-jaci">
+                {% for member in members %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-medium">{{ member.email }}</span>
+                        {% if member.id == group.owner_id %}
+                        <span class="badge-jaci badge-scheduled ms-2">criador</span>
+                        {% endif %}
+                        {% if member.id == user.id %}
+                        <span class="text-help ms-2">(você)</span>
+                        {% endif %}
+                    </div>
+                    {% if is_owner and member.id != group.owner_id %}
+                    <form method="post"
+                          action="/groups/{{ group.id }}/remove/{{ member.id }}"
+                          onsubmit="return confirm('Remover {{ member.email }} do grupo?')">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-minus"></i>
+                            Remover
+                        </button>
+                    </form>
+                    {% endif %}
+                    {% if not is_owner and member.id == user.id %}
+                    <form method="post"
+                          action="/groups/{{ group.id }}/remove/{{ member.id }}"
+                          onsubmit="return confirm('Sair do grupo {{ group.name }}?')">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-box-arrow-left"></i>
+                            Sair
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Info -->
+    <div class="col-lg-5">
+        <div class="card-jaci p-4">
+            <h3 class="h5 mb-3">Sobre este grupo</h3>
+            <dl class="mb-0">
+                <dt class="text-help small">Criado em</dt>
+                <dd class="mb-2">{{ group.created_at| localdate }}</dd>
+
+                <dt class="text-help small">Criador</dt>
+                <dd class="mb-2">
+                    {% set owner = members | selectattr('id', 'equalto', group.owner_id) | first %}
+                    {{ owner.email if owner else '—' }}
+                </dd>
+
+                <dt class="text-help small">Membros</dt>
+                <dd>{{ members | length }}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Convite -->
+{% if is_owner %}
+<div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="/groups/{{ group.id }}/invite">
+                <div class="modal-header">
+                    <h3 class="modal-title h5" id="inviteModalLabel">Convidar Membro</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-help mb-3">
+                        A pessoa receberá um link mágico por e-mail.
+                        Ao clicar, ela será adicionada automaticamente ao grupo.
+                    </p>
+                    <div class="mb-3">
+                        <label for="inviteEmail" class="form-label">E-mail do convidado</label>
+                        <input type="email" class="form-control" id="inviteEmail"
+                               name="email" placeholder="convidado@email.com"
+                               required autocomplete="off">
+                    </div>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Enviar convite
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

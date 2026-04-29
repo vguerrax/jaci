@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Compra Finalizada — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
+                <li class="breadcrumb-item active text-clay">Compra Finalizada</li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-3">
+            <h1 class="h2 mb-0">
+                {{ execution.template.name if execution.template else 'Compra Avulsa' }}
+            </h1>
+            <span class="badge-jaci {{ status_badge_class[execution.status] }}">
+                {{ status_labels[execution.status] }}
+            </span>
+        </div>
+        <p class="text-clay mt-1">
+            {{ execution.scheduled_date| localdate }}
+            {% if execution.finished_at %}
+            &middot; Finalizada em {{ execution.finished_at | localdatetime }}
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-auto align-self-end">
+        <a href="/executions" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left-square"></i>
+            Voltar
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Completed items -->
+    <div class="col-lg-8">
+        {% if grouped_items %}
+        {% for item_group in grouped_items %}
+        {% set completed_items = item_group.get('items') | selectattr('is_completed', 'equalto', true) | list %}
+        {% if completed_items %}
+        <div class="card-jaci mb-3">
+            <div class="card-header d-flex align-items-center gap-2 p-1">
+                {% if item_group.category %}
+                <span class="rounded-circle d-inline-block"
+                      style="width: 12px; height: 12px;
+                             background: {{ item_group.category.color or '#D9C4B0' }};">
+                </span>
+                <span>{{ item_group.category.name }}</span>
+                {% else %}
+                <span>Sem categoria</span>
+                {% endif %}
+                <span class="text-help small">({{ completed_items|length }} comprados)</span>
+            </div>
+            <div class="list-group list-group-flush list-group-jaci">
+                {% for item in completed_items %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-strikethrough">{{ item.name }}</span>
+                            <span class="badge-jaci badge-scheduled small ms-1">
+                                {{ item.purchased_quantity }}x
+                            </span>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-clay small">
+                                {{ item.purchased_quantity }}x R$ {{ "%.2f"|format(item.unit_price) }}
+                            </div>
+                            <div class="fw-medium">
+                                R$ {{ "%.2f"|format(item.total_price) }}
+                            </div>
+                            {% if item.location %}
+                            <div class="text-help small">📍 {{ item.location }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <!-- Not purchased items -->
+        {% set not_purchased = [] %}
+        {% for item_group in grouped_items %}
+            {% for item in item_group.get('items') %}
+                {% if not item.is_completed %}
+                    {% set _ = not_purchased.append(item) %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if not_purchased %}
+        <div class="card-jaci opacity-60">
+            <div class="card-header d-flex align-items-center gap-2 p-1">
+                <span>Não comprados</span>
+                <span class="text-help small">({{ not_purchased|length }})</span>
+            </div>
+            <div class="list-group list-group-flush list-group-jaci">
+                {% for item in not_purchased %}
+                <div class="list-group-item text-clay">
+                    <span>{{ item.name }}</span>
+                    <span class="badge-jaci badge-cancelled small ms-1">
+                        {{ item.planned_quantity }}x planejado
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Summary sidebar -->
+    <div class="col-lg-4">
+        <div class="card-jaci p-4">
+            <h3 class="h6 mb-3">Resumo da Compra</h3>
+            <dl class="mb-0 small">
+                <dt class="text-help">Data</dt>
+                <dd class="mb-2">{{ execution.scheduled_date| localdate }}</dd>
+
+                <dt class="text-help">Template</dt>
+                <dd class="mb-2">
+                    {% if execution.template %}
+                    {{ execution.template.name }}
+                    {% else %}
+                    <span class="text-clay">Compra avulsa</span>
+                    {% endif %}
+                </dd>
+
+                <dt class="text-help">Itens comprados</dt>
+                <dd class="mb-2">{{ totals.completed_items }} de {{ totals.total_items }}</dd>
+
+                <dt class="text-help">Orçamento</dt>
+                <dd class="mb-2">
+                    {% if execution.budget %}
+                    R$ {{ "%.2f"|format(execution.budget) }}
+                    {% else %}
+                    <span class="text-clay">Não definido</span>
+                    {% endif %}
+                </dd>
+
+                <dt class="text-help">Total gasto</dt>
+                <dd class="h5 mb-0 {% if execution.budget and totals.total_spent > execution.budget %}text-danger{% endif %}">
+                    R$ {{ "%.2f"|format(totals.total_spent) }}
+                </dd>
+            </dl>
+        </div>
+
+        <!-- Budget comparison -->
+        {% if execution.budget and execution.budget > 0 %}
+        <div class="card-jaci p-4 mt-3">
+            <h3 class="h6 mb-2">Orçamento</h3>
+            {% if totals.total_spent > execution.budget %}
+            <div class="alert alert-danger alert-jaci small mb-0">
+                Estourado em R$ {{ "%.2f"|format(totals.total_spent - execution.budget) }}
+            </div>
+            {% elif totals.total_spent == execution.budget %}
+            <div class="alert alert-warning alert-jaci small mb-0">
+                No limite do orçamento
+            </div>
+            {% else %}
+            <div class="alert alert-success alert-jaci small mb-0">
+                Economia de R$ {{ "%.2f"|format(execution.budget - totals.total_spent) }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

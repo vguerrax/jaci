@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Editar Lista — Jaci{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/templates" class="text-night">Listas</a></li>
+                <li class="breadcrumb-item">
+                    <a href="/templates/{{ template.id }}" class="text-night">{{ template.name }}</a>
+                </li>
+                <li class="breadcrumb-item active text-clay">Editar</li>
+            </ol>
+        </nav>
+
+        <div class="card-jaci p-4">
+            <h1 class="h3 mb-1">Editar Lista</h1>
+            <p class="text-help mb-4">
+                Alterações não afetam execuções já criadas ou em andamento.
+                Valem apenas para as próximas execuções geradas.
+            </p>
+
+            {% if error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+            {% endif %}
+
+            <form method="post" action="/templates/{{ template.id }}/edit">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control form-control-lg"
+                           id="name" name="name"
+                           value="{{ template.name }}"
+                           required maxlength="150">
+                </div>
+
+                <div class="mb-3">
+                    <label for="recurrence" class="form-label">Recorrência</label>
+                    <select class="form-select form-select-lg" id="recurrence" name="recurrence" required>
+                        {% for type in recurrence_types %}
+                        <option value="{{ type.value }}"
+                                {% if template.recurrence == type %}selected{% endif %}>
+                            {{ recurrence_labels[type] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="budget" class="form-label">Orçamento (opcional)</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-lunar border-sand">R$</span>
+                        <input type="number" class="form-control" id="budget" name="budget"
+                               value="{{ template.budget if template.budget else 0 }}"
+                               placeholder="0,00" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="/templates/{{ template.id }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary flex-grow-1">
+                        Salvar alterações
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

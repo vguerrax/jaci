@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Grupos — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h2">Meus Grupos</h1>
+        <p class="text-clay">Grupos que você participa</p>
+    </div>
+    <div class="col-auto align-self-center">
+        <a href="/groups/new" class="btn btn-primary">
+            + Novo Grupo
+        </a>
+    </div>
+</div>
+
+{% if groups %}
+<div class="row g-3">
+    {% for group in groups %}
+    <div class="col-md-6 col-lg-4">
+        <a href="/groups/{{ group.id }}" class="text-decoration-none">
+            <div class="card-jaci p-3 d-flex flex-row align-items-center gap-3
+                        {% if active_group and active_group.id == group.id %}
+                        border-night
+                        {% endif %}">
+                <div class="flex-shrink-0">
+                    <div class="rounded-circle bg-night d-flex align-items-center justify-content-center"
+                         style="width: 44px; height: 44px;">
+                        <span class="text-lunar fw-bold">{{ group.name[0] | upper }}</span>
+                    </div>
+                </div>
+                <div class="flex-grow-1 min-w-0">
+                    <h2 class="h6 mb-0 text-truncate">
+                        {{ group.name }}
+                        {% if active_group and active_group.id == group.id %}
+                        <span class="badge-jaci badge-in-progress ms-1">ativo</span>
+                        {% endif %}
+                    </h2>
+                    <p class="text-help mb-0 small">
+                        {{ group.members | length }} membro(s)
+                    </p>
+                </div>
+                <div class="flex-shrink-0 text-clay">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M6 4l4 4-4 4"/>
+                    </svg>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Você ainda não participa de nenhum grupo.</p>
+    <a href="/groups/new" class="btn btn-primary">Criar primeiro grupo</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,886 @@
+/* ============================================================
+JACI THEME — Bootstrap 5 Override
+Night Green / Lunar White / Warm Clay / Peach / Moss / Sand
+============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
+:root {
+    /* ── Core Palette ── */
+    --jaci-lunar: #F5F0E8;
+    --jaci-night: #2A4B4A;
+    --jaci-clay: #D9B382;
+    --jaci-peach: #E6B89C;
+    --jaci-moss: #4b815d;
+    --jaci-sky: #8BA7B8;
+    --jaci-sand: #D9C4B0;
+    --jaci-error: #9B6A4A;
+
+    /* ── Body ── */
+    --bs-body-bg: var(--jaci-lunar);
+    --bs-body-color: var(--jaci-night);
+    --bs-border-color: var(--jaci-sand);
+    --bs-link-color: var(--jaci-night);
+    --bs-link-hover-color: var(--jaci-peach);
+
+    /* ── Primary (Night Green) ── */
+    --bs-primary: var(--jaci-night);
+    --bs-primary-rgb: 42, 75, 74;
+    --bs-btn-primary-color: var(--jaci-lunar);
+    --bs-btn-primary-bg: var(--jaci-night);
+    --bs-btn-primary-border: var(--jaci-night);
+    --bs-btn-primary-hover-bg: #3A5B5A;
+    --bs-btn-primary-hover-border: #3A5B5A;
+    --bs-btn-primary-active-bg: #1A302F;
+    --bs-btn-primary-disabled-bg: #6B8A89;
+    --bs-btn-primary-disabled-border: #6B8A89;
+
+    /* ── Secondary (Peach Lunar) ── */
+    --bs-secondary: var(--jaci-peach);
+    --bs-secondary-rgb: 230, 184, 156;
+    --bs-btn-secondary-color: var(--jaci-night);
+    --bs-btn-secondary-bg: var(--jaci-peach);
+    --bs-btn-secondary-border: var(--jaci-peach);
+    --bs-btn-secondary-hover-color: var(--jaci-night);
+    --bs-btn-secondary-hover-bg: #F0D0C0;
+    --bs-btn-secondary-hover-border: #F0D0C0;
+    --bs-btn-secondary-active-bg: #D9A88A;
+    --bs-btn-secondary-active-border: #D9A88A;
+
+    /* ── Success (Moss Green) ── */
+    --bs-success: var(--jaci-moss);
+    --bs-success-rgb: 75, 129, 93;
+    --bs-btn-success-color: var(--jaci-night);
+    --bs-btn-success-bg: var(--jaci-moss);
+    --bs-btn-success-border: var(--jaci-moss);
+    --bs-btn-success-hover-bg: #8DB89A;
+    --bs-btn-success-hover-border: #8DB89A;
+
+    /* ── Warning (Warm Clay) ── */
+    --bs-warning: var(--jaci-clay);
+    --bs-warning-rgb: 217, 179, 130;
+    --bs-btn-warning-color: var(--jaci-night);
+    --bs-btn-warning-bg: var(--jaci-clay);
+    --bs-btn-warning-border: var(--jaci-clay);
+    --bs-btn-warning-hover-bg: #E6C89A;
+    --bs-btn-warning-hover-border: #E6C89A;
+
+    /* ── Danger (Terra Error) ── */
+    --bs-danger: var(--jaci-error);
+    --bs-danger-rgb: 155, 106, 74;
+    --bs-btn-danger-color: var(--jaci-lunar);
+    --bs-btn-danger-bg: var(--jaci-error);
+    --bs-btn-danger-border: var(--jaci-error);
+    --bs-btn-danger-hover-bg: #7A5540;
+    --bs-btn-danger-hover-border: #7A5540;
+
+    /* ── Info (Serene Sky) ── */
+    --bs-info: var(--jaci-sky);
+    --bs-info-rgb: 139, 167, 184;
+    --bs-info-bg-subtle: #E8EEF1;
+    --bs-info-border-subtle: #C5D4DB;
+    --bs-info-text-emphasis: #3D5A66;
+    --bs-btn-info-color: var(--jaci-night);
+    --bs-btn-info-bg: var(--jaci-sky);
+    --bs-btn-info-border: var(--jaci-sky);
+    --bs-btn-info-hover-color: var(--jaci-night);
+    --bs-btn-info-hover-bg: #A3C0CE;
+    --bs-btn-info-hover-border: #A3C0CE;
+    --bs-btn-info-active-bg: #6F93A3;
+    --bs-btn-info-active-border: #6F93A3;
+
+    /* ── Light / Dark ── */
+    --bs-light: #FFFFFF;
+    --bs-light-rgb: 255, 255, 255;
+    --bs-dark: #1E3635;
+
+    /* ── Typography ── */
+    --bs-body-font-family: 'Inter', 'SF Pro', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+    --bs-body-font-size: 1rem;
+    --bs-body-line-height: 1.5;
+    --bs-body-font-weight: 400;
+    --bs-heading-font-family: 'Glacial Indifference', 'Inter', system-ui, sans-serif;
+    --bs-heading-font-weight: 500;
+    --bs-heading-line-height: 1.2;
+
+    /* ── Borders & Radius ── */
+    --bs-border-radius: 0.75rem;
+    --bs-border-radius-sm: 0.5rem;
+    --bs-border-radius-lg: 1rem;
+    --bs-border-radius-xl: 1.25rem;
+    --bs-border-radius-xxl: 2rem;
+
+    /* ── Cards ── */
+    --bs-card-bg: var(--jaci-lunar);
+    --bs-card-border-color: var(--jaci-sand);
+    --bs-card-border-width: 1px;
+    --bs-card-box-shadow: 0 2px 8px rgba(42, 75, 74, 0.05);
+    --bs-card-cap-bg: transparent;
+
+    /* ── Navbar ── */
+    --bs-navbar-color: var(--jaci-night);
+    --bs-navbar-hover-color: var(--jaci-peach);
+    --bs-navbar-active-color: var(--jaci-night);
+    --bs-navbar-brand-color: var(--jaci-night);
+}
+
+/* ============================================================
+TYPOGRAPHY
+============================================================ */
+
+h1,
+.h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--jaci-night);
+}
+
+h2,
+.h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--jaci-night);
+}
+
+h3,
+.h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--jaci-night);
+}
+
+h4,
+.h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--jaci-night);
+}
+
+.text-muted-jaci {
+    color: var(--jaci-clay) !important;
+}
+
+.text-help {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--jaci-night);
+}
+
+.text-strikethrough {
+    text-decoration: line-through;
+    color: var(--jaci-clay);
+}
+
+/* ============================================================
+NAVBAR
+============================================================ */
+
+.navbar-jaci {
+    background-color: var(--jaci-lunar);
+    border-bottom: 1px solid var(--jaci-sand);
+    box-shadow: 0 2px 8px rgba(42, 75, 74, 0.05);
+}
+
+.navbar-jaci .navbar-brand {
+    font-family: var(--bs-heading-font-family);
+    font-weight: 600;
+    color: var(--jaci-night);
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+}
+
+.navbar-jaci .navbar-brand .brand-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 0.5rem;
+}
+
+.navbar-jaci .nav-link {
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+/* ============================================================
+CARDS
+============================================================ */
+
+.card-jaci {
+    border-radius: var(--bs-border-radius);
+    border: 1px solid var(--jaci-sand);
+    box-shadow: 0 2px 8px rgba(42, 75, 74, 0.05);
+    background: var(--jaci-lunar);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-jaci:hover {
+    box-shadow: 0 4px 16px rgba(42, 75, 74, 0.08);
+}
+
+.card-jaci .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--jaci-sand);
+    font-weight: 500;
+    color: var(--jaci-night);
+}
+
+.card-jaci .card-footer {
+    background: transparent;
+    border-top: 1px solid var(--jaci-sand);
+}
+
+/* ============================================================
+BUTTONS
+============================================================ */
+
+/* Botões com hover suave */
+.btn-primary {
+    background-color: var(--bs-btn-primary-bg) !important;
+    border-color: var(--bs-btn-primary-bg) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--bs-btn-primary-hover-bg) !important;
+    border-color: var(--bs-btn-primary-hover-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-primary {
+    background-color: transparent !important;
+    border-color: var(--bs-btn-primary-bg) !important;
+    color: var(--bs-primary) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--bs-btn-primary-bg) !important;
+    border-color: var(--bs-btn-primary-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-secondary {
+    background-color: var(--bs-btn-secondary-bg) !important;
+    border-color: var(--bs-btn-secondary-bg) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--bs-btn-secondary-hover-bg) !important;
+    border-color: var(--bs-btn-secondary-hover-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-secondary {
+    background-color: var(--bs-light) !important;
+    border-color: var(--bs-btn-secondary-bg) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--bs-btn-secondary-bg) !important;
+    border-color: var(--bs-btn-secondary-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-success {
+    background-color: var(--bs-btn-success-bg) !important;
+    border-color: var(--bs-btn-success-bg) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-success:hover {
+    background-color: var(--bs-btn-success-hover-bg) !important;
+    border-color: var(--bs-btn-success-hover-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-success {
+    background-color: transparent !important;
+    border-color: var(--bs-btn-success-bg) !important;
+    color: var(--bs-success) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--bs-btn-success-bg) !important;
+    border-color: var(--bs-btn-success-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-danger {
+    background-color: var(--bs-btn-danger-bg) !important;
+    border-color: var(--bs-btn-danger-bg) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-danger:hover {
+    background-color: var(--bs-btn-danger-hover-bg) !important;
+    border-color: var(--bs-btn-danger-hover-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-danger {
+    background-color: transparent !important;
+    border-color: var(--bs-btn-danger-bg) !important;
+    color: var(--bs-danger) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--bs-btn-danger-bg) !important;
+    border-color: var(--bs-btn-danger-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-warning {
+    background-color: var(--bs-btn-warning-bg) !important;
+    border-color: var(--bs-btn-warning-bg) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-warning:hover {
+    background-color: var(--bs-btn-warning-hover-bg) !important;
+    border-color: var(--bs-btn-warning-hover-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-warning {
+    background-color: transparent !important;
+    border-color: var(--bs-btn-warning-bg) !important;
+    color: var(--bs-warning) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--bs-btn-warning-bg) !important;
+    border-color: var(--bs-btn-warning-bg) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-info {
+    background-color: var(--bs-btn-info-bg) !important;
+    border-color: var(--bs-btn-info-bg) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-info:hover {
+    background-color: var(--bs-btn-info-hover-bg) !important;
+    border-color: var(--bs-btn-info-hover-bg) !important;
+    color: var(--bs-dark) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-info {
+    background-color: transparent !important;
+    border-color: var(--bs-btn-info-bg) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-info:hover {
+    background-color: var(--bs-btn-info-bg) !important;
+    border-color: var(--bs-btn-info-bg) !important;
+    color: var(--bs-dark) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-light {
+    background-color: var(--bs-light) !important;
+    border-color: var(--bs-light) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-light:hover {
+    background-color: var(--bs-light-hover) !important;
+    border-color: var(--bs-light-hover) !important;
+    color: var(--bs-dark) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-light {
+    background-color: transparent !important;
+    border-color: var(--bs-light) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--bs-light-hover) !important;
+    border-color: var(--bs-light-hover) !important;
+    color: var(--bs-dark) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-dark {
+    background-color: var(--bs-dark) !important;
+    border-color: var(--bs-dark) !important;
+    color: var(--bs-light) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-dark:hover {
+    background-color: var(--bs-dark-hover) !important;
+    border-color: var(--bs-dark-hover) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+.btn-outline-dark {
+    background-color: transparent !important;
+    border-color: var(--bs-dark) !important;
+    color: var(--bs-dark) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--bs-dark) !important;
+    border-color: var(--bs-dark) !important;
+    color: var(--bs-light) !important;
+    transform: scale(0.98) !important;
+}
+
+/* FAB (Floating Action Button) */
+.btn-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--jaci-night);
+    color: var(--jaci-lunar);
+    font-size: 1.5rem;
+    border: none;
+    box-shadow: 0 4px 12px rgba(42, 75, 74, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1050;
+}
+
+.btn-fab:hover {
+    background: var(--jaci-peach);
+    color: var(--jaci-night);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(42, 75, 74, 0.4);
+}
+
+/* ============================================================
+FORMS
+============================================================ */
+
+.form-control,
+.form-select {
+    border-radius: var(--bs-border-radius);
+    border-color: var(--jaci-sand);
+    background: #FFFEFB;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--jaci-night);
+    box-shadow: 0 0 0 0.25rem rgba(42, 75, 74, 0.15);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--jaci-night);
+    font-size: 0.875rem;
+    margin-bottom: 0.375rem;
+}
+
+/* ============================================================
+CUSTOM CHECKBOX (Item Check)
+============================================================ */
+
+.check-jaci {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border: 2px solid var(--jaci-clay);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.check-jaci:hover {
+    border-color: var(--jaci-peach);
+    background: rgba(230, 184, 156, 0.15);
+}
+
+.check-jaci.checked {
+    background: var(--jaci-night);
+    border-color: var(--jaci-night);
+}
+
+.check-jaci.checked::after {
+    font-family: "bootstrap-icons";
+    content: '\F495';
+    color: var(--jaci-lunar);
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ============================================================
+BADGES
+============================================================ */
+
+.badge-jaci {
+    font-weight: 400;
+    font-size: 0.75rem;
+    padding: 0.35em 0.75em;
+    border-radius: var(--bs-border-radius-xxl);
+}
+
+.badge-scheduled {
+    background: #D4DFDE;
+    color: var(--jaci-night);
+}
+
+.badge-in-progress {
+    background: var(--jaci-peach);
+    color: var(--jaci-night);
+}
+
+.badge-completed {
+    background: var(--jaci-moss);
+    color: var(--jaci-night);
+}
+
+.badge-cancelled {
+    background: #E2C8B7;
+    color: var(--jaci-error);
+}
+
+.badge-info {
+    background: var(--jaci-sky);
+    color: var(--jaci-night);
+}
+
+/* ============================================================
+ALERTS
+============================================================ */
+
+.alert-jaci {
+    border-radius: var(--bs-border-radius);
+    border: 1px solid var(--jaci-sand);
+}
+
+.alert-success {
+    border-color: var(--jaci-moss);
+    background: #EDF4EF;
+    color: var(--jaci-night);
+}
+
+.alert-warning {
+    border-color: var(--jaci-clay);
+    background: #FBF3E8;
+    color: var(--jaci-night);
+}
+
+.alert-danger {
+    border-color: var(--jaci-error);
+    background: #F3E8E1;
+    color: var(--jaci-error);
+}
+
+.alert-info {
+    border-color: var(--jaci-sky);
+    background: #E8EEF1;
+    color: var(--jaci-night);
+}
+
+/* ============================================================
+PROGRESS (Budget Bar)
+============================================================ */
+
+.progress-jaci {
+    height: 0.625rem;
+    background: var(--jaci-sand);
+    border-radius: var(--bs-border-radius-xxl);
+    overflow: hidden;
+}
+
+.progress-jaci .progress-bar {
+    border-radius: var(--bs-border-radius-xxl);
+    background: var(--jaci-night);
+    transition: width 0.5s ease;
+}
+
+.progress-jaci .progress-bar.bg-warning-progress {
+    background: var(--jaci-clay);
+}
+
+.progress-jaci .progress-bar.bg-danger-progress {
+    background: var(--jaci-error);
+}
+
+/* ============================================================
+TABLES
+============================================================ */
+
+.table-jaci {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--jaci-sand);
+    --bs-table-striped-bg: rgba(217, 196, 176, 0.15);
+}
+
+.table-jaci thead th {
+    font-weight: 500;
+    color: var(--jaci-clay);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--jaci-sand);
+}
+
+.table-jaci tbody td {
+    vertical-align: middle;
+    border-bottom: 1px solid var(--jaci-sand);
+}
+
+.table-jaci tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================================
+DROPDOWN / MODAL
+============================================================ */
+
+.dropdown-menu {
+    border-radius: var(--bs-border-radius);
+    border: 1px solid var(--jaci-sand);
+    box-shadow: 0 4px 16px rgba(42, 75, 74, 0.08);
+    padding: 0.5rem 0;
+}
+
+.dropdown-item:active,
+.dropdown-item.active {
+    background: var(--jaci-night);
+    color: var(--jaci-lunar);
+}
+
+.modal-content {
+    border-radius: var(--bs-border-radius-lg);
+    border: 1px solid var(--jaci-sand);
+    background: var(--jaci-lunar);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--jaci-sand);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--jaci-sand);
+}
+
+/* ============================================================
+LIST GROUP
+============================================================ */
+
+.list-group-jaci {
+    border-radius: var(--bs-border-radius);
+    overflow: hidden;
+}
+
+.list-group-jaci .list-group-item {
+    background: var(--jaci-lunar);
+    border-color: var(--jaci-sand);
+    color: var(--jaci-night);
+    padding: 0.75rem 1rem;
+    transition: background 0.15s ease;
+}
+
+.list-group-jaci .list-group-item:hover {
+    background: rgba(217, 196, 176, 0.15);
+}
+
+.list-group-jaci .list-group-item.active {
+    background: var(--jaci-night);
+    border-color: var(--jaci-night);
+    color: var(--jaci-lunar);
+}
+
+.list-group-jaci .list-group-item-action {
+    cursor: pointer;
+}
+
+/* Variants */
+.list-group-item-success {
+    border-left: 3px solid var(--jaci-moss);
+}
+
+.list-group-item-warning {
+    border-left: 3px solid var(--jaci-clay);
+}
+
+.list-group-item-danger {
+    border-left: 3px solid var(--jaci-error);
+}
+
+.list-group-item-info {
+    border-left: 3px solid var(--jaci-sky);
+}
+
+/* ============================================================
+TOASTS
+============================================================ */
+
+.toast-jaci {
+    background: var(--jaci-lunar);
+    border: 1px solid var(--jaci-sand);
+    border-radius: var(--bs-border-radius);
+    box-shadow: 0 4px 16px rgba(42, 75, 74, 0.1);
+}
+
+.toast-jaci .toast-header {
+    background: transparent;
+    border-bottom: 1px solid var(--jaci-sand);
+    color: var(--jaci-night);
+    font-weight: 500;
+}
+
+.toast-jaci .toast-body {
+    color: var(--jaci-night);
+}
+
+/* Variants */
+.toast-success .toast-header {
+    border-left: 4px solid var(--jaci-moss);
+}
+
+.toast-warning .toast-header {
+    border-left: 4px solid var(--jaci-clay);
+}
+
+.toast-danger .toast-header {
+    border-left: 4px solid var(--jaci-error);
+}
+
+.toast-info .toast-header {
+    border-left: 4px solid var(--jaci-sky);
+}
+
+/* ============================================================
+POPOVER
+============================================================ */
+
+.popover {
+    border: 1px solid var(--jaci-sand);
+    border-radius: var(--bs-border-radius);
+    box-shadow: 0 4px 16px rgba(42, 75, 74, 0.1);
+}
+
+.popover-header {
+    background: var(--jaci-lunar);
+    border-bottom: 1px solid var(--jaci-sand);
+    color: var(--jaci-night);
+    font-weight: 500;
+}
+
+.popover-body {
+    color: var(--jaci-night);
+}
+
+/* ============================================================
+TOOLTIP
+============================================================ */
+
+.tooltip .tooltip-inner {
+    background: var(--jaci-night);
+    color: var(--jaci-lunar);
+    border-radius: var(--bs-border-radius-sm);
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: var(--jaci-night);
+}
+
+.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: var(--jaci-night);
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: var(--jaci-night);
+}
+
+.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: var(--jaci-night);
+}
+
+/* ============================================================
+SPINNER
+============================================================ */
+
+.spinner-border {
+    color: var(--jaci-night);
+}
+
+/* ============================================================
+UTILS
+============================================================ */
+
+.bg-lunar {
+    background-color: var(--jaci-lunar) !important;
+}
+
+.bg-night {
+    background-color: var(--jaci-night) !important;
+}
+
+.text-night {
+    color: var(--jaci-night) !important;
+}
+
+.text-yellow {
+    color: yellow;
+}
+
+.text-clay {
+    color: var(--jaci-clay) !important;
+}
+
+.border-sand {
+    border-color: var(--jaci-sand) !important;
+}
+
+/* Gradient background (splash sections) */
+.bg-gradient-jaci {
+    background: linear-gradient(135deg, var(--jaci-lunar) 0%, #E6D9C8 100%);
+}
+
+/* Smooth transitions for all interactive elements */
+a,
+button,
+.btn,
+.form-control,
+.form-select,
+.check-jaci {
+    transition: all 0.2s ease-in-out;
+}

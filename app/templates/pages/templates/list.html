@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Listas — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h2">Listas</h1>
+        <p class="text-clay">
+            {% if active_group %}
+            Grupo: <strong>{{ active_group.name }}</strong>
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-auto align-self-center d-flex gap-2">
+        {% if active_group %}
+        <a href="/templates?show_inactive={{ not show_inactive }}"
+           class="btn btn-outline-secondary">
+            {% if show_inactive %}
+            <i class="bi bi-eye-slash-fill"></i>
+            Ocultar inativas
+            {% else %}
+            <i class="bi bi-eye-fill"></i>
+            Mostrar todas
+            {% endif %}
+        </a>
+        <a href="/templates/new" class="btn btn-primary">
+            <i class="bi bi-plus"></i>
+            Nova Lista
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-warning alert-jaci mb-4">{{ error }}</div>
+{% endif %}
+
+{% if not active_group %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Selecione um grupo ativo para gerenciar listas.</p>
+    <a href="/groups" class="btn btn-primary">Ver grupos</a>
+</div>
+{% elif templates %}
+<div class="row g-3">
+    {% for item in templates %}
+    {% set tpl = item.template %}
+    <div class="col-md-6 col-lg-4">
+        <a href="/templates/{{ tpl.id }}" class="text-decoration-none">
+            <div class="card-jaci p-3 {% if not tpl.is_active %}opacity-50{% endif %}">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h2 class="h6 mb-0">
+                        {{ tpl.name }}
+                        {% if not tpl.is_active %}
+                        <span class="badge-jaci badge-cancelled ms-1">inativo</span>
+                        {% endif %}
+                    </h2>
+                    <span class="badge-jaci badge-scheduled small">
+                        {{ recurrence_labels[tpl.recurrence] }}
+                    </span>
+                </div>
+
+                <div class="d-flex gap-3 text-help small">
+                    <span>{{ item.item_count }} itens</span>
+                    {% if tpl.budget %}
+                    <span>Orçamento: R$ {{ "%.2f"|format(tpl.budget) }}</span>
+                    {% endif %}
+                    {% if item.active_executions > 0 %}
+                    <span class="badge-jaci badge-in-progress">
+                        {{ item.active_executions }} ativa(s)
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">
+        {% if show_inactive %}
+        Nenhuma lista cadastrada neste grupo.
+        {% else %}
+        Nenhuma lista ativa<br><a href="/templates?show_inactive=true" class="text-night">Mostrar inativas</a>
+        {% endif %}
+    </p>
+    <a href="/templates/new" class="btn btn-primary">
+        Criar primeira lista
+        <i class="bi bi-moon-stars-fill"></i>
+    </a>
+</div>
+{% endif %}
+{% endblock %}

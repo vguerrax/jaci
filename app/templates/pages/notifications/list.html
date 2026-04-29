@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Notificações — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h2">Notificações</h1>
+    </div>
+    {% if unread_count > 0 %}
+    <div class="col-auto align-self-center">
+        <form method="post" action="/notifications/read-all">
+            <button type="submit" class="btn btn-outline-clay btn-sm">
+                Marcar todas como lidas
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+{% if notifications %}
+<div class="list-group list-group-flush list-group-jaci rounded-3">
+    {% for notification in notifications %}
+    <a href="{% if notification.execution_id %}/executions/{{ notification.execution_id }}{% else %}#{% endif %}"
+       class="list-group-item list-group-item-action d-flex gap-3 align-items-start
+              {% if not notification.is_read %}list-group-item-warning{% endif %}"
+       onclick="markAsRead(event, {{ notification.id }})">
+        
+        <!-- Icon -->
+        <div class="flex-shrink-0 mt-1">
+            {% if notification.type == 'execution_started' %}
+            <span style="font-size: 20px;">🟠</span>
+            {% elif notification.type == 'execution_completed' %}
+            <span style="font-size: 20px;">✅</span>
+            {% elif notification.type == 'budget_alert' %}
+            <span style="font-size: 20px;">💸</span>
+            {% elif notification.type == 'reminder' %}
+            <span style="font-size: 20px;">📅</span>
+            {% else %}
+            <span style="font-size: 20px;">🔔</span>
+            {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div class="flex-grow-1 min-w-0">
+            <div class="d-flex justify-content-between align-items-start">
+                <strong class="{% if not notification.is_read %}text-night{% else %}text-clay{% endif %}">
+                    {{ notification.title }}
+                </strong>
+                <small class="text-help ms-2 flex-shrink-0">
+                    {{ notification.created_at.strftime('%d/%m %H:%M') }}
+                </small>
+            </div>
+            <p class="mb-0 small {% if not notification.is_read %}text-night{% else %}text-clay{% endif %}">
+                {{ notification.message }}
+            </p>
+        </div>
+
+        {% if not notification.is_read %}
+        <span class="flex-shrink-0 mt-2">
+            <span class="cal-indicator indicator-in-progress"></span>
+        </span>
+        {% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Nenhuma notificação.</p>
+    <p class="text-help small">As notificações aparecerão aqui quando houver atividade nos seus grupos.</p>
+</div>
+{% endif %}
+
+<script>
+function markAsRead(event, notificationId) {
+    // Marca como lida em background
+    fetch('/notifications/' + notificationId + '/read', {
+        method: 'POST',
+    });
+}
+</script>
+{% endblock %}

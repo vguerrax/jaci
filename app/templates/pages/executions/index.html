@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Início — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h2">Compras</h1>
+        <p class="text-clay">
+            {% if active_group %}
+            Grupo: <strong>{{ active_group.name }}</strong>
+            {% else %}
+            Selecione um grupo para começar
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-auto align-self-center d-flex gap-2">
+        {% if active_group %}
+        <a href="/executions/new" class="btn btn-primary">
+            <i class="bi bi-plus"></i>
+            Nova Compra
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-warning alert-jaci mb-4">{{ error }}</div>
+{% endif %}
+
+{% if not active_group %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Selecione um grupo ativo para ver suas compras.</p>
+    <a href="/groups" class="btn btn-primary">
+        <i class="bi bi-people-fill"></i>
+        Ver grupos
+    </a>
+</div>
+{% else %}
+
+<!-- Filter tabs -->
+<div class="d-flex gap-2 mb-3 flex-wrap">
+    <a href="/executions"
+        class="btn btn-sm {% if not current_status %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        Todas
+    </a>
+    <a href="/executions/?status=scheduled"
+        class="btn btn-sm {% if current_status == 'scheduled' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        Agendadas
+    </a>
+    <a href="/executions/?status=in_progress"
+        class="btn btn-sm {% if current_status == 'in_progress' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        Em andamento
+    </a>
+    <a href="/executions/?status=completed"
+        class="btn btn-sm {% if current_status == 'completed' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        Finalizadas
+    </a>
+    <a href="/executions/?status=cancelled"
+        class="btn btn-sm {% if current_status == 'cancelled' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        Canceladas
+    </a>
+</div>
+
+{% if executions %}
+<div class="row g-3">
+    {% for item in executions %}
+    {% set exec_item = item.execution %}
+    {% set totals = item.totals %}
+    <div class="col-md-6 col-lg-4">
+        <a href="/executions/{{ exec_item.id }}" class="text-decoration-none">
+            <div class="card-jaci p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h2 class="h6 mb-0">
+                        {{ exec_item.template.name if exec_item.template else 'Compra Avulsa' }}
+                    </h2>
+                    <span class="badge-jaci {{ status_badge_class[exec_item.status] }} small">
+                        {{ status_labels[exec_item.status] }}
+                    </span>
+                </div>
+
+                <div class="text-help small mb-2">
+                    {{ exec_item.scheduled_date | localdate }}
+                </div>
+
+                <div class="d-flex gap-3 text-help small">
+                    <span>{{ totals.completed_items }}/{{ totals.total_items }} itens</span>
+                    {% if totals.total_spent > 0 %}
+                    <span>R$ {{ "%.2f"|format(totals.total_spent) }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-3">Nenhuma compra encontrada.</p>
+    <a href="/executions/new" class="btn btn-primary">
+        Criar compra
+        <i class="bi bi-moon-stars-fill"></i>
+    </a>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

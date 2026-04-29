@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Link Enviado — Jaci{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5 col-lg-4 text-center">
+
+        <div class="card-jaci p-5">
+            <div class="mb-3">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="30" fill="var(--jaci-moss)" opacity="0.2"/>
+                    <path d="M20 32l8 8 16-16" stroke="var(--jaci-moss)" stroke-width="3"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <h2 class="h4 mb-2">Link enviado!</h2>
+            <p class="text-clay mb-3">
+                Enviamos um link mágico para<br>
+                <strong class="text-night">{{ email }}</strong>
+            </p>
+            <p class="text-help mb-4">
+                Verifique sua caixa de entrada e clique no link para acessar o Jaci.<br>
+                O link expira em 15 minutos.
+            </p>
+
+            <div class="d-grid gap-2">
+                <a href="/auth/login" class="btn btn-outline-secondary">
+                    Voltar e usar outro e-mail
+                </a>
+            </div>
+        </div>
+
+        <p class="text-help mt-4">
+            Não recebeu? Verifique o spam ou
+            <a href="/auth/login" class="text-night">tente novamente</a>
+            após 60 segundos.
+        </p>
+    </div>
+</div>
+{% endblock %}

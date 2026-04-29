@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Nova Categoria — Jaci{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/categories" class="text-night">Categorias</a></li>
+                <li class="breadcrumb-item active text-clay">Nova</li>
+            </ol>
+        </nav>
+
+        <div class="card-jaci p-4">
+            <h1 class="h3 mb-1">Nova Categoria</h1>
+            <p class="text-help mb-4">
+                Categorias ajudam a organizar os itens da sua lista.
+                {% if active_group %}Grupo: <strong>{{ active_group.name }}</strong>{% endif %}
+            </p>
+
+            {% if error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+            {% endif %}
+
+            <form method="post" action="/categories/new">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control form-control-lg"
+                           id="name" name="name"
+                           placeholder="Ex: Frios, Feira, Farmácia..."
+                           required autofocus maxlength="100">
+                </div>
+
+                <div class="mb-4">
+                    <label for="color" class="form-label">Cor (opcional)</label>
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="color" class="form-control form-control-color"
+                               id="color" name="color"
+                               value="#D9B382"
+                               style="width: 56px; height: 42px;">
+                        <span class="text-help">Escolha uma cor para identificar a categoria</span>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="/categories" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary flex-grow-1">
+                        Criar categoria
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

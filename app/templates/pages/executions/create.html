@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Nova Compra — Jaci{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
+                <li class="breadcrumb-item active text-clay">Nova Compra</li>
+            </ol>
+        </nav>
+
+        <div class="card-jaci p-4">
+            <h1 class="h3 mb-1">
+                {% if template %}
+                Nova Compra: {{ template.name }}
+                {% else %}
+                Nova Compra Avulsa
+                {% endif %}
+            </h1>
+            <p class="text-help mb-4">
+                {% if template %}
+                Compra baseada no template <strong>{{ template.name }}</strong>.
+                {% else %}
+                Crie uma compra sem vínculo com nenhum template.
+                {% endif %}
+            </p>
+
+            {% if error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+            {% endif %}
+
+            <form method="post" action="/executions/new">
+                <!-- Template selection -->
+                <div class="mb-3">
+                    <label for="template_id" class="form-label">Lista (opcional)</label>
+                    <select class="form-select form-select-lg" id="template_id" name="template_id"
+                            onchange="this.form.action='/executions/new?template_id='+this.value; this.form.method='get'; this.form.submit();">
+                        <option value="0">Compra avulsa (sem lista)</option>
+                        {% for tpl in templates %}
+                        <option value="{{ tpl.id }}" {% if template and template.id == tpl.id %}selected{% endif %}>
+                            {{ tpl.name }} ({{ tpl.items|length }} itens)
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-text">
+                        Selecione uma lista para carregar seus itens automaticamente.
+                    </div>
+                </div>
+
+                <!-- Scheduled date -->
+                <div class="mb-3">
+                    <label for="scheduled_date" class="form-label">Data da compra</label>
+                    <input type="date" class="form-control form-control-lg"
+                           id="scheduled_date" name="scheduled_date"
+                           value="{{ today }}" required>
+                </div>
+
+                <!-- Budget -->
+                <div class="mb-3">
+                    <label for="budget" class="form-label">Orçamento (opcional)</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-lunar border-sand">R$</span>
+                        <input type="number" class="form-control" id="budget" name="budget"
+                               value="{{ template.budget if template and template.budget else 0 }}"
+                               placeholder="0,00" step="0.01" min="0">
+                    </div>
+                    <div class="form-text">
+                        {% if template and template.budget %}
+                        Herdado da lista. Você pode alterar.
+                        {% else %}
+                        Defina um limite de gastos para esta compra.
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if template %}
+                <!-- Is avulsa flag -->
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="is_standalone" name="is_standalone" value="true">
+                        <label class="form-check-label" for="is_standalone">
+                            Compra avulsa (não gera próximo ciclo automático)
+                        </label>
+                    </div>
+                    <div class="form-text">
+                        Marque esta opção se esta compra for extra e não deve afetar a recorrência da lista.
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="d-flex gap-2">
+                    <a href="/" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary flex-grow-1"
+                            onclick="this.form.method='post'; this.form.action='/executions/new';">
+                        Criar compra
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

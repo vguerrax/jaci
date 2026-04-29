@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% block title %}Agenda — Jaci{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ── Calendar Grid ── */
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        background: var(--jaci-sand);
+        border: 1px solid var(--jaci-sand);
+        border-radius: var(--bs-border-radius);
+        overflow: hidden;
+    }
+
+    .calendar-header {
+        background: var(--jaci-lunar);
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 500;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--jaci-clay);
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-day {
+        background: var(--jaci-lunar);
+        min-height: 80px;
+        padding: 0.375rem;
+        position: relative;
+        transition: background 0.15s ease;
+    }
+
+    .calendar-day:hover {
+        background: rgba(var(--bs-primary-rgb), 0.3);
+    }
+
+    .calendar-day.empty {
+        background: #FBF8F3;
+        cursor: default;
+    }
+
+    .calendar-day.today {
+        background: rgba(var(--bs-primary-rgb), 0.3);
+    }
+
+    .calendar-day-number {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--jaci-night);
+        margin-bottom: 0.25rem;
+    }
+
+    .calendar-day.today .calendar-day-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--jaci-night);
+        color: var(--jaci-lunar);
+    }
+
+    /* ── Indicators ── */
+    .calendar-indicators {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+
+    .cal-indicator {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .indicator-scheduled {
+        background: #8BA7B8;
+    }
+
+    .indicator-in-progress {
+        background: var(--jaci-peach);
+        animation: pulse 1.5s infinite;
+    }
+
+    .indicator-completed {
+        background: var(--jaci-moss);
+    }
+
+    .indicator-cancelled {
+        background: var(--jaci-error);
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    /* ── Execution count badge ── */
+    .cal-count {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.375rem;
+        font-size: 0.625rem;
+        font-weight: 600;
+        color: var(--bs-dark);
+    }
+
+    /* ── Mobile responsive ── */
+    @media (max-width: 768px) {
+        .calendar-day {
+            min-height: 55px;
+            padding: 0.25rem;
+        }
+
+        .calendar-day-number {
+            font-size: 0.75rem;
+        }
+
+        .calendar-day.today .calendar-day-number {
+            width: 24px;
+            height: 24px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h1 class="h2 mb-0">Agenda</h1>
+    </div>
+    <div class="col-auto">
+        <div class="btn-group btn-group-sm">
+            <a href="/agenda" class="btn btn-primary">Calendário</a>
+            <a href="/agenda/list" class="btn btn-outline-secondary">Lista</a>
+        </div>
+    </div>
+</div>
+
+<!-- Month navigation -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="/agenda?year={{ prev_year }}&month={{ prev_month }}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> {{ month_names[prev_month] }}
+    </a>
+
+    <h2 class="h4 mb-0 text-center">
+        {{ calendar.month_name }} {{ calendar.year }}
+    </h2>
+
+    <a href="/agenda?year={{ next_year }}&month={{ next_month }}" class="btn btn-outline-secondary btn-sm">
+        {{ month_names[next_month] }} <i class="bi bi-arrow-right"></i>
+    </a>
+</div>
+
+<!-- Calendar grid -->
+<div class="calendar-grid">
+    <!-- Day headers -->
+    <div class="calendar-header">Seg</div>
+    <div class="calendar-header">Ter</div>
+    <div class="calendar-header">Qua</div>
+    <div class="calendar-header">Qui</div>
+    <div class="calendar-header">Sex</div>
+    <div class="calendar-header">Sáb</div>
+    <div class="calendar-header">Dom</div>
+
+    <!-- Weeks -->
+    {% for week in calendar.weeks %}
+    {% for day in week %}
+    {% if day %}
+    <a href="/agenda/list?date={{ day.date }}" class="calendar-day text-decoration-none position-relative
+              {% if day.is_today %}today{% endif %}">
+        <div class="calendar-day-number">{{ day.day }}</div>
+
+        {% if day.count > 0 %}
+        <div class="calendar-indicators">
+            {% if day.has_in_progress %}
+            <span class="cal-indicator indicator-in-progress" title="Em andamento"></span>
+            {% endif %}
+            {% if day.has_scheduled %}
+            <span class="cal-indicator indicator-scheduled" title="Agendada"></span>
+            {% endif %}
+            {% if day.has_completed %}
+            <span class="cal-indicator indicator-completed" title="Finalizada"></span>
+            {% endif %}
+            {% if day.has_cancelled %}
+            <span class="cal-indicator indicator-cancelled" title="Cancelada"></span>
+            {% endif %}
+        </div>
+        {% if day.count > 1 %}
+        <span class="cal-count">{{ day.count }}</span>
+        {% endif %}
+        {% endif %}
+    </a>
+    {% else %}
+    <div class="calendar-day empty"></div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+</div>
+
+<!-- Legend -->
+<div class="row g-2 mt-4 text-help">
+    <div class="col-6 col-lg-3">
+        <span class="d-flex align-items-center justify-content-center gap-1">
+            <span class="cal-indicator indicator-scheduled"></span> Agendada
+        </span>
+    </div>
+    <div class="col-6 col-lg-3">
+        <span class="d-flex align-items-center justify-content-center gap-1">
+            <span class="cal-indicator indicator-in-progress"></span> Em andamento
+        </span>
+    </div>
+    <div class="col-6 col-lg-3">
+        <span class="d-flex align-items-center justify-content-center gap-1">
+            <span class="cal-indicator indicator-completed"></span> Finalizada
+        </span>
+    </div>
+    <div class="col-6 col-lg-3">
+        <span class="d-flex align-items-center justify-content-center gap-1">
+            <span class="cal-indicator indicator-cancelled"></span> Cancelada
+        </span>
+    </div>
+</div>
+
+<!-- Quick action -->
+<div class="text-center mt-4">
+    <a href="/executions/new" class="btn btn-primary">
+        <i class="bi bi-plus"></i>
+        Nova Compra
+    </a>
+</div>
+
+<p class="text-help text-center mt-3">
+    {{ calendar.total_executions }} compra(s) em {{ calendar.month_name }}
+</p>
+{% endblock %}

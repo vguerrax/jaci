@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Finalizar Compra — Jaci{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+
+        <div class="text-center mb-3">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2"
+                 style="width: 56px; height: 56px; background: rgba(217, 179, 130, 0.15);">
+                <span style="font-size: 24px;"><i class="bi bi-exclamation-triangle"></i></span>
+            </div>
+            <h1 class="h3 mb-1">Finalizar Compra</h1>
+            <p class="text-clay">
+                {{ totals.completed_items }} de {{ totals.total_items }} itens comprados
+            </p>
+        </div>
+
+        <div class="card-jaci p-4 mb-3">
+            <!-- Items already purchased -->
+            <div class="mb-4">
+                <h2 class="h6 text-success mb-2">
+                    <i class="bi bi-bag-check"></i> {{ totals.completed_items }} itens comprados
+                </h2>
+                <p class="h4 mb-0">R$ {{ "%.2f"|format(totals.total_spent) }}</p>
+            </div>
+
+            <!-- Pending items -->
+            <div class="mb-4">
+                <h2 class="h6 text-warning mb-2">
+                    <i class="bi bi-exclamation-triangle"></i> {{ pending_items|length }} itens NÃO comprados
+                </h2>
+                <ul class="list-unstyled mb-0">
+                    {% for item in pending_items %}
+                    <li class="d-flex align-items-center gap-2 py-1">
+                        <span class="text-clay">•</span>
+                        <span>{{ item.name }}</span>
+                        <span class="badge-jaci badge-scheduled small">
+                            {{ item.planned_quantity }}x
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <hr>
+
+            <h2 class="h6 mb-3">O que deseja fazer com os itens não comprados?</h2>
+
+            <form method="post" action="/executions/{{ execution.id }}/close">
+                <div class="d-grid gap-2 mb-3">
+                    <!-- Option A: Discard -->
+                    <button type="submit" name="action" value="discard"
+                            class="btn btn-outline-secondary text-start d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Descartar itens</strong>
+                            <div class="text-help small">Os itens serão removidos permanentemente.</div>
+                        </div>
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                    <!-- Option B: New execution -->
+                    <button type="button"
+                            class="btn btn-outline-secondary text-start d-flex justify-content-between align-items-center"
+                            data-bs-toggle="collapse" data-bs-target="#newExecutionOptions">
+                        <div>
+                            <strong>Gerar nova compra com pendentes</strong>
+                            <div class="text-help small">Cria uma nova lista com estes itens.</div>
+                        </div>
+                        <i class="bi bi-clipboard-heart"></i>
+                    </button>
+
+                    <!-- Date picker for new execution -->
+                    <div class="collapse" id="newExecutionOptions">
+                        <div class="card-jaci p-3 mb-2">
+                            <label for="new_date" class="form-label small">Data da nova compra</label>
+                            <input type="date" class="form-control form-control-sm"
+                                   id="new_date" name="new_date"
+                                   value="{{ tomorrow }}">
+                        </div>
+                        <button type="submit" name="action" value="new_execution"
+                                class="btn btn-primary w-100">
+                            Criar nova compra com {{ pending_items|length }} itens
+                            <i class="bi bi-moon-stars-fill"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option C: Cancel -->
+                    <a href="/executions/{{ execution.id }}"
+                       class="btn btn-outline-secondary text-center">
+                       <i class="bi bi-arrow-left-square"></i>
+                        Cancelar — Voltar para a compra
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

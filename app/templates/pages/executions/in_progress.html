@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}{{ execution.template.name if execution.template else 'Compra' }} — Jaci{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
+                <li class="breadcrumb-item active text-clay">
+                    {{ execution.template.name if execution.template else 'Compra Avulsa' }}
+                </li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <h1 class="h2 mb-0">
+                {{ execution.template.name if execution.template else 'Compra Avulsa' }}
+            </h1>
+            <span class="badge-jaci {{ status_badge_class[execution.status] }}">
+                {{ status_labels[execution.status] }}
+            </span>
+        </div>
+        <p class="text-clay mt-1">
+            {{ execution.scheduled_date| localdate }}
+            &middot; {{ totals.completed_items }}/{{ totals.total_items }} itens
+        </p>
+    </div>
+    <div class="col-auto align-self-end d-flex gap-2">
+        {% if execution.status == 'scheduled' %}
+        <form method="post" action="/executions/{{ execution.id }}/start">
+            <button type="submit" class="btn btn-primary">
+                Iniciar Compra
+                <i class="bi bi-moon-stars-fill"></i>
+            </button>
+        </form>
+        {% endif %}
+        {% if execution.status == 'in_progress' %}
+        <a href="/executions/{{ execution.id }}/close" class="btn btn-success">
+            Finalizar Compra
+            <i class="bi bi-moon-stars-fill"></i>
+        </a>
+        {% endif %}
+        {% if execution.status in ['scheduled', 'in_progress'] %}
+        <form method="post" action="/executions/{{ execution.id }}/cancel"
+            onsubmit="return confirm('Cancelar esta compra? Itens concluídos serão perdidos.')">
+            <button type="submit" class="btn btn-outline-secondary text-danger">
+                <i class="bi bi-x-square"></i>
+                Cancelar
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Sidebar -->
+    <div class="col-lg-4 order-lg-2">
+        <!-- Add item (only scheduled and in progress) -->
+        {% if execution.status in ['scheduled', 'in_progress'] %}
+        <div class="card-jaci p-4">
+            <h3 class="h6 mb-3">Adicionar Item</h3>
+            <form hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container" hx-swap="innerHTML"
+                hx-on::after-request="
+                htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
+                    target: '#sidebar-container',
+                    swap: 'innerHTML'
+                });
+                this.reset();
+            ">
+                <div class="mb-2">
+                    <input type="text" class="form-control form-control-sm" name="name" placeholder="Nome do item"
+                        required>
+                </div>
+                <div class="mb-2">
+                    <input type="number" class="form-control form-control-sm" name="planned_quantity" step="0.01"
+                        value="1" min="1">
+                </div>
+                <div class="mb-3">
+                    <select class="form-select form-select-sm" name="category_id">
+                        <option value="0">Sem categoria</option>
+                        {% if active_group %}
+                        {% for cat in active_group.categories %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm w-100">
+                    <i class="bi bi-plus"></i>
+                    Adicionar
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <div id="sidebar-container">
+            {% include "pages/executions/_sidebar_fragment.html" %}
+        </div>
+    </div>
+
+    <!-- Items list -->
+    <div class="col-lg-8 order-lg-1" id="items-container">
+        {% include "pages/executions/_items_fragment.html" %}
+    </div>
+
+    <!-- Modal container (for dynamic modals) -->
+    <div id="modal-container"></div>
+</div>
+{% block extra_js %}
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+<!-- WebSocket sync -->
+<script src="/static/js/execution-sync.js"></script>
+
+{% if execution.status == 'in_progress' %}
+<script>
+    // Inicializa automaticamente quando a página carrega
+    (function () {
+        // Pega o token da meta tag injetada pelo servidor
+        var tokenMeta = document.querySelector('meta[name="jwt-token"]');
+        var token = tokenMeta ? tokenMeta.getAttribute('content') : null;
+
+        if (token && token !== 'None' && token !== '') {
+            console.log('[Jaci] Inicializando WebSocket para execução', {{ execution.id }});
+        JaciExecutionSync.init({{ execution.id }}, token);
+        } else {
+        console.warn('[Jaci] Token JWT não encontrado. WebSocket desabilitado.');
+    }
+
+    // Limpa ao sair da página
+    window.addEventListener('beforeunload', function () {
+        if (window.JaciExecutionSync) {
+            JaciExecutionSync.disconnect();
+        }
+    });
+    }) ();
+</script>
+{% endif %}
+{% endblock %}
+{% endblock %}

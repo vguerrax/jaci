@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Entrar — Jaci{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6">
+
+        <div class="text-center mb-4">
+            <img src="/static/img/jaci-1.png" height="200" width="200">
+            <p class="text-clay">Entre para acessar suas listas</p>
+        </div>
+
+        <div class="card-jaci p-4">
+            {% if error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+            {% endif %}
+
+            <!-- Magic Link -->
+            <h2 class="h6 mb-3">Entrar com link mágico</h2>
+            <form method="post" action="/auth/magic-link" class="mb-4">
+                <div class="mb-3">
+                    <label for="magic-email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="magic-email" name="email" placeholder="seu@email.com"
+                        required autocomplete="email">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    Enviar link mágico
+                    <i class="bi bi-moon-stars-fill"></i>
+                </button>
+            </form>
+
+            <hr>
+
+            <!-- Email + Senha -->
+            <h2 class="h6 mb-3">Entrar com senha</h2>
+            <form method="post" action="/auth/password-login">
+                <div class="mb-3">
+                    <label for="login-email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="login-email" name="email" placeholder="seu@email.com"
+                        required autocomplete="email">
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="login-password" name="password"
+                        placeholder="Sua senha" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-outline-secondary w-100">
+                    Entrar
+                    <i class="bi bi-unlock-fill"></i>
+                </button>
+            </form>
+
+            <p class="text-help text-center mt-3 mb-0">
+                Primeiro acesso? Use o link mágico acima.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

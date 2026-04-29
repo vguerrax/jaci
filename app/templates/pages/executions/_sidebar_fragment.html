@@ -1,0 +1,39 @@
+<!-- Location -->
+{% if execution.status == 'in_progress' %}
+<div class="card-jaci p-4 mt-3">
+    <h3 class="h6 mb-2">Local atual</h3>
+    <p class="text-clay small mb-0">
+        {% if execution.current_location %}
+        <i class="bi bi-geo-alt-fill"></i>{{ execution.current_location }}
+        {% else %}
+        Nenhum local definido.
+        {% endif %}
+    </p>
+</div>
+{% endif %}
+
+<!-- Summary -->
+<div class="card-jaci mt-3 p-4">
+    <h3 class="h6 mb-3">Resumo</h3>
+    <dl class="mb-0 small">
+        <dt class="text-help">Data</dt>
+        <dd class="mb-2">{{ execution.scheduled_date| localdate }}</dd>
+
+        <dt class="text-help">Template</dt>
+        <dd class="mb-2">
+            {% if execution.template %}
+            {{ execution.template.name }}
+            {% else %}
+            <span class="text-clay">Compra avulsa</span>
+            {% endif %}
+        </dd>
+
+        <dt class="text-help">Itens concluídos</dt>
+        <dd class="mb-2">{{ totals.completed_items }} de {{ totals.total_items }}</dd>
+
+        <dt class="text-help">Total gasto</dt>
+        <dd class="fw-medium {% if totals.total_spent > (execution.budget or 999999) %}text-danger{% endif %}">
+            R$ {{ "%.2f"|format(totals.total_spent) }}
+        </dd>
+    </dl>
+</div>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Início — Jaci{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5 text-center">
+
+        <!-- Logo -->
+        <img src="/static/img/jaci-1.png" alt="Jaci" height="200">
+        <p class="text-help mt-4">
+            Mãe dos Frutos &mdash; organize sua colheita
+        </p>
+
+        <p class="text-clay mb-4 mt-4">
+            Planeje suas compras com simplicidade.<br>
+            Colabore em tempo real com quem divide a despensa com você.
+        </p>
+
+
+        <div class="card-jaci p-4">
+            {% if request.state.unread_count and request.state.unread_count > 0 %}
+            <div class="d-block d-lg-none mb-3">
+                <h2 class="h5 mb-3">Você possui {{ request.state.unread_count if request.state.unread_count < 10 else '9+' }} {% if request.state.unread_count > 1 %}notificações{% else %}notificação{% endif %}</h2>
+                <a href="/notifications" type="submit" class="btn btn-info w-100">
+                    Notificações
+                    <i class="bi bi-bell-fill"></i>
+                </a>
+            </div>
+            {% endif %}
+            <h2 class="h5 mb-3">Comece agora</h2>
+            <div class="vstack gap-1">
+                <div class="p-1">
+                    <a href="/templates" type="submit" class="btn btn-primary w-100">
+                        Criar uma lista
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </a>
+                </div>
+                <div class="p-1">
+                    <a href="/executions" type="submit" class="btn btn-primary w-100">
+                        Fazer uma compra
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </a>
+                </div>
+                <div class="p-1">
+                    <a href="/templates" type="submit" class="btn btn-primary w-100">
+                        Ver a agenda
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
