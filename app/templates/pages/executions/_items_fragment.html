@@ -101,6 +101,13 @@
                     {% endif %}
                     {% if execution.status in ['scheduled', 'in_progress'] and not item.is_completed %}
                     <button type="button" class="btn btn-outline-secondary btn-sm text-danger"
+                        data-bs-target="#editItemModal{{ item.id }}"
+                        hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/edit-form"
+                        hx-target="#modal-container"
+                        hx-swap="innerHTML"">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm text-danger"
                         hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/remove"
                         hx-target="#items-container"
                         hx-swap="innerHTML"

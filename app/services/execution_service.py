@@ -267,7 +267,19 @@ def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     db.delete(item)
     db.commit()
     logger.info(f"Item '{item_name}' removido da execução")
-
+    
+    
+def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None) -> ExecutionItem:
+    if item.name != name:
+        item.name = name
+    if item.planned_quantity != planned_quantity:
+        item.planned_quantity = planned_quantity
+    if item.category_id != category_id:
+        item.category_id = category_id
+    item.version += 1
+    db.commit()
+    db.refresh(item)
+    return item
 
 # ─── Finalização ───
 

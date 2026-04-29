@@ -9,6 +9,7 @@ from app.utils.datetime import now_local
 from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
+from app.models.group import Group
 from app.models.execution import Execution, ExecutionItem
 from app.models.enums import ExecutionStatus
 from app.services.template_service import (
@@ -27,6 +28,7 @@ from app.services.execution_service import (
     incomplete_item as incomplete_item_service,
     add_item_to_execution,
     remove_item_from_execution,
+    update_execution_item,
     get_pending_items,
     finalize_execution,
     cancel_execution,
@@ -62,7 +64,7 @@ async def list_executions(
     request: Request,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
     status: str | None = Query(None),
 ):
     """List all executions for the active group."""
@@ -128,7 +130,7 @@ async def create_execution_page(
     template_id: int | None = Query(None),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Create execution form page (from template or standalone)."""
     from app.main import templates
@@ -166,7 +168,7 @@ async def execution_detail(
     execution_id: int,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """View or execute a purchase."""
     from app.main import templates
@@ -255,7 +257,7 @@ async def execution_items_fragment(
     execution_id: int,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """
     Retorna apenas o fragmento HTML da lista de itens.
@@ -338,13 +340,52 @@ async def complete_item_form(
     )
     
     
+@router.get("/{execution_id}/items/{item_id}/edit-form", include_in_schema=False)
+async def edit_item_form(
+    request: Request,
+    execution_id: int,
+    item_id: int,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+):
+    """Retorna o HTML do modal para editar item (HTMX)."""
+    from app.main import templates
+
+    if not user:
+        return Response(status_code=401)
+
+    execution = get_execution_by_id(db, execution_id, user)
+    if not execution:
+        return Response(status_code=404)
+
+    item = db.scalar(
+        select(ExecutionItem).where(
+            ExecutionItem.id == item_id,
+            ExecutionItem.execution_id == execution_id,
+        )
+    )
+    if not item:
+        return Response(status_code=404)
+
+    return templates.TemplateResponse(
+        "pages/executions/_edit_modal.html",
+        {
+            "request": request,
+            "execution": execution,
+            "item": item,
+            "active_group": active_group
+        },
+    )
+    
+    
 @router.get("/{execution_id}/sidebar-fragment", include_in_schema=False)
 async def execution_sidebar_fragment(
     request: Request,
     execution_id: int,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Retorna o fragmento HTML do sidebar (resumo + local)."""
     from app.main import templates
@@ -381,7 +422,7 @@ async def handle_create_execution(
     is_standalone: bool = Form(False),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Create a new execution."""
     from app.main import templates
@@ -471,7 +512,7 @@ async def handle_complete_item(
     version: int = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Mark an item as purchased."""
     if not user:
@@ -536,7 +577,7 @@ async def handle_incomplete_item(
     version: int = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Mark an item as not purchased."""
     if not user:
@@ -607,7 +648,7 @@ async def handle_add_item(
     category_id: int | None = Form(None),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Add an item during execution."""
     if not user:
@@ -645,7 +686,7 @@ async def handle_remove_item(
     item_id: int,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Remove an item from execution (only if not completed)."""
     if not user:
@@ -681,13 +722,81 @@ async def handle_remove_item(
     return await _get_items_fragment(request, execution_id, db, user, active_group)
 
 
+@router.post("/{execution_id}/items/{item_id}/edit")
+async def handle_update_item(
+    request: Request,
+    execution_id: int,
+    item_id: int,
+    name: str = Form(...),
+    planned_quantity: float = Form(1),
+    category_id: int | None = Form(None),
+    version: int = Form(...),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+):
+    """Update an item during execution."""
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    execution = get_execution_by_id(db, execution_id, user)
+    if not execution:
+        return RedirectResponse(url="/executions", status_code=303)
+
+    # Find the item
+    item = db.scalar(
+        select(ExecutionItem).where(
+            ExecutionItem.id == item_id,
+            ExecutionItem.execution_id == execution_id,
+        )
+    )
+    if not item:
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    # Optimistic lock check
+    if item.version != version:
+        # Conflito detectado
+        await manager.broadcast(
+            execution_id,
+            "version_conflict",
+            {
+                "item_id": item_id,
+                "message": f"Item '{item.name}' foi alterado por outro usuário.",
+            },
+        )
+        return await _get_items_fragment(request, execution_id, db, user, active_group)
+
+    item = update_execution_item(
+        db, item, name, planned_quantity, category_id if category_id > 0 else None
+    )
+
+    # Broadcast para outros usuários
+    await manager.broadcast(
+        execution_id,
+        "item_updated",
+        {
+            "item_id": item_id,
+            "item_name": item.name,
+            "user_email": user.email
+        },
+    )
+
+    if execution.budget and execution.budget > 0:
+        totals = get_execution_totals(db, execution_id)
+        alerts = check_budget_alerts(totals["total_spent"], execution.budget)
+        if alerts:
+            await manager.broadcast(execution_id, "budget_alert", {"alerts": alerts})
+
+    return await _get_items_fragment(request, execution_id, db, user, active_group)
+
+
 @router.get("/{execution_id}/close", include_in_schema=False)
 async def close_execution_page(
     request: Request,
     execution_id: int,
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
+    active_group: Group | None = Depends(get_active_group),
 ):
     """Close execution page — shows pending items if any."""
     from app.main import templates
