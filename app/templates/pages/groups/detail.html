@@ -54,7 +54,7 @@
                 {% for member in members %}
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="fw-medium">{{ member.email }}</span>
+                        <span class="fw-medium">{{ member.name or member.email }}</span>
                         {% if member.id == group.owner_id %}
                         <span class="badge-jaci badge-scheduled ms-2">criador</span>
                         {% endif %}
