@@ -99,7 +99,7 @@
                 <dt class="text-help small">Criador</dt>
                 <dd class="mb-2">
                     {% set owner = members | selectattr('id', 'equalto', group.owner_id) | first %}
-                    {{ owner.email if owner else '—' }}
+                    {{ owner.name or owner.email if owner else '—' }}
                 </dd>
 
                 <dt class="text-help small">Membros</dt>
