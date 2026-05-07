@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-3">
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="text-white">Política de Privacidade</h4>
+        </div>
+        <div class="card-body">
+            <p><b>ESTA POLÍTICA DE PRIVACIDADE DESCREVE COMO VICTOR PEREIRA LOPES GUERRA (“NÓS”, “NOSSO”) COLETA, USA,
+                    ARMAZENA, COMPARTILHA E PROTEGE OS DADOS PESSOAIS DOS USUÁRIOS DA PLATAFORMA JACI.
+                    <br>ESTAMOS LOCALIZADOS NO BRASIL E SUBMETEMO-NOS À LEI GERAL DE PROTEÇÃO DE DADOS (LEI
+                    13.709/2018).</b></p>
+
+            <h5>1. Controlador e Dados de Contato</h5>
+            <p>
+                <b>Controlador:</b> VICTOR PEREIRA LOPES GUERRA
+                <br><b>CNPJ/CPF:</b> 115.455.026-50
+                <br><b>Endereço:</b> Rua Comendador Teixeira da Costa, 342, Santa Amélia, Belo Horizonte/MG
+                <br><b>E-mail para privacidade:</b> vguerrax@gmail.com
+            </p>
+            <h5>2. Quais dados coletamos e por quê?</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-auto">Dado</th>
+                            <th scope="col">Finalidade</th>
+                            <th scope="col">Base Legal (LGPD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="w-25">E-mail</td>
+                            <td class="w-50">Autenticação (login via magic link), envio de convites para grupos,
+                                recuperação de
+                                conta, comunicação sobre alterações nos Termos</td>
+                            <td class="w-25"><b>Execução de contrato</b> (art. 7º, V) – necessário para fornecer o
+                                serviço</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Nome de exibição</td>
+                            <td class="w-50">Identificação dentro de grupos de compras; pode ser um apelido (não
+                                exigimos nome civil)</td>
+                            <td class="w-25"><b>Consentimento</b> (art. 7º, I) – o usuário fornece voluntariamente</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Hash da senha</td>
+                            <td class="w-50">Autenticação segura (login com senha)</td>
+                            <td class="w-25"><b>Execução de contrato</b> (art. 7º, V)</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Grupos, templates, itens de compra (nome, qtd, preço, local)
+                            </td>
+                            <td class="w-50">Funcionalidade principal: listas colaborativas, controle de gastos,
+                                histórico de compras</td>
+                            <td class="w-25"><b>Execução de contrato</b> (art. 7º, V)</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Categorias (nome, cor)</td>
+                            <td class="w-50">Organização visual das listas (permitir que o usuário classifique produtos)
+                            </td>
+                            <td class="w-25"><b>Execução de contrato</b> (art. 7º, V)</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Notificações internas</td>
+                            <td class="w-50">Alertar sobre atividades no grupo (ex.: compra finalizada, novo membro)
+                            </td>
+                            <td class="w-25"><b>Legítimo interesse</b> (art. 10) – melhoria da experiência</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">IP e logs de acesso</td>
+                            <td class="w-50">Segurança, detecção de atividades suspeitas, diagnóstico de falhas</td>
+                            <td class="w-25"><b>Legítimo interesse</b> (art. 10) – protegemos a plataforma e os usuários
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-25">Cookies técnicos</td>
+                            <td class="w-50">Manter sessão autenticada e lembrar o grupo ativo do usuário</td>
+                            <td class="w-25"><b>Legítimo interesse</b> (essenciais – art. 10, II)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h5>3. Dados que NÃO coletamos (garantia expressa)</h5>
+            <ul>
+                <li>Nome completo (civil)</li>
+                <li>CPF, RG, passaporte ou qualquer documento</li>
+                <li>Endereço residencial ou comercial</li>
+                <li>Telefone</li>
+                <li>Data de nascimento</li>
+                <li>Dados de pagamento (cartão de crédito, PIX, boleto) – não vendemos nem processamos pagamentos</li>
+                <li>Geolocalização precisa (o campo "local de compra" é texto livre, inserido manualmente)</li>
+                <li>Fotos, arquivos ou mídia</li>
+                <li>Contatos do dispositivo</li>
+                <li>Cookies de rastreamento, publicidade, analytics ou redes sociais</li>
+            </ul>
+            <h5>4. Compartilhamento com terceiros</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-auto">Terceiro</th>
+                            <th scope="col">Dados compartilhados</th>
+                            <th scope="col">Finalidade</th>
+                            <th scope="col">Onde fica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="w-20">Resend (SMTP)</td>
+                            <td class="w-30">E-mail do destinatário, token JWT temporário (15 min), nome do grupo,
+                                e-mail de quem convidou</td>
+                            <td class="w-25">Envio de magic links de autenticação e convites para grupos</td>
+                            <td class="w-25">EUA (padrões contratuais de proteção de dados – SCCs)</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-20">CDNs (Bootstrap, HTMX, Google Fonts)</td>
+                            <td class="w-30">Endereço IP do usuário (inerente ao protocolo HTTP)</td>
+                            <td class="w-25">Carregar bibliotecas e fontes necessárias ao funcionamento da interface
+                            </td>
+                            <td class="w-25">Global – não enviamos dados pessoais ativamente, apenas o IP transita</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h5>5. Cookies e tecnologias similares</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-auto">Cookie</th>
+                            <th scope="col">Finalidade</th>
+                            <th scope="col">Duração</th>
+                            <th scope="col">Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="w-20">jaci_session</td>
+                            <td class="w-30">Autenticação (JWT) – mantém o usuário logado</td>
+                            <td class="w-25">1 hora</td>
+                            <td class="w-25">httpOnly, SameSite=Lax</td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="w-20">jaci_active_group</td>
+                            <td class="w-30">Armazena o ID do último grupo acessado pelo usuário</td>
+                            <td class="w-25">30 dias</td>
+                            <td class="w-25">httpOnly, SameSite=Lax</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><b>Não utilizamos:</b> localStorage, sessionStorage, fingerprinting, pixels, beacons ou qualquer forma de
+                rastreamento entre sessões.</p>
+            <h5>6. Retenção e exclusão de dados</h5>
+            <p>6.1. <b>Regra geral:</b> mantemos seus dados enquanto sua conta estiver ativa e os grupos que você
+                participa existirem.</p>
+            <p>6.2. <b>Após solicitação de exclusão de conta:</b></p>
+            <ul>
+                <li>Seus dados pessoais (e-mail, nome de exibição, hash de senha) serão <b>permanentemente removidos</b>
+                    em até 30 dias.</li>
+                <li><b>Exceções</b> (dados que podem permanecer anonimizados para fins legítimos):
+                    <ul>
+                        <li>Histórico de compras em grupos compartilhados: o registro "item X foi comprado por [nome]"
+                            poderá ser anonimizado (substituímos o nome por "usuário removido"), mas o preço e o item
+                            permanecem para não prejudicar os demais membros.</li>
+                        <li>Logs de acesso de segurança: mantidos por até 6 meses para investigação de incidentes.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>6.3. <b>Exclusão manual pelo Operador:</b> podemos remover dados a qualquer tempo por necessidade técnica
+                ou jurídica.</p>
+            <h5>7. Seus direitos (LGPD – Art. 18)</h5>
+            <p>Você pode, a qualquer momento e gratuitamente, solicitar ao Controlador:</p>
+            <ol>
+                <li><b>Confirmação</b> do tratamento dos seus dados.</li>
+                <li><b>Acesso</b> a todos os seus dados pessoais que possuímos.</li>
+                <li><b>Correção</b> de dados incompletos, inexatos ou desatualizados.</li>
+                <li><b>Anonimização, bloqueio ou eliminação</b> de dados desnecessários, excessivos ou tratados em
+                    desconformidade.</li>
+                <li><b>Portabilidade</b> dos dados a outro fornecedor de serviço (desde que tecnicamente viável).</li>
+                <li><b>Eliminação</b> dos dados tratados com seu consentimento (exceto quando houver outra base legal
+                    que
+                    autorize a manutenção, como execução de contrato).</li>
+                <li><b>Revogação do consentimento</b> (aplicável apenas ao nome de exibição – os demais dados são
+                    tratados com
+                    base em execução de contrato ou legítimo interesse).</li>
+                <li><b>Oposição</b> a tratamento baseado em legítimo interesse (mediante demonstração de situação
+                    particular).
+                </li>
+            </ol>
+            <p><b>Como exercer:</b> envie um e-mail para vguerrax@gmail.com com assunto “LGPD - Solicitação de
+                [direito desejado]”. Responderemos em até 15 dias (prorrogável por mais 15 mediante justificativa).</p>
+            <h5>8. Segurança da informação</h5>
+            <p>Adotamos as seguintes medidas técnicas e organizacionais:</p>
+            <ul>
+                <li>>Hash de senhas com bcrypt (custo padrão).</li>
+                <li>>Autenticação via JWT armazenado em cookies httpOnly (imunes a XSS).</li>
+                <li>>Tokens de magic link com validade curta (15 min).</li>
+                <li>>Isolamento de dados por grupo (usuário só acessa grupos onde é membro).</li>
+                <li>>Bloqueio otimista com versionamento (evita perda de edição simultânea).</li>
+                <li>>HTTPS obrigatório em produção (recomendamos e configuraremos).</li>
+                <li>>Backup diário do banco de dados SQLite.</li>
+                <li><b>Criptografia em repouso:</b> não implementada no MVP (o arquivo do banco de dados depende da
+                    criptografia do sistema de arquivos do servidor).</li>
+            </ul>
+            <p><b>Em caso de violação de dados (incidente de segurança):</b> notificaremos os usuários afetados e a ANPD
+                dentro
+                dos prazos legais (até 48h em casos críticos, ou o mais breve possível).</p>
+            <h5>9. Transferência internacional de dados</h5>
+            <p>Os serviços do <b>Resend</b> podem envolver transferência de dados para os Estados Unidos. Asseguramos
+                que tais
+                transferências ocorrem com base em <b>Cláusulas Contratuais Padrão (SCCs)</b> da União Europeia,
+                adaptadas à
+                LGPD, garantindo nível de proteção adequado.</p>
+            <h5>10. Crianças e adolescentes</h5>
+            <p>O Jaci não é direcionado a menores de 18 anos. Não coletamos intencionalmente dados de crianças. Se tomar
+                conhecimento de que um menor de idade criou conta sem autorização dos pais/responsáveis, excluiremos
+                imediatamente os dados.</p>
+            <h5>11. Atualizações desta Política</h5>
+            <p>Podemos atualizar esta Política a qualquer momento. Alterações relevantes serão comunicadas por e-mail
+                e/ou por aviso na própria Plataforma com <b>15 dias de antecedência</b>.
+                <br><b>Data da última atualização:</b> 06/05/2026
+                <br></b>Versão:</b> 1.0 (MVP)
+            </p>
+            <hr>
+            <p class="text-muted small">Última atualização: Maio/2026</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
