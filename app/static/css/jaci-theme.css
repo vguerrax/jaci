@@ -858,8 +858,8 @@ UTILS
     color: var(--jaci-night) !important;
 }
 
-.text-yellow {
-    color: yellow;
+.text-white {
+    color: #FFF;
 }
 
 .text-clay {

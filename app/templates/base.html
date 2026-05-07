@@ -70,7 +70,9 @@
                         <a class="nav-link position-relative" href="/notifications">
                             <i class="bi bi-bell-fill"></i>
                             {% if request.state.unread_count and request.state.unread_count > 0 %}
-                            <span class="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                            <span
+                                class="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger"
+                                style="font-size: 0.6rem;">
                                 {{ request.state.unread_count if request.state.unread_count < 10 else '9+' }} </span>
                                     {% endif %}
                         </a>
@@ -148,7 +150,10 @@
     <footer class="py-3 text-help text-center border-top border-sand mt-auto">
         🌙 Mãe dos Frutos &mdash; organize sua colheita
         <br>
-        <small>Jaci | 2026 - by vguerrax</small>
+        <small>Jaci | 2026 - by vguerrax<br>
+            <a href="/privacy">Política de Privacidade</a> |
+            <a href="/terms">Termos de Uso</a>
+        </small>
     </footer>
 
     <!-- Bootstrap JS -->
