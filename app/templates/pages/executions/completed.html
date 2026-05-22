@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row mb-4">
-    <div class="col">
+    <div class="col mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
@@ -19,9 +19,9 @@
             </span>
         </div>
         <p class="text-clay mt-1">
-            {{ execution.scheduled_date| localdate }}
+            <!-- {{ execution.scheduled_date| localdate }} -->
             {% if execution.finished_at %}
-            &middot; Finalizada em {{ execution.finished_at | localdatetime }}
+            Finalizada em {{ execution.finished_at | localdatetime }}
             {% endif %}
         </p>
     </div>

@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     app_url: str = "http://localhost:8000"
 
     model_config = {
-        "env_file": ".prod.env",
+        "env_file": ".env",
         "case_sensitive": False
     }
 

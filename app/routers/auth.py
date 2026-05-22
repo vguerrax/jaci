@@ -326,7 +326,6 @@ async def handle_setup_profile(
     return RedirectResponse(url="/", status_code=303)
 
 
-
 @router.get("/logout")
 async def logout(request: Request):
     """Clear session and redirect to home."""
