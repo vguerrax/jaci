@@ -39,6 +39,11 @@
                             {% endif %}
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Observações</label>
+                        <textarea class="form-control form-control-sm" name="notes"
+                            placeholder="Observações">{{ item.notes or '' }}</textarea>
+                    </div>
                 </div>
                 <div class="modal-footer d-flex align-items-center justify-content-between g-1">
                     <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
