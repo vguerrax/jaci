@@ -16,7 +16,7 @@
 
         /**
          * Inicializa a conexão WebSocket.
-         * @param {number} executionId - ID da execução
+         * @param {string} executionId - ID da execução
          * @param {string} token - JWT de sessão
          */
         init: function (executionId, token) {
@@ -26,7 +26,7 @@
             }
             
             console.log('[Jaci WS] Inicializando para execução', executionId);
-            this.executionId = executionId;
+            this.executionId = parseInt(executionId);
             this.token = token;
             this.connect();
         },
@@ -172,6 +172,10 @@
                 htmx.ajax('GET', `/executions/${this.executionId}/items-fragment`, {
                     target: '#items-container',
                     swap: 'innerHTML',
+                });
+                htmx.ajax('GET', `/executions/${this.executionId}/sidebar-fragment`, {
+                    target: '#sidebar-container',
+                    swap: 'innerHTML'
                 });
             } else {
                 window.location.reload();

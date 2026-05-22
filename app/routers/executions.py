@@ -892,6 +892,15 @@ async def handle_close_execution(
     notify_execution_completed(
         db, execution, user, template_name, totals["total_spent"]
     )
+    
+    await manager.broadcast(
+        execution_id,
+        "execution_status_changed",
+        {
+            "new_status": "completed",
+            "user_email": user.email,
+        },
+    )
 
     return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
@@ -914,6 +923,15 @@ async def handle_cancel_execution(
         cancel_execution(db, execution)
     except ValueError:
         pass  # Already completed, ignore
+    
+    await manager.broadcast(
+        execution_id,
+        "execution_status_changed",
+        {
+            "new_status": "cancelled",
+            "user_email": user.email,
+        },
+    )
 
     return RedirectResponse(url="/executions", status_code=303)
 

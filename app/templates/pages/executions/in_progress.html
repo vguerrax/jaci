@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row mb-4">
-    <div class="col">
+    <div class="col mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
@@ -20,10 +20,10 @@
                 {{ status_labels[execution.status] }}
             </span>
         </div>
-        <p class="text-clay mt-1">
+        <!-- <p class="text-clay mt-1">
             {{ execution.scheduled_date| localdate }}
-            &middot; {{ totals.completed_items }}/{{ totals.total_items }} itens
-        </p>
+            &middot; {{ totals.completed_items }}/{{ totals.total_items }} {'itens' if totals.total_items != 1 else 'item'}
+        </p> -->
     </div>
     <div class="col-auto align-self-end d-flex gap-2">
         {% if execution.status == 'scheduled' %}
@@ -112,29 +112,28 @@
 <!-- WebSocket sync -->
 <script src="/static/js/execution-sync.js"></script>
 
-{% if execution.status == 'in_progress' %}
 <script>
     // Inicializa automaticamente quando a página carrega
     (function () {
-        // Pega o token da meta tag injetada pelo servidor
-        var tokenMeta = document.querySelector('meta[name="jwt-token"]');
-        var token = tokenMeta ? tokenMeta.getAttribute('content') : null;
+        var token = "{{ jwt_token }}";
+        var executionId = "{{ execution.id }}";
 
         if (token && token !== 'None' && token !== '') {
-            console.log('[Jaci] Inicializando WebSocket para execução', {{ execution.id }});
-        JaciExecutionSync.init({{ execution.id }}, token);
-        } else {
-        console.warn('[Jaci] Token JWT não encontrado. WebSocket desabilitado.');
-    }
-
-    // Limpa ao sair da página
-    window.addEventListener('beforeunload', function () {
-        if (window.JaciExecutionSync) {
-            JaciExecutionSync.disconnect();
+            console.log('[Jaci] Inicializando WebSocket para execução', executionId);
+            JaciExecutionSync.init(executionId, token);
         }
-    });
-    }) ();
+        else {
+            console.warn('[Jaci] Token JWT não encontrado. WebSocket desabilitado.');
+        }
+
+        // Limpa ao sair da página
+        window.addEventListener('beforeunload', function () {
+            if (window.JaciExecutionSync) {
+                JaciExecutionSync.disconnect();
+            }
+        });
+    }
+    )();
 </script>
-{% endif %}
 {% endblock %}
 {% endblock %}

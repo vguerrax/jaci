@@ -7,7 +7,7 @@ services:
       - "8003:8000"
     volumes:
       # Volume para o banco SQLite
-      - ./data:/app/data
+      - /opt/jaci/data:/app/data
     env_file:
       - .prod.env
     environment:

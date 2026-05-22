@@ -86,7 +86,7 @@ def set_auth_cookie(response: Response, user_id: int, email: str) -> None:
         key="jaci_session",
         value=token,
         httponly=True,
-        secure=True,        # True em produção com HTTPS
+        secure=False,        # True em produção com HTTPS
         samesite="lax",
         max_age=settings.jwt_expire_minutes * 60,
         path="/",
