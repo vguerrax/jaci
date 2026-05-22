@@ -93,6 +93,7 @@ class ExecutionItem(Base):
         default=False,
         nullable=False,
     )
+    notes: Mapped[str] = mapped_column(String(255), nullable=True)
     version: Mapped[int] = mapped_column(
         Integer,
         default=1,

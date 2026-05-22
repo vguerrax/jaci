@@ -201,11 +201,13 @@ def complete_item(
     purchased_quantity: float,
     unit_price: float,
     location: Optional[str] = None,
+    notes: Optional[str] = None,
 ) -> ExecutionItem:
     """Marca item como comprado com quantidade e valor."""
     item.purchased_quantity = purchased_quantity
     item.unit_price = unit_price
     item.location = location
+    item.notes = notes
     item.is_completed = True
     item.version += 1
 
@@ -242,6 +244,7 @@ def add_item_to_execution(
     name: str,
     planned_quantity: float = 1,
     category_id: Optional[int] = None,
+    notes: Optional[str] = None
 ) -> ExecutionItem:
     """Adiciona item durante a execução (não afeta o template)."""
     max_order = db.scalar(
@@ -254,6 +257,7 @@ def add_item_to_execution(
         name=name.strip(),
         planned_quantity=planned_quantity,
         category_id=category_id,
+        notes=notes,
         sort_order=(max_order or 0) + 1,
     )
     db.add(item)
@@ -273,13 +277,15 @@ def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     logger.info(f"Item '{item_name}' removido da execução")
     
     
-def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None) -> ExecutionItem:
+def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None, notes: Optional[str] = None) -> ExecutionItem:
     if item.name != name:
         item.name = name
     if item.planned_quantity != planned_quantity:
         item.planned_quantity = planned_quantity
     if item.category_id != category_id:
         item.category_id = category_id
+    if item.notes != notes:
+        item.notes =  notes
     item.version += 1
     db.commit()
     db.refresh(item)

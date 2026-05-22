@@ -214,6 +214,7 @@ async def execution_detail(
             "status_labels": STATUS_LABELS,
             "status_badge_class": STATUS_BADGE_CLASS,
             "active_page": "executions",
+            "expanded_ids": [],
         },
     )
 
@@ -284,6 +285,8 @@ async def execution_items_fragment(
     from app.utils.security import create_access_token
 
     jwt_token = create_access_token(user.id, user.email)
+    collapse_state = request.headers.get("X-Collapse-State", "")
+    expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 
     return templates.TemplateResponse(
         "pages/executions/_items_fragment.html",
@@ -299,6 +302,7 @@ async def execution_items_fragment(
             "status_badge_class": STATUS_BADGE_CLASS,
             "jwt_token": jwt_token,
             "active_page": "executions",
+            "expanded_ids": expanded_ids,
         },
     )
 
@@ -564,6 +568,7 @@ async def handle_complete_item(
     purchased_quantity: float = Form(...),
     unit_price: float = Form(...),
     location: str | None = Form(None),
+    notes: str | None = Form(None),
     version: int = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
@@ -601,7 +606,7 @@ async def handle_complete_item(
         return await _get_items_fragment(request, execution_id, db, user, active_group)
 
     # Update item
-    complete_item_service(db, item, purchased_quantity, unit_price, location)
+    complete_item_service(db, item, purchased_quantity, unit_price, location, notes)
 
     # Broadcast para outros usuários
     await manager.broadcast(
@@ -701,6 +706,7 @@ async def handle_add_item(
     name: str = Form(...),
     planned_quantity: float = Form(1),
     category_id: int | None = Form(None),
+    notes: str | None = Form(None),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group: Group | None = Depends(get_active_group),
@@ -717,7 +723,7 @@ async def handle_add_item(
         return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
     item = add_item_to_execution(
-        db, execution, name, planned_quantity, category_id if category_id > 0 else None
+        db, execution, name, planned_quantity, category_id if category_id > 0 else None, notes
     )
 
     # Broadcast
@@ -785,6 +791,7 @@ async def handle_update_item(
     name: str = Form(...),
     planned_quantity: float = Form(1),
     category_id: int | None = Form(None),
+    notes: str | None = Form(None),
     version: int = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
@@ -822,7 +829,7 @@ async def handle_update_item(
         return await _get_items_fragment(request, execution_id, db, user, active_group)
 
     item = update_execution_item(
-        db, item, name, planned_quantity, category_id if category_id > 0 else None
+        db, item, name, planned_quantity, category_id if category_id > 0 else None, notes
     )
 
     # Broadcast para outros usuários

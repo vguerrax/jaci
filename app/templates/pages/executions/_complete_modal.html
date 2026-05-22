@@ -2,10 +2,8 @@
     aria-labelledby="completeItemLabel{{ item.id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/complete"
-                  hx-target="#items-container"
-                  hx-swap="innerHTML"
-                  hx-on::after-request="if(event.detail.successful) { bootstrap.Modal.getInstance(document.getElementById('completeItemModal{{ item.id }}')).hide(); }
+            <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/complete" hx-target="#items-container"
+                hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful) { bootstrap.Modal.getInstance(document.getElementById('completeItemModal{{ item.id }}')).hide(); }
                   htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',
                     swap: 'innerHTML'
@@ -38,6 +36,11 @@
                         <input type="text" class="form-control" name="location"
                             placeholder="Ex: Supermercado X, Feira Y..." value="{{ execution.current_location or '' }}">
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Observações</label>
+                        <textarea class="form-control form-control-sm" name="notes"
+                            placeholder="Observações">{{ item.notes or '' }}</textarea>
+                    </div>
                 </div>
                 <div class="modal-footer d-flex align-items-center justify-content-between g-1">
                     <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
@@ -55,7 +58,7 @@
 </div>
 <script>
     // Aguarda o HTMX inserir o HTML no DOM antes de abrir o modal
-    requestAnimationFrame(function() {
+    requestAnimationFrame(function () {
         var modalEl = document.getElementById('completeItemModal{{ item.id }}');
         if (modalEl) {
             // Remove qualquer modal antigo para evitar conflitos
@@ -63,7 +66,7 @@
             if (existingModal) {
                 existingModal.dispose();
             }
-            
+
             // Cria e abre novo modal
             var modal = new bootstrap.Modal(modalEl, {
                 backdrop: true,
@@ -71,9 +74,9 @@
                 focus: true,
             });
             modal.show();
-            
+
             // Limpa o modal do DOM quando fechar
-            modalEl.addEventListener('hidden.bs.modal', function() {
+            modalEl.addEventListener('hidden.bs.modal', function () {
                 modal.dispose();
                 modalEl.remove();
             });
