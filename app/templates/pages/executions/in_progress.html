@@ -144,6 +144,7 @@
 
         // Intercepta toda requisição HTMX que vai substituir o container
         document.body.addEventListener('htmx:configRequest', function (event) {
+            console.log(event);
             const target = event.detail.target;
             if (!target || target.id !== CONTAINER_ID) return;
 

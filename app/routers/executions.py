@@ -269,42 +269,43 @@ async def execution_items_fragment(
     if not user:
         return Response(status_code=401)
 
-    execution = get_execution_by_id(db, execution_id, user)
-    if not execution:
-        return Response(status_code=404)
+    # execution = get_execution_by_id(db, execution_id, user)
+    # if not execution:
+    #     return Response(status_code=404)
 
-    grouped_items = get_execution_items_grouped(db, execution_id)
-    totals = get_execution_totals(db, execution_id)
+    # grouped_items = get_execution_items_grouped(db, execution_id)
+    # totals = get_execution_totals(db, execution_id)
 
-    # Budget alerts
-    alerts = []
-    if execution.budget and execution.budget > 0:
-        alerts = check_budget_alerts(totals["total_spent"], execution.budget)
+    # # Budget alerts
+    # alerts = []
+    # if execution.budget and execution.budget > 0:
+    #     alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    # Generate fresh JWT token
-    from app.utils.security import create_access_token
+    # # Generate fresh JWT token
+    # from app.utils.security import create_access_token
 
-    jwt_token = create_access_token(user.id, user.email)
-    collapse_state = request.headers.get("X-Collapse-State", "")
-    expanded_ids = set(collapse_state.split(",") if collapse_state else [])
+    # jwt_token = create_access_token(user.id, user.email)
+    # collapse_state = request.headers.get("X-Collapse-State", "")
+    # expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 
-    return templates.TemplateResponse(
-        "pages/executions/_items_fragment.html",
-        {
-            "request": request,
-            "user": user,
-            "active_group": active_group,
-            "execution": execution,
-            "grouped_items": grouped_items,
-            "totals": totals,
-            "budget_alerts": alerts,
-            "status_labels": STATUS_LABELS,
-            "status_badge_class": STATUS_BADGE_CLASS,
-            "jwt_token": jwt_token,
-            "active_page": "executions",
-            "expanded_ids": expanded_ids,
-        },
-    )
+    # return templates.TemplateResponse(
+    #     "pages/executions/_items_fragment.html",
+    #     {
+    #         "request": request,
+    #         "user": user,
+    #         "active_group": active_group,
+    #         "execution": execution,
+    #         "grouped_items": grouped_items,
+    #         "totals": totals,
+    #         "budget_alerts": alerts,
+    #         "status_labels": STATUS_LABELS,
+    #         "status_badge_class": STATUS_BADGE_CLASS,
+    #         "jwt_token": jwt_token,
+    #         "active_page": "executions",
+    #         "expanded_ids": expanded_ids,
+    #     },
+    # )
+    return await _get_items_fragment(request, execution_id, db, user, active_group) 
 
 
 @router.get("/{execution_id}/items/{item_id}/complete-form", include_in_schema=False)
@@ -962,6 +963,10 @@ async def _get_items_fragment(
     if execution and execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
+    jwt_token = create_access_token(user.id, user.email)
+    collapse_state = request.headers.get("X-Collapse-State", "")
+    expanded_ids = set(collapse_state.split(",") if collapse_state else [])
+
     return templates.TemplateResponse(
         "pages/executions/_items_fragment.html",
         {
@@ -974,5 +979,8 @@ async def _get_items_fragment(
             "budget_alerts": alerts,
             "status_labels": STATUS_LABELS,
             "status_badge_class": STATUS_BADGE_CLASS,
+            "jwt_token": jwt_token,
+            "active_page": "executions",
+            "expanded_ids": expanded_ids,
         },
     )
