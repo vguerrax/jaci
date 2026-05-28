@@ -101,17 +101,16 @@
     </div>
 
     <!-- Items list -->
-    <div class="col-lg-8 order-lg-1" id="items-container" hx-preserve>
-        {% include "pages/executions/_items_fragment.html" %}
+    <div class="col-lg-8 order-lg-1" hx-preserve>
+        <div id="items-container">
+            {% include "pages/executions/_items_fragment.html" %}
+        </div>
     </div>
 
     <!-- Modal container (for dynamic modals) -->
     <div id="modal-container"></div>
 </div>
 {% block extra_js %}
-<!-- HTMX -->
-<script src="https://unpkg.com/htmx.org@2.0.4"></script>
-
 <!-- WebSocket sync -->
 <script src="/static/js/execution-sync.js"></script>
 
@@ -144,7 +143,6 @@
 
         // Intercepta toda requisição HTMX que vai substituir o container
         document.body.addEventListener('htmx:configRequest', function (event) {
-            console.log(event);
             const target = event.detail.target;
             if (!target || target.id !== CONTAINER_ID) return;
 
@@ -173,11 +171,11 @@
 
         const collapseList = [];
         if (collapseElementListOpened.length == 0 || collapseElementListClosed.length == 0) {
-            [...collapseElementList].forEach((collapseEl) => {collapseList.push(new bootstrap.Collapse(collapseEl))});
+            [...collapseElementList].forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
         } else if (collapseElementListOpened.length > collapseElementListClosed.length) {
-            collapseElementListClosed.forEach((collapseEl) => {collapseList.push(new bootstrap.Collapse(collapseEl))});
+            collapseElementListClosed.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
         } else {
-            collapseElementListOpened.forEach((collapseEl) => {collapseList.push(new bootstrap.Collapse(collapseEl))});
+            collapseElementListOpened.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
         }
         collapseList.forEach((collapse) => { collapse.toggle() });
     }

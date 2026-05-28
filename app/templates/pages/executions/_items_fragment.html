@@ -48,7 +48,11 @@
             {% else %}
             <span>Sem categoria</span>
             {% endif %}
+            {% if execution.status == 'in_progress' %}
+            <span class="text-help small">({{ item_group.get('items') | selectattr("is_completed") | list | length }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(item_group.get('items')| map(attribute='total_price') | select('number') | sum) }})</span>
+            {% else %}
             <span class="text-help small">({{ item_group.get('items')|length }})</span>
+            {% endif %}
         </div>
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#{{ cat_id }}" aria-expanded="false">
             <i class="bi bi-chevron-expand"></i>
@@ -125,13 +129,15 @@
                             hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/remove"
                             hx-target="#items-container"
                             hx-swap="innerHTML"
-                            hx-confirm="Remover {{ item.name }}?">
+                            hx-confirm="Remover {{ item.name }}?"
+                            data-jaci-confirm-ok-class="btn-danger"
+                            data-jaci-confirm-ok-label="Remover">
                             <i class="bi bi-trash"></i>
                         </button>
                         {% endif %}
                         {% if execution.status == 'in_progress' and item.is_completed %}
                         <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/incomplete"
-                            onsubmit="return confirm('Marcar {{ item.name }} como incompleto?')"
+                            hx-confirm="Marcar {{ item.name }} como incompleto?"
                             hx-target="#items-container"
                             hx-swap="innerHTML">
                             <input type="hidden" name="version" value="{{ item.version }}">
