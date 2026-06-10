@@ -13,12 +13,12 @@ logger = logging.getLogger("jaci.categories")
 
 
 def get_categories_by_group(db: Session, group_id: int) -> list[Category]:
-    """Retorna todas as categorias de um grupo, ordenadas por nome."""
+    """Retorna todas as categorias de um grupo na ordem configurada."""
     return (
         db.execute(
             select(Category)
             .where(Category.group_id == group_id)
-            .order_by(Category.name)
+            .order_by(Category.sort_order, Category.name)
         )
         .scalars()
         .all()
@@ -46,16 +46,56 @@ def create_category(
     db: Session, group: Group, name: str, color: Optional[str] = None
 ) -> Category:
     """Cria uma nova categoria no grupo."""
+    max_order = db.scalar(
+        select(func.max(Category.sort_order)).where(Category.group_id == group.id)
+    )
     category = Category(
         name=name.strip(),
         color=color,
         group_id=group.id,
+        sort_order=(max_order if max_order is not None else -1) + 1,
     )
     db.add(category)
     db.commit()
     db.refresh(category)
     logger.info(f"Categoria '{category.name}' criada no grupo '{group.name}'")
     return category
+
+
+def move_category(db: Session, category: Category, direction: str) -> bool:
+    """Move uma categoria uma posição para cima ou para baixo."""
+    categories = get_categories_by_group(db, category.group_id)
+    current_index = next(
+        (index for index, item in enumerate(categories) if item.id == category.id),
+        None,
+    )
+    if current_index is None:
+        return False
+
+    target_index = current_index + (-1 if direction == "up" else 1)
+    if direction not in {"up", "down"} or target_index < 0 or target_index >= len(categories):
+        return False
+
+    categories[current_index], categories[target_index] = (
+        categories[target_index],
+        categories[current_index],
+    )
+    for sort_order, item in enumerate(categories):
+        item.sort_order = sort_order
+
+    db.commit()
+    return True
+
+
+def set_uncategorized_position(db: Session, group: Group, position: str) -> bool:
+    """Define se o grupo sem categoria aparece primeiro ou por último."""
+    if position not in {"first", "last"}:
+        return False
+
+    group.uncategorized_first = position == "first"
+    db.commit()
+    db.refresh(group)
+    return True
 
 
 def update_category(

@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     jwt_secret_key: str = "change-me-jwt-secret-key"
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 1440
+    secure_cookie: bool = False
     magic_link_expire_minutes: int = 15
     magic_link_resend_seconds: int = 60
 
@@ -22,8 +23,8 @@ class Settings(BaseSettings):
     smtp_mock: bool = True
     smtp_host: str = "smtp.gmail.com"
     smtp_port: int = 587
-    smtp_user: str = None
-    smtp_password: str = None
+    smtp_user: str|None = None
+    smtp_password: str|None = None
     smtp_from: str = "noreply@jaci.app"
     smtp_tls: bool = True
 

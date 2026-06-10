@@ -38,15 +38,27 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Criar senha</label>
-                        <input type="password" class="form-control form-control-lg" id="password" name="password"
-                            placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password">
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-lg" id="password" name="password"
+                                placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password">
+                            <button type="button" class="btn btn-outline-secondary password-toggle"
+                                data-password-target="password" aria-label="Mostrar senha" aria-pressed="false">
+                                <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="mb-4">
                         <label for="password_confirm" class="form-label">Confirmar senha</label>
-                        <input type="password" class="form-control form-control-lg" id="password_confirm"
-                            name="password_confirm" placeholder="Repita a senha" required minlength="6"
-                            autocomplete="new-password">
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-lg" id="password_confirm"
+                                name="password_confirm" placeholder="Repita a senha" required minlength="6"
+                                autocomplete="new-password">
+                            <button type="button" class="btn btn-outline-secondary password-toggle"
+                                data-password-target="password_confirm" aria-label="Mostrar senha" aria-pressed="false">
+                                <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 btn-lg">
@@ -61,6 +73,19 @@
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.password-toggle').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const passwordInput = document.getElementById(this.dataset.passwordTarget);
+                const showingPassword = passwordInput.type === 'text';
+
+                passwordInput.type = showingPassword ? 'password' : 'text';
+                this.setAttribute('aria-label', showingPassword ? 'Mostrar senha' : 'Ocultar senha');
+                this.setAttribute('aria-pressed', String(!showingPassword));
+                this.querySelector('i').className = showingPassword ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+            });
+        });
+    </script>
 </body>
 
 </html>

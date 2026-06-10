@@ -45,12 +45,12 @@ async def send_magic_link(email: str, token: str, group_id: int | None = None, g
         html_body = _build_login_email(magic_link)
 
     # Modo mock: SMTP não configurado
-    if settings.smtp_mock:
-        logger.info("=" * 60)
-        logger.info(f"MAGIC LINK para {email}:")
-        logger.info(f"  {magic_link}")
-        logger.info("=" * 60)
-        return True
+    # if settings.smtp_mock:
+    logger.info("=" * 60)
+    logger.info(f"MAGIC LINK para {email}:")
+    print(f"  {magic_link}")
+    logger.info("=" * 60)
+        # return True
 
     message = MessageSchema(
         subject=subject,

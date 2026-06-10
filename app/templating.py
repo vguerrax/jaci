@@ -11,5 +11,11 @@ def localdatetime_filter(dt, fmt="%d/%m/%Y %H:%M"):
 def localdate_filter(dt, fmt="%d/%m/%Y"):
     return format_local_date(dt, fmt)
 
+
+def quantity_filter(value):
+    return f"{value:.3f}".rstrip("0").rstrip(".")
+
+
 templates.env.filters["localdatetime"] = localdatetime_filter
 templates.env.filters["localdate"] = localdate_filter
+templates.env.filters["quantity"] = quantity_filter

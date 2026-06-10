@@ -10,7 +10,15 @@
                 <li class="breadcrumb-item active text-clay">{{ group.name }}</li>
             </ol>
         </nav>
-        <h1 class="h2">{{ group.name }}</h1>
+        <div class="d-flex align-items-center gap-2">
+            <h1 class="h2 mb-0">{{ group.name }}</h1>
+            {% if is_owner %}
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#editGroupModal" aria-label="Editar nome do grupo">
+                <i class="bi bi-pencil"></i>
+            </button>
+            {% endif %}
+        </div>
         <p class="text-clay">
             {{ members | length }} membro(s) &middot;
             {% if is_owner %}Você é o criador{% endif %}
@@ -63,20 +71,18 @@
                         {% endif %}
                     </div>
                     {% if is_owner and member.id != group.owner_id %}
-                    <form method="post"
-                          action="/groups/{{ group.id }}/remove/{{ member.id }}"
-                          onsubmit="return confirm('Remover {{ member.email }} do grupo?')">
-                        <button type="submit" class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-minus"></i>
+                    <form method="post" action="/groups/{{ group.id }}/remove/{{ member.id }}"
+                        onsubmit="return confirm('Remover {{ member.email }} do grupo?')">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-dash"></i>
                             Remover
                         </button>
                     </form>
                     {% endif %}
                     {% if not is_owner and member.id == user.id %}
-                    <form method="post"
-                          action="/groups/{{ group.id }}/remove/{{ member.id }}"
-                          onsubmit="return confirm('Sair do grupo {{ group.name }}?')">
-                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                    <form method="post" action="/groups/{{ group.id }}/remove/{{ member.id }}"
+                        onsubmit="return confirm('Sair do grupo {{ group.name }}?')">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
                             <i class="bi bi-box-arrow-left"></i>
                             Sair
                         </button>
@@ -109,6 +115,37 @@
     </div>
 </div>
 
+<!-- Modal de edição -->
+{% if is_owner %}
+<div class="modal fade" id="editGroupModal" tabindex="-1" aria-labelledby="editGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="/groups/{{ group.id }}/edit">
+                <div class="modal-header">
+                    <h3 class="modal-title h5" id="editGroupModalLabel">Editar nome do grupo</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="groupName" class="form-label">Nome do grupo</label>
+                    <input type="text" class="form-control" id="groupName" name="name" value="{{ group.name }}"
+                        maxlength="150" required autofocus>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Salvar
+                        <i class="bi bi-check-circle"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- Modal de Convite -->
 {% if is_owner %}
 <div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
@@ -126,9 +163,8 @@
                     </p>
                     <div class="mb-3">
                         <label for="inviteEmail" class="form-label">E-mail do convidado</label>
-                        <input type="email" class="form-control" id="inviteEmail"
-                               name="email" placeholder="convidado@email.com"
-                               required autocomplete="off">
+                        <input type="email" class="form-control" id="inviteEmail" name="email"
+                            placeholder="convidado@email.com" required autocomplete="off">
                     </div>
                 </div>
                 <div class="modal-footer d-flex align-items-center justify-content-between">

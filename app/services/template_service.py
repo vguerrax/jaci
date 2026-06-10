@@ -55,34 +55,50 @@ def get_template_items_grouped(db: Session, template_id: int) -> list[dict]:
         .all()
     )
 
+    group = db.scalar(
+        select(Group)
+        .join(Template, Template.group_id == Group.id)
+        .where(Template.id == template_id)
+    )
+
     # Group by category
     grouped = {}
     no_category = []
 
     for item in items:
         if item.category:
-            cat_name = item.category.name
-            if cat_name not in grouped:
-                grouped[cat_name] = {
+            if item.category.id not in grouped:
+                grouped[item.category.id] = {
                     "category": item.category,
                     "items": [],
                 }
-            grouped[cat_name]["items"].append(item)
-            grouped[cat_name]["items"].sort(key=lambda x: x.name)
+            grouped[item.category.id]["items"].append(item)
+            grouped[item.category.id]["items"].sort(key=lambda x: x.name)
         else:
             no_category.append(item)
             no_category.sort(key=lambda x: x.name)
 
     result = list(grouped.values())
     if no_category:
-        result.append({
+        uncategorized_group = {
             "category": None,
             "items": no_category,
-        })
+        }
+        if group and group.uncategorized_first:
+            result.insert(0, uncategorized_group)
+        else:
+            result.append(uncategorized_group)
 
-    result.sort(key=lambda x: x["category"].name if x["category"] else 'ZZZZZZZZZZZZZZ')
+    categorized_groups = [item for item in result if item["category"]]
+    categorized_groups.sort(
+        key=lambda item: (item["category"].sort_order, item["category"].name)
+    )
 
-    return result
+    if no_category and group and group.uncategorized_first:
+        return [item for item in result if not item["category"]] + categorized_groups
+    if no_category:
+        return categorized_groups + [item for item in result if not item["category"]]
+    return categorized_groups
 
 
 def create_template(
@@ -263,7 +279,7 @@ def get_categories_for_group(db: Session, group_id: int) -> list[Category]:
         db.execute(
             select(Category)
             .where(Category.group_id == group_id)
-            .order_by(Category.name)
+            .order_by(Category.sort_order, Category.name)
         )
         .scalars()
         .all()

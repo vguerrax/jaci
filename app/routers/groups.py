@@ -11,6 +11,7 @@ from app.services.group_service import (
     get_group_by_id,
     get_group_members,
     is_group_owner,
+    update_group_name,
     invite_member,
     remove_member,
 )
@@ -135,6 +136,45 @@ async def handle_create_group(
 
     group = create_group(db, name, user)
     return RedirectResponse(url=f"/groups/{group.id}", status_code=303)
+
+
+@router.post("/{group_id}/edit")
+async def handle_edit_group(
+    request: Request,
+    group_id: int,
+    name: str = Form(...),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group=Depends(get_active_group),
+):
+    """Altera o nome do grupo."""
+    from app.main import templates
+
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    group = get_group_by_id(db, group_id, user)
+    if not group:
+        return RedirectResponse(url="/groups", status_code=303)
+
+    result = update_group_name(db, group, name, user)
+    members = get_group_members(db, group_id)
+
+    return templates.TemplateResponse(
+        "pages/groups/detail.html",
+        {
+            "request": request,
+            "user": user,
+            "active_group": active_group,
+            "group": group,
+            "members": members,
+            "is_owner": is_group_owner(db, group_id, user),
+            "active_page": "groups",
+            "message": result["message"] if result["success"] else None,
+            "error": result["message"] if not result["success"] else None,
+        },
+        status_code=200 if result["success"] else 400,
+    )
 
 
 @router.post("/{group_id}/invite")

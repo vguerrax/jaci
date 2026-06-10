@@ -11,6 +11,8 @@ from app.services.category_service import (
     get_category_by_id,
     create_category,
     update_category,
+    move_category,
+    set_uncategorized_position,
     count_items_using_category,
     delete_category,
 )
@@ -188,6 +190,40 @@ async def handle_create_category(
         )
 
     create_category(db, active_group, name, color if color else None)
+    return RedirectResponse(url="/categories", status_code=303)
+
+
+@router.post("/{category_id}/move")
+async def handle_move_category(
+    category_id: int,
+    direction: str = Form(...),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+):
+    """Move uma categoria na ordem de exibição."""
+    if not user or not active_group:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    category = get_category_by_id(db, category_id, user)
+    if category and category.group_id == active_group.id:
+        move_category(db, category, direction)
+
+    return RedirectResponse(url="/categories", status_code=303)
+
+
+@router.post("/order/uncategorized")
+async def handle_uncategorized_position(
+    position: str = Form(...),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+    db: Session = Depends(get_db),
+):
+    """Define a posição do grupo sem categoria."""
+    if not user or not active_group:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    set_uncategorized_position(db, active_group, position)
     return RedirectResponse(url="/categories", status_code=303)
 
 
