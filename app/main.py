@@ -5,7 +5,7 @@ from fastapi import WebSocket, Query
 
 from app.config import get_settings
 from app.templating import templates
-from app.database import engine, Base, SessionLocal
+from app.database import engine, Base, SessionLocal, ensure_schema_compatibility
 from app.dependencies import get_current_user, get_active_group, get_unread_notification_count
 from app.models.user import User
 from app.routers.auth import router as auth_router
@@ -22,6 +22,7 @@ settings = get_settings()
 
 # Cria tabelas
 Base.metadata.create_all(bind=engine)
+ensure_schema_compatibility()
 
 app = FastAPI(
     title=settings.app_name,

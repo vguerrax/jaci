@@ -32,7 +32,69 @@
     <p class="text-clay mb-3">Selecione um grupo ativo para gerenciar categorias.</p>
     <a href="/groups" class="btn btn-primary">Ver grupos</a>
 </div>
-{% elif categories %}
+{% else %}
+<div class="card-jaci p-4 mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-3">
+        <div>
+            <h2 class="h5 mb-1">Ordem de exibição</h2>
+            <p class="text-help mb-0">Esta ordem será usada nas listas e nas compras do grupo.</p>
+        </div>
+        <form method="post" action="/categories/order/uncategorized"
+            class="d-flex align-items-center gap-2">
+            <label for="uncategorized-position" class="form-label mb-0 text-nowrap">Sem categoria</label>
+            <select class="form-select form-select-sm" id="uncategorized-position" name="position"
+                onchange="this.form.submit()">
+                <option value="first" {% if active_group.uncategorized_first %}selected{% endif %}>Primeiro</option>
+                <option value="last" {% if not active_group.uncategorized_first %}selected{% endif %}>Último</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="list-group list-group-flush list-group-jaci">
+        {% if active_group.uncategorized_first %}
+        <div class="list-group-item d-flex align-items-center gap-3">
+            <i class="bi bi-inbox text-clay"></i>
+            <span class="flex-grow-1">Sem categoria</span>
+            <span class="text-help small">primeiro</span>
+        </div>
+        {% endif %}
+
+        {% for item in categories %}
+        {% set cat = item.category %}
+        <div class="list-group-item d-flex align-items-center gap-3">
+            <span class="rounded-circle flex-shrink-0"
+                style="width: 18px; height: 18px; background: {{ cat.color or '#D9C4B0' }}; border: 2px solid var(--jaci-sand);"></span>
+            <span class="flex-grow-1">{{ cat.name }}</span>
+            <div class="d-flex gap-1">
+                <form method="post" action="/categories/{{ cat.id }}/move">
+                    <input type="hidden" name="direction" value="up">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm" aria-label="Mover {{ cat.name }} para cima"
+                        {% if loop.first %}disabled{% endif %}>
+                        <i class="bi bi-arrow-up"></i>
+                    </button>
+                </form>
+                <form method="post" action="/categories/{{ cat.id }}/move">
+                    <input type="hidden" name="direction" value="down">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm" aria-label="Mover {{ cat.name }} para baixo"
+                        {% if loop.last %}disabled{% endif %}>
+                        <i class="bi bi-arrow-down"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if not active_group.uncategorized_first %}
+        <div class="list-group-item d-flex align-items-center gap-3">
+            <i class="bi bi-inbox text-clay"></i>
+            <span class="flex-grow-1">Sem categoria</span>
+            <span class="text-help small">último</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if categories %}
 <div class="row g-3">
     {% for item in categories %}
     {% set cat = item.category %}
@@ -88,6 +150,7 @@
     <p class="text-clay mb-3">Nenhuma categoria cadastrada neste grupo.</p>
     <a href="/categories/new" class="btn btn-primary">Criar primeira categoria</a>
 </div>
+{% endif %}
 {% endif %}
 
 <script>

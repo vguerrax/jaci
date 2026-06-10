@@ -12,6 +12,9 @@ from app.services.auth_service import (
     verify_magic_token,
     authenticate_with_password,
     setup_profile,
+    update_profile,
+    email_is_available,
+    change_password,
 )
 from app.services.group_service import add_member_to_group
 
@@ -103,6 +106,29 @@ async def setup_profile_page(
             "request": request,
             "user": user,
             "active_page": "setup",
+        },
+    )
+
+
+@router.get("/profile", include_in_schema=False)
+async def profile_page(
+    request: Request,
+    user: User | None = Depends(get_current_user),
+    active_group=Depends(get_active_group),
+):
+    """Tela de edição do perfil."""
+    from app.main import templates
+
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    return templates.TemplateResponse(
+        "pages/profile.html",
+        {
+            "request": request,
+            "user": user,
+            "active_group": active_group,
+            "active_page": "profile",
         },
     )
 
@@ -324,6 +350,127 @@ async def handle_setup_profile(
     set_auth_cookie(response, user.id, user.email)
     
     return RedirectResponse(url="/", status_code=303)
+
+
+@router.post("/profile")
+async def handle_update_profile(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group=Depends(get_active_group),
+):
+    """Atualiza nome e e-mail do usuário."""
+    from app.main import templates
+
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    name = name.strip()
+    email = email.lower().strip()
+    context = {
+        "request": request,
+        "user": user,
+        "active_group": active_group,
+        "active_page": "profile",
+        "profile_name": name,
+        "profile_email": email,
+    }
+
+    if not name:
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "profile_error": "O nome é obrigatório."},
+            status_code=400,
+        )
+
+    if len(name) > 100:
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "profile_error": "O nome deve ter no máximo 100 caracteres."},
+            status_code=400,
+        )
+
+    if not email or "@" not in email or len(email) > 255:
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "profile_error": "Informe um e-mail válido."},
+            status_code=400,
+        )
+
+    if not email_is_available(db, email, user):
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "profile_error": "Este e-mail já está em uso."},
+            status_code=400,
+        )
+
+    update_profile(db, user, name, email)
+    response = templates.TemplateResponse(
+        "pages/profile.html",
+        {
+            "request": request,
+            "user": user,
+            "active_group": active_group,
+            "active_page": "profile",
+            "profile_message": "Dados pessoais atualizados.",
+        },
+    )
+    set_auth_cookie(response, user.id, user.email)
+    return response
+
+
+@router.post("/profile/password")
+async def handle_change_password(
+    request: Request,
+    current_password: str = Form(...),
+    new_password: str = Form(...),
+    new_password_confirm: str = Form(...),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group=Depends(get_active_group),
+):
+    """Altera a senha do usuário."""
+    from app.main import templates
+
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    context = {
+        "request": request,
+        "user": user,
+        "active_group": active_group,
+        "active_page": "profile",
+    }
+
+    if len(new_password) < 6:
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "password_error": "A nova senha deve ter pelo menos 6 caracteres."},
+            status_code=400,
+        )
+
+    if new_password != new_password_confirm:
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "password_error": "As novas senhas não conferem."},
+            status_code=400,
+        )
+
+    if not change_password(db, user, current_password, new_password):
+        return templates.TemplateResponse(
+            "pages/profile.html",
+            {**context, "password_error": "A senha atual está incorreta."},
+            status_code=400,
+        )
+
+    response = templates.TemplateResponse(
+        "pages/profile.html",
+        {**context, "password_message": "Senha alterada com sucesso."},
+    )
+    set_auth_cookie(response, user.id, user.email)
+    return response
 
 
 @router.get("/logout")

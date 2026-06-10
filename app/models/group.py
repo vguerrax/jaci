@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import String, DateTime, ForeignKey, Table, Column, func
+from sqlalchemy import String, DateTime, ForeignKey, Table, Column, Boolean, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -22,6 +22,9 @@ class Group(Base):
     owner_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="RESTRICT"),
         nullable=False,
+    )
+    uncategorized_first: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -46,6 +49,7 @@ class Group(Base):
         "Category",
         back_populates="group",
         lazy="selectin",
+        order_by="Category.sort_order, Category.name",
     )
     templates: Mapped[list["Template"]] = relationship(
         "Template",

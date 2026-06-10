@@ -103,11 +103,12 @@ def verify_magic_token(db: Session, token: str) -> User | None:
         )
 
         # Cria categorias padrão
-        for cat_data in DEFAULT_CATEGORIES:
+        for sort_order, cat_data in enumerate(DEFAULT_CATEGORIES):
             category = Category(
                 name=cat_data["name"],
                 color=cat_data["color"],
                 group_id=default_group.id,
+                sort_order=sort_order,
             )
             db.add(category)
 
@@ -133,3 +134,40 @@ def setup_profile(
     db.refresh(user)
     logger.info(f"Perfil configurado para {user.email}")
     return user
+
+
+def update_profile(db: Session, user: User, name: str, email: str) -> User:
+    """Atualiza os dados pessoais do usuário."""
+    user.name = name.strip()
+    user.email = email.lower().strip()
+    db.commit()
+    db.refresh(user)
+    logger.info(f"Perfil atualizado para {user.email}")
+    return user
+
+
+def email_is_available(db: Session, email: str, user: User) -> bool:
+    """Verifica se o e-mail pode ser usado pelo usuário."""
+    existing_user = db.scalar(
+        select(User).where(
+            User.email == email.lower().strip(),
+            User.id != user.id,
+        )
+    )
+    return existing_user is None
+
+
+def change_password(
+    db: Session,
+    user: User,
+    current_password: str,
+    new_password: str,
+) -> bool:
+    """Altera a senha após validar a senha atual."""
+    if not user.password_hash or not verify_password(current_password, user.password_hash):
+        return False
+
+    user.password_hash = hash_password(new_password)
+    db.commit()
+    logger.info(f"Senha alterada para {user.email}")
+    return True

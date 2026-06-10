@@ -36,7 +36,7 @@
                         <span class="text-clay">•</span>
                         <span>{{ item.name }}</span>
                         <span class="badge-jaci badge-scheduled small">
-                            {{ item.planned_quantity }}x
+                            {{ item.planned_quantity|quantity }}x
                         </span>
                     </li>
                     {% endfor %}

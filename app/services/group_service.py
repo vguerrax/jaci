@@ -30,11 +30,12 @@ def create_group(db: Session, name: str, owner: User) -> Group:
     )
 
     # Cria categorias padrão
-    for cat_data in DEFAULT_CATEGORIES:
+    for sort_order, cat_data in enumerate(DEFAULT_CATEGORIES):
         category = Category(
             name=cat_data["name"],
             color=cat_data["color"],
             group_id=group.id,
+            sort_order=sort_order,
         )
         db.add(category)
 
@@ -90,6 +91,32 @@ def is_group_owner(db: Session, group_id: int, user: User) -> bool:
     if not group:
         return False
     return group.owner_id == user.id
+
+
+def update_group_name(db: Session, group: Group, name: str, updated_by: User) -> dict:
+    """Atualiza o nome do grupo quando solicitado pelo criador."""
+    if group.owner_id != updated_by.id:
+        return {
+            "success": False,
+            "message": "Apenas o criador do grupo pode alterar o nome.",
+        }
+
+    name = name.strip()
+    if not name:
+        return {"success": False, "message": "O nome do grupo é obrigatório."}
+
+    if len(name) > 150:
+        return {
+            "success": False,
+            "message": "O nome do grupo deve ter no máximo 150 caracteres.",
+        }
+
+    old_name = group.name
+    group.name = name
+    db.commit()
+    db.refresh(group)
+    logger.info(f"Grupo '{old_name}' renomeado para '{group.name}' por {updated_by.email}")
+    return {"success": True, "message": "Nome do grupo atualizado."}
 
 
 async def invite_member(

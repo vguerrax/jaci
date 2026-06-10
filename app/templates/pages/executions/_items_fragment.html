@@ -75,11 +75,7 @@
                                 <span class="{% if item.is_completed %}text-strikethrough{% endif %}">
                                     {{ item.name }}
                                     <span class="badge-jaci badge-scheduled small ms-1">
-                                        {% if (item.planned_quantity % 1) != 0 %}
-                                        {{"%.2f"|format(item.planned_quantity)}}x
-                                        {% else %}
-                                        {{item.planned_quantity}}x
-                                        {% endif %}
+                                        {{ item.planned_quantity|quantity }}x
                                     </span>
                                 </span>
                                 <br><small class="text-muted">{{ item.notes or '' }}</small>
@@ -87,11 +83,7 @@
                             {% if item.is_completed %}
                             <div class="text-end small flex-shrink-0">
                                 <div class="text-clay">
-                                    {% if (item.purchased_quantity % 1) != 0 %}
-                                    {{"%.2f"|format(item.purchased_quantity)}} x
-                                    {% else %}
-                                    {{item.purchased_quantity}} x
-                                    {% endif %}R$ {{ "%.2f"|format(item.unit_price) }}
+                                    {{ item.purchased_quantity|quantity }} x R$ {{ "%.2f"|format(item.unit_price) }}
                                 </div>
                                 <div class="fw-medium">
                                     R$ {{ "%.2f"|format(item.total_price) }}

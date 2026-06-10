@@ -43,8 +43,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="login-password" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="login-password" name="password"
-                        placeholder="Sua senha" required autocomplete="current-password">
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="login-password" name="password"
+                            placeholder="Sua senha" required autocomplete="current-password">
+                        <button type="button" class="btn btn-outline-secondary" id="toggle-login-password"
+                            aria-label="Mostrar senha" aria-pressed="false">
+                            <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-outline-secondary w-100">
                     Entrar
@@ -58,4 +64,18 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('toggle-login-password').addEventListener('click', function () {
+        const passwordInput = document.getElementById('login-password');
+        const showingPassword = passwordInput.type === 'text';
+
+        passwordInput.type = showingPassword ? 'password' : 'text';
+        this.setAttribute('aria-label', showingPassword ? 'Mostrar senha' : 'Ocultar senha');
+        this.setAttribute('aria-pressed', String(!showingPassword));
+        this.querySelector('i').className = showingPassword ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+    });
+</script>
 {% endblock %}

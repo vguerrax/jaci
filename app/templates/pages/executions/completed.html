@@ -60,12 +60,12 @@
                         <div>
                             <span class="text-strikethrough">{{ item.name }}</span>
                             <span class="badge-jaci badge-scheduled small ms-1">
-                                {{ item.purchased_quantity }}x
+                                {{ item.purchased_quantity|quantity }}x
                             </span>
                         </div>
                         <div class="text-end">
                             <div class="text-clay small">
-                                {{ item.purchased_quantity }}x R$ {{ "%.2f"|format(item.unit_price) }}
+                                {{ item.purchased_quantity|quantity }}x R$ {{ "%.2f"|format(item.unit_price) }}
                             </div>
                             <div class="fw-medium">
                                 R$ {{ "%.2f"|format(item.total_price) }}
@@ -104,7 +104,7 @@
                 <div class="list-group-item text-clay">
                     <span>{{ item.name }}</span>
                     <span class="badge-jaci badge-cancelled small ms-1">
-                        {{ item.planned_quantity }}x planejado
+                        {{ item.planned_quantity|quantity }}x planejado
                     </span>
                 </div>
                 {% endfor %}
