@@ -15,6 +15,9 @@ from app.services.group_service import (
     invite_member,
     remove_member,
 )
+from app.config import get_settings
+
+settings = get_settings()
 
 router = APIRouter(prefix="/groups", tags=["Grupos"])
 
@@ -259,11 +262,11 @@ async def handle_remove_member(
     return RedirectResponse(url=f"/groups/{group_id}", status_code=303)
 
 
-
 @router.post("/{group_id}/switch")
 async def handle_switch_group(
     request: Request,
     group_id: int,
+    return_to: str | None = Form(None),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
 ):
@@ -277,21 +280,27 @@ async def handle_switch_group(
     if not group:
         return RedirectResponse(url="/groups", status_code=303)
 
-    # Simple redirect — no cookie needed for this one in the response
-    # because we can use JavaScript instead
+    redirect_url = (
+        return_to
+        if return_to and return_to.startswith("/") and not return_to.startswith("//")
+        else f"/groups/{group_id}"
+    )
+
+    # A página intermediária garante que o navegador persista o cookie antes de navegar.
     response = templates.TemplateResponse(
         "pages/switch_group.html",
         {
             "request": request,
             "user": user,
             "group_id": group_id,
+            "redirect_url": redirect_url,
         },
     )
     response.set_cookie(
         key="jaci_active_group",
         value=str(group_id),
         httponly=True,
-        secure=False,
+        secure=settings.secure_cookie,
         samesite="lax",
         path="/",
         max_age=60 * 60 * 24 * 30,
