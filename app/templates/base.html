@@ -56,6 +56,9 @@
                 <ul class="navbar-nav me-auto">
                     {% if user %}
                     <li class="nav-item">
+                        <a class="nav-link {% if active_page == 'home' %}active{% endif %}" href="/">Início</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if active_page == 'agenda' %}active{% endif %}" href="/agenda">Agenda</a>
                     </li>
                     <li class="nav-item">

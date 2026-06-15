@@ -28,6 +28,25 @@ def test_cloud_postgres_urls_are_normalized_to_psycopg_driver():
     assert settings.database_url.startswith("postgresql+psycopg://")
 
 
+def test_debug_environment_disables_secure_cookies_for_local_http():
+    settings = Settings(debug=True, secure_cookie=True, _env_file=None)
+
+    assert settings.secure_cookie is False
+
+
+def test_production_environment_keeps_secure_cookies():
+    settings = Settings(debug=False, secure_cookie=True, _env_file=None)
+
+    assert settings.secure_cookie is True
+
+
+def test_release_environment_name_disables_debug():
+    settings = Settings(debug="release", secure_cookie=True, _env_file=None)
+
+    assert settings.debug is False
+    assert settings.secure_cookie is True
+
+
 def test_create_database_is_idempotent_for_sqlite(tmp_path):
     database = tmp_path / "nested" / "jaci.db"
     database_url = f"sqlite:///{database}"

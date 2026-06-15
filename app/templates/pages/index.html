@@ -20,6 +20,7 @@
                 {% for group in user.groups %}
                 <li>
                     <form method="post" action="/groups/{{ group.id }}/switch">
+                        <input type="hidden" name="return_to" value="/">
                         <button class="dropdown-item {% if active_group and group.id == active_group.id %}active{% endif %}"
                             type="submit">
                             {{ group.name }}

@@ -6,6 +6,7 @@ from starlette.requests import Request
 from app.main import home
 from app.models import ExecutionItem
 from app.models.enums import ExecutionStatus, RecurrenceType
+from app.routers.groups import handle_switch_group
 from app.services.execution_service import (
     complete_item,
     create_execution_from_template,
@@ -153,3 +154,40 @@ def test_home_renders_one_touch_purchase_actions_and_global_sync_indicator(
     assert 'href="/executions/new"' in body
     assert 'href="/templates/new"' in body
     assert 'id="sync-status"' in body
+
+
+def test_switching_group_from_home_returns_to_home(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    make_group("Casa", owner=user)
+    target_group = make_group("Viagem", owner=user)
+
+    response = asyncio.run(
+        handle_switch_group(
+            request=make_request(),
+            group_id=target_group.id,
+            return_to="/",
+            db=db,
+            user=user,
+        )
+    )
+    body = response.body.decode()
+
+    assert 'window.location.href = "/"' in body
+    assert f"jaci_active_group={target_group.id}" in response.headers["set-cookie"]
+
+
+def test_switching_group_rejects_external_return_url(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    target_group = make_group("Casa", owner=user)
+
+    response = asyncio.run(
+        handle_switch_group(
+            request=make_request(),
+            group_id=target_group.id,
+            return_to="//example.com",
+            db=db,
+            user=user,
+        )
+    )
+
+    assert f'window.location.href = "/groups/{target_group.id}"' in response.body.decode()
