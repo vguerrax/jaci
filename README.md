@@ -28,7 +28,7 @@ O nome é uma homenagem à deusa da lua na mitologia Tupi-Guarani — Jaci, a "M
 | Camada | Tecnologia |
 |--------|------------|
 | Backend | Python 3.12 + FastAPI |
-| Banco de dados | SQLite com SQLAlchemy 2.0 |
+| Banco de dados | SQLite em desenvolvimento e PostgreSQL em produção |
 | Frontend | Jinja2 + HTMX + Alpine.js |
 | Tempo real | WebSocket nativo do FastAPI |
 | Estilo | Bootstrap 5 + tema personalizado |
@@ -68,7 +68,7 @@ Edite o arquivo .env com suas configurações:
 
 ```env
 APP_URL=http://localhost:8000
-DATABASE_URL=sqlite:///./data/jaci.db
+DATABASE_URL=sqlite:///./data-dev/jaci.db
 JWT_SECRET_KEY=uma-chave-secreta-muito-longa-e-aleatoria
 TUPA_URL=http://localhost:8001
 TUPA_PRODUCT_ID=uuid-do-produto-jaci
@@ -87,16 +87,34 @@ pip install -r requirements.txt
 ```
 ### 4. Execute
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+python run.py
 ```
 Acesse: http://localhost:8000
 
-## 🐳 Docker
-Build e execução
+O `run.py` aplica as migrações e aceita porta, restart automático e arquivo de
+ambiente:
+
 ```bash
-docker-compose up -d --build
+python run.py --port 8000 --restart --env-file .env
+python run.py --port 8000 --no-restart --env-file .env.production
 ```
-O banco de dados SQLite é persistido no volume ./data do host.
+
+## 🐳 Docker e publicação
+
+Em produção, configure `DATABASE_URL` com uma conexão PostgreSQL gerenciada:
+
+```env
+DATABASE_URL=postgresql+psycopg://usuario:senha@host:5432/jaci
+```
+
+O script de publicação recebe um arquivo de ambiente opcional, cria o banco
+quando ele não existir, aplica as migrações e publica o container:
+
+```bash
+./publish.sh
+./publish.sh .env.production
+./publish.sh /caminho/ambiente.env
+```
 
 Comandos úteis
 ```bash
@@ -108,10 +126,43 @@ docker-compose down
 
 # Recriar após alterações
 docker-compose up -d --build --force-recreate
-
-# Backup do banco
-cp data/jaci.db backups/jaci_$(date +%Y%m%d_%H%M%S).db
 ```
+
+## Banco de dados e migrações
+
+- Desenvolvimento: SQLite configurado em `.env`.
+- Produção: PostgreSQL em nuvem configurado no arquivo de ambiente de produção.
+- Migrações: Alembic, aplicadas por `run.py` e `publish.sh`.
+
+Para criar o banco e aplicar migrações manualmente:
+
+```bash
+python -m scripts.create_database
+python -m scripts.apply_migrations
+```
+
+Para criar uma nova migração:
+
+```bash
+alembic revision --autogenerate -m "descricao"
+alembic upgrade head
+```
+
+### Migrar SQLite para PostgreSQL
+
+Primeiro aplique as migrações no PostgreSQL. Depois execute:
+
+```bash
+DATABASE_URL='postgresql+psycopg://usuario:senha@host:5432/jaci' \
+python -m scripts.migrate_sqlite_to_postgres \
+  --source /opt/jaci/data/jaci.db
+```
+
+O argumento `--source` aceita tanto o caminho do arquivo quanto uma URL
+`sqlite:///`. O destino vem de `DATABASE_URL` no arquivo indicado por `ENV_FILE`,
+ou pode ser informado com `--target`. O migrador preserva IDs e relacionamentos
+e recusa destinos já populados. Use `--replace` somente quando quiser substituir
+explicitamente todos os dados do destino.
 
 ## 📁 Estrutura do projeto
 ```text
@@ -124,9 +175,11 @@ jaci/
 │   ├── websocket/        # Gerenciador WebSocket
 │   ├── static/           # CSS, JS, imagens
 │   └── templates/        # Templates Jinja2
-├── data/                 # Volume Docker (banco SQLite)
+├── data-dev/             # Banco SQLite local de desenvolvimento
 ├── Dockerfile
 ├── docker-compose.yml
+├── migrations/           # Migrações Alembic
+├── run.py                # Inicialização local/produção
 ├── requirements.txt
 ├── .env.example
 └── README.md
