@@ -5,11 +5,5 @@ services:
     restart: unless-stopped
     ports:
       - "8003:8000"
-    volumes:
-      # Volume para o banco SQLite
-      - /opt/jaci/data:/app/data
     env_file:
-      - .env.production
-    environment:
-      # Sobrescreve o caminho do banco para usar o volume
-      - DATABASE_URL=sqlite:///./data/jaci.db
+      - ${ENV_FILE:-.env.production}

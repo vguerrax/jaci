@@ -5,7 +5,7 @@ import logging
 
 from sqlalchemy import select
 
-from app.database import SessionLocal, ensure_schema_compatibility
+from app.database import SessionLocal
 from app.models.user import User
 from app.services.tupa_service import TupaError, migrate_user
 
@@ -14,7 +14,6 @@ logger = logging.getLogger("jaci.auth.migration")
 
 
 async def main() -> None:
-    ensure_schema_compatibility()
     db = SessionLocal()
     try:
         users = db.scalars(
