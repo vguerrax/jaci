@@ -7,7 +7,7 @@ from sqlalchemy import select
 from app.models.user import User
 from app.models.group import Group, group_members
 from app.models.category import Category, DEFAULT_CATEGORIES
-from app.services import tupa_service
+from app.services import tupa_auth_service
 
 logger = logging.getLogger("jaci.auth")
 
@@ -60,8 +60,8 @@ async def authenticate_with_password(
     db: Session, email: str, password: str
 ) -> tuple[User, dict] | None:
     """Autentica no Tupã e carrega o perfil local."""
-    tokens = await tupa_service.token(email, password)
-    payload = tupa_service.decode_access_token(tokens["access_token"])
+    tokens = await tupa_auth_service.token(email, password)
+    payload = tupa_auth_service.decode_access_token(tokens["access_token"])
     if not payload or not payload.get("sub"):
         return None
 
@@ -75,8 +75,8 @@ async def register_with_password(
     db: Session, name: str, email: str, password: str
 ) -> tuple[User, dict]:
     """Cria a identidade no Tupã e o perfil local no Jaci."""
-    tupa_user_id = await tupa_service.create_user(email, password)
-    tokens = await tupa_service.token(email, password)
+    tupa_user_id = await tupa_auth_service.create_user(email, password)
+    tokens = await tupa_auth_service.token(email, password)
     user = get_or_create_tupa_user(db, tupa_user_id, email)
     user.name = name.strip()
     user.is_profile_complete = True

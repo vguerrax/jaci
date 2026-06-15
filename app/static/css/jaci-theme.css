@@ -908,3 +908,155 @@ button,
 .start-99 {
     left: 99% !important;
 }
+
+/* ============================================================
+HOME OPERATIONAL
+============================================================ */
+
+.home-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.home-priority {
+    border-color: var(--jaci-night);
+    background: linear-gradient(145deg, #FFFEFB 0%, #EDF4EF 100%);
+}
+
+.home-priority-date {
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.home-priority-stat {
+    height: 100%;
+    padding: 0.75rem;
+    border-radius: var(--bs-border-radius);
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(217, 196, 176, 0.7);
+}
+
+.home-priority-stat span,
+.home-priority-stat strong {
+    display: block;
+}
+
+.home-priority-stat span {
+    color: var(--jaci-clay);
+    font-size: 0.75rem;
+}
+
+.home-metric {
+    display: grid;
+    min-height: 112px;
+    padding: 1rem;
+    color: var(--jaci-night);
+}
+
+.home-metric i {
+    font-size: 1.25rem;
+}
+
+.home-metric strong {
+    align-self: end;
+    font-size: 1.125rem;
+}
+
+.home-metric span {
+    color: var(--jaci-clay);
+    font-size: 0.75rem;
+}
+
+.home-actions {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.home-actions a {
+    display: flex;
+    min-height: 88px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.75rem;
+    border: 1px solid var(--jaci-sand);
+    border-radius: var(--bs-border-radius);
+    background: #FFFEFB;
+    color: var(--jaci-night);
+    text-align: center;
+    text-decoration: none;
+}
+
+.home-actions i {
+    font-size: 1.35rem;
+}
+
+.home-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.home-history-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    color: var(--jaci-night);
+    border-bottom: 1px solid var(--jaci-sand);
+}
+
+.home-history-row:last-child {
+    border-bottom: 0;
+}
+
+.home-history-row span {
+    display: block;
+    color: var(--jaci-clay);
+    font-size: 0.75rem;
+}
+
+.home-empty-icon {
+    font-size: 3rem;
+}
+
+.sync-status {
+    position: fixed;
+    z-index: 1080;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--jaci-moss);
+    border-radius: 999px;
+    background: #EDF4EF;
+    color: var(--jaci-night);
+    box-shadow: 0 2px 8px rgba(42, 75, 74, 0.14);
+    font-size: 0.7rem;
+}
+
+.sync-status.is-offline {
+    border-color: var(--jaci-clay);
+    background: #FBF3E8;
+}
+
+@media (max-width: 767.98px) {
+    .home-actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .home-actions a {
+        min-height: 82px;
+        font-size: 0.8rem;
+    }
+
+    .sync-status {
+        right: 0.5rem;
+        bottom: 0.5rem;
+    }
+}
