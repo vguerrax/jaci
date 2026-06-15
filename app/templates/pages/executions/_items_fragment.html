@@ -151,3 +151,9 @@
     <p class="text-clay mb-0">Nenhum item nesta compra.</p>
 </div>
 {% endif %}
+
+{% if include_sidebar_oob %}
+<div id="sidebar-container" hx-swap-oob="innerHTML">
+    {% include "pages/executions/_sidebar_fragment.html" %}
+</div>
+{% endif %}

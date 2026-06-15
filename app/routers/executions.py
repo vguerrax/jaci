@@ -974,5 +974,6 @@ async def _get_items_fragment(
             "jwt_token": jwt_token,
             "active_page": "executions",
             "expanded_ids": expanded_ids,
+            "include_sidebar_oob": True,
         },
     )
