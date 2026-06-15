@@ -28,7 +28,7 @@ router = APIRouter(prefix="/auth", tags=["Autenticação"])
 
 @router.get("/login", include_in_schema=False)
 async def login_page(request: Request):
-    """Tela de login e cadastro."""
+    """Tela de login."""
     from app.main import templates
 
     return templates.TemplateResponse(
@@ -37,6 +37,21 @@ async def login_page(request: Request):
             "request": request,
             "user": None,
             "active_page": "login",
+        },
+    )
+
+
+@router.get("/register", include_in_schema=False)
+async def register_page(request: Request):
+    """Tela de cadastro."""
+    from app.main import templates
+
+    return templates.TemplateResponse(
+        "pages/register.html",
+        {
+            "request": request,
+            "user": None,
+            "active_page": "register",
         },
     )
 
@@ -229,8 +244,14 @@ async def register(
 
     if error:
         return templates.TemplateResponse(
-            "pages/login.html",
-            {"request": request, "user": None, "register_error": error},
+            "pages/register.html",
+            {
+                "request": request,
+                "user": None,
+                "register_error": error,
+                "form_name": name,
+                "form_email": email,
+            },
             status_code=400,
         )
 
@@ -238,8 +259,14 @@ async def register(
         user, tokens = await register_with_password(db, name, email, password)
     except TupaError as exc:
         return templates.TemplateResponse(
-            "pages/login.html",
-            {"request": request, "user": None, "register_error": str(exc)},
+            "pages/register.html",
+            {
+                "request": request,
+                "user": None,
+                "register_error": str(exc),
+                "form_name": name,
+                "form_email": email,
+            },
             status_code=exc.status_code if exc.status_code < 500 else 502,
         )
 
