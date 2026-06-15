@@ -121,8 +121,10 @@ def get_execution_totals(db: Session, execution_id: int) -> dict:
 
     total_items = len(items)
     completed_items = sum(1 for item in items if item.is_completed)
+    # Soma os mesmos totais em centavos exibidos por item para a conta fechar
+    # exatamente com o que o usuário vê na lista.
     total_spent = sum(
-        (item.purchased_quantity or 0) * (item.unit_price or 0)
+        item.total_price or 0
         for item in items
         if item.is_completed
     )
