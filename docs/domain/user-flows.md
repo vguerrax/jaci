@@ -393,3 +393,32 @@ Toda decisão de produto, arquitetura ou experiência do usuário deve priorizar
 Pergunta orientadora:
 
 "Esta alteração torna a execução da compra mais rápida, simples ou confiável?"
+
+---
+
+# FL-10 — Home Operacional
+
+## Objetivo
+
+Permitir que o usuário identifique e acesse rapidamente a compra mais relevante.
+
+## Fluxo Principal
+
+```text
+Acessar a Home
+    ↓
+Visualizar compra em andamento ou próxima compra
+    ↓
+Consultar indicadores e alertas do grupo ativo
+    ↓
+Iniciar ou continuar compra em um toque
+    ↓
+Consultar histórico recente ou usar ações rápidas
+```
+
+## Resultado Esperado
+
+* Compra ativa acessível em um toque
+* Próxima compra visível sem navegação adicional
+* Problemas relevantes identificáveis rapidamente
+* Estado de conexão sempre visível

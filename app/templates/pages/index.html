@@ -2,59 +2,211 @@
 {% block title %}Início — Jaci{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center mt-5">
-    <div class="col-md-6 col-lg-5 text-center">
+<div class="home-shell">
+    <header class="d-flex justify-content-between align-items-start gap-3 mb-4">
+        <div>
+            <p class="text-help text-uppercase mb-1">Grupo atual</p>
+            <h1 class="h2 mb-1">{{ active_group.name if active_group else 'Nenhum grupo selecionado' }}</h1>
+            <p class="text-clay mb-0">Olá, {{ user.name or user.email }}. O que vamos comprar?</p>
+        </div>
+        {% if user.groups|length > 1 %}
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="bi bi-people-fill"></i>
+                Trocar grupo
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                {% for group in user.groups %}
+                <li>
+                    <form method="post" action="/groups/{{ group.id }}/switch">
+                        <input type="hidden" name="return_to" value="/">
+                        <button class="dropdown-item {% if active_group and group.id == active_group.id %}active{% endif %}"
+                            type="submit">
+                            {{ group.name }}
+                        </button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </header>
 
-        <!-- Logo -->
-        <img src="/static/img/jaci-1.png" alt="Jaci" height="200">
-        <p class="text-help mt-4">
-            Mãe dos Frutos &mdash; organize sua colheita
-        </p>
-
-        <p class="text-clay mb-4 mt-4">
-            Planeje suas compras com simplicidade.<br>
-            Colabore em tempo real com quem divide a despensa com você.
-        </p>
-
-
-        <div class="card-jaci p-4">
-            {% if request.state.unread_count and request.state.unread_count > 0 %}
-            <div class="d-block d-block d-lg-none mb-3">
-                <h2 class="h5 mb-3">Você possui notificações</h2>
-                <a href="/notifications" type="submit" class="btn btn-info w-100 position-relative">
-                    Notificações
-                    <i class="bi bi-bell-fill"></i>
-                    <span class="position-absolute top-5 start-99 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                        {{ request.state.unread_count if request.state.unread_count < 10 else '9+' }} 
+    {% if not active_group %}
+    <div class="card-jaci home-empty p-4 p-md-5 text-center">
+        <i class="bi bi-people-fill home-empty-icon"></i>
+        <h2 class="h3 mt-3">Escolha um grupo para começar</h2>
+        <p class="text-clay">Compras, listas e histórico são sempre isolados por grupo.</p>
+        <a href="/groups" class="btn btn-primary">Ver grupos</a>
+    </div>
+    {% elif not dashboard.priority and not active_group.templates %}
+    <div class="card-jaci home-empty p-4 p-md-5 text-center">
+        <img src="/static/img/jaci-2.png" alt="" width="72" height="72">
+        <h2 class="h3 mt-3">Crie sua primeira lista de compras.</h2>
+        <p class="text-clay">Planeje os itens uma vez e simplifique as próximas compras.</p>
+        <a href="/templates/new" class="btn btn-primary btn-lg">Criar primeira lista</a>
+    </div>
+    {% else %}
+    <section class="mb-4" aria-labelledby="priority-title">
+        {% if dashboard.priority %}
+        {% set priority = dashboard.priority %}
+        {% set execution = priority.execution %}
+        {% set totals = priority.totals %}
+        <div class="card-jaci home-priority p-4">
+            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                    <p class="text-help text-uppercase mb-1">
+                        {% if execution.status == 'in_progress' %}Compra em andamento{% else %}Próxima compra{% endif %}
+                    </p>
+                    <h2 id="priority-title" class="h3 mb-1">{{ priority.name }}</h2>
+                    <span class="badge-jaci badge-{{ execution.status }}">
+                        {% if execution.status == 'in_progress' %}Em andamento{% else %}Agendada{% endif %}
                     </span>
+                </div>
+                <span class="home-priority-date">{{ execution.scheduled_date|localdate }}</span>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6 col-md-3">
+                    <div class="home-priority-stat">
+                        <span>Itens</span>
+                        <strong>{{ totals.completed_items }}/{{ totals.total_items }}</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="home-priority-stat">
+                        <span>Pendentes</span>
+                        <strong>{{ totals.remaining_items }}</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="home-priority-stat">
+                        <span>Orçamento</span>
+                        <strong>{% if execution.budget %}R$ {{ "%.2f"|format(execution.budget) }}{% else %}—{% endif %}</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="home-priority-stat">
+                        <span>Acumulado</span>
+                        <strong>R$ {{ "%.2f"|format(totals.total_spent) }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid d-sm-flex gap-2">
+                {% if execution.status == 'in_progress' %}
+                <a href="/executions/{{ execution.id }}" class="btn btn-primary btn-lg flex-grow-1">
+                    Continuar compra
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+                {% else %}
+                <form method="post" action="/executions/{{ execution.id }}/start" class="flex-grow-1">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        Iniciar compra
+                        <i class="bi bi-bag-heart-fill"></i>
+                    </button>
+                </form>
+                <a href="/executions/{{ execution.id }}" class="btn btn-outline-secondary btn-lg">Detalhes</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card-jaci home-empty p-4 text-center">
+            <h2 id="priority-title" class="h4">Nenhuma compra agendada</h2>
+            <p class="text-clay">Crie uma compra a partir de uma lista ou faça uma compra avulsa.</p>
+            <a href="/executions/new" class="btn btn-primary">Nova compra</a>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="mb-4" aria-labelledby="metrics-title">
+        <h2 id="metrics-title" class="h4 mb-3">Visão rápida</h2>
+        <div class="row g-2 home-metrics">
+            <div class="col-6 col-lg-3">
+                <a href="/executions/?status=scheduled" class="card-jaci home-metric text-decoration-none">
+                    <i class="bi bi-calendar-event"></i>
+                    <strong>{{ dashboard.metrics.scheduled }}</strong>
+                    <span>Agendadas</span>
                 </a>
             </div>
-            
-            {% endif %}
-            <h2 class="h5 mb-3">Comece agora</h2>
-            <div class="vstack gap-1">
-                <div class="p-1">
-                    <a href="/templates" type="submit" class="btn btn-primary w-100">
-                        Criar uma lista
-                        <i class="bi bi-moon-stars-fill"></i>
-                    </a>
-                </div>
-                <div class="p-1">
-                    <a href="/executions" type="submit" class="btn btn-primary w-100">
-                        Fazer uma compra
-                        <i class="bi bi-moon-stars-fill"></i>
-                    </a>
-                </div>
-                <div class="p-1">
-                    <a href="/templates" type="submit" class="btn btn-primary w-100">
-                        Ver a agenda
-                        <i class="bi bi-moon-stars-fill"></i>
-                    </a>
-                </div>
+            <div class="col-6 col-lg-3">
+                <a href="/executions/?status=in_progress" class="card-jaci home-metric text-decoration-none">
+                    <i class="bi bi-bag-heart"></i>
+                    <strong>{{ dashboard.metrics.in_progress }}</strong>
+                    <span>Em andamento</span>
+                </a>
             </div>
-
-
+            <div class="col-6 col-lg-3">
+                <a href="/agenda/list?status=completed" class="card-jaci home-metric text-decoration-none">
+                    <i class="bi bi-cash-coin"></i>
+                    <strong>R$ {{ "%.2f"|format(dashboard.metrics.month_spent) }}</strong>
+                    <span>Gasto no mês</span>
+                </a>
+            </div>
+            <div class="col-6 col-lg-3">
+                <a href="/executions" class="card-jaci home-metric text-decoration-none">
+                    <i class="bi bi-list-check"></i>
+                    <strong>{{ dashboard.metrics.pending_items }}</strong>
+                    <span>Itens pendentes</span>
+                </a>
+            </div>
         </div>
+    </section>
+
+    <section class="mb-4" aria-labelledby="actions-title">
+        <h2 id="actions-title" class="h4 mb-3">Ações rápidas</h2>
+        <div class="home-actions">
+            <a href="/templates"><i class="bi bi-card-checklist"></i><span>Listas</span></a>
+            <a href="/executions"><i class="bi bi-bag"></i><span>Compras</span></a>
+            <a href="/agenda"><i class="bi bi-calendar3"></i><span>Agenda</span></a>
+            <a href="/executions/new"><i class="bi bi-plus-circle"></i><span>Nova compra</span></a>
+            <a href="/templates/new"><i class="bi bi-file-earmark-plus"></i><span>Nova lista</span></a>
+        </div>
+    </section>
+
+    <div class="row g-4">
+        <section class="col-lg-6" aria-labelledby="alerts-title">
+            <h2 id="alerts-title" class="h4 mb-3">Atenção</h2>
+            {% if dashboard.alerts %}
+            <div class="vstack gap-2">
+                {% for alert in dashboard.alerts %}
+                <a href="{{ alert.url }}" class="alert alert-{{ alert.level }} alert-jaci home-alert mb-0 text-decoration-none">
+                    <i class="bi {{ alert.icon }}"></i>
+                    <span>{{ alert.message }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card-jaci p-4 text-clay">Tudo tranquilo por aqui.</div>
+            {% endif %}
+        </section>
+
+        <section class="col-lg-6" aria-labelledby="history-title">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 id="history-title" class="h4 mb-0">Histórico recente</h2>
+                <a href="/agenda/list?status=completed" class="text-help">Ver tudo</a>
+            </div>
+            {% if dashboard.recent_history %}
+            <div class="card-jaci overflow-hidden">
+                {% for item in dashboard.recent_history %}
+                <a href="/executions/{{ item.execution.id }}" class="home-history-row text-decoration-none">
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <span>{{ item.execution.finished_at|localdate }}</span>
+                    </div>
+                    <div class="text-end">
+                        <strong>R$ {{ "%.2f"|format(item.totals.total_spent) }}</strong>
+                        <span>Finalizada</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card-jaci p-4 text-clay">As compras finalizadas aparecerão aqui.</div>
+            {% endif %}
+        </section>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
