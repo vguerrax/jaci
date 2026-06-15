@@ -1,5 +1,7 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
+import os
 
 
 class Settings(BaseSettings):
@@ -35,8 +37,18 @@ class Settings(BaseSettings):
     # Application URL
     app_url: str = "http://localhost:8000"
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        """Usa psycopg 3 para URLs PostgreSQL fornecidas por provedores."""
+        if value.startswith("postgres://"):
+            return value.replace("postgres://", "postgresql+psycopg://", 1)
+        if value.startswith("postgresql://"):
+            return value.replace("postgresql://", "postgresql+psycopg://", 1)
+        return value
+
     model_config = {
-        "env_file": ".env",
+        "env_file": os.getenv("ENV_FILE", ".env"),
         "case_sensitive": False
     }
 

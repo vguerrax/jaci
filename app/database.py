@@ -1,28 +1,36 @@
 from sqlalchemy import create_engine, event, inspect, text
+from sqlalchemy.engine import Engine, make_url
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 from app.config import get_settings
 
 settings = get_settings()
 
-# Engine com configurações para SQLite (WAL + busy_timeout)
-engine = create_engine(
-    settings.database_url,
-    connect_args={
-        "check_same_thread": False,  # Necessário para FastAPI
-    },
-    echo= False #settings.debug,
-)
+
+def create_database_engine(database_url: str, echo: bool = False) -> Engine:
+    """Cria engine com ajustes específicos para SQLite ou PostgreSQL."""
+    url = make_url(database_url)
+    options = {
+        "echo": echo,
+        "pool_pre_ping": True,
+    }
+    if url.get_backend_name() == "sqlite":
+        options["connect_args"] = {"check_same_thread": False}
+    return create_engine(database_url, **options)
+
+
+engine = create_database_engine(settings.database_url, echo=settings.debug)
 
 
 # Ativa WAL mode e busy_timeout
-@event.listens_for(engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA journal_mode=WAL")
-    cursor.execute("PRAGMA busy_timeout=5000")
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
+if engine.dialect.name == "sqlite":
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA busy_timeout=5000")
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 
 # Session factory
@@ -35,8 +43,13 @@ class Base(DeclarativeBase):
 
 
 def ensure_schema_compatibility() -> None:
-    """Adiciona colunas simples introduzidas sem uma ferramenta de migração."""
+    """Compatibilidade temporária para bancos SQLite anteriores ao Alembic."""
+    if engine.dialect.name != "sqlite":
+        return
+
     inspector = inspect(engine)
+    if not inspector.has_table("users"):
+        return
 
     category_columns = {column["name"] for column in inspector.get_columns("categories")}
     group_columns = {column["name"] for column in inspector.get_columns("groups")}
