@@ -1,4 +1,4 @@
-from pydantic import field_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 import os
@@ -37,6 +37,18 @@ class Settings(BaseSettings):
     # Application URL
     app_url: str = "http://localhost:8000"
 
+    @field_validator("debug", mode="before")
+    @classmethod
+    def normalize_debug_mode(cls, value: bool | str) -> bool | str:
+        """Aceita nomes usuais de ambiente além de booleanos."""
+        if isinstance(value, str):
+            normalized = value.lower().strip()
+            if normalized in {"release", "prod", "production"}:
+                return False
+            if normalized in {"debug", "dev", "development"}:
+                return True
+        return value
+
     @field_validator("database_url", mode="before")
     @classmethod
     def normalize_database_url(cls, value: str) -> str:
@@ -46,6 +58,13 @@ class Settings(BaseSettings):
         if value.startswith("postgresql://"):
             return value.replace("postgresql://", "postgresql+psycopg://", 1)
         return value
+
+    @model_validator(mode="after")
+    def disable_secure_cookie_in_debug(self) -> "Settings":
+        """Permite autenticação em desenvolvimento servido por HTTP."""
+        if self.debug:
+            self.secure_cookie = False
+        return self
 
     model_config = {
         "env_file": os.getenv("ENV_FILE", ".env"),

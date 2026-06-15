@@ -58,7 +58,7 @@ async def add_unread_count(request: Request, call_next):
         refresh_token = request.cookies.get("jaci_refresh")
         if refresh_token:
             try:
-                from app.services.tupa_service import refresh
+                from app.services.tupa_auth_service import refresh
 
                 refreshed_tokens = await refresh(refresh_token)
                 token = refreshed_tokens["access_token"]
