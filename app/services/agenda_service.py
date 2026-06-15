@@ -239,7 +239,9 @@ def calculate_next_date(
         return current_date.replace(year=year, month=month, day=day)
 
     elif recurrence == RecurrenceType.yearly:
-        return current_date.replace(year=current_date.year + 1)
+        next_year = current_date.year + 1
+        _, days_in_month = monthrange(next_year, current_date.month)
+        return current_date.replace(year=next_year, day=min(current_date.day, days_in_month))
 
     return current_date
 
@@ -255,6 +257,8 @@ def reschedule_execution(
     """
     if execution.status == ExecutionStatus.in_progress:
         raise ValueError("Não é possível adiar/adiantar execução em andamento.")
+    if execution.status == ExecutionStatus.completed:
+        raise ValueError("Não é possível alterar execução já finalizada.")
 
     execution.scheduled_date = new_date
     db.commit()
@@ -276,6 +280,8 @@ def generate_next_execution(
     - Template está ativo
     - Não existe execução agendada futura do mesmo template
     """
+    if execution.status != ExecutionStatus.completed or not execution.finished_at:
+        return None
     if not execution.template_id:
         return None
     template = execution.template
@@ -284,7 +290,8 @@ def generate_next_execution(
     if execution.is_standalone:
         return None
     # Calcula próxima data
-    next_date = calculate_next_date(execution.scheduled_date, template.recurrence)
+    cycle_date = execution.finished_at or execution.scheduled_date
+    next_date = calculate_next_date(cycle_date, template.recurrence)
 
     # Verifica se já existe execução agendada para esta data
     existing = db.scalar(

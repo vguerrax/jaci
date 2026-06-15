@@ -209,8 +209,16 @@ def add_item_to_template(
     name: str,
     planned_quantity: float,
     category_id: Optional[int] = None,
+    notes: Optional[str] = None,
 ) -> TemplateItem:
     """Adiciona um item ao template."""
+    if category_id is not None:
+        category_group_id = db.scalar(
+            select(Category.group_id).where(Category.id == category_id)
+        )
+        if category_group_id != template.group_id:
+            raise ValueError("Categoria não pertence ao grupo do template.")
+
     # Get max sort_order
     max_order = db.scalar(
         select(func.max(TemplateItem.sort_order)).where(
@@ -223,6 +231,7 @@ def add_item_to_template(
         name=name.strip(),
         planned_quantity=planned_quantity,
         category_id=category_id,
+        notes=notes,
         sort_order=(max_order or 0) + 1,
     )
     db.add(item)
@@ -254,11 +263,20 @@ def update_template_item(
     name: str,
     planned_quantity: float,
     category_id: Optional[int] = None,
+    notes: Optional[str] = None,
 ) -> TemplateItem:
     """Atualiza um item do template."""
+    if category_id is not None:
+        category_group_id = db.scalar(
+            select(Category.group_id).where(Category.id == category_id)
+        )
+        if category_group_id != item.template.group_id:
+            raise ValueError("Categoria não pertence ao grupo do template.")
+
     item.name = name.strip()
     item.planned_quantity = planned_quantity
     item.category_id = category_id
+    item.notes = notes
     db.commit()
     db.refresh(item)
     logger.info(f"Item '{item.name}' atualizado")

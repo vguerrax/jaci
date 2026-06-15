@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     secure_cookie: bool = False
     magic_link_expire_minutes: int = 15
     magic_link_resend_seconds: int = 60
+    tupa_url: str = "http://localhost:8001"
+    tupa_product_id: str = ""
+    tupa_service_token: str | None = None
+    tupa_timeout_seconds: float = 10.0
 
     # Email
     smtp_mock: bool = True

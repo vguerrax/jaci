@@ -32,7 +32,7 @@
                     <tbody>
                         <tr>
                             <td scope="row" class="w-25">E-mail</td>
-                            <td class="w-50">Autenticação (login via magic link), envio de convites para grupos,
+                            <td class="w-50">Autenticação via Tupã, envio de convites para grupos,
                                 recuperação de
                                 conta, comunicação sobre alterações nos Termos</td>
                             <td class="w-25"><b>Execução de contrato</b> (art. 7º, V) – necessário para fornecer o
@@ -45,8 +45,8 @@
                             <td class="w-25"><b>Consentimento</b> (art. 7º, I) – o usuário fornece voluntariamente</td>
                         </tr>
                         <tr>
-                            <td scope="row" class="w-25">Hash da senha</td>
-                            <td class="w-50">Autenticação segura (login com senha)</td>
+                            <td scope="row" class="w-25">Identificador de autenticação</td>
+                            <td class="w-50">Associação do perfil local à identidade gerenciada pelo Tupã</td>
                             <td class="w-25"><b>Execução de contrato</b> (art. 7º, V)</td>
                         </tr>
                         <tr>
@@ -111,7 +111,7 @@
                             <td scope="row" class="w-20">Resend (SMTP)</td>
                             <td class="w-30">E-mail do destinatário, token JWT temporário (15 min), nome do grupo,
                                 e-mail de quem convidou</td>
-                            <td class="w-25">Envio de magic links de autenticação e convites para grupos</td>
+                            <td class="w-25">Envio de convites para grupos</td>
                             <td class="w-25">EUA (padrões contratuais de proteção de dados – SCCs)</td>
                         </tr>
                         <tr>
@@ -195,9 +195,9 @@
             <h5>8. Segurança da informação</h5>
             <p>Adotamos as seguintes medidas técnicas e organizacionais:</p>
             <ul>
-                <li>>Hash de senhas com bcrypt (custo padrão).</li>
-                <li>>Autenticação via JWT armazenado em cookies httpOnly (imunes a XSS).</li>
-                <li>>Tokens de magic link com validade curta (15 min).</li>
+                <li>>Senhas armazenadas exclusivamente pelo serviço de autenticação Tupã.</li>
+                <li>>JWT do Tupã validado via JWKS e armazenado em cookies httpOnly.</li>
+                <li>>Tokens de convite com validade curta (15 min).</li>
                 <li>>Isolamento de dados por grupo (usuário só acessa grupos onde é membro).</li>
                 <li>>Bloqueio otimista com versionamento (evita perda de edição simultânea).</li>
                 <li>>HTTPS obrigatório em produção (recomendamos e configuraremos).</li>

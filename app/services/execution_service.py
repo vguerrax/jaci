@@ -6,11 +6,18 @@ from sqlalchemy import select, func
 
 from app.models.user import User
 from app.models.group import Group, group_members
+from app.models.category import Category
 from app.models.template import Template, TemplateItem
 from app.models.execution import Execution, ExecutionItem
 from app.models.enums import ExecutionStatus
 
 logger = logging.getLogger("jaci.executions")
+
+
+def ensure_execution_is_mutable(execution: Execution) -> None:
+    """Impede qualquer alteração em uma execução já finalizada."""
+    if execution.status == ExecutionStatus.completed:
+        raise ValueError("Não é possível alterar execução já finalizada.")
 
 
 # ─── Queries ───
@@ -61,7 +68,10 @@ def get_execution_items_grouped(db: Session, execution_id: int) -> list[dict]:
     items = (
         db.execute(
             select(ExecutionItem)
-            .where(ExecutionItem.execution_id == execution_id)
+            .where(
+                ExecutionItem.execution_id == execution_id,
+                ExecutionItem.is_deleted == False,
+            )
             .order_by(ExecutionItem.sort_order, ExecutionItem.name)
         )
         .scalars()
@@ -100,7 +110,10 @@ def get_execution_totals(db: Session, execution_id: int) -> dict:
     """Calcula totais da execução."""
     items = (
         db.execute(
-            select(ExecutionItem).where(ExecutionItem.execution_id == execution_id)
+            select(ExecutionItem).where(
+                ExecutionItem.execution_id == execution_id,
+                ExecutionItem.is_deleted == False,
+            )
         )
         .scalars()
         .all()
@@ -153,6 +166,7 @@ def create_execution_from_template(
             name=tpl_item.name,
             category_id=tpl_item.category_id,
             planned_quantity=tpl_item.planned_quantity,
+            notes=tpl_item.notes,
             sort_order=tpl_item.sort_order,
         )
         db.add(exec_item)
@@ -179,7 +193,7 @@ def create_execution_standalone(
         group_id=group.id,
         scheduled_date=scheduled_date,
         status=ExecutionStatus.scheduled,
-        budget=budget if budget > 0 else None,
+        budget=budget if budget is not None and budget > 0 else None,
         is_standalone=True,
         created_by=created_by.id,
     )
@@ -195,6 +209,7 @@ def create_execution_standalone(
 
 def start_execution(db: Session, execution: Execution) -> Execution:
     """Inicia a execução (status -> in_progress)."""
+    ensure_execution_is_mutable(execution)
     execution.status = ExecutionStatus.in_progress
     db.commit()
     db.refresh(execution)
@@ -211,6 +226,7 @@ def complete_item(
     notes: Optional[str] = None,
 ) -> ExecutionItem:
     """Marca item como comprado com quantidade e valor."""
+    ensure_execution_is_mutable(item.execution)
     item.purchased_quantity = purchased_quantity
     item.unit_price = unit_price
     item.location = location
@@ -234,6 +250,7 @@ def incomplete_item(
     item: ExecutionItem,
 ) -> ExecutionItem:
     """Marca item como não comprado"""
+    ensure_execution_is_mutable(item.execution)
     item.purchased_quantity = None
     item.unit_price = None
     item.location = None
@@ -254,6 +271,14 @@ def add_item_to_execution(
     notes: Optional[str] = None
 ) -> ExecutionItem:
     """Adiciona item durante a execução (não afeta o template)."""
+    ensure_execution_is_mutable(execution)
+    if category_id is not None:
+        category_group_id = db.scalar(
+            select(Category.group_id).where(Category.id == category_id)
+        )
+        if category_group_id != execution.group_id:
+            raise ValueError("Categoria não pertence ao grupo da execução.")
+
     max_order = db.scalar(
         select(func.max(ExecutionItem.sort_order)).where(
             ExecutionItem.execution_id == execution.id
@@ -276,6 +301,7 @@ def add_item_to_execution(
 
 def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     """Remove item não concluído da execução."""
+    ensure_execution_is_mutable(item.execution)
     if item.is_completed:
         raise ValueError("Não é possível remover item já concluído.")
     item_name = item.name
@@ -285,6 +311,14 @@ def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     
     
 def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None, notes: Optional[str] = None) -> ExecutionItem:
+    ensure_execution_is_mutable(item.execution)
+    if category_id is not None:
+        category_group_id = db.scalar(
+            select(Category.group_id).where(Category.id == category_id)
+        )
+        if category_group_id != item.execution.group_id:
+            raise ValueError("Categoria não pertence ao grupo da execução.")
+
     if item.name != name:
         item.name = name
     if item.planned_quantity != planned_quantity:
@@ -308,6 +342,7 @@ def get_pending_items(db: Session, execution_id: int) -> list[ExecutionItem]:
             select(ExecutionItem).where(
                 ExecutionItem.execution_id == execution_id,
                 ExecutionItem.is_completed == False,
+                ExecutionItem.is_deleted == False,
             )
         )
         .scalars()
@@ -325,6 +360,7 @@ def finalize_execution(
     Se discard_pending=True, remove itens não concluídos.
     Se discard_pending=False, quem chama deve tratar os pendentes antes.
     """
+    ensure_execution_is_mutable(execution)
     if discard_pending:
         pending = get_pending_items(db, execution.id)
         for item in pending:
@@ -365,6 +401,7 @@ def create_execution_from_pending(
     Cria nova execução avulsa com os itens pendentes.
     Os itens são removidos da execução original.
     """
+    ensure_execution_is_mutable(original_execution)
     new_execution = Execution(
         template_id=original_execution.template_id,
         group_id=original_execution.group_id,

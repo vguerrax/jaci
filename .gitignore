@@ -221,3 +221,5 @@ __marimo__/
 data
 data-dev
 jaci.*
+.prod.env
+.env.production

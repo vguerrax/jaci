@@ -10,8 +10,7 @@ O nome é uma homenagem à deusa da lua na mitologia Tupi-Guarani — Jaci, a "M
 
 ## ✨ Funcionalidades
 
-- 🔗 **Magic Link** — acesso sem senha no primeiro login
-- 🔐 **Login com senha** — após configurar o perfil
+- 🔐 **Autenticação centralizada** — cadastro, login e sessões via Tupã
 - 👥 **Grupos** — compartilhe listas com família ou colegas
 - 📋 **Templates** — crie modelos de compras com recorrência
 - 🔄 **Recorrência** — diária, semanal, quinzenal, mensal ou anual
@@ -34,7 +33,7 @@ O nome é uma homenagem à deusa da lua na mitologia Tupi-Guarani — Jaci, a "M
 | Tempo real | WebSocket nativo do FastAPI |
 | Estilo | Bootstrap 5 + tema personalizado |
 | E-mail | Resend (SMTP) |
-| Autenticação | JWT (httpOnly cookies) + bcrypt |
+| Autenticação | Tupã + JWT em cookies httpOnly |
 
 ---
 
@@ -71,6 +70,9 @@ Edite o arquivo .env com suas configurações:
 APP_URL=http://localhost:8000
 DATABASE_URL=sqlite:///./data/jaci.db
 JWT_SECRET_KEY=uma-chave-secreta-muito-longa-e-aleatoria
+TUPA_URL=http://localhost:8001
+TUPA_PRODUCT_ID=uuid-do-produto-jaci
+TUPA_SERVICE_TOKEN=token-entre-servicos
 SMTP_HOST=smtp.resend.com
 SMTP_PORT=587
 SMTP_USER=resend
@@ -131,7 +133,7 @@ jaci/
 ```
 
 ## 🔄 Fluxo principal
-1. Crie uma conta — acesse com magic link e defina nome e senha
+1. Crie uma conta — a identidade e a sessão são gerenciadas pelo Tupã
 2. Crie ou entre em um grupo — convide outras pessoas pelo e-mail
 3. Configure categorias — organize seus itens (já vem com 8 categorias padrão)
 4. Crie templates — defina listas recorrentes com orçamento
@@ -139,13 +141,53 @@ jaci/
 6. Colabore em tempo real — marque itens enquanto outros também compram
 7. Acompanhe na agenda — visualize todas as compras no calendário
 
+## Fluxos e evolução
+
+Os fluxos implementados e os contratos futuros são guiados por
+[docs/user-flows.md](docs/user-flows.md):
+
+- Implementados: onboarding, templates, geração e execução de compras, colaboração,
+  grupos e consulta básica da agenda/histórico.
+- Em evolução: aprendizado de templates e histórico de preços/análise de gastos.
+- Planejado: operação offline com fila local, sincronização e resolução explícita
+  de conflitos.
+
+Os fluxos ainda não implementados já possuem contratos TDD marcados com
+`xfail(strict=True)`. Isso mantém a expectativa executável sem esconder a ausência
+da funcionalidade.
+
+## Testes
+
+Instale as dependências de desenvolvimento e execute a suíte:
+
+```bash
+pip install -r requirements-dev.txt
+venv/bin/pytest
+```
+
+A rastreabilidade entre regras, fluxos e testes está em
+[tests/README.md](tests/README.md). Uma execução saudável pode conter casos `XFAIL`
+para contratos futuros documentados; um `XPASS` é tratado como falha até que o
+fluxo seja revisado e declarado implementado.
+
 ## 🔐 Segurança
 
-- Senhas hash com bcrypt
-- JWT em cookies httpOnly
-- Magic links com validade de 15 minutos
+- Senhas armazenadas exclusivamente pelo Tupã
+- JWT do Tupã validado via JWKS e armazenado em cookie httpOnly
+- Renovação de sessão com refresh token
 - Isolamento de dados por grupo
 - Bloqueio otimista em edições simultâneas
+
+## Migração de usuários existentes
+
+Configure `TUPA_URL`, `TUPA_PRODUCT_ID` e `TUPA_SERVICE_TOKEN`, depois execute:
+
+```bash
+python3 -m scripts.migrate_auth_to_tupa
+```
+
+O script envia os hashes existentes para `/auth/migrate`, associa o UUID retornado
+ao perfil local e remove o hash local após cada migração concluída.
 
 ## 📧 Configuração de e-mail
 O Jaci usa o Resend para envio de e-mails.

@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Response, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from fastapi import WebSocket, Query
+from sqlalchemy import select
 
 from app.config import get_settings
 from app.templating import templates
@@ -17,6 +18,7 @@ from app.routers.agenda import router as agenda_router
 from app.routers.notifications import router as notifications_router
 from app.routers.legal import router as legal
 from app.websocket.handlers import execution_ws_handler
+from app.utils.security import decode_access_token
 
 settings = get_settings()
 
@@ -50,18 +52,36 @@ async def add_unread_count(request: Request, call_next):
     Lê o cookie de sessão para identificar o usuário.
     """
     unread_count = 0
+    refreshed_tokens = None
     
     token = request.cookies.get("jaci_session")
+    payload = decode_access_token(token) if token else None
+    if not payload:
+        refresh_token = request.cookies.get("jaci_refresh")
+        if refresh_token:
+            try:
+                from app.services.tupa_service import refresh
+
+                refreshed_tokens = await refresh(refresh_token)
+                token = refreshed_tokens["access_token"]
+                payload = decode_access_token(token)
+                request._cookies["jaci_session"] = token
+                request._cookies["jaci_refresh"] = refreshed_tokens["refresh_token"]
+            except Exception:
+                payload = None
+
     if token:
-        from app.utils.security import decode_access_token
-        payload = decode_access_token(token)
         if payload:
-            user_id = payload.get("sub")
-            if user_id:
+            tupa_user_id = payload.get("sub")
+            if tupa_user_id:
                 db = SessionLocal()
                 try:
                     from app.services.notification_service import get_unread_count
-                    unread_count = get_unread_count(db, int(user_id))
+                    user = db.scalar(
+                        select(User).where(User.tupa_user_id == str(tupa_user_id))
+                    )
+                    if user:
+                        unread_count = get_unread_count(db, user.id)
                 except Exception:
                     pass
                 finally:
@@ -70,6 +90,10 @@ async def add_unread_count(request: Request, call_next):
     request.state.unread_count = unread_count
     
     response = await call_next(request)
+    if refreshed_tokens:
+        from app.utils.security import set_auth_cookies
+
+        set_auth_cookies(response, **refreshed_tokens)
     return response
 
 
