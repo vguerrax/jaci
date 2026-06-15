@@ -16,10 +16,12 @@ from app.services.auth_service import (
 from app.services.group_service import add_member_to_group
 
 from app.utils.security import set_auth_cookies, clear_auth_cookies
-from app.services.tupa_service import TupaError, logout as tupa_logout
+from app.services.tupa_auth_service import TupaError, logout as tupa_logout
 
 from app.models.user import User
+from app.config import get_settings
 
+settings = get_settings()
 logger = logging.getLogger("jaci.auth")
 router = APIRouter(prefix="/auth", tags=["Autenticação"])
 
@@ -212,7 +214,7 @@ async def password_login(
         key="jaci_active_group",
         value=str(user.groups[0].id),
         httponly=True,
-        secure=False,
+        secure=settings.secure_cookie,
         samesite="lax",
         path="/",
         max_age=60 * 60 * 24 * 30,
@@ -276,7 +278,7 @@ async def register(
         key="jaci_active_group",
         value=str(user.groups[0].id),
         httponly=True,
-        secure=False,
+        secure=settings.secure_cookie,
         samesite="lax",
         path="/",
         max_age=60 * 60 * 24 * 30,
@@ -310,7 +312,7 @@ async def verify_link(
         key="jaci_active_group",
         value=str(group_id),
         httponly=True,
-        secure=False,
+        secure=settings.secure_cookie,
         samesite="lax",
         path="/",
         max_age=60 * 60 * 24 * 30,
@@ -472,7 +474,7 @@ async def logout(request: Request):
         key="jaci_active_group",
         path="/",
         httponly=True,
-        secure=False,
+        secure=settings.secure_cookie,
         samesite="lax",
     )
     return response

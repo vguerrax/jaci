@@ -41,7 +41,7 @@
     </div>
     <script>
         setTimeout(function () {
-            window.location.href = "/groups/{{ group_id }}";
+            window.location.href = {{ redirect_url | tojson }};
         }, 300);
     </script>
 </body>
