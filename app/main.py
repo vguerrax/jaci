@@ -1,14 +1,16 @@
 from fastapi import FastAPI, Request, Response, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi import WebSocket, Query
 from sqlalchemy import select
 
 from app.config import get_settings
 from app.templating import templates
 from app.database import engine, Base, SessionLocal, ensure_schema_compatibility
+from app.database import get_db
 from app.dependencies import get_current_user, get_active_group, get_unread_notification_count
 from app.models.user import User
+from app.models.group import Group
 from app.routers.auth import router as auth_router
 from app.routers.groups import router as groups_router
 from app.routers.categories import router as categories_router
@@ -101,12 +103,22 @@ async def add_unread_count(request: Request, call_next):
 
 
 @app.get("/")
-async def home(request: Request, user: User | None = Depends(get_current_user), active_group=Depends(get_active_group),):
-    """Cancel an execution."""
+async def home(
+    request: Request,
+    db=Depends(get_db),
+    user: User | None = Depends(get_current_user),
+    active_group: Group | None = Depends(get_active_group),
+):
+    """Painel operacional do grupo ativo."""
     if not user:
         return RedirectResponse(url="/auth/login", status_code=303)
-    
-    # Placeholder até o Módulo 7 (Agenda)
+
+    dashboard = None
+    if active_group:
+        from app.services.home_service import build_home_dashboard
+
+        dashboard = build_home_dashboard(db, active_group.id)
+
     return templates.TemplateResponse(
         "pages/index.html",
         {
@@ -114,6 +126,7 @@ async def home(request: Request, user: User | None = Depends(get_current_user), 
             "user": user,
             "active_group": active_group,
             "active_page": "home",
+            "dashboard": dashboard,
         },
     )
 
@@ -137,3 +150,13 @@ async def health_check():
         "status": "running",
         "modules_completed": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"],
     }
+
+
+@app.get("/service-worker.js", include_in_schema=False)
+async def service_worker():
+    """Serve o service worker na raiz para permitir cache offline da aplicação."""
+    return FileResponse(
+        "app/static/js/service-worker.js",
+        media_type="application/javascript",
+        headers={"Service-Worker-Allowed": "/"},
+    )
