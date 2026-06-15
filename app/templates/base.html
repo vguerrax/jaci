@@ -33,6 +33,11 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-lunar">
+    <div id="sync-status" class="sync-status" role="status" aria-live="polite">
+        <i class="bi bi-cloud-check-fill"></i>
+        <span class="sync-status-label">Sincronizado</span>
+        <span class="sync-status-pending d-none"></span>
+    </div>
 
     <!-- Navbar -->
     {% block navbar %}
@@ -50,6 +55,9 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav me-auto">
                     {% if user %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_page == 'home' %}active{% endif %}" href="/">Início</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if active_page == 'agenda' %}active{% endif %}" href="/agenda">Agenda</a>
                     </li>
@@ -163,6 +171,7 @@
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="/static/js/jaci-confirm.js"></script>
+    <script src="/static/js/sync-status.js"></script>
 
     {% block extra_js %}{% endblock %}
 </body>
