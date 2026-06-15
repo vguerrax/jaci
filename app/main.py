@@ -6,9 +6,9 @@ from sqlalchemy import select
 
 from app.config import get_settings
 from app.templating import templates
-from app.database import engine, Base, SessionLocal, ensure_schema_compatibility
-from app.database import get_db
-from app.dependencies import get_current_user, get_active_group, get_unread_notification_count
+from app.database import get_db, SessionLocal
+
+from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
 from app.models.group import Group
 from app.routers.auth import router as auth_router
@@ -23,10 +23,6 @@ from app.websocket.handlers import execution_ws_handler
 from app.utils.security import decode_access_token
 
 settings = get_settings()
-
-# Cria tabelas
-Base.metadata.create_all(bind=engine)
-ensure_schema_compatibility()
 
 app = FastAPI(
     title=settings.app_name,

@@ -17,11 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o código da aplicação
 COPY . .
 
-# Cria diretório para o banco de dados
-RUN mkdir -p /app/data
-
 # Expõe a porta
 EXPOSE 8000
 
 # Comando para iniciar
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "run.py", "--port", "8000", "--no-restart"]
