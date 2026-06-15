@@ -40,8 +40,18 @@ def ensure_schema_compatibility() -> None:
 
     category_columns = {column["name"] for column in inspector.get_columns("categories")}
     group_columns = {column["name"] for column in inspector.get_columns("groups")}
+    template_item_columns = {
+        column["name"] for column in inspector.get_columns("template_items")
+    }
+    user_columns = {column["name"] for column in inspector.get_columns("users")}
 
     with engine.begin() as connection:
+        if "tupa_user_id" not in user_columns:
+            connection.execute(text("ALTER TABLE users ADD COLUMN tupa_user_id VARCHAR(36)"))
+            connection.execute(
+                text("CREATE UNIQUE INDEX ix_users_tupa_user_id ON users (tupa_user_id)")
+            )
+
         if "sort_order" not in category_columns:
             connection.execute(
                 text("ALTER TABLE categories ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0")
@@ -67,6 +77,11 @@ def ensure_schema_compatibility() -> None:
                     "ALTER TABLE groups ADD COLUMN uncategorized_first "
                     "BOOLEAN NOT NULL DEFAULT 0"
                 )
+            )
+
+        if "notes" not in template_item_columns:
+            connection.execute(
+                text("ALTER TABLE template_items ADD COLUMN notes VARCHAR(255)")
             )
 
 

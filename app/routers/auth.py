@@ -8,17 +8,15 @@ from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 
 from app.services.auth_service import (
-    request_magic_link,
-    verify_magic_token,
     authenticate_with_password,
+    register_with_password,
     setup_profile,
     update_profile,
-    email_is_available,
-    change_password,
 )
 from app.services.group_service import add_member_to_group
 
-from app.utils.security import set_auth_cookie, clear_auth_cookie, decode_access_token
+from app.utils.security import set_auth_cookies, clear_auth_cookies
+from app.services.tupa_service import TupaError, logout as tupa_logout
 
 from app.models.user import User
 
@@ -30,12 +28,8 @@ router = APIRouter(prefix="/auth", tags=["Autenticação"])
 
 @router.get("/login", include_in_schema=False)
 async def login_page(request: Request):
-    """Tela de solicitação de e-mail."""
+    """Tela de login e cadastro."""
     from app.main import templates
-    
-    from app.utils.security import create_magic_token
-    # token = create_magic_token("vguerrax@gmail.com")
-    token = create_magic_token("lopesmariaclara@outlook.com.br")
 
     return templates.TemplateResponse(
         "pages/login.html",
@@ -43,8 +37,6 @@ async def login_page(request: Request):
             "request": request,
             "user": None,
             "active_page": "login",
-            "resend_cooldown": False,
-            "token": token
         },
     )
 
@@ -141,34 +133,8 @@ async def send_link(
     email: str = Form(...),
     db: Session = Depends(get_db),
 ):
-    """Send magic link to email."""
-    from app.services.auth_service import request_magic_link
-    from app.main import templates
-    
-    result = await request_magic_link(db, email)
-
-    if not result["success"]:
-        return templates.TemplateResponse(
-            "pages/login.html",
-            {
-                "request": request,
-                "user": None,
-                "error": result["message"],
-                "resend_cooldown": False,
-            },
-            status_code=400,
-        )
-
-    # Use direct TemplateResponse instead of RedirectResponse
-    response = templates.TemplateResponse(
-        "pages/login_sent.html",
-        {
-            "request": request,
-            "user": None,
-            "email": email,
-        },
-    )
-    return response
+    """Magic link de login foi substituído pelo Tupã."""
+    return RedirectResponse(url="/auth/login", status_code=303)
 
 
 @router.post("/password-login")
@@ -182,9 +148,18 @@ async def password_login(
     """Login com e-mail e senha."""
     from app.main import templates
 
-    user = authenticate_with_password(db, email, password)
+    try:
+        result = await authenticate_with_password(db, email, password)
+    except TupaError as exc:
+        if exc.status_code >= 500:
+            return templates.TemplateResponse(
+                "pages/login.html",
+                {"request": request, "user": None, "error": str(exc)},
+                status_code=502,
+            )
+        result = None
 
-    if not user:
+    if not result:
         return templates.TemplateResponse(
             "pages/login.html",
             {
@@ -196,10 +171,12 @@ async def password_login(
             status_code=400,
         )
         
-    set_auth_cookie(response, user.id, user.email)
+    user, tokens = result
 
     if not user.is_profile_complete:
-        return RedirectResponse(url="/auth/setup", status_code=303)
+        response = RedirectResponse(url="/auth/setup", status_code=303)
+        set_auth_cookies(response, **tokens)
+        return response
 
     response = templates.TemplateResponse(
         "pages/auth_verify.html",
@@ -214,7 +191,7 @@ async def password_login(
     )
     
     # Set cookies on the response
-    set_auth_cookie(response, user.id, user.email)
+    set_auth_cookies(response, **tokens)
     
     response.set_cookie(
         key="jaci_active_group",
@@ -229,66 +206,88 @@ async def password_login(
     return response
 
 
+@router.post("/register")
+async def register(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...),
+    password_confirm: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    """Cria uma conta no Tupã e o perfil correspondente no Jaci."""
+    from app.main import templates
+
+    if len(password) < 8:
+        error = "A senha deve ter pelo menos 8 caracteres."
+    elif password != password_confirm:
+        error = "As senhas não conferem."
+    elif not name.strip():
+        error = "O nome é obrigatório."
+    else:
+        error = None
+
+    if error:
+        return templates.TemplateResponse(
+            "pages/login.html",
+            {"request": request, "user": None, "register_error": error},
+            status_code=400,
+        )
+
+    try:
+        user, tokens = await register_with_password(db, name, email, password)
+    except TupaError as exc:
+        return templates.TemplateResponse(
+            "pages/login.html",
+            {"request": request, "user": None, "register_error": str(exc)},
+            status_code=exc.status_code if exc.status_code < 500 else 502,
+        )
+
+    response = RedirectResponse(url="/", status_code=303)
+    set_auth_cookies(response, **tokens)
+    response.set_cookie(
+        key="jaci_active_group",
+        value=str(user.groups[0].id),
+        httponly=True,
+        secure=False,
+        samesite="lax",
+        path="/",
+        max_age=60 * 60 * 24 * 30,
+    )
+    return response
+
+
 @router.get("/verify")
 async def verify_link(
     request: Request,
     token: str = Query(...),
     group_id: int | None = Query(None),
     db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
 ):
     """
     Validate magic token and create session.
     Uses an intermediate page to ensure cookie is set properly.
     """
-    from app.services.auth_service import verify_magic_token
-    from app.services.group_service import add_member_to_group
-    from app.main import templates
+    from app.utils.security import decode_magic_token
 
-    user = verify_magic_token(db, token)
+    invited_email = decode_magic_token(token)
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+    if not group_id or invited_email != user.email:
+        return RedirectResponse(url="/auth/login/error?reason=invalid", status_code=303)
 
-    if user is None:
-        from app.utils.security import decode_magic_token
-        email = decode_magic_token(token)
-        reason = "expired" if email is None else "invalid"
-        return RedirectResponse(
-            url=f"/auth/login/error?reason={reason}",
-            status_code=303,
-        )
-
-    # If group_id present, add user to group (invite flow)
-    if group_id:
-        add_member_to_group(db, group_id, user)
-
-    # Render intermediate page that sets cookie and redirects
-    redirect_url = "/auth/setup" if not user.is_profile_complete else "/"
-    
-    # Create the response with the template
-    response = templates.TemplateResponse(
-        "pages/auth_verify.html",
-        {
-            "request": request,
-            "user": None,
-            "redirect_url": redirect_url,
-            "user_id": user.id,
-            "email": user.email,
-            "group_id": group_id,
-        },
+    add_member_to_group(db, group_id, user)
+    response = RedirectResponse(url="/", status_code=303)
+    response.set_cookie(
+        key="jaci_active_group",
+        value=str(group_id),
+        httponly=True,
+        secure=False,
+        samesite="lax",
+        path="/",
+        max_age=60 * 60 * 24 * 30,
     )
-    
-    # Set cookies on the response
-    set_auth_cookie(response, user.id, user.email)
-    
-    if group_id:
-        response.set_cookie(
-            key="jaci_active_group",
-            value=str(group_id),
-            httponly=True,
-            secure=False,
-            samesite="lax",
-            path="/",
-            max_age=60 * 60 * 24 * 30,
-        )
-    
     return response
 
 
@@ -297,8 +296,6 @@ async def handle_setup_profile(
     request: Request,
     response: Response,
     name: str = Form(...),
-    password: str = Form(...),
-    password_confirm: str = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group=Depends(get_active_group),
@@ -324,30 +321,7 @@ async def handle_setup_profile(
             status_code=400,
         )
 
-    if len(password) < 6:
-        return templates.TemplateResponse(
-            "pages/setup_profile.html",
-            {
-                "request": request,
-                "user": user,
-                "error": "A senha deve ter pelo menos 6 caracteres.",
-            },
-            status_code=400,
-        )
-
-    if password != password_confirm:
-        return templates.TemplateResponse(
-            "pages/setup_profile.html",
-            {
-                "request": request,
-                "user": user,
-                "error": "As senhas não conferem.",
-            },
-            status_code=400,
-        )
-
-    setup_profile(db, user, name, password)
-    set_auth_cookie(response, user.id, user.email)
+    setup_profile(db, user, name)
     
     return RedirectResponse(url="/", status_code=303)
 
@@ -356,7 +330,6 @@ async def handle_setup_profile(
 async def handle_update_profile(
     request: Request,
     name: str = Form(...),
-    email: str = Form(...),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group=Depends(get_active_group),
@@ -368,14 +341,12 @@ async def handle_update_profile(
         return RedirectResponse(url="/auth/login", status_code=303)
 
     name = name.strip()
-    email = email.lower().strip()
     context = {
         "request": request,
         "user": user,
         "active_group": active_group,
         "active_page": "profile",
         "profile_name": name,
-        "profile_email": email,
     }
 
     if not name:
@@ -392,21 +363,7 @@ async def handle_update_profile(
             status_code=400,
         )
 
-    if not email or "@" not in email or len(email) > 255:
-        return templates.TemplateResponse(
-            "pages/profile.html",
-            {**context, "profile_error": "Informe um e-mail válido."},
-            status_code=400,
-        )
-
-    if not email_is_available(db, email, user):
-        return templates.TemplateResponse(
-            "pages/profile.html",
-            {**context, "profile_error": "Este e-mail já está em uso."},
-            status_code=400,
-        )
-
-    update_profile(db, user, name, email)
+    update_profile(db, user, name, user.email)
     response = templates.TemplateResponse(
         "pages/profile.html",
         {
@@ -417,7 +374,6 @@ async def handle_update_profile(
             "profile_message": "Dados pessoais atualizados.",
         },
     )
-    set_auth_cookie(response, user.id, user.email)
     return response
 
 
@@ -458,19 +414,11 @@ async def handle_change_password(
             status_code=400,
         )
 
-    if not change_password(db, user, current_password, new_password):
-        return templates.TemplateResponse(
-            "pages/profile.html",
-            {**context, "password_error": "A senha atual está incorreta."},
-            status_code=400,
-        )
-
-    response = templates.TemplateResponse(
+    return templates.TemplateResponse(
         "pages/profile.html",
-        {**context, "password_message": "Senha alterada com sucesso."},
+        {**context, "password_error": "A alteração de senha deve ser feita no serviço de autenticação."},
+        status_code=501,
     )
-    set_auth_cookie(response, user.id, user.email)
-    return response
 
 
 @router.get("/logout")
@@ -485,7 +433,13 @@ async def logout(request: Request):
             "user": None,
         },
     )
-    clear_auth_cookie(response)
+    access_token = request.cookies.get("jaci_session")
+    if access_token:
+        try:
+            await tupa_logout(access_token)
+        except TupaError:
+            pass
+    clear_auth_cookies(response)
     # Also clear active group cookie
     response.delete_cookie(
         key="jaci_active_group",

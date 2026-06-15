@@ -17,22 +17,6 @@
             <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
             {% endif %}
 
-            <!-- Magic Link -->
-            <h2 class="h6 mb-3">Entrar com link mágico</h2>
-            <form method="post" action="/auth/magic-link" class="mb-4">
-                <div class="mb-3">
-                    <label for="magic-email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="magic-email" name="email" placeholder="seu@email.com"
-                        required autocomplete="email">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                    Enviar link mágico
-                    <i class="bi bi-moon-stars-fill"></i>
-                </button>
-            </form>
-
-            <hr>
-
             <!-- Email + Senha -->
             <h2 class="h6 mb-3">Entrar com senha</h2>
             <form method="post" action="/auth/password-login">
@@ -52,15 +36,39 @@
                         </button>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-outline-secondary w-100">
+                <button type="submit" class="btn btn-primary w-100">
                     Entrar
                     <i class="bi bi-unlock-fill"></i>
                 </button>
             </form>
 
-            <p class="text-help text-center mt-3 mb-0">
-                Primeiro acesso? Use o link mágico acima.
-            </p>
+            <hr>
+
+            {% if register_error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ register_error }}</div>
+            {% endif %}
+            <h2 class="h6 mb-3">Criar conta</h2>
+            <form method="post" action="/auth/register">
+                <div class="mb-3">
+                    <label for="register-name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="register-name" name="name" required autocomplete="name">
+                </div>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="register-email" name="email" required autocomplete="email">
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="register-password" name="password"
+                        required minlength="8" autocomplete="new-password">
+                </div>
+                <div class="mb-3">
+                    <label for="register-password-confirm" class="form-label">Confirmar senha</label>
+                    <input type="password" class="form-control" id="register-password-confirm" name="password_confirm"
+                        required minlength="8" autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-outline-secondary w-100">Criar conta</button>
+            </form>
         </div>
     </div>
 </div>

@@ -1,10 +1,9 @@
 from app.utils.security import (
-    create_access_token,
     decode_access_token,
     create_magic_token,
     decode_magic_token,
-    set_auth_cookie,
-    clear_auth_cookie,
+    set_auth_cookies,
+    clear_auth_cookies,
 )
 from app.utils.email import send_magic_link
 from app.utils.datetime import (
@@ -17,12 +16,11 @@ from app.utils.datetime import (
 )
 
 __all__ = [
-    "create_access_token",
     "decode_access_token",
     "create_magic_token",
     "decode_magic_token",
-    "set_auth_cookie",
-    "clear_auth_cookie",
+    "set_auth_cookies",
+    "clear_auth_cookies",
     "send_magic_link",
     "format_local_date",
     "format_local_datetime",

@@ -196,9 +196,7 @@ async def execution_detail(
     if execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    from app.utils.security import create_access_token
-
-    jwt_token = create_access_token(user.id, user.email)
+    jwt_token = request.cookies.get("jaci_session")
 
     return templates.TemplateResponse(
         "pages/executions/in_progress.html",
@@ -281,10 +279,6 @@ async def execution_items_fragment(
     # if execution.budget and execution.budget > 0:
     #     alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    # # Generate fresh JWT token
-    # from app.utils.security import create_access_token
-
-    # jwt_token = create_access_token(user.id, user.email)
     # collapse_state = request.headers.get("X-Collapse-State", "")
     # expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 
@@ -953,8 +947,6 @@ async def _get_items_fragment(
 ):
     """Retorna o fragmento HTML dos itens."""
     from app.main import templates
-    from app.utils.security import create_access_token
-
     execution = get_execution_by_id(db, execution_id, user)
     grouped_items = get_execution_items_grouped(db, execution_id)
     totals = get_execution_totals(db, execution_id)
@@ -963,7 +955,7 @@ async def _get_items_fragment(
     if execution and execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    jwt_token = create_access_token(user.id, user.email)
+    jwt_token = request.cookies.get("jaci_session")
     collapse_state = request.headers.get("X-Collapse-State", "")
     expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 

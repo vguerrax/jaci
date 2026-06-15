@@ -28,16 +28,11 @@ async def get_current_user(
     if not payload:
         return None
     
-    user_id = payload.get("sub")
-    if not user_id:
+    tupa_user_id = payload.get("sub")
+    if not tupa_user_id:
         return None
-    
-    try:
-        user_id_int = int(user_id)
-    except (ValueError, TypeError):
-        return None
-    
-    user = db.scalar(select(User).where(User.id == user_id_int))
+
+    user = db.scalar(select(User).where(User.tupa_user_id == str(tupa_user_id)))
     
     return user
 
@@ -108,16 +103,11 @@ async def get_current_user_ws(
     if not payload:
         return None
  
-    user_id = payload.get("sub")
-    if not user_id:
+    tupa_user_id = payload.get("sub")
+    if not tupa_user_id:
         return None
- 
-    try:
-        user_id_int = int(user_id)
-    except (ValueError, TypeError):
-        return None
- 
-    user = db.scalar(select(User).where(User.id == user_id_int))
+
+    user = db.scalar(select(User).where(User.tupa_user_id == str(tupa_user_id)))
     return user
 
 

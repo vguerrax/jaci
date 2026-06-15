@@ -31,9 +31,11 @@ async def execution_ws_handler(
 
             payload = decode_access_token(token)
             if payload:
-                user_id = payload.get("sub")
-                if user_id:
-                    user = db.scalar(select(User).where(User.id == int(user_id)))
+                tupa_user_id = payload.get("sub")
+                if tupa_user_id:
+                    user = db.scalar(
+                        select(User).where(User.tupa_user_id == str(tupa_user_id))
+                    )
     except Exception:
         pass
     finally:
