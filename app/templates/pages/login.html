@@ -17,8 +17,7 @@
             <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
             {% endif %}
 
-            <!-- Email + Senha -->
-            <h2 class="h6 mb-3">Entrar com senha</h2>
+            <h1 class="h5 mb-3">Acesse sua conta</h1>
             <form method="post" action="/auth/password-login">
                 <div class="mb-3">
                     <label for="login-email" class="form-label">E-mail</label>
@@ -43,32 +42,10 @@
             </form>
 
             <hr>
-
-            {% if register_error %}
-            <div class="alert alert-danger alert-jaci mb-3">{{ register_error }}</div>
-            {% endif %}
-            <h2 class="h6 mb-3">Criar conta</h2>
-            <form method="post" action="/auth/register">
-                <div class="mb-3">
-                    <label for="register-name" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="register-name" name="name" required autocomplete="name">
-                </div>
-                <div class="mb-3">
-                    <label for="register-email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="register-email" name="email" required autocomplete="email">
-                </div>
-                <div class="mb-3">
-                    <label for="register-password" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="register-password" name="password"
-                        required minlength="8" autocomplete="new-password">
-                </div>
-                <div class="mb-3">
-                    <label for="register-password-confirm" class="form-label">Confirmar senha</label>
-                    <input type="password" class="form-control" id="register-password-confirm" name="password_confirm"
-                        required minlength="8" autocomplete="new-password">
-                </div>
-                <button type="submit" class="btn btn-outline-secondary w-100">Criar conta</button>
-            </form>
+            <p class="text-center text-help mb-0">
+                Não possui conta?
+                <a href="/auth/register" class="text-night fw-medium">Crie uma aqui.</a>
+            </p>
         </div>
     </div>
 </div>
