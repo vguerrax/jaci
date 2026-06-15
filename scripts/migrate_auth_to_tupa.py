@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 from app.database import SessionLocal
 from app.models.user import User
-from app.services.tupa_service import TupaError, migrate_user
+from app.services.tupa_auth_service import TupaError, migrate_user
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("jaci.auth.migration")
