@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Criar conta — Jaci{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6">
+
+        <div class="text-center mb-4">
+            <img src="/static/img/jaci-1.png" height="200" width="200" alt="Jaci">
+            <p class="text-clay">Crie sua conta e organize suas compras</p>
+        </div>
+
+        <div class="card-jaci p-4">
+            {% if register_error %}
+            <div class="alert alert-danger alert-jaci mb-3">{{ register_error }}</div>
+            {% endif %}
+
+            <h1 class="h5 mb-3">Criar conta</h1>
+            <form method="post" action="/auth/register">
+                <div class="mb-3">
+                    <label for="register-name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="register-name" name="name"
+                        value="{{ form_name or '' }}" required autocomplete="name" autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="register-email" name="email"
+                        value="{{ form_email or '' }}" required autocomplete="email">
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label">Senha</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="register-password" name="password"
+                            required minlength="8" autocomplete="new-password">
+                        <button type="button" class="btn btn-outline-secondary toggle-password"
+                            data-target="register-password" aria-label="Mostrar senha" aria-pressed="false">
+                            <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password-confirm" class="form-label">Confirmar senha</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="register-password-confirm"
+                            name="password_confirm" required minlength="8" autocomplete="new-password">
+                        <button type="button" class="btn btn-outline-secondary toggle-password"
+                            data-target="register-password-confirm" aria-label="Mostrar senha" aria-pressed="false">
+                            <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    Criar conta
+                    <i class="bi bi-person-plus-fill"></i>
+                </button>
+            </form>
+
+            <hr>
+            <p class="text-center text-help mb-0">
+                Já possui conta?
+                <a href="/auth/login" class="text-night fw-medium">Acesse sua conta aqui.</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.toggle-password').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const passwordInput = document.getElementById(this.dataset.target);
+            const showingPassword = passwordInput.type === 'text';
+
+            passwordInput.type = showingPassword ? 'password' : 'text';
+            this.setAttribute('aria-label', showingPassword ? 'Mostrar senha' : 'Ocultar senha');
+            this.setAttribute('aria-pressed', String(!showingPassword));
+            this.querySelector('i').className = showingPassword ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+        });
+    });
+</script>
+{% endblock %}
