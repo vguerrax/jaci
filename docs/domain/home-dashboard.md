@@ -2,8 +2,7 @@
 
 ## Objetivo
 
-A Home do Jaci é um painel operacional, não uma página institucional. Ela deve
-responder rapidamente:
+A Home do Jaci é um painel operacional, não uma página institucional. Ela deve responder rapidamente:
 
 * O que preciso comprar agora?
 * Quanto estou gastando?
