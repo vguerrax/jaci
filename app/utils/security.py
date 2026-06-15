@@ -4,7 +4,7 @@ from jose import jwt, JWTError, ExpiredSignatureError
 from fastapi import Response
 
 from app.config import get_settings
-from app.services.tupa_service import decode_access_token
+from app.services.tupa_auth_service import decode_access_token
 
 settings = get_settings()
 
