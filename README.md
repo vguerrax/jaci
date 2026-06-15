@@ -18,6 +18,8 @@ O nome é uma homenagem à deusa da lua na mitologia Tupi-Guarani — Jaci, a "M
 - 💰 **Controle de orçamento** — alertas visuais ao atingir limites
 - 📅 **Agenda** — calendário mensal e lista cronológica
 - 🔔 **Notificações** — saiba quando alguém inicia ou finaliza uma compra
+- 🏠 **Home operacional** — continue a compra ativa, acompanhe indicadores e veja alertas
+- ☁️ **Indicador de sincronização** — estado de conexão visível em todas as telas
 - 📱 **Responsivo** — funciona no celular durante as compras
 - 🌐 **WebSocket + HTMX** — atualizações em tempo real sem recarregar
 
@@ -144,10 +146,10 @@ jaci/
 ## Fluxos e evolução
 
 Os fluxos implementados e os contratos futuros são guiados por
-[docs/user-flows.md](docs/user-flows.md):
+[docs/domain/user-flows.md](docs/domain/user-flows.md):
 
 - Implementados: onboarding, templates, geração e execução de compras, colaboração,
-  grupos e consulta básica da agenda/histórico.
+  grupos, Home operacional e consulta básica da agenda/histórico.
 - Em evolução: aprendizado de templates e histórico de preços/análise de gastos.
 - Planejado: operação offline com fila local, sincronização e resolução explícita
   de conflitos.
@@ -155,6 +157,17 @@ Os fluxos implementados e os contratos futuros são guiados por
 Os fluxos ainda não implementados já possuem contratos TDD marcados com
 `xfail(strict=True)`. Isso mantém a expectativa executável sem esconder a ausência
 da funcionalidade.
+
+### Home operacional
+
+A tela inicial prioriza a compra em andamento ou a próxima compra agendada,
+apresenta indicadores isolados pelo grupo ativo, ações rápidas, até três alertas
+contextuais e as três compras finalizadas mais recentes. O indicador global de
+sincronização informa quando a aplicação está offline, e páginas já visitadas
+podem ser recuperadas pelo cache do service worker.
+
+As regras detalhadas estão em
+[docs/domain/home-dashboard.md](docs/domain/home-dashboard.md).
 
 ## Testes
 

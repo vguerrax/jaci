@@ -16,6 +16,10 @@
 | RN12 | `test_rn12_websocket_failure_does_not_undo_persisted_api_mutation` |
 | RN13 | Pendente: requer uma interface de fila de sincronização offline. |
 | RN14 | Pendente: requer uma interface de resolução de conflitos offline. |
+| RN15 | `test_home_prioritizes_in_progress_purchase_over_scheduled_purchase`, `test_home_uses_next_scheduled_purchase_when_none_is_in_progress` |
+| RN16 | `test_home_metrics_and_history_are_scoped_to_active_group` |
+| RN17 | `test_home_alerts_are_limited_and_ordered_by_criticality` |
+| RN18 | `test_home_recent_history_is_limited_to_three_completed_executions` |
 
 Execute a suíte com:
 
@@ -36,6 +40,7 @@ venv/bin/pytest
 | FL-07 Gestão de grupos | Implementado | `test_member_can_be_invited_to_the_group`, `test_fl07_accepted_member_can_access_shared_templates_and_executions` |
 | FL-08 Agenda e histórico | Parcial | `test_fl08_completed_execution_remains_available_in_agenda_history`; histórico de preços e análise de gastos estão em `xfail` |
 | FL-09 Operação offline | Contrato TDD (`xfail`) | fila local, sincronização e resolução explícita de conflitos |
+| FL-10 Home operacional | Implementado | `test_home_renders_one_touch_purchase_actions_and_global_sync_indicator` e `tests/test_home_dashboard.py` |
 
 Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados, aparecem
 como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até que o fluxo
