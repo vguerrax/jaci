@@ -60,3 +60,23 @@ Quando houver conflito entre dados locais e remotos:
 * O sistema deve detectar o conflito.
 * O sistema deve informar o usuário.
 * O sistema deve permitir resolução explícita.
+
+### RN15
+
+A Home sempre prioriza uma execução em andamento. Na ausência dela, exibe a
+próxima execução agendada.
+
+### RN16
+
+Indicadores, alertas e histórico da Home devem ser calculados exclusivamente para
+o grupo ativo.
+
+### RN17
+
+A Home exibe no máximo três alertas simultâneos, ordenados por criticidade:
+orçamento ultrapassado, compra em andamento e compra nas próximas 24 horas.
+
+### RN18
+
+O histórico recente da Home exibe no máximo as três execuções finalizadas mais
+recentes do grupo ativo.
