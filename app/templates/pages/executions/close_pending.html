@@ -47,7 +47,8 @@
 
             <h2 class="h6 mb-3">O que deseja fazer com os itens não comprados?</h2>
 
-            <form method="post" action="/executions/{{ execution.id }}/close">
+            <form method="post" action="/executions/{{ execution.id }}/close"
+                data-offline-finalize-execution data-execution-id="{{ execution.id }}">
                 <div class="d-grid gap-2 mb-3">
                     <!-- Option A: Discard -->
                     <button type="submit" name="action" value="discard"

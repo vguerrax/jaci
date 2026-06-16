@@ -11,11 +11,13 @@ from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.offline import (
     AddExecutionItemOperation,
     ExecutionItemOperation,
+    FinalizeExecutionOperation,
     RemoveExecutionItemOperation,
     StartExecutionOperation,
     offline_snapshot,
     sync_add_execution_item_operation,
     sync_execution_item_operation,
+    sync_finalize_execution_operation,
     sync_remove_execution_item_operation,
     sync_start_execution_operation,
 )
@@ -422,6 +424,108 @@ def test_offline_remove_item_operation_rejects_completed_item(
     assert error.value.status_code == 409
 
 
+def test_offline_finalize_execution_operation_generates_next_cycle_on_sync(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, 500)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    db.add(
+        ExecutionItem(
+            execution_id=execution.id,
+            name="Arroz",
+            planned_quantity=1,
+            purchased_quantity=1,
+            unit_price=10,
+            is_completed=True,
+        )
+    )
+    db.commit()
+
+    result = asyncio.run(
+        sync_finalize_execution_operation(
+            FinalizeExecutionOperation(
+                execution_id=execution.id,
+                action="discard",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    next_execution = db.scalar(
+        select(Execution).where(
+            Execution.template_id == template.id,
+            Execution.id != execution.id,
+            Execution.status == ExecutionStatus.scheduled,
+        )
+    )
+
+    assert result["status"] == "applied"
+    assert result["execution"]["status"] == "completed"
+    assert result["next_execution_id"] == next_execution.id
+    assert execution.status == ExecutionStatus.completed
+
+
+def test_offline_finalize_execution_operation_handles_pending_items_on_sync(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    db.add(
+        ExecutionItem(
+            execution_id=execution.id,
+            name="Feijão",
+            planned_quantity=1,
+        )
+    )
+    db.commit()
+
+    result = asyncio.run(
+        sync_finalize_execution_operation(
+            FinalizeExecutionOperation(
+                execution_id=execution.id,
+                action="new_execution",
+                new_date="2026-06-20",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    carryover = db.scalar(
+        select(Execution).where(
+            Execution.id != execution.id,
+            Execution.group_id == group.id,
+            Execution.status == ExecutionStatus.scheduled,
+        )
+    )
+
+    assert result["status"] == "applied"
+    assert execution.status == ExecutionStatus.completed
+    assert carryover is not None
+    assert carryover.is_standalone is True
+
+
 def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
@@ -439,8 +543,11 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "EXECUTION_ITEM_SYNC_URL" in script
     assert "ADD_EXECUTION_ITEM_SYNC_URL" in script
     assert "REMOVE_EXECUTION_ITEM_SYNC_URL" in script
+    assert "FINALIZE_EXECUTION_SYNC_URL" in script
     assert "data-offline-start-execution" in script
     assert "data-offline-add-item" in script
+    assert "data-offline-finalize-link" in script
+    assert "data-offline-finalize-execution" in script
     assert "data-offline-complete-item" in script
     assert "data-offline-incomplete-item" in script
     assert "data-offline-remove-item" in script
@@ -448,10 +555,13 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "enqueueAddExecutionItemOperation" in script
     assert "enqueueExecutionItemOperation" in script
     assert "enqueueRemoveExecutionItemOperation" in script
+    assert "enqueueFinalizeExecutionOperation" in script
     assert "createTempId" in script
     assert "is_temporary" in script
     assert "add_execution_item" in script
     assert "remove_execution_item" in script
+    assert "finalize_execution" in script
+    assert "offline_finalized_at" in script
     assert "offline_removed_at" in script
     assert "offline_base_version" in script
     assert "start_execution" in script
@@ -492,6 +602,17 @@ def test_add_item_form_is_offline_capable():
     assert 'name="planned_quantity"' in detail
     assert 'name="category_id"' in detail
     assert 'name="notes"' in detail
+
+
+def test_finalize_controls_are_offline_capable():
+    detail = Path("app/templates/pages/executions/in_progress.html").read_text()
+    close = Path("app/templates/pages/executions/close_pending.html").read_text()
+
+    assert "data-offline-finalize-link" in detail
+    assert "data-offline-finalize-execution" in close
+    assert 'name="action" value="discard"' in close
+    assert 'name="action" value="new_execution"' in close
+    assert 'name="new_date"' in close
 
 
 def test_execution_item_controls_are_offline_capable():
