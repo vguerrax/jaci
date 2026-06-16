@@ -15,7 +15,7 @@
 | RN11 | `test_execution_budget_can_override_template_budget`, `test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs` |
 | RN12 | `test_rn12_websocket_failure_does_not_undo_persisted_api_mutation` |
 | RN13 | Pendente: requer uma interface de fila de sincronização offline. |
-| RN14 | Pendente: requer uma interface de resolução de conflitos offline. |
+| RN14 | `test_offline_item_operation_rejects_stale_version`, `test_offline_conflicts_are_preserved_and_visible_to_user` |
 | RN15 | `test_home_prioritizes_in_progress_purchase_over_scheduled_purchase`, `test_home_uses_next_scheduled_purchase_when_none_is_in_progress` |
 | RN16 | `test_home_metrics_and_history_are_scoped_to_active_group` |
 | RN17 | `test_home_alerts_are_limited_and_ordered_by_criticality` |
