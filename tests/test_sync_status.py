@@ -50,4 +50,8 @@ def test_sync_status_is_visible_globally_and_styled_by_state():
     assert ".sync-status.is-syncing" in styles
     assert ".sync-status.is-error" in styles
     assert "animation: jaci-spin" in styles
+    assert "@media (max-width: 767.98px)" in styles
+    assert "top: 4.75rem;" in styles
+    assert "bottom: auto;" in styles
+    assert "top: 7.5rem;" in styles
     assert "--jaci-harvest" not in styles
