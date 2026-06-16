@@ -273,6 +273,11 @@ def test_offline_item_operation_rejects_stale_version(db, make_user, make_group)
         )
 
     assert error.value.status_code == 409
+    assert error.value.detail["type"] == "sync_conflict"
+    assert error.value.detail["reason"] == "stale_version"
+    assert error.value.detail["local"]["version"] == 2
+    assert error.value.detail["remote"]["version"] == 3
+    assert error.value.detail["remote"]["name"] == "Café"
 
 
 def test_offline_add_item_operation_creates_real_item_from_temp_id(
@@ -422,6 +427,10 @@ def test_offline_remove_item_operation_rejects_completed_item(
         )
 
     assert error.value.status_code == 409
+    assert error.value.detail["type"] == "sync_conflict"
+    assert error.value.detail["reason"] == "item_already_completed"
+    assert error.value.detail["local"]["item_id"] == item.id
+    assert error.value.detail["remote"]["is_completed"] is True
 
 
 def test_offline_finalize_execution_operation_generates_next_cycle_on_sync(
@@ -530,7 +539,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
-    assert "const DB_VERSION = 10" in script
+    assert "const DB_VERSION = 11" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -553,6 +562,11 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "jaci_pending_conflicts" in script
     assert "renderPendingState" in script
     assert "Number(operation.tentativas || 0) > 0" in script
+    assert "isConflictOperation" in script
+    assert "renderConflictSummary" in script
+    assert "status: conflictPayload ? 'conflict'" in script
+    assert "conflict_detected_at" in script
+    assert "response.status === 409 && isConflictPayload(detail)" in script
     assert "SYNC_RETRY_BASE_DELAY_MS" in script
     assert "SYNC_RETRY_MAX_DELAY_MS" in script
     assert "getRetryDelay" in script
@@ -639,6 +653,22 @@ def test_offline_sync_uses_exponential_backoff_and_only_notifies_manual_errors()
     assert "window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'))" in script
 
 
+def test_offline_conflicts_are_preserved_and_visible_to_user():
+    script = Path("app/static/js/offline-cache.js").read_text()
+    base = Path("app/templates/base.html").read_text()
+    styles = Path("app/static/css/jaci-theme.css").read_text()
+
+    assert 'id="sync-conflict-panel"' in base
+    assert 'id="sync-conflict-summary"' in base
+    assert "Conflitos de sincronização" in base
+    assert ".sync-conflict-panel" in styles
+    assert ".offline-cache-panel:not([hidden]) + .sync-conflict-panel:not([hidden])" in styles
+    assert "Local: ${escapeHtml(local)}" in script
+    assert "Servidor: ${escapeHtml(remote)}" in script
+    assert "parseConflictMessage(conflict)" in script
+    assert "operation.conflict || {}" in script
+
+
 def test_base_template_exposes_offline_cache_panel():
     base = Path("app/templates/base.html").read_text()
 
@@ -646,6 +676,7 @@ def test_base_template_exposes_offline_cache_panel():
     assert 'id="offline-cache-summary"' in base
     assert "Compras iniciadas offline serão sincronizadas automaticamente." in base
     assert "/static/js/offline-cache.js" in base
+    assert 'id="sync-conflict-panel"' in base
 
 
 def test_start_execution_forms_are_offline_capable():

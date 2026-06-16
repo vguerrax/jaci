@@ -69,6 +69,7 @@ def test_sync_status_is_visible_globally_and_styled_by_state():
     assert ".sync-status-body" in styles
     assert ".sync-status-details" in styles
     assert ".sync-status-errors" in styles
+    assert ".sync-conflict-panel" in styles
     assert "animation: jaci-spin" in styles
     assert "@media (max-width: 767.98px)" in styles
     assert "--jaci-clay: #8A5F3E;" in styles
