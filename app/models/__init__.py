@@ -5,6 +5,7 @@ from app.models.category import Category
 from app.models.template import Template, TemplateItem
 from app.models.execution import Execution, ExecutionItem
 from app.models.notification import Notification
+from app.models.sync_conflict_audit import SyncConflictAudit
 
 __all__ = [
     "ExecutionStatus",
@@ -18,4 +19,5 @@ __all__ = [
     "Execution",
     "ExecutionItem",
     "Notification",
+    "SyncConflictAudit",
 ]
