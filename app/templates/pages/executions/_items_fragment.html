@@ -102,6 +102,13 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm"
                                 data-bs-toggle="modal"
                                 data-bs-target="#completeItemModal{{ item.id }}"
+                                data-offline-complete-item
+                                data-execution-id="{{ execution.id }}"
+                                data-item-id="{{ item.id }}"
+                                data-item-name="{{ item.name }}"
+                                data-version="{{ item.version }}"
+                                data-planned-quantity="{{ item.planned_quantity }}"
+                                data-notes="{{ item.notes or '' }}"
                                 hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/complete-form"
                                 hx-target="#modal-container"
                                 hx-swap="innerHTML">
@@ -128,10 +135,31 @@
                         </button>
                         {% endif %}
                         {% if execution.status == 'in_progress' and item.is_completed %}
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#completeItemModal{{ item.id }}"
+                                data-offline-complete-item
+                                data-execution-id="{{ execution.id }}"
+                                data-item-id="{{ item.id }}"
+                                data-item-name="{{ item.name }}"
+                                data-version="{{ item.version }}"
+                                data-planned-quantity="{{ item.planned_quantity }}"
+                                data-purchased-quantity="{{ item.purchased_quantity or '' }}"
+                                data-unit-price="{{ item.unit_price or '' }}"
+                                data-location="{{ item.location or '' }}"
+                                data-notes="{{ item.notes or '' }}"
+                                hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/complete-form"
+                                hx-target="#modal-container"
+                                hx-swap="innerHTML">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                         <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/incomplete"
                             hx-confirm="Marcar {{ item.name }} como incompleto?"
                             hx-target="#items-container"
-                            hx-swap="innerHTML">
+                            hx-swap="innerHTML"
+                            data-offline-incomplete-item
+                            data-execution-id="{{ execution.id }}"
+                            data-item-id="{{ item.id }}">
                             <input type="hidden" name="version" value="{{ item.version }}">
                             <button type="submit" class="btn btn-outline-secondary btn-sm text-danger">
                                 <i class="bi bi-bag-dash"></i>

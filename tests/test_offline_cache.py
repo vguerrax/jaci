@@ -8,8 +8,10 @@ from fastapi import HTTPException
 from app.models import Execution, ExecutionItem
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.offline import (
+    ExecutionItemOperation,
     StartExecutionOperation,
     offline_snapshot,
+    sync_execution_item_operation,
     sync_start_execution_operation,
 )
 from app.services.offline_cache_service import build_offline_snapshot
@@ -135,6 +137,137 @@ def test_offline_start_execution_operation_rejects_foreign_execution(
     assert error.value.status_code == 404
 
 
+def test_offline_complete_item_operation_applies_pending_change(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(execution_id=execution.id, name="Arroz", planned_quantity=2)
+    db.add(item)
+    db.commit()
+
+    result = asyncio.run(
+        sync_execution_item_operation(
+            ExecutionItemOperation(
+                execution_id=execution.id,
+                item_id=item.id,
+                action="complete_item",
+                version=item.version,
+                purchased_quantity=1.5,
+                unit_price=8.9,
+                location="Mercado",
+                notes="Pacote pequeno",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(item)
+    assert result["status"] == "applied"
+    assert result["item"]["is_completed"] is True
+    assert item.is_completed is True
+    assert item.purchased_quantity == 1.5
+    assert item.unit_price == 8.9
+    assert item.location == "Mercado"
+    assert item.notes == "Pacote pequeno"
+    assert item.version == 2
+
+
+def test_offline_incomplete_item_operation_applies_pending_change(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Feijão",
+        planned_quantity=1,
+        purchased_quantity=1,
+        unit_price=7,
+        location="Mercado",
+        is_completed=True,
+    )
+    db.add(item)
+    db.commit()
+
+    result = asyncio.run(
+        sync_execution_item_operation(
+            ExecutionItemOperation(
+                execution_id=execution.id,
+                item_id=item.id,
+                action="incomplete_item",
+                version=item.version,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(item)
+    assert result["status"] == "applied"
+    assert item.is_completed is False
+    assert item.purchased_quantity is None
+    assert item.unit_price is None
+    assert item.location is None
+    assert item.version == 2
+
+
+def test_offline_item_operation_rejects_stale_version(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Café",
+        planned_quantity=1,
+        version=3,
+    )
+    db.add(item)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_execution_item_operation(
+                ExecutionItemOperation(
+                    execution_id=execution.id,
+                    item_id=item.id,
+                    action="complete_item",
+                    version=2,
+                    purchased_quantity=1,
+                    unit_price=12,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 409
+
+
 def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
@@ -145,12 +278,20 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "'categories'" in script
     assert "'templates'" in script
     assert "'executions'" in script
+    assert "'execution_items'" in script
     assert "'pending_operations'" in script
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
+    assert "EXECUTION_ITEM_SYNC_URL" in script
     assert "data-offline-start-execution" in script
+    assert "data-offline-complete-item" in script
+    assert "data-offline-incomplete-item" in script
     assert "enqueueStartExecution" in script
+    assert "enqueueExecutionItemOperation" in script
+    assert "offline_base_version" in script
     assert "start_execution" in script
+    assert "complete_item" in script
+    assert "incomplete_item" in script
     assert "credentials: 'same-origin'" in script
     assert "window.addEventListener('online'" in script
     assert "indexedDB.deleteDatabase" in script
@@ -175,3 +316,15 @@ def test_start_execution_forms_are_offline_capable():
     assert 'data-execution-id="{{ execution.id }}"' in home
     assert "data-offline-start-execution" in detail
     assert 'data-execution-id="{{ execution.id }}"' in detail
+
+
+def test_execution_item_controls_are_offline_capable():
+    items = Path("app/templates/pages/executions/_items_fragment.html").read_text()
+    modal = Path("app/templates/pages/executions/_complete_modal.html").read_text()
+
+    assert "data-offline-complete-item" in items
+    assert "data-offline-incomplete-item" in items
+    assert "data-purchased-quantity" in items
+    assert "data-unit-price" in items
+    assert "data-offline-complete-item-form" in modal
+    assert 'value="{{ item.unit_price if item.unit_price else \'\' }}"' in modal
