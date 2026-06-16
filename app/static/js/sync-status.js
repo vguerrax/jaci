@@ -7,6 +7,7 @@
     const icon = status.querySelector('i');
     const label = status.querySelector('.sync-status-label');
     const pending = status.querySelector('.sync-status-pending');
+    const manualSync = status.querySelector('[data-sync-now]');
     const STATES = {
         synced: {
             label: 'Sincronizado',
@@ -108,6 +109,11 @@
     window.addEventListener('jaci:sync-start', startSync);
     window.addEventListener('jaci:sync-success', finishSync);
     window.addEventListener('jaci:sync-error', failSync);
+    if (manualSync) {
+        manualSync.addEventListener('click', function () {
+            window.dispatchEvent(new CustomEvent('jaci:sync-manual'));
+        });
+    }
     render();
 
 })();

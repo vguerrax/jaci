@@ -2,7 +2,7 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 7;
+    const DB_VERSION = 8;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
@@ -10,6 +10,7 @@
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
+    const SYNC_RETRY_DELAY_MS = 15000;
     const STORE_NAMES = [
         'groups',
         'categories',
@@ -23,6 +24,8 @@
 
     const panel = document.getElementById('offline-cache-panel');
     const summary = document.getElementById('offline-cache-summary');
+    let retryTimer = null;
+    let syncInFlight = false;
 
     if (!('indexedDB' in window)) return;
 
@@ -472,6 +475,35 @@
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
     }
 
+    function scheduleAutomaticRetry(delay) {
+        if (!navigator.onLine) return;
+        if (retryTimer) window.clearTimeout(retryTimer);
+        retryTimer = window.setTimeout(function () {
+            retryTimer = null;
+            runAutomaticSync({ retry: true });
+        }, delay);
+    }
+
+    async function runAutomaticSync(options) {
+        if (!navigator.onLine || syncInFlight) return;
+        syncInFlight = true;
+        if (retryTimer) {
+            window.clearTimeout(retryTimer);
+            retryTimer = null;
+        }
+
+        try {
+            await syncPendingOperations();
+            await refreshSnapshot();
+        } catch (error) {
+            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+            scheduleAutomaticRetry(SYNC_RETRY_DELAY_MS);
+        } finally {
+            syncInFlight = false;
+            renderOfflineSummary();
+        }
+    }
+
     function clearLocalCache() {
         localStorage.removeItem(PENDING_CHANGES_KEY);
         return new Promise(function (resolve, reject) {
@@ -801,6 +833,7 @@
         refresh: refreshSnapshot,
         read: readSnapshot,
         syncPending: syncPendingOperations,
+        syncNow: runAutomaticSync,
         enqueueStartExecution: enqueueStartExecution,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
@@ -814,20 +847,17 @@
         return;
     }
 
-    window.addEventListener('online', function () {
-        syncPendingOperations().then(refreshSnapshot).catch(function () {
-            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
-        }).finally(renderOfflineSummary);
-    });
+    window.addEventListener('online', runAutomaticSync);
     window.addEventListener('offline', renderOfflineSummary);
+    window.addEventListener('jaci:sync-manual', function () {
+        runAutomaticSync({ manual: true });
+    });
     window.addEventListener('load', function () {
         setupOfflineStartForms();
         setupOfflineAddItemForms();
         setupOfflineItemOperations();
         setupOfflineFinalizeControls();
         updatePendingCount().catch(function () {});
-        syncPendingOperations().then(refreshSnapshot).catch(function () {
-            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
-        }).finally(renderOfflineSummary);
+        runAutomaticSync();
     });
 })();
