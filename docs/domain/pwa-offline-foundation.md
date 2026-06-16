@@ -57,7 +57,9 @@ O indicador global fica visível em todas as telas e informa:
 * sincronizando;
 * offline;
 * erro de sincronização;
-* quantidade de alterações pendentes registrada localmente.
+* quantidade de alterações pendentes registrada localmente;
+* data e hora da última sincronização concluída;
+* quantidade de operações pendentes que já falharam ao sincronizar.
 
 As transições acontecem automaticamente:
 
@@ -68,9 +70,18 @@ As transições acontecem automaticamente:
 * o cache local IndexedDB dispara eventos `jaci:sync-start`,
   `jaci:sync-success` e `jaci:sync-error` ao atualizar o snapshot offline.
 
-A fila persistente de mutações, sincronização assíncrona e resolução de conflitos
-continuam como evoluções futuras. A fundação atual não deve comunicar que uma
-alteração offline foi salva sem que exista confirmação local.
+## BL-016 — Status Detalhado de Sincronização
+
+O indicador global deve permitir que o usuário entenda claramente o estado dos
+dados. O chip exibe o estado atual, a quantidade de alterações pendentes, a
+última sincronização bem-sucedida e a quantidade de erros pendentes. Esses
+valores são atualizados a partir de `localStorage` (`jaci_pending_changes`,
+`jaci_last_sync_at` e `jaci_pending_errors`) para permanecerem disponíveis após
+recarregamento da aplicação.
+
+A resolução explícita de conflitos continua como evolução futura. A interface
+não deve comunicar que uma alteração foi sincronizada enquanto ela ainda existir
+na fila local.
 
 ## Feedback de Carregamento
 
