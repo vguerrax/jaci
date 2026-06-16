@@ -32,6 +32,9 @@ def test_sync_center_renders_local_queue_management_shell(db, make_user, make_gr
     assert "data-sync-filter=\"failed\"" in body
     assert "data-sync-filter=\"conflict\"" in body
     assert "data-sync-center-sync-now" in body
+    assert "Histórico de conflitos" in body
+    assert "data-sync-audit-list" in body
+    assert "data-sync-audit-refresh" in body
 
 
 def test_sync_center_is_available_from_navigation():
@@ -52,6 +55,11 @@ def test_sync_center_frontend_reads_queue_and_resolves_conflicts():
     assert "buildConflict" in script
     assert "response.status === 409" in script
     assert "resolveOperation" in script
+    assert "SYNC_CONFLICTS_URL" in script
+    assert "recordConflictResolution" in script
+    assert "renderConflictAuditHistory" in script
+    assert "data-sync-audit-list" in script
+    assert "data-sync-audit-refresh" in script
     assert "discard_local" in script
     assert "retry_local" in script
     assert "requires_manual_intervention: false" in script
@@ -59,3 +67,4 @@ def test_sync_center_frontend_reads_queue_and_resolves_conflicts():
     assert "if (operation.requires_manual_intervention || isConflictOperation(operation))" in script
     assert ".sync-center-stats" in styles
     assert ".sync-operation-conflict" in styles
+    assert ".sync-audit-card" in styles

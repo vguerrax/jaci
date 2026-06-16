@@ -23,6 +23,12 @@ from app.services.execution_service import (
     start_execution,
 )
 from app.services.offline_cache_service import build_offline_snapshot
+from app.services.sync_conflict_audit_service import (
+    create_conflict_audit,
+    list_conflict_audits,
+    resolve_conflict_audit,
+    serialize_conflict_audit,
+)
 from app.websocket.manager import manager
 
 
@@ -64,20 +70,21 @@ class FinalizeExecutionOperation(BaseModel):
     new_date: str | None = None
 
 
-def _serialize_execution_conflict(execution) -> dict:
+class ConflictResolutionOperation(BaseModel):
+    resolution: str = Field(pattern="^(retry_local|discard_local|manual)$")
+
+
+def _execution_state(execution) -> dict:
     return {
         "id": execution.id,
-        "status": execution.status.value,
-        "scheduled_date": execution.scheduled_date.isoformat()
-        if execution.scheduled_date
-        else None,
-        "finished_at": execution.finished_at.isoformat()
-        if execution.finished_at
-        else None,
+        "group_id": execution.group_id,
+        "status": execution.status.value if hasattr(execution.status, "value") else str(execution.status),
+        "scheduled_date": execution.scheduled_date.isoformat() if execution.scheduled_date else None,
+        "finished_at": execution.finished_at.isoformat() if execution.finished_at else None,
     }
 
 
-def _serialize_item_conflict(item: ExecutionItem) -> dict:
+def _item_state(item: ExecutionItem) -> dict:
     return {
         "id": item.id,
         "execution_id": item.execution_id,
@@ -94,45 +101,44 @@ def _serialize_item_conflict(item: ExecutionItem) -> dict:
     }
 
 
-def _conflict_detail(
+def _raise_sync_conflict(
+    db: Session,
     *,
-    message: str,
+    user: User,
+    group_id: int,
+    execution_id: int | None,
+    operation: BaseModel,
     entity: str,
-    entity_id: int,
-    local: BaseModel | dict,
-    remote: dict,
+    entity_id: int | str,
     reason: str,
-) -> dict:
-    return {
-        "type": "sync_conflict",
-        "message": message,
-        "entity": entity,
-        "entity_id": entity_id,
-        "reason": reason,
-        "local": local.model_dump() if isinstance(local, BaseModel) else local,
-        "remote": remote,
-    }
-
-
-def _raise_conflict(
-    *,
     message: str,
-    entity: str,
-    entity_id: int,
-    local: BaseModel | dict,
-    remote: dict,
-    reason: str,
+    remote_state: dict,
 ) -> None:
+    audit = create_conflict_audit(
+        db,
+        user=user,
+        group_id=group_id,
+        execution_id=execution_id,
+        operation_type=operation.__class__.__name__,
+        entity=entity,
+        entity_id=entity_id,
+        reason=reason,
+        message=message,
+        local_state=operation,
+        remote_state=remote_state,
+    )
     raise HTTPException(
         status_code=status.HTTP_409_CONFLICT,
-        detail=_conflict_detail(
-            message=message,
-            entity=entity,
-            entity_id=entity_id,
-            local=local,
-            remote=remote,
-            reason=reason,
-        ),
+        detail={
+            "type": "sync_conflict",
+            "audit_id": audit.id,
+            "message": message,
+            "entity": entity,
+            "entity_id": entity_id,
+            "reason": reason,
+            "local": audit.local_state,
+            "remote": audit.remote_state,
+        },
     )
 
 
@@ -148,6 +154,53 @@ async def offline_snapshot(
             detail="Autenticação necessária",
         )
     return build_offline_snapshot(db, user)
+
+
+@router.get("/conflicts")
+async def offline_conflict_history(
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Histórico auditável de conflitos de sincronização dos grupos do usuário."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+    return {
+        "conflicts": [
+            serialize_conflict_audit(audit)
+            for audit in list_conflict_audits(db, user)
+        ]
+    }
+
+
+@router.post("/conflicts/{audit_id}/resolution")
+async def record_conflict_resolution(
+    audit_id: int,
+    operation: ConflictResolutionOperation,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Registra a resolução aplicada a um conflito sem apagar sua auditoria."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+
+    audit = resolve_conflict_audit(
+        db,
+        audit_id=audit_id,
+        user=user,
+        resolution=operation.resolution,
+    )
+    if not audit:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Conflito não encontrado",
+        )
+    return {"conflict": serialize_conflict_audit(audit)}
 
 
 @router.post("/operations/start-execution")
@@ -170,22 +223,30 @@ async def sync_start_execution_operation(
             detail="Execução não encontrada",
         )
     if execution.status == ExecutionStatus.completed:
-        _raise_conflict(
-            message="A execução já foi finalizada no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_already_completed",
+            message="Não é possível iniciar execução já finalizada.",
+            remote_state=_execution_state(execution),
         )
     if execution.status == ExecutionStatus.cancelled:
-        _raise_conflict(
-            message="A execução foi cancelada no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_cancelled",
+            message="Não é possível iniciar execução cancelada.",
+            remote_state=_execution_state(execution),
         )
 
     if execution.status == ExecutionStatus.scheduled:
@@ -231,13 +292,17 @@ async def sync_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        _raise_conflict(
-            message="A execução não aceita mais alterações no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_not_editable",
+            message="Execução não permite alterações.",
+            remote_state=_execution_state(execution),
         )
 
     item = db.scalar(
@@ -252,13 +317,17 @@ async def sync_execution_item_operation(
             detail="Item não encontrado",
         )
     if item.version != operation.version:
-        _raise_conflict(
-            message="O item foi alterado por outro usuário antes da sincronização.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution_item",
             entity_id=item.id,
-            local=operation,
-            remote=_serialize_item_conflict(item),
             reason="stale_version",
+            message="Item alterado por outro usuário.",
+            remote_state=_item_state(item),
         )
 
     if operation.action == "complete_item":
@@ -334,13 +403,17 @@ async def sync_add_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        _raise_conflict(
-            message="A execução não aceita mais novos itens no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_not_editable",
+            message="Execução não permite alterações.",
+            remote_state=_execution_state(execution),
         )
     if not operation.name.strip():
         raise HTTPException(
@@ -417,13 +490,17 @@ async def sync_remove_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        _raise_conflict(
-            message="A execução não aceita remoções no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_not_editable",
+            message="Execução não permite alterações.",
+            remote_state=_execution_state(execution),
         )
 
     item = db.scalar(
@@ -438,13 +515,17 @@ async def sync_remove_execution_item_operation(
             detail="Item não encontrado",
         )
     if item.is_completed:
-        _raise_conflict(
-            message="O item já foi marcado como comprado no servidor.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution_item",
             entity_id=item.id,
-            local=operation,
-            remote=_serialize_item_conflict(item),
             reason="item_already_completed",
+            message="Não é possível remover item já concluído.",
+            remote_state=_item_state(item),
         )
 
     item_name = item.name
@@ -493,13 +574,17 @@ async def sync_finalize_execution_operation(
             detail="Execução não encontrada",
         )
     if execution.status == ExecutionStatus.cancelled:
-        _raise_conflict(
-            message="A execução foi cancelada no servidor e não pode ser finalizada.",
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
             entity="execution",
             entity_id=execution.id,
-            local=operation,
-            remote=_serialize_execution_conflict(execution),
             reason="execution_cancelled",
+            message="Execução cancelada não pode ser finalizada.",
+            remote_state=_execution_state(execution),
         )
     if execution.status == ExecutionStatus.completed:
         return {
