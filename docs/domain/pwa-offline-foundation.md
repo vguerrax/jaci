@@ -106,6 +106,30 @@ com a quantidade de dados disponíveis localmente e a data da última atualizaç
 Esse painel é uma indicação de consulta local, não uma confirmação de
 sincronização remota.
 
+## BL-014 — Fila Local de Operações
+
+Alterações offline são armazenadas na store IndexedDB `pending_operations`. Cada
+registro segue um contrato persistente compatível com:
+
+```json
+{
+  "id": "uuid-ou-chave-estavel",
+  "tipo": "UPDATE_ITEM",
+  "entidade": "execution_item",
+  "entidade_id": "uuid-ou-id",
+  "payload": {},
+  "created_at": "timestamp",
+  "tentativas": 0
+}
+```
+
+O cliente mantém também campos internos de compatibilidade (`action`, `entity`,
+`entity_id`, `status`, `updated_at`) para roteamento da sincronização. A fila é
+lida do IndexedDB ao abrir o app, persiste entre reinicializações e é executada
+em ordem crescente de `created_at`. Quando uma sincronização falha por erro de
+rede ou resposta não-OK, a operação permanece na fila e `tentativas` é
+incrementado.
+
 Execuções agendadas podem ser iniciadas offline. O cliente persiste uma operação
 `start_execution` na store `pending_operations`, atualiza a execução local para
 `in_progress` e incrementa o indicador global de alterações pendentes. Quando a

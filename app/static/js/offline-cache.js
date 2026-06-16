@@ -2,7 +2,7 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 6;
+    const DB_VERSION = 7;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
@@ -152,15 +152,14 @@
 
     async function enqueueStartExecution(executionId) {
         const db = await openDatabase();
-        await putRecord(db, 'pending_operations', {
+        await putRecord(db, 'pending_operations', buildQueuedOperation({
             id: `start-execution-${executionId}`,
-            entity: 'execution',
-            entity_id: executionId,
+            tipo: 'START_EXECUTION',
+            entidade: 'execution',
+            entidadeId: executionId,
             action: 'start_execution',
             payload: { execution_id: executionId },
-            status: 'pending',
-            created_at: new Date().toISOString(),
-        });
+        }));
         db.close();
         await markExecutionStartedLocally(executionId);
         await updatePendingCount();
@@ -183,6 +182,41 @@
         if (value === null || value === undefined || value === '') return null;
         const normalized = Number(String(value).replace(',', '.'));
         return Number.isFinite(normalized) ? normalized : null;
+    }
+
+    function buildQueuedOperation({ id, tipo, entidade, entidadeId, action, payload, createdAt, updatedAt }) {
+        const created = createdAt || new Date().toISOString();
+        return {
+            id: id,
+            tipo: tipo,
+            entidade: entidade,
+            entidade_id: entidadeId,
+            payload: payload,
+            created_at: created,
+            tentativas: 0,
+            entity: entidade,
+            entity_id: entidadeId,
+            action: action,
+            status: 'pending',
+            updated_at: updatedAt || created,
+        };
+    }
+
+    function sortOperationsByCreation(operations) {
+        return operations.slice().sort(function (a, b) {
+            const byCreatedAt = String(a.created_at || '').localeCompare(String(b.created_at || ''));
+            if (byCreatedAt !== 0) return byCreatedAt;
+            return String(a.id).localeCompare(String(b.id));
+        });
+    }
+
+    async function recordSyncAttempt(operation) {
+        const db = await openDatabase();
+        await putRecord(db, 'pending_operations', Object.assign({}, operation, {
+            tentativas: Number(operation.tentativas || 0) + 1,
+            updated_at: new Date().toISOString(),
+        }));
+        db.close();
     }
 
     async function markExecutionItemLocally(operation) {
@@ -216,16 +250,18 @@
         const baseVersion = existing?.payload?.version ?? operation.version;
         const payload = Object.assign({}, operation, { version: baseVersion });
 
-        await putRecord(db, 'pending_operations', {
-            id: operationId,
-            entity: 'execution_item',
-            entity_id: operation.item_id,
-            action: operation.action,
-            payload: payload,
-            status: 'pending',
-            created_at: existing?.created_at || new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-        });
+        await putRecord(db, 'pending_operations', Object.assign(
+            buildQueuedOperation({
+                id: operationId,
+                tipo: operation.action === 'complete_item' ? 'COMPLETE_ITEM' : 'INCOMPLETE_ITEM',
+                entidade: 'execution_item',
+                entidadeId: operation.item_id,
+                action: operation.action,
+                payload: payload,
+                createdAt: existing?.created_at,
+            }),
+            { tentativas: Number(existing?.tentativas || 0) }
+        ));
         db.close();
         await markExecutionItemLocally(payload);
         await updatePendingCount();
@@ -255,15 +291,14 @@
 
     async function enqueueAddExecutionItemOperation(operation) {
         const db = await openDatabase();
-        await putRecord(db, 'pending_operations', {
+        await putRecord(db, 'pending_operations', buildQueuedOperation({
             id: operationIdForTempItem(operation.temp_id),
-            entity: 'execution_item',
-            entity_id: operation.temp_id,
+            tipo: 'ADD_ITEM',
+            entidade: 'execution_item',
+            entidadeId: operation.temp_id,
             action: 'add_execution_item',
             payload: operation,
-            status: 'pending',
-            created_at: new Date().toISOString(),
-        });
+        }));
         db.close();
         await markAddedExecutionItemLocally(operation);
         await updatePendingCount();
@@ -296,15 +331,14 @@
             return;
         }
 
-        await putRecord(db, 'pending_operations', {
+        await putRecord(db, 'pending_operations', buildQueuedOperation({
             id: `remove-execution-item-${operation.item_id}`,
-            entity: 'execution_item',
-            entity_id: operation.item_id,
+            tipo: 'REMOVE_ITEM',
+            entidade: 'execution_item',
+            entidadeId: operation.item_id,
             action: 'remove_execution_item',
             payload: operation,
-            status: 'pending',
-            created_at: new Date().toISOString(),
-        });
+        }));
         await deleteRecord(db, 'pending_operations', operationIdForItem(operation.item_id));
         db.close();
         await markRemovedExecutionItemLocally(operation);
@@ -338,15 +372,14 @@
 
     async function enqueueFinalizeExecutionOperation(operation) {
         const db = await openDatabase();
-        await putRecord(db, 'pending_operations', {
+        await putRecord(db, 'pending_operations', buildQueuedOperation({
             id: `finalize-execution-${operation.execution_id}`,
-            entity: 'execution',
-            entity_id: operation.execution_id,
+            tipo: 'FINALIZE_EXECUTION',
+            entidade: 'execution',
+            entidadeId: operation.execution_id,
             action: 'finalize_execution',
             payload: operation,
-            status: 'pending',
-            created_at: new Date().toISOString(),
-        });
+        }));
         db.close();
         await markExecutionFinalizedLocally(operation);
         await updatePendingCount();
@@ -375,17 +408,26 @@
         }
         if (!url) return false;
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify(operation.payload),
-        });
+        let response;
+        try {
+            response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(operation.payload),
+            });
+        } catch (error) {
+            await recordSyncAttempt(operation);
+            throw error;
+        }
         if (response.status === 401) return false;
-        if (!response.ok) throw new Error('Falha ao sincronizar alteração offline.');
+        if (!response.ok) {
+            await recordSyncAttempt(operation);
+            throw new Error('Falha ao sincronizar alteração offline.');
+        }
         return true;
     }
 
@@ -393,11 +435,7 @@
         if (!navigator.onLine) return;
 
         const db = await openDatabase();
-        const operations = (await readStore(db, 'pending_operations')).sort(function (a, b) {
-            if (a.action === 'finalize_execution' && b.action !== 'finalize_execution') return 1;
-            if (a.action !== 'finalize_execution' && b.action === 'finalize_execution') return -1;
-            return 0;
-        });
+        const operations = sortOperationsByCreation(await readStore(db, 'pending_operations'));
         db.close();
 
         if (!operations.length) {
