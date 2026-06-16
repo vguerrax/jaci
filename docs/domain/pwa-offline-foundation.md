@@ -79,9 +79,10 @@ valores são atualizados a partir de `localStorage` (`jaci_pending_changes`,
 `jaci_last_sync_at` e `jaci_pending_errors`) para permanecerem disponíveis após
 recarregamento da aplicação.
 
-A resolução explícita de conflitos continua como evolução futura. A interface
-não deve comunicar que uma alteração foi sincronizada enquanto ela ainda existir
-na fila local.
+A interface não deve comunicar que uma alteração foi sincronizada enquanto ela
+ainda existir na fila local. Quando a sincronização detecta conflito, o
+indicador mostra a quantidade de conflitos pendentes e um painel global resume o
+estado local e o estado do servidor para orientar a intervenção manual.
 
 ## Feedback de Carregamento
 
@@ -168,6 +169,34 @@ inválido, ficam marcadas com `requires_manual_intervention=true`. Apenas nesses
 casos o indicador global entra em estado de erro para chamar atenção do usuário.
 Falhas transitórias não exibem erro permanente; o indicador mantém as pendências
 visíveis enquanto a retentativa automática trabalha em segundo plano.
+
+## BL-019 — Resolução de Conflitos
+
+Conflitos são detectados automaticamente durante a sincronização das operações
+offline. Respostas HTTP `409` da API offline usam um detalhe estruturado:
+
+```json
+{
+  "type": "sync_conflict",
+  "message": "O item foi alterado por outro usuário antes da sincronização.",
+  "entity": "execution_item",
+  "entity_id": 42,
+  "reason": "stale_version",
+  "local": {},
+  "remote": {}
+}
+```
+
+O cliente grava esse detalhe na operação original em `pending_operations`,
+incrementa `tentativas`, marca `requires_manual_intervention=true` e altera o
+status local da operação para `conflict`. A operação permanece na fila até que o
+usuário resolva o conflito; nenhuma alteração local é removida automaticamente.
+
+O indicador global mostra a quantidade de conflitos pendentes usando
+`jaci_pending_conflicts`. Um painel global `sync-conflict-panel` apresenta uma
+mensagem curta para cada conflito, incluindo um resumo do valor local e do valor
+existente no servidor. Isso torna explícito que há intervenção manual pendente e
+preserva as duas versões para uma etapa posterior de resolução assistida.
 
 Execuções agendadas podem ser iniciadas offline. O cliente persiste uma operação
 `start_execution` na store `pending_operations`, atualiza a execução local para
