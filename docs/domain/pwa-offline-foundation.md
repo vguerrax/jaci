@@ -155,6 +155,20 @@ rotina evita execuções concorrentes, envia as operações em ordem de criaçã
 atualiza o snapshot offline ao concluir e agenda nova tentativa automática
 quando uma falha temporária deixa operações pendentes.
 
+## BL-017 — Retentativa Automática
+
+Falhas transitórias são reprocessadas sem intervenção do usuário. O cliente
+classifica como transitórias falhas de rede, HTTP `429` e respostas `5xx`; nesses
+casos incrementa `tentativas`, mantém a operação na fila e agenda nova tentativa
+com backoff exponencial entre `SYNC_RETRY_BASE_DELAY_MS` e
+`SYNC_RETRY_MAX_DELAY_MS`.
+
+Falhas que indicam intervenção manual, como conflitos de versão ou payload
+inválido, ficam marcadas com `requires_manual_intervention=true`. Apenas nesses
+casos o indicador global entra em estado de erro para chamar atenção do usuário.
+Falhas transitórias não exibem erro permanente; o indicador mantém as pendências
+visíveis enquanto a retentativa automática trabalha em segundo plano.
+
 Execuções agendadas podem ser iniciadas offline. O cliente persiste uma operação
 `start_execution` na store `pending_operations`, atualiza a execução local para
 `in_progress` e incrementa o indicador global de alterações pendentes. Quando a

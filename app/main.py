@@ -118,6 +118,7 @@ async def home(
         dashboard = build_home_dashboard(db, active_group.id)
 
     return templates.TemplateResponse(
+        request,
         "pages/index.html",
         {
             "request": request,

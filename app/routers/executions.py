@@ -75,6 +75,7 @@ async def list_executions(
 
     if not active_group:
         return templates.TemplateResponse(
+            request,
             "pages/executions/index.html",
             {
                 "request": request,
@@ -110,6 +111,7 @@ async def list_executions(
         )
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/index.html",
         {
             "request": request,
@@ -148,6 +150,7 @@ async def create_execution_page(
     tomorrow_str = (now_local() + timedelta(days=1)).strftime("%Y-%m-%d")
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/create.html",
         {
             "request": request,
@@ -199,6 +202,7 @@ async def execution_detail(
     jwt_token = request.cookies.get("jaci_session")
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/in_progress.html",
         {
             "request": request,
@@ -235,6 +239,7 @@ async def _completed_page(
     totals = get_execution_totals(db, execution_id)
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/completed.html",
         {
             "request": request,
@@ -330,6 +335,7 @@ async def complete_item_form(
         return Response(status_code=404)
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/_complete_modal.html",
         {
             "request": request,
@@ -368,6 +374,7 @@ async def edit_item_form(
         return Response(status_code=404)
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/_edit_modal.html",
         {
             "request": request,
@@ -399,6 +406,7 @@ async def execution_sidebar_fragment(
     totals = get_execution_totals(db, execution_id)
  
     return templates.TemplateResponse(
+        request,
         "pages/executions/_sidebar_fragment.html",
         {
             "request": request,
@@ -450,6 +458,7 @@ async def close_execution_page(
     tomorrow_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/close_pending.html",
         {
             "request": request,
@@ -492,6 +501,7 @@ async def handle_create_execution(
         today_str = now_local().strftime("%Y-%m-%d")
         tomorrow_str = (now_local() + timedelta(days=1)).strftime("%Y-%m-%d")
         return templates.TemplateResponse(
+            request,
             "pages/executions/create.html",
             {
                 "request": request,
@@ -960,6 +970,7 @@ async def _get_items_fragment(
     expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 
     return templates.TemplateResponse(
+        request,
         "pages/executions/_items_fragment.html",
         {
             "request": request,
