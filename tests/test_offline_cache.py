@@ -11,10 +11,12 @@ from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.offline import (
     AddExecutionItemOperation,
     ExecutionItemOperation,
+    RemoveExecutionItemOperation,
     StartExecutionOperation,
     offline_snapshot,
     sync_add_execution_item_operation,
     sync_execution_item_operation,
+    sync_remove_execution_item_operation,
     sync_start_execution_operation,
 )
 from app.services.offline_cache_service import build_offline_snapshot
@@ -348,6 +350,78 @@ def test_offline_add_item_operation_rejects_foreign_category(
     assert error.value.status_code == 422
 
 
+def test_offline_remove_item_operation_removes_incomplete_item(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(execution_id=execution.id, name="Arroz", planned_quantity=2)
+    db.add(item)
+    db.commit()
+    item_id = item.id
+
+    result = asyncio.run(
+        sync_remove_execution_item_operation(
+            RemoveExecutionItemOperation(
+                execution_id=execution.id,
+                item_id=item_id,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    stored = db.scalar(select(ExecutionItem).where(ExecutionItem.id == item_id))
+    assert result["status"] == "applied"
+    assert result["item"]["is_deleted"] is True
+    assert stored is None
+
+
+def test_offline_remove_item_operation_rejects_completed_item(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Feijão",
+        planned_quantity=1,
+        is_completed=True,
+    )
+    db.add(item)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_remove_execution_item_operation(
+                RemoveExecutionItemOperation(
+                    execution_id=execution.id,
+                    item_id=item.id,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 409
+
+
 def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
@@ -364,16 +438,21 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "START_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
     assert "ADD_EXECUTION_ITEM_SYNC_URL" in script
+    assert "REMOVE_EXECUTION_ITEM_SYNC_URL" in script
     assert "data-offline-start-execution" in script
     assert "data-offline-add-item" in script
     assert "data-offline-complete-item" in script
     assert "data-offline-incomplete-item" in script
+    assert "data-offline-remove-item" in script
     assert "enqueueStartExecution" in script
     assert "enqueueAddExecutionItemOperation" in script
     assert "enqueueExecutionItemOperation" in script
+    assert "enqueueRemoveExecutionItemOperation" in script
     assert "createTempId" in script
     assert "is_temporary" in script
     assert "add_execution_item" in script
+    assert "remove_execution_item" in script
+    assert "offline_removed_at" in script
     assert "offline_base_version" in script
     assert "start_execution" in script
     assert "complete_item" in script
@@ -421,6 +500,7 @@ def test_execution_item_controls_are_offline_capable():
 
     assert "data-offline-complete-item" in items
     assert "data-offline-incomplete-item" in items
+    assert "data-offline-remove-item" in items
     assert "data-purchased-quantity" in items
     assert "data-unit-price" in items
     assert "data-offline-complete-item-form" in modal

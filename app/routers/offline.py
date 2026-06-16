@@ -14,6 +14,7 @@ from app.services.execution_service import (
     complete_item as complete_item_service,
     get_execution_by_id,
     incomplete_item as incomplete_item_service,
+    remove_item_from_execution,
     start_execution,
 )
 from app.services.offline_cache_service import build_offline_snapshot
@@ -45,6 +46,11 @@ class AddExecutionItemOperation(BaseModel):
     planned_quantity: float = 1
     category_id: int | None = None
     notes: str | None = None
+
+
+class RemoveExecutionItemOperation(BaseModel):
+    execution_id: int
+    item_id: int
 
 
 @router.get("/snapshot")
@@ -284,5 +290,73 @@ async def sync_add_execution_item_operation(
             "notes": item.notes,
             "version": item.version,
             "sort_order": item.sort_order,
+        },
+    }
+
+
+@router.post("/operations/remove-execution-item")
+async def sync_remove_execution_item_operation(
+    operation: RemoveExecutionItemOperation,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Remove no servidor um item não concluído removido offline."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+
+    execution = get_execution_by_id(db, operation.execution_id, user)
+    if not execution:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Execução não encontrada",
+        )
+    if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Execução não permite alterações.",
+        )
+
+    item = db.scalar(
+        select(ExecutionItem).where(
+            ExecutionItem.id == operation.item_id,
+            ExecutionItem.execution_id == operation.execution_id,
+        )
+    )
+    if not item:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Item não encontrado",
+        )
+    if item.is_completed:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Não é possível remover item já concluído.",
+        )
+
+    item_name = item.name
+    remove_item_from_execution(db, item)
+
+    try:
+        await manager.broadcast(
+            operation.execution_id,
+            "item_removed",
+            {
+                "item_id": operation.item_id,
+                "item_name": item_name,
+                "user_email": user.email,
+            },
+        )
+    except Exception:
+        pass
+
+    return {
+        "status": "applied",
+        "item": {
+            "id": operation.item_id,
+            "execution_id": operation.execution_id,
+            "is_deleted": True,
         },
     }
