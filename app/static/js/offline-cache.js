@@ -9,6 +9,7 @@
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
+    const SYNC_CONFLICTS_URL = '/api/offline/conflicts';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
     const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
@@ -34,6 +35,9 @@
     const syncCountPending = document.querySelector('[data-sync-count-pending]');
     const syncCountFailed = document.querySelector('[data-sync-count-failed]');
     const syncCountConflict = document.querySelector('[data-sync-count-conflict]');
+    const syncAuditList = document.querySelector('[data-sync-audit-list]');
+    const syncAuditEmpty = document.querySelector('[data-sync-audit-empty]');
+    const syncAuditRefresh = document.querySelector('[data-sync-audit-refresh]');
     let syncFilter = 'all';
     let retryTimer = null;
     let syncInFlight = false;
@@ -685,12 +689,30 @@
             }));
         }
         db.close();
+        if (operation.conflict?.audit_id && navigator.onLine) {
+            recordConflictResolution(operation.conflict.audit_id, resolution).catch(function () {});
+        }
         await updatePendingCount();
         if (resolution === 'discard_local' && navigator.onLine) {
             refreshSnapshot().catch(function () {});
         }
         if (resolution === 'retry_local') {
             runAutomaticSync({ manual: true });
+        }
+    }
+
+    async function recordConflictResolution(auditId, resolution) {
+        const response = await fetch(`${SYNC_CONFLICTS_URL}/${auditId}/resolution`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ resolution: resolution }),
+        });
+        if (response.ok) {
+            renderConflictAuditHistory().catch(function () {});
         }
     }
 
@@ -755,6 +777,45 @@
         syncOperationList.insertAdjacentHTML('beforeend', cards);
     }
 
+    function auditCard(conflict) {
+        const local = formatPayload(conflict.local_state);
+        const remote = formatPayload(conflict.remote_state);
+        const resolution = conflict.resolution_applied || 'Pendente';
+
+        return [
+            '<article class="sync-audit-card">',
+            '<div>',
+            `<span class="sync-operation-status">${escapeHtml(resolution)}</span>`,
+            `<h3>${escapeHtml(conflict.operation_type)}</h3>`,
+            `<p>${escapeHtml(conflict.message)}</p>`,
+            `<small>Execução ${escapeHtml(conflict.execution_id || 'n/a')} · usuário #${escapeHtml(conflict.user_id)} · ${formatDate(conflict.created_at)}</small>`,
+            local ? `<dl><dt>Local</dt><dd>${escapeHtml(local)}</dd></dl>` : '',
+            remote ? `<dl><dt>Servidor</dt><dd>${escapeHtml(remote)}</dd></dl>` : '',
+            conflict.resolved_at ? `<small>Resolvido em ${formatDate(conflict.resolved_at)}</small>` : '',
+            '</div>',
+            '</article>',
+        ].join('');
+    }
+
+    async function renderConflictAuditHistory() {
+        if (!syncAuditList || !navigator.onLine) return;
+        const response = await fetch(SYNC_CONFLICTS_URL, {
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
+        });
+        if (!response.ok) return;
+
+        const data = await response.json();
+        const conflicts = data.conflicts || [];
+        if (syncAuditEmpty) {
+            syncAuditEmpty.hidden = conflicts.length > 0;
+        }
+        syncAuditList.querySelectorAll('.sync-audit-card').forEach(function (card) {
+            card.remove();
+        });
+        syncAuditList.insertAdjacentHTML('beforeend', conflicts.map(auditCard).join(''));
+    }
+
     function setupSyncCenter() {
         if (!syncCenter) return;
 
@@ -783,8 +844,14 @@
                 renderSyncCenter().catch(function () {});
             });
         }
+        if (syncAuditRefresh) {
+            syncAuditRefresh.addEventListener('click', function () {
+                renderConflictAuditHistory().catch(function () {});
+            });
+        }
 
         renderSyncCenter().catch(function () {});
+        renderConflictAuditHistory().catch(function () {});
     }
 
     function formatDate(value) {
@@ -1108,6 +1175,7 @@
         syncPending: syncPendingOperations,
         syncNow: runAutomaticSync,
         renderSyncCenter: renderSyncCenter,
+        renderConflictAuditHistory: renderConflictAuditHistory,
         enqueueStartExecution: enqueueStartExecution,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
