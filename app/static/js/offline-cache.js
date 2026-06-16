@@ -2,7 +2,7 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 9;
+    const DB_VERSION = 10;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
@@ -11,7 +11,8 @@
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
-    const SYNC_RETRY_DELAY_MS = 15000;
+    const SYNC_RETRY_BASE_DELAY_MS = 5000;
+    const SYNC_RETRY_MAX_DELAY_MS = 120000;
     const STORE_NAMES = [
         'groups',
         'categories',
@@ -27,6 +28,12 @@
     const summary = document.getElementById('offline-cache-summary');
     let retryTimer = null;
     let syncInFlight = false;
+
+    function SyncFailure(message, requiresManualIntervention) {
+        this.name = 'SyncFailure';
+        this.message = message;
+        this.requiresManualIntervention = requiresManualIntervention;
+    }
 
     if (!('indexedDB' in window)) return;
 
@@ -219,10 +226,20 @@
         });
     }
 
-    async function recordSyncAttempt(operation) {
+    function getRetryDelay(operation) {
+        const attempts = Math.max(1, Number(operation.tentativas || 0) + 1);
+        return Math.min(SYNC_RETRY_MAX_DELAY_MS, SYNC_RETRY_BASE_DELAY_MS * (2 ** (attempts - 1)));
+    }
+
+    function isTransientStatus(status) {
+        return status === 429 || status >= 500;
+    }
+
+    async function recordSyncAttempt(operation, requiresManualIntervention) {
         const db = await openDatabase();
         await putRecord(db, 'pending_operations', Object.assign({}, operation, {
             tentativas: Number(operation.tentativas || 0) + 1,
+            requires_manual_intervention: Boolean(requiresManualIntervention),
             updated_at: new Date().toISOString(),
         }));
         db.close();
@@ -429,13 +446,19 @@
                 body: JSON.stringify(operation.payload),
             });
         } catch (error) {
-            await recordSyncAttempt(operation);
-            throw error;
+            await recordSyncAttempt(operation, false);
+            throw new SyncFailure('Falha temporária de rede.', false);
         }
         if (response.status === 401) return false;
         if (!response.ok) {
-            await recordSyncAttempt(operation);
-            throw new Error('Falha ao sincronizar alteração offline.');
+            const requiresManualIntervention = !isTransientStatus(response.status);
+            await recordSyncAttempt(operation, requiresManualIntervention);
+            throw new SyncFailure(
+                requiresManualIntervention
+                    ? 'Sincronização requer intervenção manual.'
+                    : 'Falha temporária ao sincronizar alteração offline.',
+                requiresManualIntervention
+            );
         }
         return true;
     }
@@ -481,6 +504,18 @@
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
     }
 
+    function getNextRetryDelay() {
+        return updatePendingCount().then(function () {
+            return readSnapshot();
+        }).then(function (snapshot) {
+            const retryable = snapshot.pending_operations.filter(function (operation) {
+                return Number(operation.tentativas || 0) > 0 && !operation.requires_manual_intervention;
+            });
+            if (!retryable.length) return SYNC_RETRY_BASE_DELAY_MS;
+            return Math.max.apply(null, retryable.map(getRetryDelay));
+        });
+    }
+
     function scheduleAutomaticRetry(delay) {
         if (!navigator.onLine) return;
         if (retryTimer) window.clearTimeout(retryTimer);
@@ -502,8 +537,12 @@
             await syncPendingOperations();
             await refreshSnapshot();
         } catch (error) {
-            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
-            scheduleAutomaticRetry(SYNC_RETRY_DELAY_MS);
+            if (error.requiresManualIntervention) {
+                window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+            } else {
+                window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'));
+                getNextRetryDelay().then(scheduleAutomaticRetry);
+            }
         } finally {
             syncInFlight = false;
             renderOfflineSummary();

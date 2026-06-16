@@ -77,6 +77,7 @@ async def list_templates(
 
     if not active_group:
         return templates.TemplateResponse(
+            request,
             "pages/templates/list.html",
             {
                 "request": request,
@@ -104,6 +105,7 @@ async def list_templates(
         })
 
     return templates.TemplateResponse(
+        request,
         "pages/templates/list.html",
         {
             "request": request,
@@ -133,6 +135,7 @@ async def create_template_page(
         return RedirectResponse(url="/templates", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/templates/create.html",
         _get_template_context(request, user, active_group),
     )
@@ -161,6 +164,7 @@ async def template_detail(
     execution_counts = count_active_executions(db, template_id)
     
     return templates.TemplateResponse(
+        request,
         "pages/templates/detail.html",
         {
             **_get_template_context(request, user, active_group, template=template),
@@ -190,6 +194,7 @@ async def edit_template_page(
         return RedirectResponse(url="/templates", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/templates/edit.html",
         _get_template_context(request, user, active_group, template=template),
     )
@@ -215,6 +220,7 @@ async def handle_create_template(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/templates/create.html",
             {
                 **_get_template_context(request, user, active_group),
@@ -227,6 +233,7 @@ async def handle_create_template(
         rec_type = RecurrenceType(recurrence)
     except ValueError:
         return templates.TemplateResponse(
+            request,
             "pages/templates/create.html",
             {
                 **_get_template_context(request, user, active_group),
@@ -262,6 +269,7 @@ async def handle_edit_template(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/templates/edit.html",
             {
                 **_get_template_context(request, user, active_group, template=template),
@@ -274,6 +282,7 @@ async def handle_edit_template(
         rec_type = RecurrenceType(recurrence)
     except ValueError:
         return templates.TemplateResponse(
+            request,
             "pages/templates/edit.html",
             {
                 **_get_template_context(request, user, active_group, template=template),
@@ -331,6 +340,7 @@ async def handle_delete_template(
         execution_counts = count_active_executions(db, template_id)
 
         return templates.TemplateResponse(
+            request,
             "pages/templates/detail.html",
             {
                 **_get_template_context(
@@ -375,6 +385,7 @@ async def handle_add_item(
         categories = get_categories_for_group(db, template.group_id)
 
         return templates.TemplateResponse(
+            request,
             "pages/templates/detail.html",
             {
                 **_get_template_context(request, user, active_group, template=template,

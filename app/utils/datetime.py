@@ -1,10 +1,10 @@
-from datetime import datetime, date
-import pytz
+from datetime import datetime, date, timezone
+from zoneinfo import ZoneInfo
 import locale
 
 # Timezone configuration
-UTC_TZ = pytz.UTC
-LOCAL_TZ = pytz.timezone("America/Sao_Paulo")  # Brazil timezone (UTC-3)
+UTC_TZ = timezone.utc
+LOCAL_TZ = ZoneInfo("America/Sao_Paulo")
 
 try:
     locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
@@ -23,7 +23,7 @@ def format_local_datetime(dt: datetime, fmt: str = "%d/%m/%Y %H:%M") -> str:
 
     # If datetime has no timezone info, assume it's UTC
     if dt.tzinfo is None:
-        dt = UTC_TZ.localize(dt)
+        dt = dt.replace(tzinfo=UTC_TZ)
 
     # Convert to local timezone
     dt_local = dt.astimezone(LOCAL_TZ)
@@ -35,14 +35,14 @@ def format_local_date(dt: datetime | date, fmt: str = "%d/%m/%Y") -> str:
     if dt is None:
         return ""
 
-    if isinstance(dt, date):
-        return dt.strftime(fmt)
+    if isinstance(dt, datetime):
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=UTC_TZ)
 
-    if dt.tzinfo is None:
-        dt = UTC_TZ.localize(dt)
+        dt_local = dt.astimezone(LOCAL_TZ)
+        return dt_local.strftime(fmt)
 
-    dt_local = dt.astimezone(LOCAL_TZ)
-    return dt_local.strftime(fmt)
+    return dt.strftime(fmt)
 
 
 def now_local() -> datetime:
@@ -53,14 +53,14 @@ def now_local() -> datetime:
 def to_utc(dt_local: datetime) -> datetime:
     """Convert local datetime to UTC for storage"""
     if dt_local.tzinfo is None:
-        dt_local = LOCAL_TZ.localize(dt_local)
+        dt_local = dt_local.replace(tzinfo=LOCAL_TZ)
     return dt_local.astimezone(UTC_TZ)
 
 
 def to_local(dt_utc: datetime) -> datetime:
     """Convert UTC datetime to local"""
     if dt_utc.tzinfo is None:
-        dt_utc = UTC_TZ.localize(dt_utc)
+        dt_utc = dt_utc.replace(tzinfo=UTC_TZ)
     return dt_utc.astimezone(LOCAL_TZ)
 
 
@@ -79,6 +79,6 @@ def parse_local_date(
     datetime_str = f"{date_str} {time_str}"
     dt_local = dt.strptime(datetime_str, f"{date_format} {time_format}")
 
-    # Localize and convert to UTC
-    dt_local = LOCAL_TZ.localize(dt_local)
+    # Attach local timezone and convert to UTC
+    dt_local = dt_local.replace(tzinfo=LOCAL_TZ)
     return dt_local.astimezone(UTC_TZ)
