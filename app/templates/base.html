@@ -70,6 +70,12 @@
         <small>Compras iniciadas offline serão sincronizadas automaticamente.</small>
     </aside>
 
+    <aside id="sync-conflict-panel" class="sync-conflict-panel" aria-live="polite" hidden>
+        <strong>Conflitos de sincronização</strong>
+        <ul id="sync-conflict-summary"></ul>
+        <small>Revise as alterações pendentes antes de sincronizar novamente.</small>
+    </aside>
+
     <!-- Navbar -->
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-jaci sticky-top">
