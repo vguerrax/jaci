@@ -2,11 +2,12 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 4;
+    const DB_VERSION = 5;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
+    const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const STORE_NAMES = [
         'groups',
@@ -267,6 +268,48 @@
         await updatePendingCount();
     }
 
+    async function markRemovedExecutionItemLocally(operation) {
+        const db = await openDatabase();
+        const item = await getRecord(db, 'execution_items', operation.item_id);
+        if (item?.is_temporary) {
+            await deleteRecord(db, 'execution_items', item.id);
+            await deleteRecord(db, 'pending_operations', operationIdForTempItem(item.id));
+            db.close();
+            return;
+        }
+        if (item) {
+            item.is_deleted = true;
+            item.offline_removed_at = new Date().toISOString();
+            await putRecord(db, 'execution_items', item);
+        }
+        db.close();
+    }
+
+    async function enqueueRemoveExecutionItemOperation(operation) {
+        const db = await openDatabase();
+        const item = await getRecord(db, 'execution_items', operation.item_id);
+        if (item?.is_temporary) {
+            db.close();
+            await markRemovedExecutionItemLocally(operation);
+            await updatePendingCount();
+            return;
+        }
+
+        await putRecord(db, 'pending_operations', {
+            id: `remove-execution-item-${operation.item_id}`,
+            entity: 'execution_item',
+            entity_id: operation.item_id,
+            action: 'remove_execution_item',
+            payload: operation,
+            status: 'pending',
+            created_at: new Date().toISOString(),
+        });
+        await deleteRecord(db, 'pending_operations', operationIdForItem(operation.item_id));
+        db.close();
+        await markRemovedExecutionItemLocally(operation);
+        await updatePendingCount();
+    }
+
     async function syncPendingOperation(operation) {
         let url = null;
 
@@ -281,6 +324,9 @@
         }
         if (operation.action === 'add_execution_item') {
             url = ADD_EXECUTION_ITEM_SYNC_URL;
+        }
+        if (operation.action === 'remove_execution_item') {
+            url = REMOVE_EXECUTION_ITEM_SYNC_URL;
         }
         if (!url) return false;
 
@@ -425,6 +471,15 @@
         };
     }
 
+    function readRemoveItemOperationFromButton(button) {
+        return {
+            execution_id: Number(button.dataset.executionId),
+            item_id: button.dataset.itemId && button.dataset.itemId.startsWith('temp-')
+                ? button.dataset.itemId
+                : Number(button.dataset.itemId),
+        };
+    }
+
     function readAddItemOperationFromForm(form) {
         const formData = new FormData(form);
         const name = String(formData.get('name') || '').trim();
@@ -495,6 +550,23 @@
 
     function setupOfflineItemOperations() {
         document.addEventListener('click', function (event) {
+            const removeButton = event.target.closest('[data-offline-remove-item]');
+            if (removeButton && !navigator.onLine) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                const operation = readRemoveItemOperationFromButton(removeButton);
+                enqueueRemoveExecutionItemOperation(operation)
+                    .then(function () {
+                        renderQueuedItemControl(removeButton);
+                        renderOfflineSummary();
+                    })
+                    .catch(function () {
+                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    });
+                return;
+            }
+
             const button = event.target.closest('[data-offline-complete-item]');
             if (!button || navigator.onLine) return;
 
@@ -572,6 +644,7 @@
         enqueueStartExecution: enqueueStartExecution,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
+        enqueueRemoveExecutionItemOperation: enqueueRemoveExecutionItemOperation,
         clear: clearLocalCache,
     };
 

@@ -117,6 +117,7 @@ Itens de execução também podem ser atualizados offline. As operações suport
 são:
 
 * criar novos itens;
+* remover itens não concluídos;
 * marcar item como comprado;
 * desmarcar item;
 * alterar quantidade comprada;
@@ -136,6 +137,14 @@ operação `add_execution_item` é enviada para
 `/api/offline/operations/add-execution-item`; a resposta inclui o `temp_id` e o
 item persistido com ID real. Após a sincronização das operações pendentes, o
 snapshot remoto substitui o item temporário pelo registro definitivo.
+
+Itens não concluídos podem ser removidos offline. Para itens já existentes no
+servidor, o cliente grava `remove_execution_item` em `pending_operations` e marca
+o registro local com `is_deleted=true` e `offline_removed_at`. Ao reconectar, a
+operação é enviada para `/api/offline/operations/remove-execution-item`; o
+snapshot seguinte remove o item da store local. Se o item removido ainda for
+temporário, o cliente descarta o item local e remove também a operação
+`add_execution_item` pendente, sem chamada remota.
 
 Ao reconectar, operações de item são enviadas para
 `/api/offline/operations/execution-item`. Se a versão remota divergir, o servidor
