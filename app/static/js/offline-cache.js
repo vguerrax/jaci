@@ -2,12 +2,13 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 5;
+    const DB_VERSION = 6;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
+    const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const STORE_NAMES = [
         'groups',
@@ -310,6 +311,47 @@
         await updatePendingCount();
     }
 
+    async function markExecutionFinalizedLocally(operation) {
+        const db = await openDatabase();
+        const execution = await getRecord(db, 'executions', operation.execution_id);
+        const items = await readStore(db, 'execution_items');
+
+        if (execution) {
+            execution.status = 'completed';
+            execution.finished_at = new Date().toISOString();
+            execution.offline_finalized_at = execution.finished_at;
+            await putRecord(db, 'executions', execution);
+        }
+
+        const pendingItems = items.filter(function (item) {
+            return item.execution_id === operation.execution_id
+                && !item.is_completed
+                && !item.is_deleted;
+        });
+        for (const item of pendingItems) {
+            item.is_deleted = true;
+            item.offline_removed_at = new Date().toISOString();
+            await putRecord(db, 'execution_items', item);
+        }
+        db.close();
+    }
+
+    async function enqueueFinalizeExecutionOperation(operation) {
+        const db = await openDatabase();
+        await putRecord(db, 'pending_operations', {
+            id: `finalize-execution-${operation.execution_id}`,
+            entity: 'execution',
+            entity_id: operation.execution_id,
+            action: 'finalize_execution',
+            payload: operation,
+            status: 'pending',
+            created_at: new Date().toISOString(),
+        });
+        db.close();
+        await markExecutionFinalizedLocally(operation);
+        await updatePendingCount();
+    }
+
     async function syncPendingOperation(operation) {
         let url = null;
 
@@ -327,6 +369,9 @@
         }
         if (operation.action === 'remove_execution_item') {
             url = REMOVE_EXECUTION_ITEM_SYNC_URL;
+        }
+        if (operation.action === 'finalize_execution') {
+            url = FINALIZE_EXECUTION_SYNC_URL;
         }
         if (!url) return false;
 
@@ -348,7 +393,11 @@
         if (!navigator.onLine) return;
 
         const db = await openDatabase();
-        const operations = await readStore(db, 'pending_operations');
+        const operations = (await readStore(db, 'pending_operations')).sort(function (a, b) {
+            if (a.action === 'finalize_execution' && b.action !== 'finalize_execution') return 1;
+            if (a.action !== 'finalize_execution' && b.action === 'finalize_execution') return -1;
+            return 0;
+        });
         db.close();
 
         if (!operations.length) {
@@ -478,6 +527,26 @@
                 ? button.dataset.itemId
                 : Number(button.dataset.itemId),
         };
+    }
+
+    function readFinalizeOperationFromForm(form, submitter) {
+        const formData = new FormData(form);
+        return {
+            execution_id: Number(form.dataset.executionId),
+            action: submitter?.value || formData.get('action') || 'discard',
+            new_date: formData.get('new_date') || null,
+        };
+    }
+
+    async function countPendingItemsForExecution(executionId) {
+        const db = await openDatabase();
+        const items = await readStore(db, 'execution_items');
+        db.close();
+        return items.filter(function (item) {
+            return item.execution_id === executionId
+                && !item.is_completed
+                && !item.is_deleted;
+        }).length;
     }
 
     function readAddItemOperationFromForm(form) {
@@ -637,6 +706,59 @@
         });
     }
 
+    function renderFinalizeConfirmation() {
+        alert('Compra finalizada offline. A recorrencia sera processada quando a sincronizacao concluir.');
+    }
+
+    function setupOfflineFinalizeControls() {
+        document.querySelectorAll('[data-offline-finalize-link]').forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                if (navigator.onLine) return;
+
+                event.preventDefault();
+                const executionId = Number(link.dataset.executionId);
+                countPendingItemsForExecution(executionId).then(function (pendingCount) {
+                    if (pendingCount > 0) {
+                        alert('Existem itens pendentes. Trate os pendentes antes de finalizar offline.');
+                        return;
+                    }
+                    enqueueFinalizeExecutionOperation({
+                        execution_id: executionId,
+                        action: 'discard',
+                        new_date: null,
+                    }).then(function () {
+                        link.classList.remove('btn-success');
+                        link.classList.add('btn-outline-secondary');
+                        renderFinalizeConfirmation();
+                        renderOfflineSummary();
+                    });
+                }).catch(function () {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                });
+            });
+        });
+
+        document.querySelectorAll('[data-offline-finalize-execution]').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (navigator.onLine) return;
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                const operation = readFinalizeOperationFromForm(form, event.submitter);
+                enqueueFinalizeExecutionOperation(operation)
+                    .then(function () {
+                        renderQueuedItemControl(form);
+                        renderFinalizeConfirmation();
+                        renderOfflineSummary();
+                    })
+                    .catch(function () {
+                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    });
+            });
+        });
+    }
+
     window.JaciOfflineCache = {
         refresh: refreshSnapshot,
         read: readSnapshot,
@@ -645,6 +767,7 @@
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
         enqueueRemoveExecutionItemOperation: enqueueRemoveExecutionItemOperation,
+        enqueueFinalizeExecutionOperation: enqueueFinalizeExecutionOperation,
         clear: clearLocalCache,
     };
 
@@ -663,6 +786,7 @@
         setupOfflineStartForms();
         setupOfflineAddItemForms();
         setupOfflineItemOperations();
+        setupOfflineFinalizeControls();
         updatePendingCount().catch(function () {});
         syncPendingOperations().then(refreshSnapshot).catch(function () {
             window.dispatchEvent(new CustomEvent('jaci:sync-error'));

@@ -86,7 +86,7 @@ abertura em nova aba ou controles Bootstrap como dropdowns e modais. Enquanto
 visível, ele cobre a tela e bloqueia novos toques até a resposta da navegação ou
 requisição.
 
-## BL-005 a BL-010 — Cache Local e Operações Offline
+## BL-005 a BL-013 — Cache Local e Operações Offline
 
 O Jaci mantém um cache local em IndexedDB para consulta offline dos dados
 essenciais:
@@ -145,6 +145,16 @@ operação é enviada para `/api/offline/operations/remove-execution-item`; o
 snapshot seguinte remove o item da store local. Se o item removido ainda for
 temporário, o cliente descarta o item local e remove também a operação
 `add_execution_item` pendente, sem chamada remota.
+
+Execuções em andamento podem ser finalizadas offline. Quando não há pendentes
+locais, a tela da compra permite encerrar diretamente com `discard`. Quando há
+pendentes, o usuário deve passar pela tela de fechamento e escolher
+explicitamente entre descartar pendentes ou gerar uma nova compra com pendentes.
+O cliente registra `finalize_execution`, atualiza a execução local para
+`completed`, marca pendentes locais como removidos e mostra confirmação local.
+O próximo ciclo recorrente nunca é criado localmente; durante a sincronização,
+`/api/offline/operations/finalize-execution` finaliza a execução no servidor,
+processa os pendentes e então executa a geração de recorrência.
 
 Ao reconectar, operações de item são enviadas para
 `/api/offline/operations/execution-item`. Se a versão remota divergir, o servidor

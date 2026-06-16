@@ -1,3 +1,5 @@
+from datetime import datetime, timezone, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from pydantic import Field
@@ -12,7 +14,10 @@ from app.models.user import User
 from app.services.execution_service import (
     add_item_to_execution,
     complete_item as complete_item_service,
+    create_execution_from_pending,
+    finalize_execution,
     get_execution_by_id,
+    get_pending_items,
     incomplete_item as incomplete_item_service,
     remove_item_from_execution,
     start_execution,
@@ -51,6 +56,12 @@ class AddExecutionItemOperation(BaseModel):
 class RemoveExecutionItemOperation(BaseModel):
     execution_id: int
     item_id: int
+
+
+class FinalizeExecutionOperation(BaseModel):
+    execution_id: int
+    action: str = Field(pattern="^(discard|new_execution)$")
+    new_date: str | None = None
 
 
 @router.get("/snapshot")
@@ -359,4 +370,88 @@ async def sync_remove_execution_item_operation(
             "execution_id": operation.execution_id,
             "is_deleted": True,
         },
+    }
+
+
+@router.post("/operations/finalize-execution")
+async def sync_finalize_execution_operation(
+    operation: FinalizeExecutionOperation,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Finaliza no servidor uma execução encerrada offline."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+
+    execution = get_execution_by_id(db, operation.execution_id, user)
+    if not execution:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Execução não encontrada",
+        )
+    if execution.status == ExecutionStatus.cancelled:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Execução cancelada não pode ser finalizada.",
+        )
+    if execution.status == ExecutionStatus.completed:
+        return {
+            "status": "applied",
+            "execution": {
+                "id": execution.id,
+                "status": ExecutionStatus.completed.value,
+            },
+            "next_execution_id": None,
+        }
+
+    pending = get_pending_items(db, execution.id)
+    if pending and operation.action not in {"discard", "new_execution"}:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Tratamento de pendentes é obrigatório.",
+        )
+
+    if operation.action == "discard" or not pending:
+        finalize_execution(db, execution, discard_pending=True)
+    else:
+        new_date = datetime.now(timezone.utc) + timedelta(days=1)
+        if operation.new_date:
+            try:
+                new_date = datetime.strptime(operation.new_date, "%Y-%m-%d")
+                new_date = new_date.replace(tzinfo=timezone.utc)
+            except ValueError as exc:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail="Data da nova execução inválida.",
+                ) from exc
+        create_execution_from_pending(db, execution, pending, new_date)
+        finalize_execution(db, execution, discard_pending=False)
+
+    from app.services.agenda_service import generate_next_execution
+
+    next_execution = generate_next_execution(db, execution, user)
+
+    try:
+        await manager.broadcast(
+            operation.execution_id,
+            "execution_status_changed",
+            {
+                "new_status": "completed",
+                "user_email": user.email,
+            },
+        )
+    except Exception:
+        pass
+
+    return {
+        "status": "applied",
+        "execution": {
+            "id": execution.id,
+            "status": ExecutionStatus.completed.value,
+            "finished_at": execution.finished_at.isoformat() if execution.finished_at else None,
+        },
+        "next_execution_id": next_execution.id if next_execution else None,
     }
