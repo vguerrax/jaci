@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'jaci-';
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v6';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -13,6 +13,7 @@ const SHELL_ASSETS = [
     '/static/js/jaci-confirm.js',
     '/static/js/execution-sync.js',
     '/static/js/loading-indicator.js',
+    '/static/js/offline-cache.js',
     '/static/js/pwa-install.js',
     '/static/js/sync-status.js',
     '/static/img/jaci-2.png',
