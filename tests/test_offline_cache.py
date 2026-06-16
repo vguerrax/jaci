@@ -530,7 +530,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
-    assert "const DB_VERSION = 7" in script
+    assert "const DB_VERSION = 8" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -547,6 +547,11 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "sortOperationsByCreation" in script
     assert "recordSyncAttempt" in script
     assert "tentativas: Number(operation.tentativas || 0) + 1" in script
+    assert "SYNC_RETRY_DELAY_MS" in script
+    assert "scheduleAutomaticRetry" in script
+    assert "runAutomaticSync" in script
+    assert "syncInFlight" in script
+    assert "window.addEventListener('jaci:sync-manual'" in script
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
@@ -594,6 +599,19 @@ def test_offline_queue_contract_uses_persistent_created_order_and_attempts():
     assert "sortOperationsByCreation(await readStore(db, 'pending_operations'))" in script
     assert "await recordSyncAttempt(operation)" in script
     assert "await deleteRecord(nextDb, 'pending_operations', operation.id)" in script
+
+
+def test_offline_sync_runs_automatically_manually_and_retries_failures():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "window.addEventListener('online', runAutomaticSync)" in script
+    assert "window.addEventListener('load'" in script
+    assert "runAutomaticSync();" in script
+    assert "syncNow: runAutomaticSync" in script
+    assert "runAutomaticSync({ manual: true })" in script
+    assert "scheduleAutomaticRetry(SYNC_RETRY_DELAY_MS)" in script
+    assert "window.setTimeout(function ()" in script
+    assert "retryTimer = null" in script
 
 
 def test_base_template_exposes_offline_cache_panel():
