@@ -156,3 +156,12 @@ async def service_worker():
         media_type="application/javascript",
         headers={"Service-Worker-Allowed": "/"},
     )
+
+
+@app.get("/manifest.webmanifest", include_in_schema=False)
+async def web_app_manifest():
+    """Serve o manifesto PWA com o tipo de conteúdo esperado pelos navegadores."""
+    return FileResponse(
+        "app/static/manifest.webmanifest",
+        media_type="application/manifest+json",
+    )
