@@ -27,7 +27,8 @@
     </div>
     <div class="col-auto align-self-end d-flex gap-2">
         {% if execution.status == 'scheduled' %}
-        <form method="post" action="/executions/{{ execution.id }}/start">
+        <form method="post" action="/executions/{{ execution.id }}/start"
+            data-offline-start-execution data-execution-id="{{ execution.id }}">
             <button type="submit" class="btn btn-primary">
                 Iniciar Compra
                 <i class="bi bi-moon-stars-fill"></i>
