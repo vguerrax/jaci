@@ -549,6 +549,8 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "tentativas: Number(operation.tentativas || 0) + 1" in script
     assert "PENDING_ERRORS_KEY" in script
     assert "jaci_pending_errors" in script
+    assert "PENDING_CONFLICTS_KEY" in script
+    assert "jaci_pending_conflicts" in script
     assert "renderPendingState" in script
     assert "Number(operation.tentativas || 0) > 0" in script
     assert "SYNC_RETRY_BASE_DELAY_MS" in script
@@ -556,6 +558,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "getRetryDelay" in script
     assert "isTransientStatus" in script
     assert "requires_manual_intervention" in script
+    assert "renderSyncCenter" in script
     assert "scheduleAutomaticRetry" in script
     assert "runAutomaticSync" in script
     assert "syncInFlight" in script
@@ -606,7 +609,7 @@ def test_offline_queue_contract_uses_persistent_created_order_and_attempts():
     assert "localeCompare(String(b.created_at || ''))" in script
     assert "sortOperationsByCreation(await readStore(db, 'pending_operations'))" in script
     assert "await recordSyncAttempt(operation, false)" in script
-    assert "await recordSyncAttempt(operation, requiresManualIntervention)" in script
+    assert "await recordSyncAttempt(operation, requiresManualIntervention, conflict)" in script
     assert "await deleteRecord(nextDb, 'pending_operations', operation.id)" in script
 
 
