@@ -90,13 +90,18 @@
 
     async function refreshSnapshot() {
         if (!navigator.onLine) return;
+        window.dispatchEvent(new CustomEvent('jaci:sync-start'));
         const response = await fetch(SNAPSHOT_URL, {
             headers: { Accept: 'application/json' },
             credentials: 'same-origin',
         });
-        if (response.status === 401) return;
+        if (response.status === 401) {
+            window.dispatchEvent(new CustomEvent('jaci:sync-success'));
+            return;
+        }
         if (!response.ok) throw new Error('Falha ao atualizar cache offline.');
         await saveSnapshot(await response.json());
+        window.dispatchEvent(new CustomEvent('jaci:sync-success'));
     }
 
     function clearLocalCache() {
@@ -149,10 +154,14 @@
     }
 
     window.addEventListener('online', function () {
-        refreshSnapshot().catch(function () {}).finally(renderOfflineSummary);
+        refreshSnapshot().catch(function () {
+            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+        }).finally(renderOfflineSummary);
     });
     window.addEventListener('offline', renderOfflineSummary);
     window.addEventListener('load', function () {
-        refreshSnapshot().catch(function () {}).finally(renderOfflineSummary);
+        refreshSnapshot().catch(function () {
+            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+        }).finally(renderOfflineSummary);
     });
 })();
