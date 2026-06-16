@@ -10,6 +10,7 @@ from app.models.enums import ExecutionStatus
 from app.models.execution import ExecutionItem
 from app.models.user import User
 from app.services.execution_service import (
+    add_item_to_execution,
     complete_item as complete_item_service,
     get_execution_by_id,
     incomplete_item as incomplete_item_service,
@@ -34,6 +35,15 @@ class ExecutionItemOperation(BaseModel):
     purchased_quantity: float | None = None
     unit_price: float | None = None
     location: str | None = None
+    notes: str | None = None
+
+
+class AddExecutionItemOperation(BaseModel):
+    execution_id: int
+    temp_id: str
+    name: str
+    planned_quantity: float = 1
+    category_id: int | None = None
     notes: str | None = None
 
 
@@ -195,5 +205,84 @@ async def sync_execution_item_operation(
             "location": item.location,
             "notes": item.notes,
             "version": item.version,
+        },
+    }
+
+
+@router.post("/operations/add-execution-item")
+async def sync_add_execution_item_operation(
+    operation: AddExecutionItemOperation,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Cria no servidor um item de execução gerado offline com ID temporário."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+
+    execution = get_execution_by_id(db, operation.execution_id, user)
+    if not execution:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Execução não encontrada",
+        )
+    if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Execução não permite alterações.",
+        )
+    if not operation.name.strip():
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Nome do item é obrigatório.",
+        )
+    if operation.planned_quantity <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Quantidade planejada inválida.",
+        )
+
+    try:
+        item = add_item_to_execution(
+            db,
+            execution,
+            operation.name,
+            operation.planned_quantity,
+            operation.category_id if operation.category_id and operation.category_id > 0 else None,
+            operation.notes,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(exc),
+        ) from exc
+
+    try:
+        await manager.broadcast(
+            operation.execution_id,
+            "item_added",
+            {
+                "item_id": item.id,
+                "item_name": item.name,
+                "user_email": user.email,
+            },
+        )
+    except Exception:
+        pass
+
+    return {
+        "status": "applied",
+        "temp_id": operation.temp_id,
+        "item": {
+            "id": item.id,
+            "execution_id": item.execution_id,
+            "category_id": item.category_id,
+            "name": item.name,
+            "planned_quantity": item.planned_quantity,
+            "notes": item.notes,
+            "version": item.version,
+            "sort_order": item.sort_order,
         },
     }
