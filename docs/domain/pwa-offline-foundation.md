@@ -283,6 +283,34 @@ Para conflitos e falhas manuais, a central oferece duas ações:
 Essas ações tornam a resolução explícita. Nenhuma alteração é descartada sem
 ação do usuário.
 
+## BL-021 — Auditoria de Conflitos
+
+Conflitos detectados pela API offline são registrados automaticamente na tabela
+`sync_conflict_audits` antes da resposta HTTP `409` ser enviada ao cliente. Cada
+registro contém:
+
+* execução afetada;
+* grupo afetado;
+* usuário responsável pela operação offline;
+* tipo de operação em conflito;
+* entidade e identificador da entidade;
+* motivo do conflito;
+* estado local enviado pelo dispositivo;
+* estado remoto existente no servidor;
+* data e hora de detecção;
+* resolução aplicada e data da resolução, quando houver.
+
+A API `/api/offline/conflicts` retorna o histórico dos grupos do usuário
+autenticado, incluindo registros já resolvidos. A central de sincronização
+consulta esse endpoint e mostra o histórico abaixo da fila local para diagnóstico
+e rastreabilidade.
+
+Quando o usuário resolve um conflito pela central, o cliente chama
+`/api/offline/conflicts/{audit_id}/resolution` com a resolução aplicada
+(`retry_local`, `discard_local` ou `manual`). O registro de auditoria é atualizado
+com a resolução, mas não é removido. Assim, o histórico permanece disponível após
+a operação pendente sair da fila local.
+
 ### Fora do Escopo
 
 O cache local não implementa:
