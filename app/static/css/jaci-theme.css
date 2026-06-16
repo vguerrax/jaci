@@ -1045,6 +1045,20 @@ HOME OPERATIONAL
     background: #FBF3E8;
 }
 
+.sync-status.is-syncing {
+    border-color: var(--jaci-clay);
+    background: #FFF7E8;
+}
+
+.sync-status.is-syncing i {
+    animation: jaci-spin 0.8s linear infinite;
+}
+
+.sync-status.is-error {
+    border-color: #B45309;
+    background: #FEF3C7;
+}
+
 .offline-cache-panel {
     position: fixed;
     z-index: 1075;

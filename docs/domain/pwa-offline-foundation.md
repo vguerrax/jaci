@@ -49,11 +49,24 @@ assets antigos após uma publicação.
 
 ## Estado de Sincronização
 
-O indicador global informa:
+## BL-026 — Indicador de Sincronização
+
+O indicador global fica visível em todas as telas e informa:
 
 * sincronizado;
-* modo offline;
+* sincronizando;
+* offline;
+* erro de sincronização;
 * quantidade de alterações pendentes registrada localmente.
+
+As transições acontecem automaticamente:
+
+* eventos `online` e `offline` do navegador atualizam conectividade;
+* requisições HTMX colocam o estado em `sincronizando` e retornam para
+  `sincronizado` quando concluídas;
+* erros de HTMX colocam o estado em `erro de sincronização`;
+* o cache local IndexedDB dispara eventos `jaci:sync-start`,
+  `jaci:sync-success` e `jaci:sync-error` ao atualizar o snapshot offline.
 
 A fila persistente de mutações, sincronização assíncrona e resolução de conflitos
 continuam como evoluções futuras. A fundação atual não deve comunicar que uma

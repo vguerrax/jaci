@@ -227,8 +227,9 @@ As regras detalhadas estão em
 O Jaci possui manifesto instalável para Android e iOS, abre em modo standalone e
 mantém em cache o shell da aplicação, recursos estáticos, APIs GET recentes e
 páginas visitadas recentemente. Em caso de indisponibilidade da rede, o
-indicador global comunica o modo offline e uma tela própria explica quando o
-conteúdo solicitado ainda não está armazenado.
+indicador global comunica sincronizado, sincronizando, offline ou erro de
+sincronização, e uma tela própria explica quando o conteúdo solicitado ainda não
+está armazenado.
 
 No PWA instalado, um indicador global de carregamento aparece em navegações,
 formulários e requisições HTMX para evitar múltiplos toques durante o delay de
