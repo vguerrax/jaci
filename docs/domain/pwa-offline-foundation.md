@@ -116,6 +116,7 @@ limpa e o snapshot offline é atualizado.
 Itens de execução também podem ser atualizados offline. As operações suportadas
 são:
 
+* criar novos itens;
 * marcar item como comprado;
 * desmarcar item;
 * alterar quantidade comprada;
@@ -128,6 +129,13 @@ store `execution_items`, mantendo uma `offline_base_version` para preservar a
 versão remota esperada durante a sincronização. Operações sucessivas no mesmo
 item são coalescidas para preservar o último estado desejado sem perder a versão
 base.
+
+Itens criados offline recebem identificadores temporários no formato `temp-*` e
+são gravados em `execution_items` com `is_temporary=true`. Ao reconectar, a
+operação `add_execution_item` é enviada para
+`/api/offline/operations/add-execution-item`; a resposta inclui o `temp_id` e o
+item persistido com ID real. Após a sincronização das operações pendentes, o
+snapshot remoto substitui o item temporário pelo registro definitivo.
 
 Ao reconectar, operações de item são enviadas para
 `/api/offline/operations/execution-item`. Se a versão remota divergir, o servidor

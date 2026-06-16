@@ -61,6 +61,7 @@
         <div class="card-jaci p-4">
             <h3 class="h6 mb-3">Adicionar Item</h3>
             <form hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container" hx-swap="innerHTML"
+                data-offline-add-item data-execution-id="{{ execution.id }}"
                 hx-on::after-request="
                 htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',

@@ -2,10 +2,11 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 3;
+    const DB_VERSION = 4;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
+    const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const STORE_NAMES = [
         'groups',
@@ -167,6 +168,15 @@
         return `execution-item-${itemId}`;
     }
 
+    function operationIdForTempItem(tempId) {
+        return `add-execution-item-${tempId}`;
+    }
+
+    function createTempId() {
+        const random = Math.random().toString(36).slice(2, 10);
+        return `temp-${Date.now()}-${random}`;
+    }
+
     function normalizeNumber(value) {
         if (value === null || value === undefined || value === '') return null;
         const normalized = Number(String(value).replace(',', '.'));
@@ -219,6 +229,44 @@
         await updatePendingCount();
     }
 
+    async function markAddedExecutionItemLocally(operation) {
+        const db = await openDatabase();
+        await putRecord(db, 'execution_items', {
+            id: operation.temp_id,
+            execution_id: operation.execution_id,
+            category_id: operation.category_id,
+            name: operation.name,
+            planned_quantity: operation.planned_quantity,
+            purchased_quantity: null,
+            unit_price: null,
+            location: null,
+            is_completed: false,
+            notes: operation.notes,
+            version: 1,
+            sort_order: Date.now(),
+            is_deleted: false,
+            is_temporary: true,
+            offline_created_at: new Date().toISOString(),
+        });
+        db.close();
+    }
+
+    async function enqueueAddExecutionItemOperation(operation) {
+        const db = await openDatabase();
+        await putRecord(db, 'pending_operations', {
+            id: operationIdForTempItem(operation.temp_id),
+            entity: 'execution_item',
+            entity_id: operation.temp_id,
+            action: 'add_execution_item',
+            payload: operation,
+            status: 'pending',
+            created_at: new Date().toISOString(),
+        });
+        db.close();
+        await markAddedExecutionItemLocally(operation);
+        await updatePendingCount();
+    }
+
     async function syncPendingOperation(operation) {
         let url = null;
 
@@ -230,6 +278,9 @@
             && ['complete_item', 'incomplete_item'].includes(operation.action)
         ) {
             url = EXECUTION_ITEM_SYNC_URL;
+        }
+        if (operation.action === 'add_execution_item') {
+            url = ADD_EXECUTION_ITEM_SYNC_URL;
         }
         if (!url) return false;
 
@@ -374,6 +425,22 @@
         };
     }
 
+    function readAddItemOperationFromForm(form) {
+        const formData = new FormData(form);
+        const name = String(formData.get('name') || '').trim();
+        const plannedQuantity = normalizeNumber(formData.get('planned_quantity')) || 1;
+        const categoryId = normalizeNumber(formData.get('category_id'));
+
+        return {
+            execution_id: Number(form.dataset.executionId),
+            temp_id: createTempId(),
+            name: name,
+            planned_quantity: plannedQuantity,
+            category_id: categoryId && categoryId > 0 ? categoryId : null,
+            notes: formData.get('notes') || null,
+        };
+    }
+
     function readItemOperationFromButton(button) {
         const quantity = prompt(
             `Quantidade comprada para ${button.dataset.itemName}`,
@@ -471,12 +538,40 @@
         }, true);
     }
 
+    function setupOfflineAddItemForms() {
+        document.querySelectorAll('[data-offline-add-item]').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (navigator.onLine) return;
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                const operation = readAddItemOperationFromForm(form);
+                if (!operation.name || operation.planned_quantity <= 0) {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    return;
+                }
+
+                enqueueAddExecutionItemOperation(operation)
+                    .then(function () {
+                        form.reset();
+                        renderQueuedItemControl(form);
+                        renderOfflineSummary();
+                    })
+                    .catch(function () {
+                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    });
+            });
+        });
+    }
+
     window.JaciOfflineCache = {
         refresh: refreshSnapshot,
         read: readSnapshot,
         syncPending: syncPendingOperations,
         enqueueStartExecution: enqueueStartExecution,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
+        enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
         clear: clearLocalCache,
     };
 
@@ -493,6 +588,7 @@
     window.addEventListener('offline', renderOfflineSummary);
     window.addEventListener('load', function () {
         setupOfflineStartForms();
+        setupOfflineAddItemForms();
         setupOfflineItemOperations();
         updatePendingCount().catch(function () {});
         syncPendingOperations().then(refreshSnapshot).catch(function () {
