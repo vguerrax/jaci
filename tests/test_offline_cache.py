@@ -7,7 +7,11 @@ from fastapi import HTTPException
 
 from app.models import Execution, ExecutionItem
 from app.models.enums import ExecutionStatus, RecurrenceType
-from app.routers.offline import offline_snapshot
+from app.routers.offline import (
+    StartExecutionOperation,
+    offline_snapshot,
+    sync_start_execution_operation,
+)
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.template_service import add_item_to_template, create_template
 
@@ -78,6 +82,59 @@ def test_offline_snapshot_requires_authentication(db):
     assert error.value.status_code == 401
 
 
+def test_offline_start_execution_operation_applies_pending_change(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_start_execution_operation(
+            StartExecutionOperation(execution_id=execution.id),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    assert result["status"] == "applied"
+    assert result["execution"]["status"] == "in_progress"
+    assert execution.status == ExecutionStatus.in_progress
+
+
+def test_offline_start_execution_operation_rejects_foreign_execution(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    other_user = make_user("bia@example.com")
+    other_group = make_group("Outra", owner=other_user)
+    execution = Execution(
+        group_id=other_group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        created_by=other_user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_start_execution_operation(
+                StartExecutionOperation(execution_id=execution.id),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 404
+
+
 def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
@@ -88,7 +145,12 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "'categories'" in script
     assert "'templates'" in script
     assert "'executions'" in script
+    assert "'pending_operations'" in script
     assert "fetch(SNAPSHOT_URL" in script
+    assert "START_EXECUTION_SYNC_URL" in script
+    assert "data-offline-start-execution" in script
+    assert "enqueueStartExecution" in script
+    assert "start_execution" in script
     assert "credentials: 'same-origin'" in script
     assert "window.addEventListener('online'" in script
     assert "indexedDB.deleteDatabase" in script
@@ -101,5 +163,15 @@ def test_base_template_exposes_offline_cache_panel():
 
     assert 'id="offline-cache-panel"' in base
     assert 'id="offline-cache-summary"' in base
-    assert "Consulta local somente leitura" in base
+    assert "Compras iniciadas offline serão sincronizadas automaticamente." in base
     assert "/static/js/offline-cache.js" in base
+
+
+def test_start_execution_forms_are_offline_capable():
+    home = Path("app/templates/pages/index.html").read_text()
+    detail = Path("app/templates/pages/executions/in_progress.html").read_text()
+
+    assert "data-offline-start-execution" in home
+    assert 'data-execution-id="{{ execution.id }}"' in home
+    assert "data-offline-start-execution" in detail
+    assert 'data-execution-id="{{ execution.id }}"' in detail
