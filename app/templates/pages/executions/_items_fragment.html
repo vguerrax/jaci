@@ -130,7 +130,10 @@
                             hx-swap="innerHTML"
                             hx-confirm="Remover {{ item.name }}?"
                             data-jaci-confirm-ok-class="btn-danger"
-                            data-jaci-confirm-ok-label="Remover">
+                            data-jaci-confirm-ok-label="Remover"
+                            data-offline-remove-item
+                            data-execution-id="{{ execution.id }}"
+                            data-item-id="{{ item.id }}">
                             <i class="bi bi-trash"></i>
                         </button>
                         {% endif %}
