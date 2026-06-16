@@ -49,8 +49,16 @@
 
     <div id="sync-status" class="sync-status is-synced" data-state="synced" role="status" aria-live="polite">
         <i class="bi bi-cloud-check-fill"></i>
-        <span class="sync-status-label">Sincronizado</span>
-        <span class="sync-status-pending d-none"></span>
+        <span class="sync-status-body">
+            <span class="sync-status-main">
+                <span class="sync-status-label">Sincronizado</span>
+                <span class="sync-status-pending d-none"></span>
+            </span>
+            <span class="sync-status-details">
+                <span class="sync-status-last">Última sync: nunca</span>
+                <span class="sync-status-errors d-none"></span>
+            </span>
+        </span>
         <button type="button" class="sync-status-action" data-sync-now title="Sincronizar agora" aria-label="Sincronizar agora">
             <i class="bi bi-arrow-repeat"></i>
         </button>
