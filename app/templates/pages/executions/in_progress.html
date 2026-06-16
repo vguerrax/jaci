@@ -36,7 +36,9 @@
         </form>
         {% endif %}
         {% if execution.status == 'in_progress' %}
-        <a href="/executions/{{ execution.id }}/close" class="btn btn-success">
+        <a href="/executions/{{ execution.id }}/close" class="btn btn-success"
+            data-offline-finalize-link
+            data-execution-id="{{ execution.id }}">
             Finalizar Compra
             <i class="bi bi-moon-stars-fill"></i>
         </a>
