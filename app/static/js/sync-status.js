@@ -23,9 +23,4 @@
     window.addEventListener('offline', render);
     render();
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(function () {
-            // O indicador continua funcional mesmo quando o cache offline falha.
-        });
-    }
 })();
