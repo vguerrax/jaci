@@ -59,7 +59,7 @@ def test_base_template_declares_global_loading_indicator():
 def test_service_worker_caches_shell_and_falls_back_offline():
     worker = (STATIC / "js/service-worker.js").read_text()
 
-    assert "const CACHE_VERSION = 'v14'" in worker
+    assert "const CACHE_VERSION = 'v15'" in worker
     assert "SHELL_CACHE" in worker
     assert "STATIC_CACHE" in worker
     assert "PAGE_CACHE" in worker

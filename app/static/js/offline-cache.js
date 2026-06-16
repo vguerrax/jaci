@@ -2,7 +2,7 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 8;
+    const DB_VERSION = 9;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
@@ -10,6 +10,7 @@
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
+    const PENDING_ERRORS_KEY = 'jaci_pending_errors';
     const SYNC_RETRY_DELAY_MS = 15000;
     const STORE_NAMES = [
         'groups',
@@ -127,8 +128,13 @@
         return data;
     }
 
-    function renderPendingCount(count) {
+    function renderPendingState(operations) {
+        const count = operations.length;
+        const errorCount = operations.filter(function (operation) {
+            return Number(operation.tentativas || 0) > 0;
+        }).length;
         localStorage.setItem(PENDING_CHANGES_KEY, String(count));
+        localStorage.setItem(PENDING_ERRORS_KEY, String(errorCount));
         if (window.JaciSyncStatus) {
             window.JaciSyncStatus.render();
         }
@@ -138,7 +144,7 @@
         const db = await openDatabase();
         const pendingOperations = await readStore(db, 'pending_operations');
         db.close();
-        renderPendingCount(pendingOperations.length);
+        renderPendingState(pendingOperations);
         return pendingOperations.length;
     }
 
@@ -442,7 +448,7 @@
         db.close();
 
         if (!operations.length) {
-            renderPendingCount(0);
+            renderPendingState([]);
             return;
         }
 
@@ -506,6 +512,7 @@
 
     function clearLocalCache() {
         localStorage.removeItem(PENDING_CHANGES_KEY);
+        localStorage.removeItem(PENDING_ERRORS_KEY);
         return new Promise(function (resolve, reject) {
             const request = indexedDB.deleteDatabase(DB_NAME);
             request.onsuccess = resolve;
