@@ -64,6 +64,78 @@ class FinalizeExecutionOperation(BaseModel):
     new_date: str | None = None
 
 
+def _serialize_execution_conflict(execution) -> dict:
+    return {
+        "id": execution.id,
+        "status": execution.status.value,
+        "scheduled_date": execution.scheduled_date.isoformat()
+        if execution.scheduled_date
+        else None,
+        "finished_at": execution.finished_at.isoformat()
+        if execution.finished_at
+        else None,
+    }
+
+
+def _serialize_item_conflict(item: ExecutionItem) -> dict:
+    return {
+        "id": item.id,
+        "execution_id": item.execution_id,
+        "name": item.name,
+        "category_id": item.category_id,
+        "planned_quantity": item.planned_quantity,
+        "purchased_quantity": item.purchased_quantity,
+        "unit_price": item.unit_price,
+        "location": item.location,
+        "notes": item.notes,
+        "is_completed": item.is_completed,
+        "version": item.version,
+        "is_deleted": item.is_deleted,
+    }
+
+
+def _conflict_detail(
+    *,
+    message: str,
+    entity: str,
+    entity_id: int,
+    local: BaseModel | dict,
+    remote: dict,
+    reason: str,
+) -> dict:
+    return {
+        "type": "sync_conflict",
+        "message": message,
+        "entity": entity,
+        "entity_id": entity_id,
+        "reason": reason,
+        "local": local.model_dump() if isinstance(local, BaseModel) else local,
+        "remote": remote,
+    }
+
+
+def _raise_conflict(
+    *,
+    message: str,
+    entity: str,
+    entity_id: int,
+    local: BaseModel | dict,
+    remote: dict,
+    reason: str,
+) -> None:
+    raise HTTPException(
+        status_code=status.HTTP_409_CONFLICT,
+        detail=_conflict_detail(
+            message=message,
+            entity=entity,
+            entity_id=entity_id,
+            local=local,
+            remote=remote,
+            reason=reason,
+        ),
+    )
+
+
 @router.get("/snapshot")
 async def offline_snapshot(
     db: Session = Depends(get_db),
@@ -98,14 +170,22 @@ async def sync_start_execution_operation(
             detail="Execução não encontrada",
         )
     if execution.status == ExecutionStatus.completed:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Não é possível iniciar execução já finalizada.",
+        _raise_conflict(
+            message="A execução já foi finalizada no servidor.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_already_completed",
         )
     if execution.status == ExecutionStatus.cancelled:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Não é possível iniciar execução cancelada.",
+        _raise_conflict(
+            message="A execução foi cancelada no servidor.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_cancelled",
         )
 
     if execution.status == ExecutionStatus.scheduled:
@@ -151,9 +231,13 @@ async def sync_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Execução não permite alterações.",
+        _raise_conflict(
+            message="A execução não aceita mais alterações no servidor.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_not_editable",
         )
 
     item = db.scalar(
@@ -168,9 +252,13 @@ async def sync_execution_item_operation(
             detail="Item não encontrado",
         )
     if item.version != operation.version:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Item alterado por outro usuário.",
+        _raise_conflict(
+            message="O item foi alterado por outro usuário antes da sincronização.",
+            entity="execution_item",
+            entity_id=item.id,
+            local=operation,
+            remote=_serialize_item_conflict(item),
+            reason="stale_version",
         )
 
     if operation.action == "complete_item":
@@ -246,9 +334,13 @@ async def sync_add_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Execução não permite alterações.",
+        _raise_conflict(
+            message="A execução não aceita mais novos itens no servidor.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_not_editable",
         )
     if not operation.name.strip():
         raise HTTPException(
@@ -325,9 +417,13 @@ async def sync_remove_execution_item_operation(
             detail="Execução não encontrada",
         )
     if execution.status in {ExecutionStatus.completed, ExecutionStatus.cancelled}:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Execução não permite alterações.",
+        _raise_conflict(
+            message="A execução não aceita remoções no servidor.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_not_editable",
         )
 
     item = db.scalar(
@@ -342,9 +438,13 @@ async def sync_remove_execution_item_operation(
             detail="Item não encontrado",
         )
     if item.is_completed:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Não é possível remover item já concluído.",
+        _raise_conflict(
+            message="O item já foi marcado como comprado no servidor.",
+            entity="execution_item",
+            entity_id=item.id,
+            local=operation,
+            remote=_serialize_item_conflict(item),
+            reason="item_already_completed",
         )
 
     item_name = item.name
@@ -393,9 +493,13 @@ async def sync_finalize_execution_operation(
             detail="Execução não encontrada",
         )
     if execution.status == ExecutionStatus.cancelled:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Execução cancelada não pode ser finalizada.",
+        _raise_conflict(
+            message="A execução foi cancelada no servidor e não pode ser finalizada.",
+            entity="execution",
+            entity_id=execution.id,
+            local=operation,
+            remote=_serialize_execution_conflict(execution),
+            reason="execution_cancelled",
         )
     if execution.status == ExecutionStatus.completed:
         return {

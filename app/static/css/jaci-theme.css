@@ -1136,6 +1136,49 @@ HOME OPERATIONAL
     color: var(--jaci-clay);
 }
 
+.sync-conflict-panel {
+    position: fixed;
+    z-index: 1076;
+    right: 0.75rem;
+    bottom: 3.25rem;
+    width: min(24rem, calc(100vw - 1.5rem));
+    max-height: min(20rem, calc(100vh - 8rem));
+    overflow-y: auto;
+    padding: 0.9rem 1rem;
+    border: 1px solid #B45309;
+    border-radius: 0.75rem;
+    background: rgba(255, 251, 235, 0.98);
+    color: var(--jaci-night);
+    box-shadow: 0 8px 24px rgba(146, 64, 14, 0.16);
+    font-size: 0.8rem;
+}
+
+.sync-conflict-panel[hidden] {
+    display: none;
+}
+
+.sync-conflict-panel ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+}
+
+.sync-conflict-panel li span {
+    display: block;
+    color: var(--jaci-clay);
+    font-size: 0.72rem;
+    line-height: 1.25;
+}
+
+.sync-conflict-panel small {
+    color: #92400E;
+}
+
+.offline-cache-panel:not([hidden]) + .sync-conflict-panel:not([hidden]) {
+    bottom: 12.25rem;
+}
+
 .page-loading {
     position: fixed;
     inset: 0;
@@ -1204,6 +1247,19 @@ HOME OPERATIONAL
         right: 0.5rem;
         top: 7.5rem;
         bottom: auto;
+    }
+
+    .sync-conflict-panel {
+        right: 0.5rem;
+        top: 7.5rem;
+        bottom: auto;
+        max-height: calc(100vh - 8.5rem);
+    }
+
+    .offline-cache-panel:not([hidden]) + .sync-conflict-panel:not([hidden]) {
+        top: 17.5rem;
+        bottom: auto;
+        max-height: calc(100vh - 18rem);
     }
 
     .page-loading {
