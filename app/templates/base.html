@@ -14,7 +14,7 @@
 
     <!-- PWA -->
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.png">
     <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 
     <!-- Fonts -->
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div id="sync-status" class="sync-status" role="status" aria-live="polite">
+    <div id="sync-status" class="sync-status is-synced" data-state="synced" role="status" aria-live="polite">
         <i class="bi bi-cloud-check-fill"></i>
         <span class="sync-status-label">Sincronizado</span>
         <span class="sync-status-pending d-none"></span>
