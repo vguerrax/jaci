@@ -98,6 +98,11 @@
         setState('error');
     }
 
+    function waitForRetry() {
+        activeRequests = 0;
+        setState('synced');
+    }
+
     function render() {
         setState(navigator.onLine ? (currentState || 'synced') : 'offline');
     }
@@ -133,6 +138,7 @@
     window.addEventListener('jaci:sync-start', startSync);
     window.addEventListener('jaci:sync-success', finishSync);
     window.addEventListener('jaci:sync-error', failSync);
+    window.addEventListener('jaci:sync-retry-scheduled', waitForRetry);
     if (manualSync) {
         manualSync.addEventListener('click', function () {
             window.dispatchEvent(new CustomEvent('jaci:sync-manual'));
