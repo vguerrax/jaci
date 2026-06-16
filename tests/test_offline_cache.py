@@ -4,13 +4,16 @@ from pathlib import Path
 
 import pytest
 from fastapi import HTTPException
+from sqlalchemy import select
 
 from app.models import Execution, ExecutionItem
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.offline import (
+    AddExecutionItemOperation,
     ExecutionItemOperation,
     StartExecutionOperation,
     offline_snapshot,
+    sync_add_execution_item_operation,
     sync_execution_item_operation,
     sync_start_execution_operation,
 )
@@ -268,6 +271,83 @@ def test_offline_item_operation_rejects_stale_version(db, make_user, make_group)
     assert error.value.status_code == 409
 
 
+def test_offline_add_item_operation_creates_real_item_from_temp_id(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Hortifruti")
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_add_execution_item_operation(
+            AddExecutionItemOperation(
+                execution_id=execution.id,
+                temp_id="temp-123",
+                name="Banana",
+                planned_quantity=6,
+                category_id=category.id,
+                notes="Prata",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    item = db.scalar(
+        select(ExecutionItem)
+        .where(ExecutionItem.execution_id == execution.id)
+        .where(ExecutionItem.name == "Banana")
+    )
+
+    assert result["status"] == "applied"
+    assert result["temp_id"] == "temp-123"
+    assert result["item"]["id"] != "temp-123"
+    assert result["item"]["name"] == "Banana"
+    assert item is not None
+
+
+def test_offline_add_item_operation_rejects_foreign_category(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    other_group = make_group("Outra")
+    foreign_category = make_category(other_group, "Alheia")
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_add_execution_item_operation(
+                AddExecutionItemOperation(
+                    execution_id=execution.id,
+                    temp_id="temp-456",
+                    name="Sabão",
+                    planned_quantity=1,
+                    category_id=foreign_category.id,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 422
+
+
 def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
@@ -283,11 +363,17 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
+    assert "ADD_EXECUTION_ITEM_SYNC_URL" in script
     assert "data-offline-start-execution" in script
+    assert "data-offline-add-item" in script
     assert "data-offline-complete-item" in script
     assert "data-offline-incomplete-item" in script
     assert "enqueueStartExecution" in script
+    assert "enqueueAddExecutionItemOperation" in script
     assert "enqueueExecutionItemOperation" in script
+    assert "createTempId" in script
+    assert "is_temporary" in script
+    assert "add_execution_item" in script
     assert "offline_base_version" in script
     assert "start_execution" in script
     assert "complete_item" in script
@@ -316,6 +402,17 @@ def test_start_execution_forms_are_offline_capable():
     assert 'data-execution-id="{{ execution.id }}"' in home
     assert "data-offline-start-execution" in detail
     assert 'data-execution-id="{{ execution.id }}"' in detail
+
+
+def test_add_item_form_is_offline_capable():
+    detail = Path("app/templates/pages/executions/in_progress.html").read_text()
+
+    assert "data-offline-add-item" in detail
+    assert 'data-execution-id="{{ execution.id }}"' in detail
+    assert 'name="name"' in detail
+    assert 'name="planned_quantity"' in detail
+    assert 'name="category_id"' in detail
+    assert 'name="notes"' in detail
 
 
 def test_execution_item_controls_are_offline_capable():
