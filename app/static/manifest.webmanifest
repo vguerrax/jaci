@@ -1,0 +1,51 @@
+{
+  "id": "/",
+  "name": "Jaci - Compras Colaborativas",
+  "short_name": "Jaci",
+  "description": "Planejamento e execução colaborativa de compras recorrentes.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5EFE4",
+  "theme_color": "#2A4B4A",
+  "icons": [
+    {
+      "src": "/static/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Iniciar ou continuar compra",
+      "short_name": "Compra ativa",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/static/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Nova compra",
+      "short_name": "Nova compra",
+      "url": "/executions/new",
+      "icons": [
+        {
+          "src": "/static/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
