@@ -14,8 +14,8 @@
 | RN10 | `test_stale_item_version_fails_explicitly_without_overwriting` |
 | RN11 | `test_execution_budget_can_override_template_budget`, `test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs` |
 | RN12 | `test_rn12_websocket_failure_does_not_undo_persisted_api_mutation` |
-| RN13 | Pendente: requer uma interface de fila de sincronização offline. |
-| RN14 | Pendente: requer uma interface de resolução de conflitos offline. |
+| RN13 | `test_sync_center_renders_local_queue_management_shell`, `test_sync_center_frontend_reads_queue_and_resolves_conflicts` |
+| RN14 | `test_sync_center_frontend_reads_queue_and_resolves_conflicts` |
 | RN15 | `test_home_prioritizes_in_progress_purchase_over_scheduled_purchase`, `test_home_uses_next_scheduled_purchase_when_none_is_in_progress` |
 | RN16 | `test_home_metrics_and_history_are_scoped_to_active_group` |
 | RN17 | `test_home_alerts_are_limited_and_ordered_by_criticality` |
