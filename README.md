@@ -234,8 +234,12 @@ No PWA instalado, um indicador global de carregamento aparece em navegações,
 formulários e requisições HTMX para evitar múltiplos toques durante o delay de
 carregamento.
 
-A fundação atual não inclui fila persistente de mutações nem resolução de
-conflitos. Detalhes e roteiro de validação manual estão em
+Também há cache local em IndexedDB para consulta offline de grupos, categorias,
+listas/templates e execuções recentes. Esse cache é atualizado automaticamente
+quando o usuário está online e autenticado, mas continua somente leitura.
+
+A fundação atual não inclui alterações offline, fila persistente de mutações nem
+resolução de conflitos. Detalhes e roteiro de validação manual estão em
 [docs/domain/pwa-offline-foundation.md](docs/domain/pwa-offline-foundation.md).
 
 ## Testes

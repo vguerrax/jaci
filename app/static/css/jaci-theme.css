@@ -1045,6 +1045,34 @@ HOME OPERATIONAL
     background: #FBF3E8;
 }
 
+.offline-cache-panel {
+    position: fixed;
+    z-index: 1075;
+    right: 0.75rem;
+    bottom: 3.25rem;
+    width: min(22rem, calc(100vw - 1.5rem));
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--jaci-sand);
+    border-radius: 1rem;
+    background: rgba(255, 252, 247, 0.96);
+    color: var(--jaci-night);
+    box-shadow: 0 8px 24px rgba(42, 75, 74, 0.16);
+    font-size: 0.8rem;
+}
+
+.offline-cache-panel[hidden] {
+    display: none;
+}
+
+.offline-cache-panel ul {
+    margin: 0.4rem 0;
+    padding-left: 1rem;
+}
+
+.offline-cache-panel small {
+    color: var(--jaci-clay);
+}
+
 .page-loading {
     position: fixed;
     inset: 0;
@@ -1105,6 +1133,11 @@ HOME OPERATIONAL
     .sync-status {
         right: 0.5rem;
         bottom: 0.5rem;
+    }
+
+    .offline-cache-panel {
+        right: 0.5rem;
+        bottom: 2.95rem;
     }
 
     .page-loading {

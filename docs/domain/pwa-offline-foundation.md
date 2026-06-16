@@ -73,6 +73,38 @@ abertura em nova aba ou controles Bootstrap como dropdowns e modais. Enquanto
 visível, ele cobre a tela e bloqueia novos toques até a resposta da navegação ou
 requisição.
 
+## BL-005 a BL-008 — Cache Local
+
+O Jaci mantém um cache local somente leitura em IndexedDB para consulta offline
+dos dados essenciais:
+
+* grupos;
+* categorias;
+* templates e seus itens;
+* execuções recentes e seus itens.
+
+Quando o usuário está online e autenticado, o app shell busca
+`/api/offline/snapshot` e substitui os dados armazenados localmente. O snapshot é
+sempre escopado aos grupos do usuário autenticado e nunca deve incluir dados de
+grupos externos.
+
+Quando o navegador entra em modo offline, a interface exibe um painel discreto
+com a quantidade de dados disponíveis localmente e a data da última atualização.
+Esse painel é uma indicação de consulta local, não uma confirmação de
+sincronização remota.
+
+### Fora do Escopo
+
+O cache local não implementa:
+
+* alterações offline;
+* fila de sincronização;
+* resolução de conflitos;
+* sobrescrita automática de dados remotos.
+
+Qualquer operação de escrita continua dependendo da API remota ou de uma
+evolução futura da fila offline.
+
 ## Validação Manual
 
 Validar em ambiente HTTPS:
