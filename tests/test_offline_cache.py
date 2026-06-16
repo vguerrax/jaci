@@ -530,6 +530,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
+    assert "const DB_VERSION = 7" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -538,6 +539,14 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "'executions'" in script
     assert "'execution_items'" in script
     assert "'pending_operations'" in script
+    assert "buildQueuedOperation" in script
+    assert "tipo:" in script
+    assert "entidade:" in script
+    assert "entidade_id:" in script
+    assert "tentativas: 0" in script
+    assert "sortOperationsByCreation" in script
+    assert "recordSyncAttempt" in script
+    assert "tentativas: Number(operation.tentativas || 0) + 1" in script
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
@@ -572,6 +581,19 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "indexedDB.deleteDatabase" in script
     assert "window.location.pathname === '/auth/logout'" in script
     assert "Alterações offline ainda não são suportadas" not in script
+
+
+def test_offline_queue_contract_uses_persistent_created_order_and_attempts():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "STORE_NAMES" in script
+    assert "'pending_operations'" in script
+    assert "created_at: created" in script
+    assert "return operations.slice().sort" in script
+    assert "localeCompare(String(b.created_at || ''))" in script
+    assert "sortOperationsByCreation(await readStore(db, 'pending_operations'))" in script
+    assert "await recordSyncAttempt(operation)" in script
+    assert "await deleteRecord(nextDb, 'pending_operations', operation.id)" in script
 
 
 def test_base_template_exposes_offline_cache_panel():
