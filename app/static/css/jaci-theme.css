@@ -1146,12 +1146,15 @@ HOME OPERATIONAL
 
     .sync-status {
         right: 0.5rem;
-        bottom: 0.5rem;
+        top: 4.75rem;
+        bottom: auto;
+        max-width: calc(100vw - 1rem);
     }
 
     .offline-cache-panel {
         right: 0.5rem;
-        bottom: 2.95rem;
+        top: 7.5rem;
+        bottom: auto;
     }
 
     .page-loading {
