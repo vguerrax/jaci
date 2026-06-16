@@ -86,7 +86,7 @@ abertura em nova aba ou controles Bootstrap como dropdowns e modais. Enquanto
 visível, ele cobre a tela e bloqueia novos toques até a resposta da navegação ou
 requisição.
 
-## BL-005 a BL-009 — Cache Local e Início Offline
+## BL-005 a BL-010 — Cache Local e Operações Offline
 
 O Jaci mantém um cache local em IndexedDB para consulta offline dos dados
 essenciais:
@@ -113,11 +113,31 @@ conexão volta, a operação é enviada para
 `/api/offline/operations/start-execution`; em caso de sucesso, a fila local é
 limpa e o snapshot offline é atualizado.
 
+Itens de execução também podem ser atualizados offline. As operações suportadas
+são:
+
+* marcar item como comprado;
+* desmarcar item;
+* alterar quantidade comprada;
+* alterar valor unitário;
+* alterar local de compra;
+* alterar observações.
+
+Cada alteração é gravada em `pending_operations` e aplicada imediatamente na
+store `execution_items`, mantendo uma `offline_base_version` para preservar a
+versão remota esperada durante a sincronização. Operações sucessivas no mesmo
+item são coalescidas para preservar o último estado desejado sem perder a versão
+base.
+
+Ao reconectar, operações de item são enviadas para
+`/api/offline/operations/execution-item`. Se a versão remota divergir, o servidor
+responde conflito e a operação permanece localmente pendente; o cliente nunca
+descarta nem sobrescreve essa alteração silenciosamente.
+
 ### Fora do Escopo
 
 O cache local não implementa:
 
-* alterações offline de itens;
 * resolução de conflitos;
 * sobrescrita automática de dados remotos.
 
