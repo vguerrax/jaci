@@ -130,6 +130,20 @@ em ordem crescente de `created_at`. Quando uma sincronização falha por erro de
 rede ou resposta não-OK, a operação permanece na fila e `tentativas` é
 incrementado.
 
+## BL-015 — Sincronização Automática
+
+A fila é sincronizada automaticamente quando:
+
+* a aplicação carrega online;
+* o navegador dispara o evento `online`;
+* uma retentativa automática é agendada após falha temporária.
+
+O indicador global de sincronização também expõe o botão "Sincronizar agora",
+que dispara `jaci:sync-manual` e executa a mesma rotina de drenagem da fila. A
+rotina evita execuções concorrentes, envia as operações em ordem de criação,
+atualiza o snapshot offline ao concluir e agenda nova tentativa automática
+quando uma falha temporária deixa operações pendentes.
+
 Execuções agendadas podem ser iniciadas offline. O cliente persiste uma operação
 `start_execution` na store `pending_operations`, atualiza a execução local para
 `in_progress` e incrementa o indicador global de alterações pendentes. Quando a

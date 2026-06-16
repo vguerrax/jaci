@@ -37,6 +37,8 @@ def test_sync_status_exposes_public_events_for_offline_cache():
     assert "new CustomEvent('jaci:sync-start')" in offline_cache
     assert "new CustomEvent('jaci:sync-success')" in offline_cache
     assert "new CustomEvent('jaci:sync-error')" in offline_cache
+    assert "new CustomEvent('jaci:sync-manual')" in script
+    assert "window.addEventListener('jaci:sync-manual'" in offline_cache
 
 
 def test_sync_status_is_visible_globally_and_styled_by_state():
@@ -45,10 +47,13 @@ def test_sync_status_is_visible_globally_and_styled_by_state():
 
     assert 'id="sync-status"' in base
     assert 'data-state="synced"' in base
+    assert 'data-sync-now' in base
+    assert 'aria-label="Sincronizar agora"' in base
     assert 'aria-live="polite"' in base
     assert ".sync-status.is-offline" in styles
     assert ".sync-status.is-syncing" in styles
     assert ".sync-status.is-error" in styles
+    assert ".sync-status-action" in styles
     assert "animation: jaci-spin" in styles
     assert "@media (max-width: 767.98px)" in styles
     assert "top: 4.75rem;" in styles
