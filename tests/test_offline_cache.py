@@ -530,7 +530,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
-    assert "const DB_VERSION = 8" in script
+    assert "const DB_VERSION = 9" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -547,6 +547,10 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "sortOperationsByCreation" in script
     assert "recordSyncAttempt" in script
     assert "tentativas: Number(operation.tentativas || 0) + 1" in script
+    assert "PENDING_ERRORS_KEY" in script
+    assert "jaci_pending_errors" in script
+    assert "renderPendingState" in script
+    assert "Number(operation.tentativas || 0) > 0" in script
     assert "SYNC_RETRY_DELAY_MS" in script
     assert "scheduleAutomaticRetry" in script
     assert "runAutomaticSync" in script

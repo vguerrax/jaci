@@ -7,7 +7,12 @@
     const icon = status.querySelector('i');
     const label = status.querySelector('.sync-status-label');
     const pending = status.querySelector('.sync-status-pending');
+    const lastSync = status.querySelector('.sync-status-last');
+    const errors = status.querySelector('.sync-status-errors');
     const manualSync = status.querySelector('[data-sync-now]');
+    const LAST_SYNC_KEY = 'jaci_last_sync_at';
+    const PENDING_CHANGES_KEY = 'jaci_pending_changes';
+    const PENDING_ERRORS_KEY = 'jaci_pending_errors';
     const STATES = {
         synced: {
             label: 'Sincronizado',
@@ -34,10 +39,28 @@
     let activeRequests = 0;
     let currentState = null;
 
-    function renderPending() {
-        const pendingCount = Number(localStorage.getItem('jaci_pending_changes') || 0);
+    function formatDateTime(value) {
+        if (!value) return 'nunca';
+        return new Intl.DateTimeFormat('pt-BR', {
+            dateStyle: 'short',
+            timeStyle: 'short',
+        }).format(new Date(value));
+    }
+
+    function renderDetails() {
+        const pendingCount = Number(localStorage.getItem(PENDING_CHANGES_KEY) || 0);
+        const errorCount = Number(localStorage.getItem(PENDING_ERRORS_KEY) || 0);
+        const lastSyncAt = localStorage.getItem(LAST_SYNC_KEY);
+
         pending.classList.toggle('d-none', pendingCount === 0);
         pending.textContent = pendingCount ? `${pendingCount} pendente(s)` : '';
+        if (lastSync) {
+            lastSync.textContent = `Última sync: ${formatDateTime(lastSyncAt)}`;
+        }
+        if (errors) {
+            errors.classList.toggle('d-none', errorCount === 0);
+            errors.textContent = errorCount ? `${errorCount} erro(s)` : '';
+        }
     }
 
     function setState(nextState) {
@@ -50,7 +73,7 @@
         status.classList.add(config.className);
         icon.className = config.icon;
         label.textContent = config.label;
-        renderPending();
+        renderDetails();
     }
 
     function startSync() {
@@ -65,6 +88,7 @@
     function finishSync() {
         activeRequests = Math.max(0, activeRequests - 1);
         if (activeRequests === 0) {
+            localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
             setState('synced');
         }
     }
@@ -89,8 +113,8 @@
     window.addEventListener('online', render);
     window.addEventListener('offline', render);
     window.addEventListener('storage', function (event) {
-        if (event.key === 'jaci_pending_changes') {
-            renderPending();
+        if ([PENDING_CHANGES_KEY, PENDING_ERRORS_KEY, LAST_SYNC_KEY].includes(event.key)) {
+            renderDetails();
         }
     });
 
