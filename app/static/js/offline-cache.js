@@ -2,7 +2,7 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 10;
+    const DB_VERSION = 11;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
@@ -11,6 +11,7 @@
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
+    const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
     const SYNC_RETRY_BASE_DELAY_MS = 5000;
     const SYNC_RETRY_MAX_DELAY_MS = 120000;
     const STORE_NAMES = [
@@ -26,13 +27,16 @@
 
     const panel = document.getElementById('offline-cache-panel');
     const summary = document.getElementById('offline-cache-summary');
+    const conflictPanel = document.getElementById('sync-conflict-panel');
+    const conflictSummary = document.getElementById('sync-conflict-summary');
     let retryTimer = null;
     let syncInFlight = false;
 
-    function SyncFailure(message, requiresManualIntervention) {
+    function SyncFailure(message, requiresManualIntervention, conflict) {
         this.name = 'SyncFailure';
         this.message = message;
         this.requiresManualIntervention = requiresManualIntervention;
+        this.conflict = conflict || null;
     }
 
     if (!('indexedDB' in window)) return;
@@ -140,11 +144,14 @@
         const errorCount = operations.filter(function (operation) {
             return Number(operation.tentativas || 0) > 0;
         }).length;
+        const conflictCount = operations.filter(isConflictOperation).length;
         localStorage.setItem(PENDING_CHANGES_KEY, String(count));
         localStorage.setItem(PENDING_ERRORS_KEY, String(errorCount));
+        localStorage.setItem(PENDING_CONFLICTS_KEY, String(conflictCount));
         if (window.JaciSyncStatus) {
             window.JaciSyncStatus.render();
         }
+        renderConflictSummary(operations);
     }
 
     async function updatePendingCount() {
@@ -235,11 +242,76 @@
         return status === 429 || status >= 500;
     }
 
-    async function recordSyncAttempt(operation, requiresManualIntervention) {
+    function isConflictPayload(payload) {
+        return payload && payload.type === 'sync_conflict';
+    }
+
+    function isConflictOperation(operation) {
+        return operation?.status === 'conflict' || isConflictPayload(operation?.conflict);
+    }
+
+    function parseConflictMessage(detail) {
+        if (!detail) return 'Conflito de sincronização detectado.';
+        if (typeof detail === 'string') return detail;
+        return detail.message || 'Conflito de sincronização detectado.';
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    function summarizeConflictValue(value) {
+        if (!value || typeof value !== 'object') return '';
+        const parts = [];
+        if (value.action) parts.push(`ação local: ${value.action}`);
+        if (value.version !== undefined) parts.push(`versão: ${value.version}`);
+        if (value.status) parts.push(`status: ${value.status}`);
+        if (value.name) parts.push(`item: ${value.name}`);
+        if (value.is_completed !== undefined) {
+            parts.push(value.is_completed ? 'comprado' : 'não comprado');
+        }
+        return parts.join(', ');
+    }
+
+    function renderConflictSummary(operations) {
+        if (!conflictPanel || !conflictSummary) return;
+        const conflicts = (operations || []).filter(isConflictOperation);
+        if (!conflicts.length) {
+            conflictPanel.hidden = true;
+            conflictSummary.innerHTML = '';
+            return;
+        }
+
+        conflictPanel.hidden = false;
+        conflictSummary.innerHTML = conflicts.slice(0, 3).map(function (operation) {
+            const conflict = operation.conflict || {};
+            const local = summarizeConflictValue(conflict.local || operation.payload);
+            const remote = summarizeConflictValue(conflict.remote);
+            return [
+                '<li>',
+                `<strong>${escapeHtml(parseConflictMessage(conflict))}</strong>`,
+                local ? `<span>Local: ${escapeHtml(local)}</span>` : '',
+                remote ? `<span>Servidor: ${escapeHtml(remote)}</span>` : '',
+                '</li>',
+            ].join('');
+        }).join('');
+    }
+
+    async function recordSyncAttempt(operation, requiresManualIntervention, conflict) {
         const db = await openDatabase();
+        const conflictPayload = isConflictPayload(conflict) ? conflict : null;
         await putRecord(db, 'pending_operations', Object.assign({}, operation, {
             tentativas: Number(operation.tentativas || 0) + 1,
             requires_manual_intervention: Boolean(requiresManualIntervention),
+            status: conflictPayload ? 'conflict' : operation.status,
+            conflict: conflictPayload,
+            conflict_detected_at: conflictPayload ? new Date().toISOString() : operation.conflict_detected_at,
+            error_message: conflictPayload ? parseConflictMessage(conflictPayload) : operation.error_message,
             updated_at: new Date().toISOString(),
         }));
         db.close();
@@ -451,13 +523,24 @@
         }
         if (response.status === 401) return false;
         if (!response.ok) {
+            let responseBody = null;
+            try {
+                responseBody = await response.json();
+            } catch (error) {
+                responseBody = null;
+            }
+            const detail = responseBody?.detail;
+            const conflict = response.status === 409 && isConflictPayload(detail) ? detail : null;
             const requiresManualIntervention = !isTransientStatus(response.status);
-            await recordSyncAttempt(operation, requiresManualIntervention);
+            await recordSyncAttempt(operation, requiresManualIntervention, conflict);
             throw new SyncFailure(
-                requiresManualIntervention
-                    ? 'Sincronização requer intervenção manual.'
-                    : 'Falha temporária ao sincronizar alteração offline.',
-                requiresManualIntervention
+                conflict
+                    ? parseConflictMessage(conflict)
+                    : requiresManualIntervention
+                        ? 'Sincronização requer intervenção manual.'
+                        : 'Falha temporária ao sincronizar alteração offline.',
+                requiresManualIntervention,
+                conflict
             );
         }
         return true;
@@ -552,6 +635,7 @@
     function clearLocalCache() {
         localStorage.removeItem(PENDING_CHANGES_KEY);
         localStorage.removeItem(PENDING_ERRORS_KEY);
+        localStorage.removeItem(PENDING_CONFLICTS_KEY);
         return new Promise(function (resolve, reject) {
             const request = indexedDB.deleteDatabase(DB_NAME);
             request.onsuccess = resolve;
@@ -589,6 +673,7 @@
             `<li>${snapshot.pending_operations.length} alteração(ões) aguardando sync</li>`,
             `<li>Atualizado em ${formatDate(metadata?.cached_at)}</li>`,
         ].join('');
+        renderConflictSummary(snapshot.pending_operations);
     }
 
     function renderQueuedStart(form) {
@@ -904,6 +989,9 @@
         setupOfflineItemOperations();
         setupOfflineFinalizeControls();
         updatePendingCount().catch(function () {});
+        readSnapshot().then(function (snapshot) {
+            renderConflictSummary(snapshot.pending_operations);
+        }).catch(function () {});
         runAutomaticSync();
     });
 })();
