@@ -9,11 +9,14 @@
                     swap: 'innerHTML'
                 });
                 this.reset();
-                ">
+                "
+                data-offline-complete-item-form
+                data-execution-id="{{ execution.id }}"
+                data-item-id="{{ item.id }}">
                 <input type="hidden" name="version" value="{{ item.version }}">
                 <div class="modal-header">
                     <h3 class="modal-title h6" id="completeItemLabel{{ item.id }}">
-                        Comprar: {{ item.name }}
+                        {% if item.is_completed %}Editar compra{% else %}Comprar{% endif %}: {{ item.name }}
                     </h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
@@ -21,7 +24,7 @@
                     <div class="mb-3">
                         <label class="form-label">Quantidade comprada</label>
                         <input type="number" class="form-control" name="purchased_quantity"
-                            value="{{ item.planned_quantity|quantity }}" step="0.001" min="0.001" required>
+                            value="{{ (item.purchased_quantity if item.purchased_quantity else item.planned_quantity)|quantity }}" step="0.001" min="0.001" required>
                         <div class="form-text">
                             Planejado: {{ item.planned_quantity|quantity }}
                         </div>
@@ -29,12 +32,12 @@
                     <div class="mb-3">
                         <label class="form-label">Valor unitário (R$)</label>
                         <input type="number" class="form-control" name="unit_price" placeholder="0,00" step="0.01"
-                            min="0.01" required>
+                            min="0.01" value="{{ item.unit_price if item.unit_price else '' }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Local de compra (opcional)</label>
                         <input type="text" class="form-control" name="location"
-                            placeholder="Ex: Supermercado X, Feira Y..." value="{{ execution.current_location or '' }}">
+                            placeholder="Ex: Supermercado X, Feira Y..." value="{{ item.location or execution.current_location or '' }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Observações</label>
