@@ -31,6 +31,7 @@ async def list_notifications(
     notifications = get_notifications(db, user.id)
 
     return templates.TemplateResponse(
+        request,
         "pages/notifications/list.html",
         {
             "request": request,

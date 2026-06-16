@@ -38,9 +38,11 @@ def test_sync_status_exposes_public_events_for_offline_cache():
     assert "jaci:sync-start" in script
     assert "jaci:sync-success" in script
     assert "jaci:sync-error" in script
+    assert "jaci:sync-retry-scheduled" in script
     assert "new CustomEvent('jaci:sync-start')" in offline_cache
     assert "new CustomEvent('jaci:sync-success')" in offline_cache
     assert "new CustomEvent('jaci:sync-error')" in offline_cache
+    assert "new CustomEvent('jaci:sync-retry-scheduled')" in offline_cache
     assert "new CustomEvent('jaci:sync-manual')" in script
     assert "window.addEventListener('jaci:sync-manual'" in offline_cache
 

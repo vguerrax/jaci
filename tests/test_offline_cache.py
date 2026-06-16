@@ -530,7 +530,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
-    assert "const DB_VERSION = 9" in script
+    assert "const DB_VERSION = 10" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -551,7 +551,11 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "jaci_pending_errors" in script
     assert "renderPendingState" in script
     assert "Number(operation.tentativas || 0) > 0" in script
-    assert "SYNC_RETRY_DELAY_MS" in script
+    assert "SYNC_RETRY_BASE_DELAY_MS" in script
+    assert "SYNC_RETRY_MAX_DELAY_MS" in script
+    assert "getRetryDelay" in script
+    assert "isTransientStatus" in script
+    assert "requires_manual_intervention" in script
     assert "scheduleAutomaticRetry" in script
     assert "runAutomaticSync" in script
     assert "syncInFlight" in script
@@ -601,7 +605,8 @@ def test_offline_queue_contract_uses_persistent_created_order_and_attempts():
     assert "return operations.slice().sort" in script
     assert "localeCompare(String(b.created_at || ''))" in script
     assert "sortOperationsByCreation(await readStore(db, 'pending_operations'))" in script
-    assert "await recordSyncAttempt(operation)" in script
+    assert "await recordSyncAttempt(operation, false)" in script
+    assert "await recordSyncAttempt(operation, requiresManualIntervention)" in script
     assert "await deleteRecord(nextDb, 'pending_operations', operation.id)" in script
 
 
@@ -613,9 +618,22 @@ def test_offline_sync_runs_automatically_manually_and_retries_failures():
     assert "runAutomaticSync();" in script
     assert "syncNow: runAutomaticSync" in script
     assert "runAutomaticSync({ manual: true })" in script
-    assert "scheduleAutomaticRetry(SYNC_RETRY_DELAY_MS)" in script
+    assert "getNextRetryDelay().then(scheduleAutomaticRetry)" in script
     assert "window.setTimeout(function ()" in script
     assert "retryTimer = null" in script
+
+
+def test_offline_sync_uses_exponential_backoff_and_only_notifies_manual_errors():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "2 ** (attempts - 1)" in script
+    assert "Math.min(SYNC_RETRY_MAX_DELAY_MS" in script
+    assert "status === 429 || status >= 500" in script
+    assert "requiresManualIntervention = !isTransientStatus(response.status)" in script
+    assert "new SyncFailure('Falha temporária de rede.', false)" in script
+    assert "if (error.requiresManualIntervention)" in script
+    assert "window.dispatchEvent(new CustomEvent('jaci:sync-error'))" in script
+    assert "window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'))" in script
 
 
 def test_base_template_exposes_offline_cache_panel():
