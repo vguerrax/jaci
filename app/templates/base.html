@@ -53,6 +53,12 @@
         <span class="sync-status-pending d-none"></span>
     </div>
 
+    <aside id="offline-cache-panel" class="offline-cache-panel" aria-live="polite" hidden>
+        <strong>Dados offline disponíveis</strong>
+        <ul id="offline-cache-summary"></ul>
+        <small>Consulta local somente leitura. Alterações offline ainda não são suportadas.</small>
+    </aside>
+
     <!-- Navbar -->
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-jaci sticky-top">
@@ -193,6 +199,7 @@
     <script src="/static/js/sync-status.js"></script>
     <script src="/static/js/pwa-install.js"></script>
     <script src="/static/js/loading-indicator.js"></script>
+    <script src="/static/js/offline-cache.js"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

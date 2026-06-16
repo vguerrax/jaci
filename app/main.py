@@ -19,6 +19,7 @@ from app.routers.executions import router as executions_router
 from app.routers.agenda import router as agenda_router
 from app.routers.notifications import router as notifications_router
 from app.routers.legal import router as legal
+from app.routers.offline import router as offline_router
 from app.websocket.handlers import execution_ws_handler
 from app.utils.security import decode_access_token
 
@@ -42,6 +43,7 @@ app.include_router(executions_router)
 app.include_router(agenda_router)
 app.include_router(notifications_router)
 app.include_router(legal)
+app.include_router(offline_router)
 
 @app.middleware("http")
 async def add_unread_count(request: Request, call_next):
