@@ -2,13 +2,14 @@
     'use strict';
 
     const DB_NAME = 'jaci-offline-cache';
-    const DB_VERSION = 11;
+    const DB_VERSION = 10;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
+    const SYNC_CONFLICTS_URL = '/api/offline/conflicts';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
     const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
@@ -27,16 +28,24 @@
 
     const panel = document.getElementById('offline-cache-panel');
     const summary = document.getElementById('offline-cache-summary');
-    const conflictPanel = document.getElementById('sync-conflict-panel');
-    const conflictSummary = document.getElementById('sync-conflict-summary');
+    const syncCenter = document.querySelector('[data-sync-center]');
+    const syncOperationList = document.querySelector('[data-sync-operation-list]');
+    const syncEmpty = document.querySelector('[data-sync-empty]');
+    const syncNowButton = document.querySelector('[data-sync-center-sync-now]');
+    const syncCountPending = document.querySelector('[data-sync-count-pending]');
+    const syncCountFailed = document.querySelector('[data-sync-count-failed]');
+    const syncCountConflict = document.querySelector('[data-sync-count-conflict]');
+    const syncAuditList = document.querySelector('[data-sync-audit-list]');
+    const syncAuditEmpty = document.querySelector('[data-sync-audit-empty]');
+    const syncAuditRefresh = document.querySelector('[data-sync-audit-refresh]');
+    let syncFilter = 'all';
     let retryTimer = null;
     let syncInFlight = false;
 
-    function SyncFailure(message, requiresManualIntervention, conflict) {
+    function SyncFailure(message, requiresManualIntervention) {
         this.name = 'SyncFailure';
         this.message = message;
         this.requiresManualIntervention = requiresManualIntervention;
-        this.conflict = conflict || null;
     }
 
     if (!('indexedDB' in window)) return;
@@ -151,7 +160,7 @@
         if (window.JaciSyncStatus) {
             window.JaciSyncStatus.render();
         }
-        renderConflictSummary(operations);
+        renderSyncCenter(operations).catch(function () {});
     }
 
     async function updatePendingCount() {
@@ -242,76 +251,45 @@
         return status === 429 || status >= 500;
     }
 
-    function isConflictPayload(payload) {
-        return payload && payload.type === 'sync_conflict';
-    }
-
     function isConflictOperation(operation) {
-        return operation?.status === 'conflict' || isConflictPayload(operation?.conflict);
+        return operation?.status === 'conflict' || operation?.conflict?.type === 'sync_conflict';
     }
 
-    function parseConflictMessage(detail) {
-        if (!detail) return 'Conflito de sincronização detectado.';
+    function classifyOperation(operation) {
+        if (isConflictOperation(operation)) return 'conflict';
+        if (operation?.requires_manual_intervention || Number(operation?.tentativas || 0) > 0) return 'failed';
+        return 'pending';
+    }
+
+    function detailMessage(detail) {
+        if (!detail) return 'Falha de sincronização.';
         if (typeof detail === 'string') return detail;
-        return detail.message || 'Conflito de sincronização detectado.';
+        return detail.message || detail.detail || 'Falha de sincronização.';
     }
 
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replaceAll('&', '&amp;')
-            .replaceAll('<', '&lt;')
-            .replaceAll('>', '&gt;')
-            .replaceAll('"', '&quot;')
-            .replaceAll("'", '&#039;');
-    }
-
-    function summarizeConflictValue(value) {
-        if (!value || typeof value !== 'object') return '';
-        const parts = [];
-        if (value.action) parts.push(`ação local: ${value.action}`);
-        if (value.version !== undefined) parts.push(`versão: ${value.version}`);
-        if (value.status) parts.push(`status: ${value.status}`);
-        if (value.name) parts.push(`item: ${value.name}`);
-        if (value.is_completed !== undefined) {
-            parts.push(value.is_completed ? 'comprado' : 'não comprado');
-        }
-        return parts.join(', ');
-    }
-
-    function renderConflictSummary(operations) {
-        if (!conflictPanel || !conflictSummary) return;
-        const conflicts = (operations || []).filter(isConflictOperation);
-        if (!conflicts.length) {
-            conflictPanel.hidden = true;
-            conflictSummary.innerHTML = '';
-            return;
-        }
-
-        conflictPanel.hidden = false;
-        conflictSummary.innerHTML = conflicts.slice(0, 3).map(function (operation) {
-            const conflict = operation.conflict || {};
-            const local = summarizeConflictValue(conflict.local || operation.payload);
-            const remote = summarizeConflictValue(conflict.remote);
-            return [
-                '<li>',
-                `<strong>${escapeHtml(parseConflictMessage(conflict))}</strong>`,
-                local ? `<span>Local: ${escapeHtml(local)}</span>` : '',
-                remote ? `<span>Servidor: ${escapeHtml(remote)}</span>` : '',
-                '</li>',
-            ].join('');
-        }).join('');
+    function buildConflict(operation, statusCode, detail) {
+        if (detail?.type === 'sync_conflict') return detail;
+        return {
+            type: 'sync_conflict',
+            message: detailMessage(detail),
+            entity: operation.entity,
+            entity_id: operation.entity_id,
+            reason: statusCode === 409 ? 'server_conflict' : 'manual_intervention',
+            local: operation.payload,
+            remote: detail?.remote || null,
+        };
     }
 
     async function recordSyncAttempt(operation, requiresManualIntervention, conflict) {
         const db = await openDatabase();
-        const conflictPayload = isConflictPayload(conflict) ? conflict : null;
+        const conflictPayload = conflict?.type === 'sync_conflict' ? conflict : null;
         await putRecord(db, 'pending_operations', Object.assign({}, operation, {
             tentativas: Number(operation.tentativas || 0) + 1,
             requires_manual_intervention: Boolean(requiresManualIntervention),
             status: conflictPayload ? 'conflict' : operation.status,
-            conflict: conflictPayload,
+            conflict: conflictPayload || operation.conflict || null,
+            error_message: conflictPayload ? conflictPayload.message : operation.error_message,
             conflict_detected_at: conflictPayload ? new Date().toISOString() : operation.conflict_detected_at,
-            error_message: conflictPayload ? parseConflictMessage(conflictPayload) : operation.error_message,
             updated_at: new Date().toISOString(),
         }));
         db.close();
@@ -523,24 +501,23 @@
         }
         if (response.status === 401) return false;
         if (!response.ok) {
-            let responseBody = null;
+            let detail = null;
             try {
-                responseBody = await response.json();
+                const responseBody = await response.json();
+                detail = responseBody?.detail || responseBody;
             } catch (error) {
-                responseBody = null;
+                detail = null;
             }
-            const detail = responseBody?.detail;
-            const conflict = response.status === 409 && isConflictPayload(detail) ? detail : null;
             const requiresManualIntervention = !isTransientStatus(response.status);
+            const conflict = response.status === 409 ? buildConflict(operation, response.status, detail) : null;
             await recordSyncAttempt(operation, requiresManualIntervention, conflict);
             throw new SyncFailure(
                 conflict
-                    ? parseConflictMessage(conflict)
+                    ? conflict.message
                     : requiresManualIntervention
-                        ? 'Sincronização requer intervenção manual.'
-                        : 'Falha temporária ao sincronizar alteração offline.',
-                requiresManualIntervention,
-                conflict
+                    ? 'Sincronização requer intervenção manual.'
+                    : 'Falha temporária ao sincronizar alteração offline.',
+                requiresManualIntervention
             );
         }
         return true;
@@ -560,6 +537,9 @@
 
         window.dispatchEvent(new CustomEvent('jaci:sync-start'));
         for (const operation of operations) {
+            if (operation.requires_manual_intervention || isConflictOperation(operation)) {
+                continue;
+            }
             const applied = await syncPendingOperation(operation);
             if (applied) {
                 const nextDb = await openDatabase();
@@ -644,6 +624,236 @@
         });
     }
 
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    function operationLabel(operation) {
+        const labels = {
+            start_execution: 'Iniciar compra',
+            complete_item: 'Marcar item como comprado',
+            incomplete_item: 'Desmarcar item',
+            add_execution_item: 'Adicionar item',
+            remove_execution_item: 'Remover item',
+            finalize_execution: 'Finalizar compra',
+        };
+        return labels[operation.action] || operation.tipo || 'Operação offline';
+    }
+
+    function operationStatusLabel(operation) {
+        const statusName = classifyOperation(operation);
+        if (statusName === 'conflict') return 'Conflito';
+        if (statusName === 'failed') return 'Falha';
+        return 'Pendente';
+    }
+
+    function formatPayload(payload) {
+        if (!payload || typeof payload !== 'object') return '';
+        return Object.entries(payload)
+            .filter(function ([, value]) { return value !== null && value !== undefined && value !== ''; })
+            .map(function ([key, value]) { return `${key}: ${value}`; })
+            .slice(0, 6)
+            .join(' · ');
+    }
+
+    function filterOperations(operations) {
+        if (syncFilter === 'all') return operations;
+        return operations.filter(function (operation) {
+            return classifyOperation(operation) === syncFilter;
+        });
+    }
+
+    async function resolveOperation(operationId, resolution) {
+        const db = await openDatabase();
+        const operation = await getRecord(db, 'pending_operations', operationId);
+        if (!operation) {
+            db.close();
+            return;
+        }
+
+        if (resolution === 'discard_local') {
+            await deleteRecord(db, 'pending_operations', operationId);
+        }
+        if (resolution === 'retry_local') {
+            await putRecord(db, 'pending_operations', Object.assign({}, operation, {
+                status: 'pending',
+                requires_manual_intervention: false,
+                conflict: null,
+                error_message: null,
+                updated_at: new Date().toISOString(),
+            }));
+        }
+        db.close();
+        if (operation.conflict?.audit_id && navigator.onLine) {
+            recordConflictResolution(operation.conflict.audit_id, resolution).catch(function () {});
+        }
+        await updatePendingCount();
+        if (resolution === 'discard_local' && navigator.onLine) {
+            refreshSnapshot().catch(function () {});
+        }
+        if (resolution === 'retry_local') {
+            runAutomaticSync({ manual: true });
+        }
+    }
+
+    async function recordConflictResolution(auditId, resolution) {
+        const response = await fetch(`${SYNC_CONFLICTS_URL}/${auditId}/resolution`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ resolution: resolution }),
+        });
+        if (response.ok) {
+            renderConflictAuditHistory().catch(function () {});
+        }
+    }
+
+    function operationCard(operation) {
+        const statusName = classifyOperation(operation);
+        const conflict = operation.conflict || {};
+        const payload = formatPayload(operation.payload);
+        const remote = formatPayload(conflict.remote);
+        const failure = conflict.message || operation.error_message || (
+            Number(operation.tentativas || 0) > 0 ? 'Aguardando nova tentativa automática.' : ''
+        );
+
+        return [
+            `<article class="sync-operation sync-operation-${statusName}" data-operation-id="${escapeHtml(operation.id)}">`,
+            '<div class="sync-operation-main">',
+            `<span class="sync-operation-status">${operationStatusLabel(operation)}</span>`,
+            `<h2>${escapeHtml(operationLabel(operation))}</h2>`,
+            `<p>${escapeHtml(operation.entidade || operation.entity)} #${escapeHtml(operation.entidade_id || operation.entity_id)}</p>`,
+            payload ? `<dl><dt>Local</dt><dd>${escapeHtml(payload)}</dd></dl>` : '',
+            remote ? `<dl><dt>Servidor</dt><dd>${escapeHtml(remote)}</dd></dl>` : '',
+            failure ? `<p class="sync-operation-message">${escapeHtml(failure)}</p>` : '',
+            `<small>Criada em ${formatDate(operation.created_at)} · ${Number(operation.tentativas || 0)} tentativa(s)</small>`,
+            '</div>',
+            '<div class="sync-operation-actions">',
+            statusName === 'conflict' || statusName === 'failed'
+                ? `<button type="button" class="btn btn-sm btn-primary" data-sync-resolve="retry_local" data-operation-id="${escapeHtml(operation.id)}">Tentar local</button>`
+                : '',
+            statusName === 'conflict' || statusName === 'failed'
+                ? `<button type="button" class="btn btn-sm btn-outline-secondary" data-sync-resolve="discard_local" data-operation-id="${escapeHtml(operation.id)}">Usar servidor</button>`
+                : '',
+            '</div>',
+            '</article>',
+        ].join('');
+    }
+
+    async function renderSyncCenter(operations) {
+        if (!syncCenter || !syncOperationList) return;
+        const snapshotOperations = operations || (await readSnapshot()).pending_operations;
+        const sorted = sortOperationsByCreation(snapshotOperations);
+        const visible = filterOperations(sorted);
+        const pendingCount = sorted.filter(function (operation) {
+            return classifyOperation(operation) === 'pending';
+        }).length;
+        const failedCount = sorted.filter(function (operation) {
+            return classifyOperation(operation) === 'failed';
+        }).length;
+        const conflictCount = sorted.filter(function (operation) {
+            return classifyOperation(operation) === 'conflict';
+        }).length;
+
+        if (syncCountPending) syncCountPending.textContent = String(pendingCount);
+        if (syncCountFailed) syncCountFailed.textContent = String(failedCount);
+        if (syncCountConflict) syncCountConflict.textContent = String(conflictCount);
+
+        if (syncEmpty) {
+            syncEmpty.hidden = visible.length > 0;
+        }
+        const cards = visible.map(operationCard).join('');
+        syncOperationList.querySelectorAll('.sync-operation').forEach(function (card) {
+            card.remove();
+        });
+        syncOperationList.insertAdjacentHTML('beforeend', cards);
+    }
+
+    function auditCard(conflict) {
+        const local = formatPayload(conflict.local_state);
+        const remote = formatPayload(conflict.remote_state);
+        const resolution = conflict.resolution_applied || 'Pendente';
+
+        return [
+            '<article class="sync-audit-card">',
+            '<div>',
+            `<span class="sync-operation-status">${escapeHtml(resolution)}</span>`,
+            `<h3>${escapeHtml(conflict.operation_type)}</h3>`,
+            `<p>${escapeHtml(conflict.message)}</p>`,
+            `<small>Execução ${escapeHtml(conflict.execution_id || 'n/a')} · usuário #${escapeHtml(conflict.user_id)} · ${formatDate(conflict.created_at)}</small>`,
+            local ? `<dl><dt>Local</dt><dd>${escapeHtml(local)}</dd></dl>` : '',
+            remote ? `<dl><dt>Servidor</dt><dd>${escapeHtml(remote)}</dd></dl>` : '',
+            conflict.resolved_at ? `<small>Resolvido em ${formatDate(conflict.resolved_at)}</small>` : '',
+            '</div>',
+            '</article>',
+        ].join('');
+    }
+
+    async function renderConflictAuditHistory() {
+        if (!syncAuditList || !navigator.onLine) return;
+        const response = await fetch(SYNC_CONFLICTS_URL, {
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
+        });
+        if (!response.ok) return;
+
+        const data = await response.json();
+        const conflicts = data.conflicts || [];
+        if (syncAuditEmpty) {
+            syncAuditEmpty.hidden = conflicts.length > 0;
+        }
+        syncAuditList.querySelectorAll('.sync-audit-card').forEach(function (card) {
+            card.remove();
+        });
+        syncAuditList.insertAdjacentHTML('beforeend', conflicts.map(auditCard).join(''));
+    }
+
+    function setupSyncCenter() {
+        if (!syncCenter) return;
+
+        document.querySelectorAll('[data-sync-filter]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                syncFilter = button.dataset.syncFilter || 'all';
+                document.querySelectorAll('[data-sync-filter]').forEach(function (otherButton) {
+                    otherButton.classList.toggle('btn-primary', otherButton === button);
+                    otherButton.classList.toggle('btn-outline-primary', otherButton !== button);
+                });
+                renderSyncCenter().catch(function () {});
+            });
+        });
+
+        syncOperationList.addEventListener('click', function (event) {
+            const button = event.target.closest('[data-sync-resolve]');
+            if (!button) return;
+            resolveOperation(button.dataset.operationId, button.dataset.syncResolve).catch(function () {
+                window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+            });
+        });
+
+        if (syncNowButton) {
+            syncNowButton.addEventListener('click', function () {
+                runAutomaticSync({ manual: true });
+                renderSyncCenter().catch(function () {});
+            });
+        }
+        if (syncAuditRefresh) {
+            syncAuditRefresh.addEventListener('click', function () {
+                renderConflictAuditHistory().catch(function () {});
+            });
+        }
+
+        renderSyncCenter().catch(function () {});
+        renderConflictAuditHistory().catch(function () {});
+    }
+
     function formatDate(value) {
         if (!value) return 'nunca';
         return new Intl.DateTimeFormat('pt-BR', {
@@ -673,7 +883,6 @@
             `<li>${snapshot.pending_operations.length} alteração(ões) aguardando sync</li>`,
             `<li>Atualizado em ${formatDate(metadata?.cached_at)}</li>`,
         ].join('');
-        renderConflictSummary(snapshot.pending_operations);
     }
 
     function renderQueuedStart(form) {
@@ -965,6 +1174,8 @@
         read: readSnapshot,
         syncPending: syncPendingOperations,
         syncNow: runAutomaticSync,
+        renderSyncCenter: renderSyncCenter,
+        renderConflictAuditHistory: renderConflictAuditHistory,
         enqueueStartExecution: enqueueStartExecution,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
@@ -988,10 +1199,8 @@
         setupOfflineAddItemForms();
         setupOfflineItemOperations();
         setupOfflineFinalizeControls();
+        setupSyncCenter();
         updatePendingCount().catch(function () {});
-        readSnapshot().then(function (snapshot) {
-            renderConflictSummary(snapshot.pending_operations);
-        }).catch(function () {});
         runAutomaticSync();
     });
 })();

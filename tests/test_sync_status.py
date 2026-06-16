@@ -72,7 +72,10 @@ def test_sync_status_is_visible_globally_and_styled_by_state():
     assert ".sync-conflict-panel" in styles
     assert "animation: jaci-spin" in styles
     assert "@media (max-width: 767.98px)" in styles
-    assert "top: 4.75rem;" in styles
-    assert "bottom: auto;" in styles
-    assert "top: 7.5rem;" in styles
+    assert "--jaci-clay: #8A5F3E;" in styles
+    assert "--bs-warning-rgb: 138, 95, 62;" in styles
+    assert "--bs-btn-warning-color: var(--jaci-lunar);" in styles
+    assert "bottom: 0.75rem;" in styles
+    assert "display: none;" in styles
+    assert "bottom: 3.75rem;" in styles
     assert "--jaci-harvest" not in styles

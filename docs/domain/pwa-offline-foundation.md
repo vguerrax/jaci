@@ -253,15 +253,44 @@ Ao reconectar, operações de item são enviadas para
 responde conflito e a operação permanece localmente pendente; o cliente nunca
 descarta nem sobrescreve essa alteração silenciosamente.
 
+## BL-020 — Central de Sincronização
+
+A rota `/sync` exibe uma central local para acompanhamento da store
+`pending_operations`. A tela é renderizada pelo servidor como shell, mas os dados
+vêm do IndexedDB do dispositivo para preservar o comportamento offline-first.
+
+A central mostra:
+
+* quantidade de operações pendentes;
+* quantidade de operações com falha;
+* quantidade de conflitos;
+* lista de operações em ordem de criação;
+* payload local preservado;
+* detalhe remoto quando o conflito foi informado pela API;
+* número de tentativas já realizadas.
+
+O usuário pode disparar sincronização manual pela própria tela. Operações que
+requerem intervenção manual não são reprocessadas automaticamente enquanto
+continuarem marcadas com `requires_manual_intervention=true` ou `status=conflict`.
+
+Para conflitos e falhas manuais, a central oferece duas ações:
+
+* `Tentar local`: remove a marca de intervenção manual e tenta sincronizar a
+  operação local novamente;
+* `Usar servidor`: remove a operação pendente local, preservando o estado remoto
+  como fonte de verdade.
+
+Essas ações tornam a resolução explícita. Nenhuma alteração é descartada sem
+ação do usuário.
+
 ### Fora do Escopo
 
 O cache local não implementa:
 
-* resolução de conflitos;
 * sobrescrita automática de dados remotos.
 
-Demais operações de escrita continuam dependendo da API remota ou de evoluções
-futuras da fila offline.
+Demais operações de escrita fora da fila local continuam dependendo da API
+remota ou de evoluções futuras da fila offline.
 
 ## Validação Manual
 

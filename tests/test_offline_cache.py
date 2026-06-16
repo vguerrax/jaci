@@ -572,6 +572,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "getRetryDelay" in script
     assert "isTransientStatus" in script
     assert "requires_manual_intervention" in script
+    assert "renderSyncCenter" in script
     assert "scheduleAutomaticRetry" in script
     assert "runAutomaticSync" in script
     assert "syncInFlight" in script
