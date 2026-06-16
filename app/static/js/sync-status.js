@@ -13,6 +13,7 @@
     const LAST_SYNC_KEY = 'jaci_last_sync_at';
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
+    const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
     const STATES = {
         synced: {
             label: 'Sincronizado',
@@ -50,6 +51,7 @@
     function renderDetails() {
         const pendingCount = Number(localStorage.getItem(PENDING_CHANGES_KEY) || 0);
         const errorCount = Number(localStorage.getItem(PENDING_ERRORS_KEY) || 0);
+        const conflictCount = Number(localStorage.getItem(PENDING_CONFLICTS_KEY) || 0);
         const lastSyncAt = localStorage.getItem(LAST_SYNC_KEY);
 
         pending.classList.toggle('d-none', pendingCount === 0);
@@ -58,8 +60,11 @@
             lastSync.textContent = `Última sync: ${formatDateTime(lastSyncAt)}`;
         }
         if (errors) {
-            errors.classList.toggle('d-none', errorCount === 0);
-            errors.textContent = errorCount ? `${errorCount} erro(s)` : '';
+            errors.classList.toggle('d-none', errorCount === 0 && conflictCount === 0);
+            errors.textContent = [
+                errorCount ? `${errorCount} erro(s)` : '',
+                conflictCount ? `${conflictCount} conflito(s)` : '',
+            ].filter(Boolean).join(' · ');
         }
     }
 
@@ -118,7 +123,7 @@
     window.addEventListener('online', render);
     window.addEventListener('offline', render);
     window.addEventListener('storage', function (event) {
-        if ([PENDING_CHANGES_KEY, PENDING_ERRORS_KEY, LAST_SYNC_KEY].includes(event.key)) {
+        if ([PENDING_CHANGES_KEY, PENDING_ERRORS_KEY, PENDING_CONFLICTS_KEY, LAST_SYNC_KEY].includes(event.key)) {
             renderDetails();
         }
     });
