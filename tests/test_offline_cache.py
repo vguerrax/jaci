@@ -750,6 +750,13 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "refreshCurrentExecutionFragments" in script
     assert "`/executions/${executionId}/items-fragment`" in script
     assert "`/executions/${executionId}/sidebar-fragment`" in script
+    assert "cache: 'no-store'" in script
+    assert "reconcileAppliedOperationInDom" in script
+    assert "removeEmptyOfflineCategoryCard" in script
+    assert "operation.action === 'remove_execution_item'" in script
+    assert "operation.action !== 'incomplete_item'" in script
+    assert "incompleteForm.remove()" in script
+    assert "element.classList.remove('text-strikethrough')" in script
     assert "markItemRowAsOfflineUpdated" in script
     assert "is-offline-updated" in script
     assert "Comprado offline" in script
@@ -819,6 +826,15 @@ def test_offline_sync_uses_exponential_backoff_and_only_notifies_manual_errors()
     assert "if (error.requiresManualIntervention)" in script
     assert "window.dispatchEvent(new CustomEvent('jaci:sync-error'))" in script
     assert "window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'))" in script
+
+
+def test_execution_sync_handles_item_updated_event():
+    script = Path("app/static/js/execution-sync.js").read_text()
+
+    assert "case 'item_updated':" in script
+    assert "_onItemUpdated" in script
+    assert "Item ${data.item_id} atualizado" in script
+    assert "this._refreshItems();" in script
 
 
 def test_base_template_exposes_offline_cache_panel():

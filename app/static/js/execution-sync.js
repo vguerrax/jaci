@@ -128,6 +128,11 @@
                     this._onItemCompleted(msg.data);
                     break;
 
+                case 'item_updated':
+                    // Outro usuário editou ou desmarcou um item
+                    this._onItemUpdated(msg.data);
+                    break;
+
                 case 'item_added':
                     // Outro usuário adicionou um item
                     this._onItemAdded(msg.data);
@@ -184,6 +189,11 @@
 
         _onItemCompleted: function (data) {
             console.log(`[Jaci WS] Item ${data.item_id} concluído por outro usuário`);
+            this._refreshItems();
+        },
+
+        _onItemUpdated: function (data) {
+            console.log(`[Jaci WS] Item ${data.item_id} atualizado por outro usuário`);
             this._refreshItems();
         },
 

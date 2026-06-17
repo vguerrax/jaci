@@ -537,7 +537,11 @@
                 requiresManualIntervention
             );
         }
-        return true;
+        try {
+            return await response.json();
+        } catch (error) {
+            return { status: 'applied' };
+        }
     }
 
     async function syncPendingOperations() {
@@ -553,6 +557,7 @@
         }
 
         window.dispatchEvent(new CustomEvent('jaci:sync-start'));
+        const appliedOperations = [];
         for (const operation of operations) {
             if (operation.requires_manual_intervention || isConflictOperation(operation)) {
                 continue;
@@ -562,11 +567,15 @@
                 const nextDb = await openDatabase();
                 await deleteRecord(nextDb, 'pending_operations', operation.id);
                 nextDb.close();
+                appliedOperations.push({ operation: operation, result: applied });
             }
         }
         await updatePendingCount();
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
-        await refreshCurrentExecutionFragments();
+        const refreshed = await refreshCurrentExecutionFragments();
+        if (!refreshed) {
+            appliedOperations.forEach(reconcileAppliedOperationInDom);
+        }
         await clearOfflineItemIndicatorsWhenSynced();
     }
 
@@ -1048,21 +1057,94 @@
     }
 
     async function refreshCurrentExecutionFragments() {
-        if (!navigator.onLine || typeof htmx === 'undefined') return;
+        if (!navigator.onLine) return false;
         const executionId = currentExecutionIdFromPage();
         const itemsContainer = document.getElementById('items-container');
-        if (!executionId || !itemsContainer) return;
+        if (!executionId || !itemsContainer) return false;
 
-        await htmx.ajax('GET', `/executions/${executionId}/items-fragment`, {
-            target: '#items-container',
-            swap: 'innerHTML',
+        const expandedIds = Array.from(itemsContainer.querySelectorAll('.collapse.show'))
+            .map(function (element) { return element.id; })
+            .filter(Boolean);
+        let response;
+        try {
+            response = await fetch(`/executions/${executionId}/items-fragment`, {
+                headers: {
+                    Accept: 'text/html',
+                    'X-Collapse-State': expandedIds.join(','),
+                },
+                credentials: 'same-origin',
+                cache: 'no-store',
+            });
+        } catch (error) {
+            return false;
+        }
+        if (!response.ok) return false;
+
+        const html = await response.text();
+        const fragment = document.createElement('div');
+        fragment.innerHTML = html;
+        fragment.querySelectorAll('[hx-swap-oob]').forEach(function (outOfBand) {
+            const target = outOfBand.id ? document.getElementById(outOfBand.id) : null;
+            if (target && target !== outOfBand) {
+                target.innerHTML = outOfBand.innerHTML;
+            }
+            outOfBand.remove();
         });
-        if (document.getElementById('sidebar-container')) {
-            htmx.ajax('GET', `/executions/${executionId}/sidebar-fragment`, {
-                target: '#sidebar-container',
-                swap: 'innerHTML',
+        itemsContainer.innerHTML = fragment.innerHTML;
+
+        const sidebar = document.getElementById('sidebar-container');
+        if (sidebar) {
+            fetch(`/executions/${executionId}/sidebar-fragment`, {
+                headers: { Accept: 'text/html' },
+                credentials: 'same-origin',
+                cache: 'no-store',
+            }).then(function (sidebarResponse) {
+                if (!sidebarResponse.ok) return null;
+                return sidebarResponse.text();
+            }).then(function (sidebarHtml) {
+                if (sidebarHtml !== null) sidebar.innerHTML = sidebarHtml;
+            }).catch(function () {
+                return null;
             });
         }
+        return true;
+    }
+
+    function removeEmptyOfflineCategoryCard(row) {
+        const card = row.closest('.card-jaci');
+        row.remove();
+        if (card && !card.querySelector('[data-execution-item-row]')) {
+            card.remove();
+        }
+    }
+
+    function reconcileAppliedOperationInDom(applied) {
+        const operation = applied.operation || {};
+        const result = applied.result || {};
+        const itemId = operation.payload?.item_id || operation.entity_id || operation.entidade_id || result.item?.id;
+        if (!itemId) return;
+
+        const row = document.querySelector(`[data-execution-item-row][data-item-id="${itemId}"]`);
+        if (!row) return;
+
+        if (operation.action === 'remove_execution_item') {
+            removeEmptyOfflineCategoryCard(row);
+            return;
+        }
+        if (operation.action !== 'incomplete_item') return;
+
+        row.classList.remove('opacity-75', 'is-offline-updated', 'is-offline-removed');
+        const check = row.querySelector('.check-jaci');
+        if (check) check.classList.remove('checked');
+        row.querySelectorAll('.text-strikethrough').forEach(function (element) {
+            element.classList.remove('text-strikethrough');
+        });
+        const completedSummary = row.querySelector('[data-item-completed-summary]');
+        if (completedSummary) completedSummary.remove();
+        const incompleteForm = row.querySelector('[data-offline-incomplete-item]');
+        if (incompleteForm) incompleteForm.remove();
+        const badge = row.querySelector('[data-offline-item-badge]');
+        if (badge) badge.classList.add('d-none');
     }
 
     function clearOfflineItemIndicators() {
@@ -1238,7 +1320,11 @@
         }
 
         showManualModal(modalEl);
-        return true;
+        try {
+            return await response.json();
+        } catch (error) {
+            return { status: 'applied' };
+        }
     }
 
     function openOfflineEditModal(button) {
