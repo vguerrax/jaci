@@ -171,6 +171,7 @@ def create_execution_from_template(
     for tpl_item in template.items:
         exec_item = ExecutionItem(
             execution_id=execution.id,
+            template_item_id=tpl_item.id,
             name=tpl_item.name,
             category_id=tpl_item.category_id,
             planned_quantity=tpl_item.planned_quantity,

@@ -144,6 +144,7 @@ def build_offline_snapshot(db: Session, user: User) -> dict[str, Any]:
             {
                 "id": item.id,
                 "execution_id": item.execution_id,
+                "template_item_id": item.template_item_id,
                 "category_id": item.category_id,
                 "name": item.name,
                 "planned_quantity": item.planned_quantity,

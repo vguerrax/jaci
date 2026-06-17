@@ -91,6 +91,11 @@ class ExecutionItem(Base):
         ForeignKey("categories.id", ondelete="SET NULL"),
         nullable=True,
     )
+    template_item_id: Mapped[int | None] = mapped_column(
+        ForeignKey("template_items.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
     planned_quantity: Mapped[float] = mapped_column(Float, default=1, nullable=False)
     purchased_quantity: Mapped[float | None] = mapped_column(Float, nullable=True)
     unit_price: Mapped[float | None] = mapped_column(Float, nullable=True)
@@ -118,6 +123,7 @@ class ExecutionItem(Base):
         "Category",
         back_populates="execution_items",
     )
+    template_item: Mapped["TemplateItem | None"] = relationship("TemplateItem")
 
     @property
     def total_price(self) -> float | None:
