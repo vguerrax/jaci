@@ -48,10 +48,11 @@ def test_offline_snapshot_contains_essential_read_only_data(
     db.add(execution)
     db.flush()
     db.add(
-        ExecutionItem(
-            execution_id=execution.id,
-            name="Arroz",
-            category_id=category.id,
+            ExecutionItem(
+                execution_id=execution.id,
+                template_item_id=item.id,
+                name="Arroz",
+                category_id=category.id,
             planned_quantity=2,
         )
     )
@@ -74,6 +75,7 @@ def test_offline_snapshot_contains_essential_read_only_data(
     assert snapshot["template_items"][0]["id"] == item.id
     assert snapshot["executions"][0]["status"] == "in_progress"
     assert snapshot["execution_items"][0]["name"] == "Arroz"
+    assert snapshot["execution_items"][0]["template_item_id"] == item.id
     assert "location" in snapshot["execution_items"][0]
 
 
@@ -843,6 +845,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "enqueueFinalizeExecutionOperation" in script
     assert "createTempId" in script
     assert "is_temporary" in script
+    assert "template_item_id: null" in script
     assert "add_execution_item" in script
     assert "remove_execution_item" in script
     assert "finalize_execution" in script

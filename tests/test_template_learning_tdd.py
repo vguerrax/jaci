@@ -26,7 +26,6 @@ def learning_service():
     return import_module("app.services.template_learning_service")
 
 
-@sprint4_contract
 def test_bl029_detects_runtime_items_only_for_template_executions(
     db, make_user, make_group
 ):

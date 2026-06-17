@@ -405,6 +405,7 @@
         await putRecord(db, 'execution_items', {
             id: operation.temp_id,
             execution_id: operation.execution_id,
+            template_item_id: null,
             category_id: operation.category_id,
             name: operation.name,
             planned_quantity: operation.planned_quantity,
