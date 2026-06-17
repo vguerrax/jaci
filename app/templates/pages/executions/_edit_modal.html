@@ -5,7 +5,7 @@
             <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/edit"
                   hx-target="#items-container"
                   hx-swap="innerHTML"
-                  hx-on::after-request="if(event.detail.successful) { bootstrap.Modal.getInstance(document.getElementById('editItemModal{{ item.id }}')).hide(); }
+                  hx-on::after-request="if(event.detail.successful) { window.JaciModal && window.JaciModal.hide(document.getElementById('editItemModal{{ item.id }}')); }
                   htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',
                     swap: 'innerHTML'
@@ -64,23 +64,10 @@
     requestAnimationFrame(function() {
         var modalEl = document.getElementById('editItemModal{{ item.id }}');
         if (modalEl) {
-            // Remove qualquer modal antigo para evitar conflitos
-            var existingModal = bootstrap.Modal.getInstance(modalEl);
-            if (existingModal) {
-                existingModal.dispose();
-            }
-            
-            // Cria e abre novo modal
-            var modal = new bootstrap.Modal(modalEl, {
-                backdrop: true,
-                keyboard: true,
-                focus: true,
-            });
-            modal.show();
+            window.JaciModal && window.JaciModal.show(modalEl);
             
             // Limpa o modal do DOM quando fechar
             modalEl.addEventListener('hidden.bs.modal', function() {
-                modal.dispose();
                 modalEl.remove();
             });
         }

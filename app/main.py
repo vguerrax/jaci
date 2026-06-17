@@ -20,6 +20,7 @@ from app.routers.agenda import router as agenda_router
 from app.routers.notifications import router as notifications_router
 from app.routers.legal import router as legal
 from app.routers.offline import router as offline_router
+from app.routers.sync_center import router as sync_center_router
 from app.websocket.handlers import execution_ws_handler
 from app.utils.security import decode_access_token
 
@@ -44,6 +45,7 @@ app.include_router(agenda_router)
 app.include_router(notifications_router)
 app.include_router(legal)
 app.include_router(offline_router)
+app.include_router(sync_center_router)
 
 @app.middleware("http")
 async def add_unread_count(request: Request, call_next):
@@ -118,6 +120,7 @@ async def home(
         dashboard = build_home_dashboard(db, active_group.id)
 
     return templates.TemplateResponse(
+        request,
         "pages/index.html",
         {
             "request": request,
