@@ -33,6 +33,7 @@ from app.services.sync_conflict_audit_service import (
     resolve_conflict_audit,
     serialize_conflict_audit,
 )
+from app.utils.datetime import parse_local_date
 from app.websocket.manager import manager
 
 
@@ -322,8 +323,7 @@ async def sync_update_execution_operation(
         )
 
     try:
-        scheduled_date = datetime.strptime(operation.scheduled_date, "%Y-%m-%d")
-        scheduled_date = scheduled_date.replace(tzinfo=timezone.utc)
+        scheduled_date = parse_local_date(operation.scheduled_date)
     except ValueError as exc:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -740,8 +740,7 @@ async def sync_finalize_execution_operation(
         new_date = datetime.now(timezone.utc) + timedelta(days=1)
         if operation.new_date:
             try:
-                new_date = datetime.strptime(operation.new_date, "%Y-%m-%d")
-                new_date = new_date.replace(tzinfo=timezone.utc)
+                new_date = parse_local_date(operation.new_date)
             except ValueError as exc:
                 raise HTTPException(
                     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

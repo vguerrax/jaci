@@ -7,7 +7,7 @@ from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
 from app.models.enums import ExecutionStatus
-from app.utils.datetime import now_local
+from app.utils.datetime import now_local, parse_local_date, format_local_date
 from app.services.agenda_service import (
     build_calendar_data,
     get_executions_for_date,
@@ -147,8 +147,7 @@ async def agenda_list(
     selected_date = None
     if date:
         try:
-            selected_date = datetime.strptime(date, "%Y-%m-%d")
-            selected_date = selected_date.replace(tzinfo=timezone.utc)
+            selected_date = parse_local_date(date)
         except ValueError:
             pass
 
@@ -172,7 +171,7 @@ async def agenda_list(
     # Agrupa por data
     grouped_by_date = {}
     for item in executions_with_data:
-        date_key = item["execution"].scheduled_date.strftime("%Y-%m-%d")
+        date_key = format_local_date(item["execution"].scheduled_date, "%Y-%m-%d")
         if date_key not in grouped_by_date:
             grouped_by_date[date_key] = {
                 "date": item["execution"].scheduled_date,
@@ -239,8 +238,7 @@ async def handle_reschedule(
         return RedirectResponse(url="/agenda", status_code=303)
 
     try:
-        date = datetime.strptime(new_date, "%Y-%m-%d")
-        date = date.replace(tzinfo=timezone.utc)
+        date = parse_local_date(new_date)
     except ValueError:
         return RedirectResponse(url="/agenda", status_code=303)
 

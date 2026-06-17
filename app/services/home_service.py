@@ -9,10 +9,16 @@ from app.services.execution_service import (
     get_execution_display_name,
     get_execution_totals,
 )
+from app.utils.datetime import to_local, to_utc
 
 
 def _as_utc(value: datetime) -> datetime:
     return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value
+
+
+def _local_day_start_utc(value: datetime) -> datetime:
+    local = to_local(_as_utc(value))
+    return to_utc(local.replace(hour=0, minute=0, second=0, microsecond=0))
 
 
 def get_priority_execution(
@@ -21,6 +27,7 @@ def get_priority_execution(
     now: datetime,
 ) -> Execution | None:
     """Retorna a compra mais relevante: em andamento, depois agendada."""
+    today_start = _local_day_start_utc(now)
     in_progress = db.scalar(
         select(Execution)
         .where(
@@ -40,7 +47,7 @@ def get_priority_execution(
             Execution.status == ExecutionStatus.scheduled,
         )
         .order_by(
-            case((Execution.scheduled_date >= now, 0), else_=1),
+            case((Execution.scheduled_date >= today_start, 0), else_=1),
             Execution.scheduled_date.asc(),
             Execution.id.asc(),
         )
@@ -50,12 +57,20 @@ def get_priority_execution(
 
 def get_home_metrics(db: Session, group_id: int, now: datetime) -> dict:
     """Calcula indicadores rápidos do grupo ativo."""
-    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    next_month = (
-        month_start.replace(year=month_start.year + 1, month=1)
-        if month_start.month == 12
-        else month_start.replace(month=month_start.month + 1)
+    local_month_start = to_local(_as_utc(now)).replace(
+        day=1,
+        hour=0,
+        minute=0,
+        second=0,
+        microsecond=0,
     )
+    local_next_month = (
+        local_month_start.replace(year=local_month_start.year + 1, month=1)
+        if local_month_start.month == 12
+        else local_month_start.replace(month=local_month_start.month + 1)
+    )
+    month_start = to_utc(local_month_start)
+    next_month = to_utc(local_next_month)
 
     scheduled = db.scalar(
         select(func.count(Execution.id)).where(
@@ -132,6 +147,8 @@ def get_home_alerts(
     limit: int = 3,
 ) -> list[dict]:
     """Retorna alertas contextuais ordenados por criticidade."""
+    alert_start = _local_day_start_utc(now)
+    alert_end = _as_utc(now) + timedelta(hours=24)
     active = db.scalars(
         select(Execution).where(
             Execution.group_id == group_id,
@@ -168,9 +185,9 @@ def get_home_alerts(
             )
         if (
             execution.status == ExecutionStatus.scheduled
-            and _as_utc(now)
+            and alert_start
             <= _as_utc(execution.scheduled_date)
-            <= _as_utc(now) + timedelta(hours=24)
+            <= alert_end
         ):
             alerts.append(
                 {

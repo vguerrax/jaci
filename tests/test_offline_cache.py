@@ -28,6 +28,7 @@ from app.routers.offline import (
 )
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.template_service import add_item_to_template, create_template
+from app.utils.datetime import to_local
 
 
 def test_offline_snapshot_contains_essential_read_only_data(
@@ -173,7 +174,7 @@ def test_offline_update_execution_operation_applies_pending_change(
             UpdateExecutionOperation(
                 execution_id=execution.id,
                 name="Compra do Mês",
-                scheduled_date="2026-06-20",
+                scheduled_date="2026-06-30",
                 budget=850,
             ),
             db=db,
@@ -184,10 +185,12 @@ def test_offline_update_execution_operation_applies_pending_change(
     db.refresh(execution)
     assert result["status"] == "applied"
     assert result["execution"]["name"] == "Compra do Mês"
-    assert result["execution"]["scheduled_date"] == "2026-06-20"
+    assert result["execution"]["scheduled_date"] == "2026-06-30"
     assert result["execution"]["budget"] == 850
     assert execution.name == "Compra do Mês"
-    assert execution.scheduled_date.date().isoformat() == "2026-06-20"
+    scheduled_local = to_local(execution.scheduled_date)
+    assert scheduled_local.date().isoformat() == "2026-06-30"
+    assert scheduled_local.hour == 0
     assert execution.budget == 850
 
 

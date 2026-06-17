@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select, func
 
 from app.websocket.manager import manager
-from app.utils.datetime import now_local
+from app.utils.datetime import now_local, parse_local_date
 from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
@@ -571,8 +571,7 @@ async def handle_create_execution(
 
     # Parse date
     try:
-        date = datetime.strptime(scheduled_date, "%Y-%m-%d")
-        date = date.replace(tzinfo=timezone.utc)
+        date = parse_local_date(scheduled_date)
     except ValueError:
         today_str = now_local().strftime("%Y-%m-%d")
         tomorrow_str = (now_local() + timedelta(days=1)).strftime("%Y-%m-%d")
@@ -659,8 +658,7 @@ async def handle_update_execution(
         return RedirectResponse(url="/executions", status_code=303)
 
     try:
-        parsed_date = datetime.strptime(scheduled_date, "%Y-%m-%d")
-        parsed_date = parsed_date.replace(tzinfo=timezone.utc)
+        parsed_date = parse_local_date(scheduled_date)
     except ValueError:
         return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
@@ -1022,8 +1020,7 @@ async def handle_close_execution(
         date = datetime.now(timezone.utc) + timedelta(days=1)
         if new_date:
             try:
-                date = datetime.strptime(new_date, "%Y-%m-%d")
-                date = date.replace(tzinfo=timezone.utc)
+                date = parse_local_date(new_date)
             except ValueError:
                 pass
 

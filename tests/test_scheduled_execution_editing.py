@@ -15,6 +15,7 @@ from app.services.execution_service import (
 )
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.template_service import add_item_to_template, create_template
+from app.utils.datetime import to_local
 
 
 def make_request() -> Request:
@@ -111,7 +112,7 @@ def test_update_execution_route_notifies_members_and_broadcasts_change(
         execution_routes.handle_update_execution(
             execution_id=execution.id,
             name="Compra do Mês",
-            scheduled_date="2026-06-20",
+            scheduled_date="2026-06-30",
             budget="850.50",
             db=db,
             user=owner,
@@ -125,7 +126,9 @@ def test_update_execution_route_notifies_members_and_broadcasts_change(
     assert response.status_code == 303
     assert response.headers["location"] == f"/executions/{execution.id}?updated=1"
     assert execution.name == "Compra do Mês"
-    assert execution.scheduled_date.date().isoformat() == "2026-06-20"
+    scheduled_local = to_local(execution.scheduled_date)
+    assert scheduled_local.date().isoformat() == "2026-06-30"
+    assert scheduled_local.hour == 0
     assert execution.budget == 850.50
     assert notification is not None
     assert notification.type == "execution_updated"
@@ -137,12 +140,41 @@ def test_update_execution_route_notifies_members_and_broadcasts_change(
             {
                 "execution_id": execution.id,
                 "name": "Compra do Mês",
-                "scheduled_date": "2026-06-20",
+                "scheduled_date": "2026-06-30",
                 "budget": 850.50,
                 "user_email": owner.email,
             },
         )
     ]
+
+
+def test_create_execution_route_preserves_local_form_date(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+
+    response = asyncio.run(
+        execution_routes.handle_create_execution(
+            request=make_request(),
+            template_id=template.id,
+            scheduled_date="2026-06-30",
+            budget=None,
+            is_standalone=False,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    db.refresh(template)
+    execution = template.executions[0]
+    scheduled_local = to_local(execution.scheduled_date)
+    assert response.status_code == 303
+    assert scheduled_local.date().isoformat() == "2026-06-30"
+    assert scheduled_local.hour == 0
+    assert scheduled_local.minute == 0
 
 
 def test_offline_snapshot_contains_edited_execution_name(db, make_user, make_group):
