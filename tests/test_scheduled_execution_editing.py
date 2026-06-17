@@ -216,5 +216,6 @@ def test_scheduled_execution_edit_interface_is_available_only_for_scheduled():
     assert 'name="budget"' in detail
     assert "Alterações salvas são sincronizadas para o grupo." in detail
     assert ".execution-detail-actions > *" in styles
+    assert ".execution-detail-actions form > .btn" in styles
     assert "case 'execution_updated'" in sync
     assert "_onExecutionUpdated" in sync
