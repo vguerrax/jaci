@@ -20,6 +20,11 @@ def ensure_execution_is_mutable(execution: Execution) -> None:
         raise ValueError("Não é possível alterar execução já finalizada.")
 
 
+def get_execution_display_name(execution: Execution) -> str:
+    """Retorna o nome próprio da execução, preservando fallback legado."""
+    return execution.display_name
+
+
 # ─── Queries ───
 
 
@@ -152,6 +157,7 @@ def create_execution_from_template(
     execution = Execution(
         template_id=template.id,
         group_id=template.group_id,
+        name=template.name,
         scheduled_date=scheduled_date,
         status=ExecutionStatus.scheduled,
         budget=budget if budget is not None and budget > 0 else template.budget,
@@ -165,6 +171,7 @@ def create_execution_from_template(
     for tpl_item in template.items:
         exec_item = ExecutionItem(
             execution_id=execution.id,
+            template_item_id=tpl_item.id,
             name=tpl_item.name,
             category_id=tpl_item.category_id,
             planned_quantity=tpl_item.planned_quantity,
@@ -193,6 +200,7 @@ def create_execution_standalone(
     execution = Execution(
         template_id=None,
         group_id=group.id,
+        name="Compra Avulsa",
         scheduled_date=scheduled_date,
         status=ExecutionStatus.scheduled,
         budget=budget if budget is not None and budget > 0 else None,
@@ -203,6 +211,34 @@ def create_execution_standalone(
     db.commit()
     db.refresh(execution)
     logger.info(f"Execução avulsa criada para {scheduled_date.date()}")
+    return execution
+
+
+def update_scheduled_execution(
+    db: Session,
+    execution: Execution,
+    name: str,
+    scheduled_date: datetime,
+    budget: Optional[float] = None,
+) -> Execution:
+    """Edita somente dados próprios de uma execução agendada."""
+    if execution.status != ExecutionStatus.scheduled:
+        raise ValueError("Apenas execuções agendadas podem ser editadas.")
+
+    normalized_name = name.strip()
+    if not normalized_name:
+        raise ValueError("Nome da execução é obrigatório.")
+    if len(normalized_name) > 150:
+        raise ValueError("Nome da execução deve ter no máximo 150 caracteres.")
+    if budget is not None and budget < 0:
+        raise ValueError("Orçamento não pode ser negativo.")
+
+    execution.name = normalized_name
+    execution.scheduled_date = scheduled_date
+    execution.budget = budget if budget is not None and budget > 0 else None
+    db.commit()
+    db.refresh(execution)
+    logger.info(f"Execução {execution.id} atualizada enquanto agendada")
     return execution
 
 
@@ -407,6 +443,7 @@ def create_execution_from_pending(
     new_execution = Execution(
         template_id=original_execution.template_id,
         group_id=original_execution.group_id,
+        name=get_execution_display_name(original_execution),
         scheduled_date=new_date,
         status=ExecutionStatus.scheduled,
         budget=original_execution.budget,

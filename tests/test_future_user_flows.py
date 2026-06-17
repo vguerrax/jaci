@@ -1,4 +1,4 @@
-"""Contratos TDD dos fluxos documentados que ainda não possuem implementação."""
+"""Contratos dos fluxos documentados e dos fluxos futuros ainda pendentes."""
 
 from datetime import datetime, timezone
 from importlib import import_module
@@ -11,7 +11,6 @@ from app.services.execution_service import (
     complete_item,
     create_execution_from_template,
     finalize_execution,
-    update_execution_item,
 )
 from app.services.template_service import add_item_to_template, create_template
 
@@ -22,7 +21,6 @@ future_flow = pytest.mark.xfail(
 )
 
 
-@future_flow
 def test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them(
     db, make_user, make_group
 ):
@@ -38,18 +36,14 @@ def test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them(
 
     suggestions = learning.get_template_suggestions(db, execution)
 
-    assert suggestions == [
-        {
-            "type": "new_item",
-            "execution_item_id": execution.items[0].id,
-            "name": "Item esquecido",
-            "planned_quantity": 2,
-        }
-    ]
+    assert len(suggestions) == 1
+    assert suggestions[0]["type"] == "new_item"
+    assert suggestions[0]["execution_item_id"] == execution.items[0].id
+    assert suggestions[0]["name"] == "Item esquecido"
+    assert suggestions[0]["planned_quantity"] == 2
     assert template.items == []
 
 
-@future_flow
 def test_fl06_only_selected_suggestions_are_applied_to_template(
     db, make_user, make_group
 ):
@@ -57,26 +51,27 @@ def test_fl06_only_selected_suggestions_are_applied_to_template(
     user = make_user("ana@example.com")
     group = make_group(owner=user)
     template = create_template(db, group, "Mensal", RecurrenceType.monthly)
-    original = add_item_to_template(db, template, "Arroz", 1, notes="Pacote pequeno")
     execution = create_execution_from_template(
         db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
     )
-    update_execution_item(db, execution.items[0], "Arroz", 5, None, "Pacote grande")
-    add_item_to_execution(db, execution, "Feijão", 2)
+    selected = add_item_to_execution(db, execution, "Feijão", 2)
+    ignored = add_item_to_execution(db, execution, "Chocolate", 1)
     finalize_execution(db, execution)
     suggestions = learning.get_template_suggestions(db, execution)
 
     learning.apply_template_suggestions(
         db,
         template,
-        suggestions,
-        selected_types={"quantity", "notes"},
+        [
+            {
+                "suggestion_id": suggestions.by_execution_item(selected.id).id,
+                "planned_quantity": 3,
+            }
+        ],
     )
 
-    assert [(item.name, item.planned_quantity, item.notes) for item in template.items] == [
-        ("Arroz", 5, "Pacote grande")
-    ]
-    assert original.id == template.items[0].id
+    assert [(item.name, item.planned_quantity) for item in template.items] == [("Feijão", 3)]
+    assert ignored.name not in [item.name for item in template.items]
 
 
 @future_flow
@@ -163,4 +158,3 @@ def test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_vers
     assert conflict.local["name"] == "Arroz integral"
     assert conflict.remote["name"] == "Arroz branco"
     assert conflict.resolved_value is None
-

@@ -5,6 +5,7 @@
     const DB_VERSION = 10;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
+    const UPDATE_EXECUTION_SYNC_URL = '/api/offline/operations/update-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
@@ -204,6 +205,45 @@
         await updatePendingCount();
     }
 
+    function operationIdForExecution(executionId) {
+        return `update-execution-${executionId}`;
+    }
+
+    async function markExecutionUpdatedLocally(operation) {
+        const db = await openDatabase();
+        const execution = await getRecord(db, 'executions', operation.execution_id);
+        if (execution) {
+            execution.name = operation.name;
+            execution.scheduled_date = operation.scheduled_date;
+            execution.budget = operation.budget;
+            execution.offline_updated_at = new Date().toISOString();
+            await putRecord(db, 'executions', execution);
+        }
+        db.close();
+    }
+
+    async function enqueueUpdateExecutionOperation(operation) {
+        const db = await openDatabase();
+        const operationId = operationIdForExecution(operation.execution_id);
+        const existing = await getRecord(db, 'pending_operations', operationId);
+
+        await putRecord(db, 'pending_operations', Object.assign(
+            buildQueuedOperation({
+                id: operationId,
+                tipo: 'UPDATE_EXECUTION',
+                entidade: 'execution',
+                entidadeId: operation.execution_id,
+                action: 'update_execution',
+                payload: operation,
+                createdAt: existing?.created_at,
+            }),
+            { tentativas: Number(existing?.tentativas || 0) }
+        ));
+        db.close();
+        await markExecutionUpdatedLocally(operation);
+        await updatePendingCount();
+    }
+
     function operationIdForItem(itemId) {
         return `execution-item-${itemId}`;
     }
@@ -365,6 +405,7 @@
         await putRecord(db, 'execution_items', {
             id: operation.temp_id,
             execution_id: operation.execution_id,
+            template_item_id: null,
             category_id: operation.category_id,
             name: operation.name,
             planned_quantity: operation.planned_quantity,
@@ -484,6 +525,9 @@
         if (operation.action === 'start_execution') {
             url = START_EXECUTION_SYNC_URL;
         }
+        if (operation.action === 'update_execution') {
+            url = UPDATE_EXECUTION_SYNC_URL;
+        }
         if (
             operation.entity === 'execution_item'
             && ['complete_item', 'incomplete_item', 'update_item'].includes(operation.action)
@@ -537,7 +581,11 @@
                 requiresManualIntervention
             );
         }
-        return true;
+        try {
+            return await response.json();
+        } catch (error) {
+            return { status: 'applied' };
+        }
     }
 
     async function syncPendingOperations() {
@@ -553,6 +601,7 @@
         }
 
         window.dispatchEvent(new CustomEvent('jaci:sync-start'));
+        const appliedOperations = [];
         for (const operation of operations) {
             if (operation.requires_manual_intervention || isConflictOperation(operation)) {
                 continue;
@@ -562,11 +611,15 @@
                 const nextDb = await openDatabase();
                 await deleteRecord(nextDb, 'pending_operations', operation.id);
                 nextDb.close();
+                appliedOperations.push({ operation: operation, result: applied });
             }
         }
         await updatePendingCount();
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
-        await refreshCurrentExecutionFragments();
+        const refreshed = await refreshCurrentExecutionFragments();
+        if (!refreshed) {
+            appliedOperations.forEach(reconcileAppliedOperationInDom);
+        }
         await clearOfflineItemIndicatorsWhenSynced();
     }
 
@@ -657,6 +710,7 @@
     function operationLabel(operation) {
         const labels = {
             start_execution: 'Iniciar compra',
+            update_execution: 'Editar compra agendada',
             complete_item: 'Marcar item como comprado',
             incomplete_item: 'Desmarcar item',
             update_item: 'Editar item',
@@ -917,6 +971,36 @@
         button.innerHTML = 'Compra iniciada offline <i class="bi bi-cloud-arrow-up-fill"></i>';
     }
 
+    function readExecutionOperationFromForm(form) {
+        const formData = new FormData(form);
+        const budget = normalizeNumber(formData.get('budget'));
+        return {
+            execution_id: Number(form.dataset.executionId),
+            name: String(formData.get('name') || '').trim(),
+            scheduled_date: String(formData.get('scheduled_date') || ''),
+            budget: budget && budget > 0 ? budget : null,
+        };
+    }
+
+    function markExecutionPageAsOfflineUpdated(operation) {
+        document.querySelectorAll('[data-execution-name-label]').forEach(function (element) {
+            element.textContent = operation.name;
+        });
+        document.querySelectorAll('[data-execution-date-label]').forEach(function (element) {
+            element.textContent = operation.scheduled_date;
+        });
+        document.querySelectorAll('[data-execution-budget-label]').forEach(function (element) {
+            element.textContent = operation.budget
+                ? `R$ ${Number(operation.budget).toFixed(2)}`
+                : 'Não definido';
+        });
+
+        const status = document.querySelector('[data-execution-sync-feedback]');
+        if (status) {
+            status.classList.remove('d-none');
+        }
+    }
+
     function setupOfflineStartForms() {
         document.querySelectorAll('[data-offline-start-execution]').forEach(function (form) {
             form.addEventListener('submit', function (event) {
@@ -929,6 +1013,39 @@
                 enqueueStartExecution(executionId)
                     .then(function () {
                         renderQueuedStart(form);
+                        renderOfflineSummary();
+                    })
+                    .catch(function () {
+                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    });
+            });
+        });
+    }
+
+    function setupOfflineExecutionEditForms() {
+        document.querySelectorAll('[data-offline-edit-execution]').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (navigator.onLine) return;
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                if (form.dataset.executionStatus !== 'scheduled') {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    return;
+                }
+
+                const operation = readExecutionOperationFromForm(form);
+                if (!operation.execution_id || !operation.name || !operation.scheduled_date) {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    return;
+                }
+
+                enqueueUpdateExecutionOperation(operation)
+                    .then(function () {
+                        markExecutionPageAsOfflineUpdated(operation);
+                        hideContainingModal(form);
+                        renderQueuedItemControl(form);
                         renderOfflineSummary();
                     })
                     .catch(function () {
@@ -1048,21 +1165,94 @@
     }
 
     async function refreshCurrentExecutionFragments() {
-        if (!navigator.onLine || typeof htmx === 'undefined') return;
+        if (!navigator.onLine) return false;
         const executionId = currentExecutionIdFromPage();
         const itemsContainer = document.getElementById('items-container');
-        if (!executionId || !itemsContainer) return;
+        if (!executionId || !itemsContainer) return false;
 
-        await htmx.ajax('GET', `/executions/${executionId}/items-fragment`, {
-            target: '#items-container',
-            swap: 'innerHTML',
+        const expandedIds = Array.from(itemsContainer.querySelectorAll('.collapse.show'))
+            .map(function (element) { return element.id; })
+            .filter(Boolean);
+        let response;
+        try {
+            response = await fetch(`/executions/${executionId}/items-fragment`, {
+                headers: {
+                    Accept: 'text/html',
+                    'X-Collapse-State': expandedIds.join(','),
+                },
+                credentials: 'same-origin',
+                cache: 'no-store',
+            });
+        } catch (error) {
+            return false;
+        }
+        if (!response.ok) return false;
+
+        const html = await response.text();
+        const fragment = document.createElement('div');
+        fragment.innerHTML = html;
+        fragment.querySelectorAll('[hx-swap-oob]').forEach(function (outOfBand) {
+            const target = outOfBand.id ? document.getElementById(outOfBand.id) : null;
+            if (target && target !== outOfBand) {
+                target.innerHTML = outOfBand.innerHTML;
+            }
+            outOfBand.remove();
         });
-        if (document.getElementById('sidebar-container')) {
-            htmx.ajax('GET', `/executions/${executionId}/sidebar-fragment`, {
-                target: '#sidebar-container',
-                swap: 'innerHTML',
+        itemsContainer.innerHTML = fragment.innerHTML;
+
+        const sidebar = document.getElementById('sidebar-container');
+        if (sidebar) {
+            fetch(`/executions/${executionId}/sidebar-fragment`, {
+                headers: { Accept: 'text/html' },
+                credentials: 'same-origin',
+                cache: 'no-store',
+            }).then(function (sidebarResponse) {
+                if (!sidebarResponse.ok) return null;
+                return sidebarResponse.text();
+            }).then(function (sidebarHtml) {
+                if (sidebarHtml !== null) sidebar.innerHTML = sidebarHtml;
+            }).catch(function () {
+                return null;
             });
         }
+        return true;
+    }
+
+    function removeEmptyOfflineCategoryCard(row) {
+        const card = row.closest('.card-jaci');
+        row.remove();
+        if (card && !card.querySelector('[data-execution-item-row]')) {
+            card.remove();
+        }
+    }
+
+    function reconcileAppliedOperationInDom(applied) {
+        const operation = applied.operation || {};
+        const result = applied.result || {};
+        const itemId = operation.payload?.item_id || operation.entity_id || operation.entidade_id || result.item?.id;
+        if (!itemId) return;
+
+        const row = document.querySelector(`[data-execution-item-row][data-item-id="${itemId}"]`);
+        if (!row) return;
+
+        if (operation.action === 'remove_execution_item') {
+            removeEmptyOfflineCategoryCard(row);
+            return;
+        }
+        if (operation.action !== 'incomplete_item') return;
+
+        row.classList.remove('opacity-75', 'is-offline-updated', 'is-offline-removed');
+        const check = row.querySelector('.check-jaci');
+        if (check) check.classList.remove('checked');
+        row.querySelectorAll('.text-strikethrough').forEach(function (element) {
+            element.classList.remove('text-strikethrough');
+        });
+        const completedSummary = row.querySelector('[data-item-completed-summary]');
+        if (completedSummary) completedSummary.remove();
+        const incompleteForm = row.querySelector('[data-offline-incomplete-item]');
+        if (incompleteForm) incompleteForm.remove();
+        const badge = row.querySelector('[data-offline-item-badge]');
+        if (badge) badge.classList.add('d-none');
     }
 
     function clearOfflineItemIndicators() {
@@ -1238,7 +1428,11 @@
         }
 
         showManualModal(modalEl);
-        return true;
+        try {
+            return await response.json();
+        } catch (error) {
+            return { status: 'applied' };
+        }
     }
 
     function openOfflineEditModal(button) {
@@ -1597,6 +1791,7 @@
         refreshCurrentExecutionFragments: refreshCurrentExecutionFragments,
         clearOfflineItemIndicators: clearOfflineItemIndicators,
         enqueueStartExecution: enqueueStartExecution,
+        enqueueUpdateExecutionOperation: enqueueUpdateExecutionOperation,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
         enqueueRemoveExecutionItemOperation: enqueueRemoveExecutionItemOperation,
@@ -1621,6 +1816,7 @@
     });
     window.addEventListener('load', function () {
         setupOfflineStartForms();
+        setupOfflineExecutionEditForms();
         setupOfflineAddItemForms();
         setupOfflineItemOperations();
         setupOfflineCompleteModalControls();

@@ -93,12 +93,19 @@ def is_group_owner(db: Session, group_id: int, user: User) -> bool:
     return group.owner_id == user.id
 
 
-def update_group_name(db: Session, group: Group, name: str, updated_by: User) -> dict:
-    """Atualiza o nome do grupo quando solicitado pelo criador."""
+def update_group_settings(
+    db: Session,
+    group: Group,
+    name: str,
+    updated_by: User,
+    *,
+    template_learning_enabled: bool | None = None,
+) -> dict:
+    """Atualiza configurações do grupo quando solicitado pelo criador."""
     if group.owner_id != updated_by.id:
         return {
             "success": False,
-            "message": "Apenas o criador do grupo pode alterar o nome.",
+            "message": "Apenas o criador do grupo pode alterar as configurações.",
         }
 
     name = name.strip()
@@ -113,10 +120,20 @@ def update_group_name(db: Session, group: Group, name: str, updated_by: User) ->
 
     old_name = group.name
     group.name = name
+    if template_learning_enabled is not None:
+        group.template_learning_enabled = template_learning_enabled
     db.commit()
     db.refresh(group)
-    logger.info(f"Grupo '{old_name}' renomeado para '{group.name}' por {updated_by.email}")
-    return {"success": True, "message": "Nome do grupo atualizado."}
+    logger.info(f"Grupo '{old_name}' atualizado por {updated_by.email}")
+    return {"success": True, "message": "Configurações do grupo atualizadas."}
+
+
+def update_group_name(db: Session, group: Group, name: str, updated_by: User) -> dict:
+    """Atualiza o nome do grupo quando solicitado pelo criador."""
+    result = update_group_settings(db, group, name, updated_by)
+    if result["success"]:
+        result["message"] = "Nome do grupo atualizado."
+    return result
 
 
 async def invite_member(

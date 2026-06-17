@@ -40,8 +40,8 @@ def test_sync_center_renders_local_queue_management_shell(db, make_user, make_gr
 def test_sync_center_is_available_from_navigation():
     base = Path("app/templates/base.html").read_text()
 
-    assert 'href="/sync">Sincronização</a>' in base
-    assert "active_page == 'sync'" in base
+    assert '<a class="dropdown-item" href="/sync">Sincronização</a>' in base
+    assert "active_page == 'sync'" not in base
 
 
 def test_sync_center_frontend_reads_queue_and_resolves_conflicts():

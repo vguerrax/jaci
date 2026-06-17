@@ -8,6 +8,7 @@ from sqlalchemy import select, func
 from app.models.user import User
 from app.models.execution import Execution
 from app.models.enums import ExecutionStatus, RecurrenceType
+from app.utils.datetime import parse_local_date, to_local, to_utc
 
 logger = logging.getLogger("jaci.agenda")
 
@@ -35,11 +36,11 @@ def get_executions_for_month(
     month: int,
 ) -> list[Execution]:
     """Retorna todas as execuções de um mês para o grupo."""
-    first_day = datetime(year, month, 1, tzinfo=timezone.utc)
+    first_day = parse_local_date(f"{year}-{month:02d}-01")
     if month == 12:
-        last_day = datetime(year + 1, 1, 1, tzinfo=timezone.utc)
+        last_day = parse_local_date(f"{year + 1}-01-01")
     else:
-        last_day = datetime(year, month + 1, 1, tzinfo=timezone.utc)
+        last_day = parse_local_date(f"{year}-{month + 1:02d}-01")
 
     return (
         db.execute(
@@ -62,7 +63,8 @@ def get_executions_for_date(
     date: datetime,
 ) -> list[Execution]:
     """Retorna execuções de uma data específica."""
-    start = date.replace(hour=0, minute=0, second=0, microsecond=0)
+    local_date = to_local(date).date()
+    start = parse_local_date(local_date.isoformat())
     end = start + timedelta(days=1)
 
     return (
@@ -96,7 +98,10 @@ def build_calendar_data(
     # Agrupa execuções por dia
     by_day: dict[int, list[Execution]] = {}
     for exec_item in executions:
-        day = exec_item.scheduled_date.day
+        local_date = to_local(exec_item.scheduled_date).date()
+        if local_date.year != year or local_date.month != month:
+            continue
+        day = local_date.day
         if day not in by_day:
             by_day[day] = []
         by_day[day].append(exec_item)
@@ -194,10 +199,13 @@ def get_list_executions(
 
     # Filtro de período
     now = datetime.now(timezone.utc)
+    today_start = to_utc(
+        to_local(now).replace(hour=0, minute=0, second=0, microsecond=0)
+    )
     if period == "upcoming":
-        query = query.where(Execution.scheduled_date >= now)
+        query = query.where(Execution.scheduled_date >= today_start)
     elif period == "past":
-        query = query.where(Execution.scheduled_date < now)
+        query = query.where(Execution.scheduled_date < today_start)
 
     query = query.order_by(Execution.scheduled_date.desc())
 

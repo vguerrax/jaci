@@ -14,6 +14,7 @@ from app.routers.offline import (
     FinalizeExecutionOperation,
     RemoveExecutionItemOperation,
     StartExecutionOperation,
+    UpdateExecutionOperation,
     ConflictResolutionOperation,
     offline_conflict_history,
     offline_snapshot,
@@ -23,9 +24,11 @@ from app.routers.offline import (
     sync_finalize_execution_operation,
     sync_remove_execution_item_operation,
     sync_start_execution_operation,
+    sync_update_execution_operation,
 )
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.template_service import add_item_to_template, create_template
+from app.utils.datetime import to_local
 
 
 def test_offline_snapshot_contains_essential_read_only_data(
@@ -46,10 +49,11 @@ def test_offline_snapshot_contains_essential_read_only_data(
     db.add(execution)
     db.flush()
     db.add(
-        ExecutionItem(
-            execution_id=execution.id,
-            name="Arroz",
-            category_id=category.id,
+            ExecutionItem(
+                execution_id=execution.id,
+                template_item_id=item.id,
+                name="Arroz",
+                category_id=category.id,
             planned_quantity=2,
         )
     )
@@ -72,6 +76,7 @@ def test_offline_snapshot_contains_essential_read_only_data(
     assert snapshot["template_items"][0]["id"] == item.id
     assert snapshot["executions"][0]["status"] == "in_progress"
     assert snapshot["execution_items"][0]["name"] == "Arroz"
+    assert snapshot["execution_items"][0]["template_item_id"] == item.id
     assert "location" in snapshot["execution_items"][0]
 
 
@@ -146,6 +151,91 @@ def test_offline_start_execution_operation_rejects_foreign_execution(
         )
 
     assert error.value.status_code == 404
+
+
+def test_offline_update_execution_operation_applies_pending_change(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        name="Compra antiga",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_update_execution_operation(
+            UpdateExecutionOperation(
+                execution_id=execution.id,
+                name="Compra do Mês",
+                scheduled_date="2026-06-30",
+                budget=850,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    assert result["status"] == "applied"
+    assert result["execution"]["name"] == "Compra do Mês"
+    assert result["execution"]["scheduled_date"] == "2026-06-30"
+    assert result["execution"]["budget"] == 850
+    assert execution.name == "Compra do Mês"
+    scheduled_local = to_local(execution.scheduled_date)
+    assert scheduled_local.date().isoformat() == "2026-06-30"
+    assert scheduled_local.hour == 0
+    assert execution.budget == 850
+
+
+def test_offline_update_execution_operation_records_conflict_when_not_scheduled(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        name="Compra em andamento",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_update_execution_operation(
+                UpdateExecutionOperation(
+                    execution_id=execution.id,
+                    name="Compra do Mês",
+                    scheduled_date="2026-06-20",
+                    budget=850,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 409
+    assert error.value.detail["type"] == "sync_conflict"
+    assert error.value.detail["reason"] == "execution_not_scheduled"
+    assert error.value.detail["remote"]["status"] == "in_progress"
+
+    audit = db.scalar(select(SyncConflictAudit))
+    assert audit is not None
+    assert audit.execution_id == execution.id
+    assert audit.entity == "execution"
+    assert audit.reason == "execution_not_scheduled"
+    assert audit.local_state["name"] == "Compra do Mês"
+    assert audit.remote_state["status"] == "in_progress"
 
 
 def test_offline_complete_item_operation_applies_pending_change(
@@ -694,15 +784,20 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "window.addEventListener('jaci:sync-manual'" in script
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
+    assert "UPDATE_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
     assert "ADD_EXECUTION_ITEM_SYNC_URL" in script
     assert "REMOVE_EXECUTION_ITEM_SYNC_URL" in script
     assert "FINALIZE_EXECUTION_SYNC_URL" in script
     assert "data-offline-start-execution" in script
+    assert "data-offline-edit-execution" in script
     assert "data-offline-add-item" in script
     assert "data-offline-finalize-link" in script
     assert "data-offline-finalize-execution" in script
     assert "data-offline-complete-item" in script
+    assert "readExecutionOperationFromForm" in script
+    assert "markExecutionPageAsOfflineUpdated" in script
+    assert "setupOfflineExecutionEditForms" in script
     assert "data-offline-edit-item" in script
     assert "data-offline-edit-item-form" in script
     assert "readEditItemOperationFromForm" in script
@@ -750,6 +845,13 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "refreshCurrentExecutionFragments" in script
     assert "`/executions/${executionId}/items-fragment`" in script
     assert "`/executions/${executionId}/sidebar-fragment`" in script
+    assert "cache: 'no-store'" in script
+    assert "reconcileAppliedOperationInDom" in script
+    assert "removeEmptyOfflineCategoryCard" in script
+    assert "operation.action === 'remove_execution_item'" in script
+    assert "operation.action !== 'incomplete_item'" in script
+    assert "incompleteForm.remove()" in script
+    assert "element.classList.remove('text-strikethrough')" in script
     assert "markItemRowAsOfflineUpdated" in script
     assert "is-offline-updated" in script
     assert "Comprado offline" in script
@@ -757,12 +859,18 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "data-offline-incomplete-item" in script
     assert "data-offline-remove-item" in script
     assert "enqueueStartExecution" in script
+    assert "enqueueUpdateExecutionOperation" in script
+    assert "operationIdForExecution" in script
+    assert "UPDATE_EXECUTION" in script
+    assert "update_execution" in script
+    assert "markExecutionUpdatedLocally" in script
     assert "enqueueAddExecutionItemOperation" in script
     assert "enqueueExecutionItemOperation" in script
     assert "enqueueRemoveExecutionItemOperation" in script
     assert "enqueueFinalizeExecutionOperation" in script
     assert "createTempId" in script
     assert "is_temporary" in script
+    assert "template_item_id: null" in script
     assert "add_execution_item" in script
     assert "remove_execution_item" in script
     assert "finalize_execution" in script
@@ -821,6 +929,15 @@ def test_offline_sync_uses_exponential_backoff_and_only_notifies_manual_errors()
     assert "window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'))" in script
 
 
+def test_execution_sync_handles_item_updated_event():
+    script = Path("app/static/js/execution-sync.js").read_text()
+
+    assert "case 'item_updated':" in script
+    assert "_onItemUpdated" in script
+    assert "Item ${data.item_id} atualizado" in script
+    assert "this._refreshItems();" in script
+
+
 def test_base_template_exposes_offline_cache_panel():
     base = Path("app/templates/base.html").read_text()
 
@@ -846,6 +963,22 @@ def test_start_execution_forms_are_offline_capable():
     assert 'data-execution-id="{{ execution.id }}"' in home
     assert "data-offline-start-execution" in detail
     assert 'data-execution-id="{{ execution.id }}"' in detail
+
+
+def test_scheduled_execution_edit_form_is_offline_capable():
+    detail = Path("app/templates/pages/executions/in_progress.html").read_text()
+    sidebar = Path("app/templates/pages/executions/_sidebar_fragment.html").read_text()
+
+    assert "data-offline-edit-execution" in detail
+    assert 'data-execution-id="{{ execution.id }}"' in detail
+    assert 'data-execution-status="{{ execution.status }}"' in detail
+    assert 'data-execution-sync-feedback' in detail
+    assert 'data-execution-name-label' in detail
+    assert 'name="name"' in detail
+    assert 'name="scheduled_date"' in detail
+    assert 'name="budget"' in detail
+    assert 'data-execution-date-label' in sidebar
+    assert 'data-execution-budget-label' in sidebar
 
 
 def test_add_item_form_is_offline_capable():
