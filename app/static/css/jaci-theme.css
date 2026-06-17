@@ -1466,6 +1466,15 @@ HOME OPERATIONAL
         justify-content: flex-start;
     }
 
+    .execution-detail-actions > *,
+    .execution-detail-actions .btn {
+        width: 100%;
+    }
+
+    .execution-detail-actions form {
+        display: grid;
+    }
+
     .page-loading {
         place-items: end center;
         padding-bottom: 5rem;

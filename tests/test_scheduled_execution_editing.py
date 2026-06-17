@@ -203,8 +203,11 @@ def test_offline_snapshot_contains_edited_execution_name(db, make_user, make_gro
 def test_scheduled_execution_edit_interface_is_available_only_for_scheduled():
     detail = open("app/templates/pages/executions/in_progress.html", encoding="utf-8").read()
     sync = open("app/static/js/execution-sync.js", encoding="utf-8").read()
+    styles = open("app/static/css/jaci-theme.css", encoding="utf-8").read()
 
     assert "{% if execution.status == 'scheduled' %}" in detail
+    assert "flex-column flex-sm-row" in detail
+    assert "execution-detail-actions" in detail
     assert "Editar compra" in detail
     assert 'id="editExecutionModal"' in detail
     assert 'action="/executions/{{ execution.id }}/edit"' in detail
@@ -212,5 +215,6 @@ def test_scheduled_execution_edit_interface_is_available_only_for_scheduled():
     assert 'name="scheduled_date"' in detail
     assert 'name="budget"' in detail
     assert "Alterações salvas são sincronizadas para o grupo." in detail
+    assert ".execution-detail-actions > *" in styles
     assert "case 'execution_updated'" in sync
     assert "_onExecutionUpdated" in sync
