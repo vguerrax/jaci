@@ -107,6 +107,25 @@ def notify_execution_completed(
     )
 
 
+def notify_execution_updated(
+    db: Session,
+    execution: Execution,
+    updated_by: User,
+    execution_name: str,
+) -> None:
+    """Notifica membros que uma compra agendada foi alterada."""
+    actor = updated_by.name or updated_by.email
+    notify_group_members(
+        db,
+        execution.group_id,
+        updated_by.id,
+        "execution_updated",
+        "Compra alterada",
+        f"{actor} alterou a compra '{execution_name}'.",
+        execution.id,
+    )
+
+
 def get_unread_count(db: Session, user_id: int) -> int:
     """Retorna contagem de notificações não lidas."""
     return db.scalar(
