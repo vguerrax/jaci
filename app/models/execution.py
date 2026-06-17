@@ -20,6 +20,7 @@ class Execution(Base):
         nullable=False,
         index=True,
     )
+    name: Mapped[str | None] = mapped_column(String(150), nullable=True)
     scheduled_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -68,6 +69,12 @@ class Execution(Base):
 
     def __repr__(self) -> str:
         return f"<Execution(id={self.id}, status='{self.status}')>"
+
+    @property
+    def display_name(self) -> str:
+        if self.name and self.name.strip():
+            return self.name.strip()
+        return self.template.name if self.template else "Compra Avulsa"
 
 
 class ExecutionItem(Base):

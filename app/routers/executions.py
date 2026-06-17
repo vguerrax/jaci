@@ -21,8 +21,10 @@ from app.services.execution_service import (
     get_execution_by_id,
     get_execution_items_grouped,
     get_execution_totals,
+    get_execution_display_name,
     create_execution_from_template,
     create_execution_standalone,
+    update_scheduled_execution,
     start_execution,
     complete_item as complete_item_service,
     incomplete_item as incomplete_item_service,
@@ -200,6 +202,9 @@ async def execution_detail(
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
     jwt_token = request.cookies.get("jaci_session")
+    messages = []
+    if request.query_params.get("updated") == "1":
+        messages.append(("success", "Compra atualizada e sincronizada."))
 
     return templates.TemplateResponse(
         request,
@@ -210,9 +215,11 @@ async def execution_detail(
             "active_group": active_group,
             "jwt_token": jwt_token,
             "execution": execution,
+            "execution_name": get_execution_display_name(execution),
             "grouped_items": grouped_items,
             "totals": totals,
             "budget_alerts": alerts,
+            "messages": messages,
             "status_labels": STATUS_LABELS,
             "status_badge_class": STATUS_BADGE_CLASS,
             "active_page": "executions",
@@ -246,6 +253,7 @@ async def _completed_page(
             "user": user,
             "active_group": active_group,
             "execution": execution,
+            "execution_name": get_execution_display_name(execution),
             "grouped_items": grouped_items,
             "totals": totals,
             "status_labels": STATUS_LABELS,
@@ -447,7 +455,7 @@ async def close_execution_page(
 
         # Notificar membros
         totals = get_execution_totals(db, execution.id)
-        template_name = execution.template.name if execution.template else "Compra Avulsa"
+        template_name = get_execution_display_name(execution)
         from app.services.notification_service import notify_execution_completed
 
         notify_execution_completed(
@@ -548,7 +556,7 @@ async def handle_start_execution(
 
     start_execution(db, execution)
 
-    template_name = execution.template.name if execution.template else "Compra Avulsa"
+    template_name = get_execution_display_name(execution)
     from app.services.notification_service import notify_execution_started
 
     notify_execution_started(db, execution, user, template_name)
@@ -563,6 +571,61 @@ async def handle_start_execution(
     )
 
     return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+
+@router.post("/{execution_id}/edit")
+async def handle_update_execution(
+    execution_id: int,
+    name: str = Form(...),
+    scheduled_date: str = Form(...),
+    budget: str | None = Form(None),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Edita dados próprios de uma execução agendada."""
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    execution = get_execution_by_id(db, execution_id, user)
+    if not execution:
+        return RedirectResponse(url="/executions", status_code=303)
+
+    try:
+        parsed_date = datetime.strptime(scheduled_date, "%Y-%m-%d")
+        parsed_date = parsed_date.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    parsed_budget = None
+    if budget not in (None, ""):
+        try:
+            parsed_budget = float(str(budget).replace(",", "."))
+        except ValueError:
+            return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    try:
+        update_scheduled_execution(db, execution, name, parsed_date, parsed_budget)
+    except ValueError:
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    execution_name = get_execution_display_name(execution)
+    from app.services.notification_service import notify_execution_updated
+
+    notify_execution_updated(db, execution, user, execution_name)
+
+    await manager.broadcast(
+        execution_id,
+        "execution_updated",
+        {
+            "execution_id": execution.id,
+            "name": execution_name,
+            "scheduled_date": execution.scheduled_date.date().isoformat(),
+            "budget": execution.budget,
+            "user_email": user.email,
+        },
+    )
+
+    return RedirectResponse(url=f"/executions/{execution_id}?updated=1", status_code=303)
 
 
 @router.post("/{execution_id}/items/{item_id}/complete")
@@ -898,7 +961,7 @@ async def handle_close_execution(
 
     # Notificar membros
     totals = get_execution_totals(db, execution.id)
-    template_name = execution.template.name if execution.template else "Compra Avulsa"
+    template_name = get_execution_display_name(execution)
     from app.services.notification_service import notify_execution_completed
 
     notify_execution_completed(

@@ -84,7 +84,7 @@
                             {% endif %}">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <h3 class="h6 mb-0">
-                            {{ item.template_name or 'Compra Avulsa' }}
+                            {{ item.execution_name }}
                         </h3>
                         <span class="badge-jaci {{ status_badge_class[exec_item.status] }} small">
                             {{ status_labels[exec_item.status] }}
