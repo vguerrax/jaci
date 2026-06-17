@@ -45,3 +45,15 @@ venv/bin/pytest
 Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados, aparecem
 como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até que o fluxo
 seja revisado e marcado como implementado.
+
+# Sprint 4 — Aprendizado contínuo dos templates
+
+| Backlog | Estado | Cobertura TDD |
+|---|---|---|
+| BL-029 Detectar itens adicionados durante a execução | Contrato TDD (`xfail`) | `test_bl029_detects_runtime_items_only_for_template_executions` |
+| BL-030 Sugerir incorporação de itens ao template | Contrato TDD (`xfail`) | `test_bl030_applies_only_selected_new_item_suggestions_to_future_executions` |
+| BL-031 Detectar divergências recorrentes de quantidade | Contrato TDD (`xfail`) | `test_bl031_quantity_suggestions_require_recurrent_divergence`, `test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence` |
+| BL-032 Sugerir atualização de quantidades padrão | Contrato TDD (`xfail`) | `test_bl032_applies_quantity_suggestion_only_to_template_future_runs` |
+| BL-033 Detectar alterações recorrentes em observações | Contrato TDD (`xfail`) | `test_bl033_detects_recurrent_notes_only_for_template_items` |
+| BL-034 Sugerir atualização de observações do template | Contrato TDD (`xfail`) | `test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones` |
+| RNF-S4.04 Desativar sugestões por grupo | Contrato TDD (`xfail`) | `test_rnf_s4_group_can_disable_template_learning_suggestions` |
