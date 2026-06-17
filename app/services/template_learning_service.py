@@ -1,4 +1,5 @@
 from collections import Counter, defaultdict
+from statistics import median
 from types import SimpleNamespace
 from typing import Any
 
@@ -12,6 +13,7 @@ from app.models.template_learning import TemplateLearningDismissal
 from app.services.template_service import add_item_to_template, update_template_item
 
 MIN_RECURRENT_OCCURRENCES = 3
+BUDGET_DIVERGENCE_THRESHOLD = 0.10
 
 
 class SuggestionList(list):
@@ -23,12 +25,18 @@ class SuggestionList(list):
 
 
 class TemplateHistorySuggestions:
-    def __init__(self, quantity: list[dict] | None = None, notes: list[dict] | None = None):
+    def __init__(
+        self,
+        quantity: list[dict] | None = None,
+        notes: list[dict] | None = None,
+        budget: list[dict] | None = None,
+    ):
         self.quantity = quantity or []
         self.notes = notes or []
+        self.budget = budget or []
 
     def is_empty(self) -> bool:
-        return not self.quantity and not self.notes
+        return not self.quantity and not self.notes and not self.budget
 
 
 def _normalize_name(value: str | None) -> str:
@@ -56,6 +64,12 @@ def _suggestion_id(suggestion_type: str, entity_id: int, value: Any = None) -> s
     return f"{suggestion_type}:{entity_id}{value_part}"
 
 
+def _money(value: float | int | None) -> float | None:
+    if value is None:
+        return None
+    return round(float(value), 2)
+
+
 def _dismissed_keys(db: Session, execution_id: int) -> set[tuple]:
     dismissals = db.scalars(
         select(TemplateLearningDismissal).where(
@@ -74,7 +88,13 @@ def _dismissed_keys(db: Session, execution_id: int) -> set[tuple]:
 
 
 def _dismissal_value_for_suggestion(suggestion: dict) -> str | None:
-    value = suggestion.get("suggested_notes") or suggestion.get("suggested_quantity")
+    if suggestion.get("suggested_budget") is not None:
+        value = _money(suggestion.get("suggested_budget"))
+        return None if value is None else f"{value:g}"
+    value = (
+        suggestion.get("suggested_notes")
+        or suggestion.get("suggested_quantity")
+    )
     return None if value is None else str(value)
 
 
@@ -86,7 +106,7 @@ def _dismissal_key_for_suggestion(suggestion: dict) -> tuple:
         suggestion_type, entity_id = _parse_suggestion_id(suggestion["suggestion_id"])
         if suggestion_type == "new_item":
             execution_item_id = entity_id
-        else:
+        elif suggestion_type != "budget":
             template_item_id = entity_id
     return (
         suggestion_type,
@@ -161,6 +181,36 @@ def analyze_template_history(
     if not execution_ids:
         return TemplateHistorySuggestions()
 
+    budget_suggestions: list[dict] = []
+    budgets = [
+        _money(item.budget)
+        for item in executions
+        if item.template_id == template.id and item.budget is not None and item.budget > 0
+    ]
+    if len(budgets) >= MIN_RECURRENT_OCCURRENCES:
+        suggested_budget = _money(median(budgets))
+        current_budget = _money(template.budget)
+        if suggested_budget and suggested_budget > 0:
+            should_suggest = current_budget is None
+            if current_budget and current_budget > 0:
+                difference = abs(suggested_budget - current_budget) / current_budget
+                should_suggest = difference >= BUDGET_DIVERGENCE_THRESHOLD
+            if should_suggest:
+                budget_suggestions.append(
+                    {
+                        "type": "budget",
+                        "suggestion_id": _suggestion_id("budget", template.id, suggested_budget),
+                        "template_id": template.id,
+                        "current_budget": current_budget,
+                        "suggested_budget": suggested_budget,
+                        "sample_size": len(budgets),
+                        "explanation": (
+                            f"Mediana de R$ {suggested_budget:.2f} "
+                            f"em {len(budgets)} execuções finalizadas recentes."
+                        ),
+                    }
+                )
+
     history_items = db.scalars(
         select(ExecutionItem).where(
             ExecutionItem.execution_id.in_(execution_ids),
@@ -225,7 +275,7 @@ def analyze_template_history(
                     }
                 )
 
-    suggestions = TemplateHistorySuggestions(quantity_suggestions, notes_suggestions)
+    suggestions = TemplateHistorySuggestions(quantity_suggestions, notes_suggestions, budget_suggestions)
     if not execution:
         return suggestions
 
@@ -238,6 +288,11 @@ def analyze_template_history(
     suggestions.notes = [
         suggestion
         for suggestion in suggestions.notes
+        if _dismissal_key_for_suggestion(suggestion) not in dismissed
+    ]
+    suggestions.budget = [
+        suggestion
+        for suggestion in suggestions.budget
         if _dismissal_key_for_suggestion(suggestion) not in dismissed
     ]
     return suggestions
@@ -305,6 +360,11 @@ def apply_template_suggestions(
                     suggestion.get("suggested_notes"),
                 )
                 applied.append(item)
+        elif suggestion_type == "budget":
+            suggested_budget = _money(suggestion.get("suggested_budget"))
+            if suggestion.get("template_id") == template.id and suggested_budget is not None:
+                template.budget = suggested_budget
+                db.commit()
 
     return applied
 
@@ -325,7 +385,7 @@ def dismiss_template_suggestions(
             suggestion_type, entity_id = _parse_suggestion_id(suggestion["suggestion_id"])
             if suggestion_type == "new_item":
                 execution_item_id = entity_id
-            else:
+            elif suggestion_type != "budget":
                 template_item_id = entity_id
         key = (suggestion_type, execution_item_id, template_item_id, value)
         if key in dismissed:

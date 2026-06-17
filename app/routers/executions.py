@@ -131,6 +131,17 @@ def _read_template_learning_choices(form) -> dict[str, list[dict]]:
                     "suggested_notes": form.get(f"suggested_notes_{suggestion_id}"),
                 }
             )
+        elif suggestion_type == "budget":
+            target.append(
+                {
+                    "suggestion_id": suggestion_id,
+                    "type": "budget",
+                    "template_id": entity_id,
+                    "suggested_budget": _to_float(
+                        form.get(f"suggested_budget_{suggestion_id}"),
+                    ),
+                }
+            )
 
     return result
 

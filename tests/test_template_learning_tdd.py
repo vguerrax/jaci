@@ -8,7 +8,7 @@ from urllib.parse import urlencode
 from starlette.requests import Request
 
 from app.routers import executions as execution_routes
-from app.models.enums import RecurrenceType
+from app.models.enums import ExecutionStatus, RecurrenceType
 from app.services.execution_service import (
     add_item_to_execution,
     complete_item,
@@ -166,10 +166,13 @@ def test_bl030_close_page_exposes_template_learning_controls():
     assert "learning_suggestions" in template
     assert "history_suggestions.quantity" in template
     assert "history_suggestions.notes" in template
+    assert "history_suggestions.budget" in template
     assert 'name="template_learning_present"' in template
     assert 'name="template_learning_selected"' in template
     assert "planned_quantity_{{ suggestion.suggestion_id }}" in template
     assert "category_id_{{ suggestion.suggestion_id }}" in template
+    assert "suggested_budget_{{ suggestion.suggestion_id }}" in template
+    assert "Atualizar orçamento da lista" in template
     assert "As alterações afetam compras futuras." in template
 
 
@@ -316,6 +319,156 @@ def test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_
         suggestion.get("template_item_id") != ignored_item.id
         for suggestion in suggestions.notes
     )
+
+
+def test_bl075_budget_suggestion_uses_median_from_completed_template_executions(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, budget=500)
+    budgets = [780, 800, 900]
+    for index, budget in enumerate(budgets, start=1):
+        execution = create_execution_from_template(
+            db,
+            template,
+            datetime(2026, 6, index, tzinfo=timezone.utc),
+            user,
+            budget=budget,
+        )
+        finalize_execution(db, execution)
+
+    suggestions = learning.analyze_template_history(db, template)
+
+    assert suggestions.budget == [
+        {
+            "suggestion_id": f"budget:{template.id}:800",
+            "type": "budget",
+            "template_id": template.id,
+            "current_budget": 500,
+            "suggested_budget": 800,
+            "sample_size": 3,
+            "explanation": "Mediana de R$ 800.00 em 3 execuções finalizadas recentes.",
+        }
+    ]
+    assert template.budget == 500
+
+
+def test_bl075_budget_learning_ignores_standalone_and_unfinished_executions(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, budget=500)
+
+    unfinished = create_execution_from_template(
+        db, template, datetime(2026, 6, 1, tzinfo=timezone.utc), user, budget=900
+    )
+    standalone = create_execution_standalone(
+        db, group, datetime(2026, 6, 2, tzinfo=timezone.utc), user, budget=900
+    )
+    finalize_execution(db, standalone)
+
+    suggestions = learning.analyze_template_history(db, template)
+
+    assert unfinished.status == ExecutionStatus.scheduled
+    assert suggestions.budget == []
+
+
+def test_bl076_accepts_budget_suggestion_only_for_future_executions(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, budget=500)
+    existing_execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 1, tzinfo=timezone.utc), user
+    )
+
+    learning.apply_template_suggestions(
+        db,
+        template,
+        [{"type": "budget", "template_id": template.id, "suggested_budget": 800}],
+    )
+    next_execution = create_execution_from_template(
+        db, template, datetime(2026, 7, 1, tzinfo=timezone.utc), user
+    )
+
+    assert template.budget == 800
+    assert existing_execution.budget == 500
+    assert next_execution.budget == 800
+
+
+def test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, budget=500)
+    execution = None
+    for index, budget in enumerate([780, 800, 900], start=1):
+        execution = create_execution_from_template(
+            db,
+            template,
+            datetime(2026, 6, index, tzinfo=timezone.utc),
+            user,
+            budget=budget,
+        )
+        finalize_execution(db, execution)
+
+    learning.dismiss_template_suggestions(
+        db,
+        execution,
+        [{"type": "budget", "template_id": template.id, "suggested_budget": 800}],
+    )
+
+    suggestions = learning.analyze_template_history(db, template, execution)
+
+    assert suggestions.budget == []
+
+
+def test_bl076_close_flow_accepts_or_rejects_budget_suggestion(
+    db, make_user, make_group, monkeypatch
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly, budget=500)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 1, tzinfo=timezone.utc), user, budget=800
+    )
+
+    async def fake_broadcast(*args, **kwargs):
+        return None
+
+    monkeypatch.setattr(execution_routes.manager, "broadcast", fake_broadcast)
+    suggestion_id = f"budget:{template.id}:800"
+    request = make_form_request(
+        [
+            ("action", "discard"),
+            ("template_learning_present", suggestion_id),
+            ("template_learning_selected", suggestion_id),
+            (f"suggested_budget_{suggestion_id}", "800"),
+        ]
+    )
+
+    response = asyncio.run(
+        execution_routes.handle_close_execution(
+            request=request,
+            execution_id=execution.id,
+            action="discard",
+            new_date=None,
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(template)
+    assert response.status_code == 303
+    assert template.budget == 800
 
 
 def test_rnf_s4_group_can_disable_template_learning_suggestions(

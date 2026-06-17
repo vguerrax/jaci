@@ -438,7 +438,7 @@ def test_offline_item_operation_rejects_stale_version(db, make_user, make_group)
 
 
 def test_offline_conflict_history_lists_and_resolves_audits(db, make_user, make_group):
-    user = make_user("ana@example.com")
+    user = make_user("ana@example.com", "Ana Maria")
     group = make_group(owner=user)
     execution = Execution(
         group_id=group.id,
@@ -476,6 +476,7 @@ def test_offline_conflict_history_lists_and_resolves_audits(db, make_user, make_
 
     history = asyncio.run(offline_conflict_history(db=db, user=user))
     assert history["conflicts"][0]["id"] == audit_id
+    assert history["conflicts"][0]["user_name"] == "Ana Maria"
     assert history["conflicts"][0]["resolution_applied"] is None
 
     resolved = asyncio.run(
@@ -489,6 +490,7 @@ def test_offline_conflict_history_lists_and_resolves_audits(db, make_user, make_
 
     history_after_resolution = asyncio.run(offline_conflict_history(db=db, user=user))
     assert resolved["conflict"]["resolution_applied"] == "discard_local"
+    assert resolved["conflict"]["user_name"] == "Ana Maria"
     assert resolved["conflict"]["resolved_at"] is not None
     assert history_after_resolution["conflicts"][0]["id"] == audit_id
     assert history_after_resolution["conflicts"][0]["resolution_applied"] == "discard_local"
