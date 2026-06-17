@@ -6,7 +6,7 @@ import pytest
 from fastapi import HTTPException
 from sqlalchemy import select
 
-from app.models import Execution, ExecutionItem
+from app.models import Execution, ExecutionItem, SyncConflictAudit
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.offline import (
     AddExecutionItemOperation,
@@ -14,7 +14,10 @@ from app.routers.offline import (
     FinalizeExecutionOperation,
     RemoveExecutionItemOperation,
     StartExecutionOperation,
+    ConflictResolutionOperation,
+    offline_conflict_history,
     offline_snapshot,
+    record_conflict_resolution,
     sync_add_execution_item_operation,
     sync_execution_item_operation,
     sync_finalize_execution_operation,
@@ -69,6 +72,7 @@ def test_offline_snapshot_contains_essential_read_only_data(
     assert snapshot["template_items"][0]["id"] == item.id
     assert snapshot["executions"][0]["status"] == "in_progress"
     assert snapshot["execution_items"][0]["name"] == "Arroz"
+    assert "location" in snapshot["execution_items"][0]
 
 
 def test_offline_snapshot_is_scoped_to_user_groups(db, make_user, make_group):
@@ -236,6 +240,59 @@ def test_offline_incomplete_item_operation_applies_pending_change(
     assert item.version == 2
 
 
+def test_offline_update_item_operation_applies_pending_change(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Limpeza")
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Sabão",
+        planned_quantity=1,
+        notes="Em pó",
+    )
+    db.add(item)
+    db.commit()
+
+    result = asyncio.run(
+        sync_execution_item_operation(
+            ExecutionItemOperation(
+                execution_id=execution.id,
+                item_id=item.id,
+                action="update_item",
+                version=item.version,
+                name="Sabão líquido",
+                planned_quantity=2,
+                category_id=category.id,
+                notes="Refil",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(item)
+    assert result["status"] == "applied"
+    assert result["item"]["name"] == "Sabão líquido"
+    assert result["item"]["planned_quantity"] == 2
+    assert result["item"]["category_id"] == category.id
+    assert item.name == "Sabão líquido"
+    assert item.planned_quantity == 2
+    assert item.category_id == category.id
+    assert item.notes == "Refil"
+    assert item.is_completed is False
+    assert item.version == 2
+
+
 def test_offline_item_operation_rejects_stale_version(db, make_user, make_group):
     user = make_user("ana@example.com")
     group = make_group(owner=user)
@@ -273,6 +330,78 @@ def test_offline_item_operation_rejects_stale_version(db, make_user, make_group)
         )
 
     assert error.value.status_code == 409
+    assert error.value.detail["type"] == "sync_conflict"
+    assert error.value.detail["audit_id"]
+    assert error.value.detail["local"]["version"] == 2
+    assert error.value.detail["remote"]["version"] == 3
+
+    audit = db.scalar(select(SyncConflictAudit))
+    assert audit is not None
+    assert audit.execution_id == execution.id
+    assert audit.user_id == user.id
+    assert audit.operation_type == "ExecutionItemOperation"
+    assert audit.entity == "execution_item"
+    assert audit.entity_id == str(item.id)
+    assert audit.local_state["version"] == 2
+    assert audit.remote_state["version"] == 3
+    assert audit.resolution_applied is None
+
+
+def test_offline_conflict_history_lists_and_resolves_audits(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Café",
+        planned_quantity=1,
+        version=3,
+    )
+    db.add(item)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_execution_item_operation(
+                ExecutionItemOperation(
+                    execution_id=execution.id,
+                    item_id=item.id,
+                    action="complete_item",
+                    version=2,
+                    purchased_quantity=1,
+                    unit_price=12,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+    audit_id = error.value.detail["audit_id"]
+
+    history = asyncio.run(offline_conflict_history(db=db, user=user))
+    assert history["conflicts"][0]["id"] == audit_id
+    assert history["conflicts"][0]["resolution_applied"] is None
+
+    resolved = asyncio.run(
+        record_conflict_resolution(
+            audit_id,
+            ConflictResolutionOperation(resolution="discard_local"),
+            db=db,
+            user=user,
+        )
+    )
+
+    history_after_resolution = asyncio.run(offline_conflict_history(db=db, user=user))
+    assert resolved["conflict"]["resolution_applied"] == "discard_local"
+    assert resolved["conflict"]["resolved_at"] is not None
+    assert history_after_resolution["conflicts"][0]["id"] == audit_id
+    assert history_after_resolution["conflicts"][0]["resolution_applied"] == "discard_local"
 
 
 def test_offline_add_item_operation_creates_real_item_from_temp_id(
@@ -530,7 +659,7 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     script = Path("app/static/js/offline-cache.js").read_text()
 
     assert "indexedDB.open" in script
-    assert "const DB_VERSION = 7" in script
+    assert "const DB_VERSION = 10" in script
     assert "'indexedDB' in window" in script
     assert "jaci-offline-cache" in script
     assert "'groups'" in script
@@ -547,6 +676,22 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "sortOperationsByCreation" in script
     assert "recordSyncAttempt" in script
     assert "tentativas: Number(operation.tentativas || 0) + 1" in script
+    assert "PENDING_ERRORS_KEY" in script
+    assert "jaci_pending_errors" in script
+    assert "PENDING_CONFLICTS_KEY" in script
+    assert "jaci_pending_conflicts" in script
+    assert "renderPendingState" in script
+    assert "Number(operation.tentativas || 0) > 0" in script
+    assert "SYNC_RETRY_BASE_DELAY_MS" in script
+    assert "SYNC_RETRY_MAX_DELAY_MS" in script
+    assert "getRetryDelay" in script
+    assert "isTransientStatus" in script
+    assert "requires_manual_intervention" in script
+    assert "renderSyncCenter" in script
+    assert "scheduleAutomaticRetry" in script
+    assert "runAutomaticSync" in script
+    assert "syncInFlight" in script
+    assert "window.addEventListener('jaci:sync-manual'" in script
     assert "fetch(SNAPSHOT_URL" in script
     assert "START_EXECUTION_SYNC_URL" in script
     assert "EXECUTION_ITEM_SYNC_URL" in script
@@ -558,6 +703,42 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "data-offline-finalize-link" in script
     assert "data-offline-finalize-execution" in script
     assert "data-offline-complete-item" in script
+    assert "data-offline-edit-item" in script
+    assert "data-offline-edit-item-form" in script
+    assert "readEditItemOperationFromForm" in script
+    assert "openOfflineEditModal" in script
+    assert "handleOfflineEditItemClick" in script
+    assert "document.addEventListener('click', handleOfflineEditItemClick, true)" in script
+    assert "offlineEditItemModal" in script
+    assert "openOfflineCompleteModal" in script
+    assert "showManualModal" in script
+    assert "closeManualModal" in script
+    assert "setupOfflineCompleteModalControls" in script
+    assert "window.JaciModal" in script
+    assert "dataset.jaciModalBackdrop" in script
+    assert "bootstrap.Modal.getOrCreateInstance(modalEl" not in script
+    assert "offlineCompleteItemModal" in script
+    assert "disableOfflineCompleteBootstrapTriggers" in script
+    assert "disableMissingCompleteModalTriggers" in script
+    assert "document.addEventListener('pointerdown', disableMissingCompleteModalTriggers, true)" in script
+    assert "document.addEventListener('touchstart', disableMissingCompleteModalTriggers, true)" in script
+    assert "completeModalTargetMissing" in script
+    assert "shouldUseOfflineCompleteModal" in script
+    assert "targetSelector && !document.querySelector(targetSelector)" in script
+    assert "form.dataset.forceOfflineSubmit = 'true'" in script
+    assert "forcedOfflineSubmit" in script
+    assert "setOfflineCompleteBootstrapTriggersEnabled" in script
+    assert "button.removeAttribute('data-bs-toggle')" in script
+    assert "button.removeAttribute('data-bs-target')" in script
+    assert "window.addEventListener('online', function ()" in script
+    assert "window.addEventListener('offline', disableOfflineCompleteBootstrapTriggers)" in script
+    assert "getLastLocationForExecution" in script
+    assert "getLastLocationFromPage" in script
+    assert "await getLastLocationForExecution(button.dataset.executionId, button.dataset.itemId)" in script
+    assert "markItemRowAsOfflineUpdated" in script
+    assert "is-offline-updated" in script
+    assert "Comprado offline" in script
+    assert "prompt(" not in script
     assert "data-offline-incomplete-item" in script
     assert "data-offline-remove-item" in script
     assert "enqueueStartExecution" in script
@@ -576,6 +757,8 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "start_execution" in script
     assert "complete_item" in script
     assert "incomplete_item" in script
+    assert "update_item" in script
+    assert "UPDATE_ITEM" in script
     assert "credentials: 'same-origin'" in script
     assert "window.addEventListener('online'" in script
     assert "indexedDB.deleteDatabase" in script
@@ -592,8 +775,35 @@ def test_offline_queue_contract_uses_persistent_created_order_and_attempts():
     assert "return operations.slice().sort" in script
     assert "localeCompare(String(b.created_at || ''))" in script
     assert "sortOperationsByCreation(await readStore(db, 'pending_operations'))" in script
-    assert "await recordSyncAttempt(operation)" in script
+    assert "await recordSyncAttempt(operation, false)" in script
+    assert "await recordSyncAttempt(operation, requiresManualIntervention, conflict)" in script
     assert "await deleteRecord(nextDb, 'pending_operations', operation.id)" in script
+
+
+def test_offline_sync_runs_automatically_manually_and_retries_failures():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "window.addEventListener('online', runAutomaticSync)" in script
+    assert "window.addEventListener('load'" in script
+    assert "runAutomaticSync();" in script
+    assert "syncNow: runAutomaticSync" in script
+    assert "runAutomaticSync({ manual: true })" in script
+    assert "getNextRetryDelay().then(scheduleAutomaticRetry)" in script
+    assert "window.setTimeout(function ()" in script
+    assert "retryTimer = null" in script
+
+
+def test_offline_sync_uses_exponential_backoff_and_only_notifies_manual_errors():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "2 ** (attempts - 1)" in script
+    assert "Math.min(SYNC_RETRY_MAX_DELAY_MS" in script
+    assert "status === 429 || status >= 500" in script
+    assert "requiresManualIntervention = !isTransientStatus(response.status)" in script
+    assert "new SyncFailure('Falha temporária de rede.', false)" in script
+    assert "if (error.requiresManualIntervention)" in script
+    assert "window.dispatchEvent(new CustomEvent('jaci:sync-error'))" in script
+    assert "window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'))" in script
 
 
 def test_base_template_exposes_offline_cache_panel():
@@ -601,7 +811,15 @@ def test_base_template_exposes_offline_cache_panel():
 
     assert 'id="offline-cache-panel"' in base
     assert 'id="offline-cache-summary"' in base
+    assert base.index("</nav>") < base.index('id="offline-cache-panel"') < base.index("<!-- Flash Messages -->")
+    assert 'id="offlineCompleteItemModal"' in base
+    assert "data-offline-complete-item-modal-form" in base
+    assert 'id="offlineEditItemModal"' in base
+    assert "data-offline-edit-item-modal-form" in base
     assert "Compras iniciadas offline serão sincronizadas automaticamente." in base
+    assert "data-bs-toggle=\"modal\"" in base
+    assert "!document.querySelector(targetSelector)" in base
+    assert "event.stopImmediatePropagation()" in base
     assert "/static/js/offline-cache.js" in base
 
 
@@ -640,11 +858,41 @@ def test_finalize_controls_are_offline_capable():
 def test_execution_item_controls_are_offline_capable():
     items = Path("app/templates/pages/executions/_items_fragment.html").read_text()
     modal = Path("app/templates/pages/executions/_complete_modal.html").read_text()
+    edit_modal = Path("app/templates/pages/executions/_edit_modal.html").read_text()
 
     assert "data-offline-complete-item" in items
+    assert "data-offline-edit-item" in items
     assert "data-offline-incomplete-item" in items
     assert "data-offline-remove-item" in items
+    assert 'data-bs-toggle="modal"' not in items
+    assert 'data-bs-target="#completeItemModal' not in items
+    assert 'data-bs-target="#editItemModal' not in items
+    assert 'hx-swap="innerHTML""' not in items
+    assert "data-execution-item-row" in items
+    assert "data-item-location" in items
+    assert "data-item-name-label" in items
+    assert "data-item-planned-quantity-label" in items
+    assert "data-item-notes-label" in items
+    assert "data-offline-item-badge" in items
+    assert "Comprado offline" in items
     assert "data-purchased-quantity" in items
     assert "data-unit-price" in items
+    assert "data-category-id" in items
     assert "data-offline-complete-item-form" in modal
     assert 'value="{{ item.unit_price if item.unit_price else \'\' }}"' in modal
+    assert "window.JaciModal.show(modalEl)" in modal
+    assert "window.JaciModal.hide" in modal
+    assert "bootstrap.Modal" not in modal
+    assert "window.JaciModal.show(modalEl)" in edit_modal
+    assert "window.JaciModal.hide" in edit_modal
+    assert "bootstrap.Modal" not in edit_modal
+
+
+def test_offline_item_state_is_visible_and_mobile_panel_does_not_overlay_content():
+    styles = Path("app/static/css/jaci-theme.css").read_text()
+
+    assert ".offline-item-badge" in styles
+    assert ".list-group-jaci .list-group-item.is-offline-updated" in styles
+    assert "@media (max-width: 767.98px)" in styles
+    assert ".offline-cache-panel {\n        position: static;" in styles
+    assert "box-shadow: none;" in styles

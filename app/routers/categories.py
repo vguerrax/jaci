@@ -37,6 +37,7 @@ async def list_categories(
 
     if not active_group:
         return templates.TemplateResponse(
+            request,
             "pages/categories/list.html",
             {
                 "request": request,
@@ -60,6 +61,7 @@ async def list_categories(
         })
 
     return templates.TemplateResponse(
+        request,
         "pages/categories/list.html",
         {
             "request": request,
@@ -87,6 +89,7 @@ async def create_category_page(
         return RedirectResponse(url="/categories", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/categories/create.html",
         {
             "request": request,
@@ -116,6 +119,7 @@ async def edit_category_page(
         return RedirectResponse(url="/categories", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/categories/edit.html",
         {
             "request": request,
@@ -148,6 +152,7 @@ async def delete_category_confirm_page(
     counts = count_items_using_category(db, category.id)
 
     return templates.TemplateResponse(
+        request,
         "pages/categories/delete_confirm.html",
         {
             "request": request,
@@ -179,6 +184,7 @@ async def handle_create_category(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/categories/create.html",
             {
                 "request": request,
@@ -249,6 +255,7 @@ async def handle_edit_category(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/categories/edit.html",
             {
                 "request": request,
@@ -288,6 +295,7 @@ async def handle_delete_category(
     # If there are items and no confirmation, show confirmation page
     if counts["total"] > 0 and confirm != "yes":
         return templates.TemplateResponse(
+            request,
             "pages/categories/delete_confirm.html",
             {
                 "request": request,

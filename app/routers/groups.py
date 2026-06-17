@@ -40,6 +40,7 @@ async def list_groups(
     groups = get_user_groups(db, user)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/list.html",
         {
             "request": request,
@@ -64,6 +65,7 @@ async def create_group_page(
         return RedirectResponse(url="/auth/login", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/create.html",
         {
             "request": request,
@@ -96,6 +98,7 @@ async def group_detail(
     owner = is_group_owner(db, group_id, user)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -127,6 +130,7 @@ async def handle_create_group(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/groups/create.html",
             {
                 "request": request,
@@ -164,6 +168,7 @@ async def handle_edit_group(
     members = get_group_members(db, group_id)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -205,6 +210,7 @@ async def handle_invite(
     owner = is_group_owner(db, group_id, user)
     
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -243,6 +249,7 @@ async def handle_remove_member(
         owner = is_group_owner(db, group_id, user)
 
         return templates.TemplateResponse(
+            request,
             "pages/groups/detail.html",
             {
                 "request": request,
@@ -288,6 +295,7 @@ async def handle_switch_group(
 
     # A página intermediária garante que o navegador persista o cookie antes de navegar.
     response = templates.TemplateResponse(
+        request,
         "pages/switch_group.html",
         {
             "request": request,

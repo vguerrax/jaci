@@ -66,6 +66,7 @@ async def agenda_calendar(
 
     if not active_group:
         return templates.TemplateResponse(
+            request,
             "pages/executions/index.html",
             {
                 "request": request,
@@ -103,6 +104,7 @@ async def agenda_calendar(
         next_year += 1
 
     return templates.TemplateResponse(
+        request,
         "pages/agenda/calendar.html",
         {
             "request": request,
@@ -184,6 +186,7 @@ async def agenda_list(
     )
 
     return templates.TemplateResponse(
+        request,
         "pages/agenda/list.html",
         {
             "request": request,
