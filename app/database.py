@@ -96,6 +96,14 @@ def ensure_schema_compatibility() -> None:
                 )
             )
 
+        if "template_learning_enabled" not in group_columns:
+            connection.execute(
+                text(
+                    "ALTER TABLE groups ADD COLUMN template_learning_enabled "
+                    "BOOLEAN NOT NULL DEFAULT 1"
+                )
+            )
+
         if "notes" not in template_item_columns:
             connection.execute(
                 text("ALTER TABLE template_items ADD COLUMN notes VARCHAR(255)")

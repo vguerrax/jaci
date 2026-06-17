@@ -11,7 +11,7 @@ from app.services.group_service import (
     get_group_by_id,
     get_group_members,
     is_group_owner,
-    update_group_name,
+    update_group_settings,
     invite_member,
     remove_member,
 )
@@ -150,11 +150,12 @@ async def handle_edit_group(
     request: Request,
     group_id: int,
     name: str = Form(...),
+    template_learning_enabled: bool = Form(False),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group=Depends(get_active_group),
 ):
-    """Altera o nome do grupo."""
+    """Altera configurações do grupo."""
     from app.main import templates
 
     if not user:
@@ -164,7 +165,13 @@ async def handle_edit_group(
     if not group:
         return RedirectResponse(url="/groups", status_code=303)
 
-    result = update_group_name(db, group, name, user)
+    result = update_group_settings(
+        db,
+        group,
+        name,
+        user,
+        template_learning_enabled=template_learning_enabled,
+    )
     members = get_group_members(db, group_id)
 
     return templates.TemplateResponse(

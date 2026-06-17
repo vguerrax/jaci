@@ -74,7 +74,10 @@ def test_migrations_create_schema_in_empty_sqlite_database(tmp_path):
     inspector = inspect(engine)
     assert inspector.has_table("users")
     assert inspector.has_table("executions")
+    assert inspector.has_table("template_learning_dismissals")
     assert inspector.has_table("alembic_version")
+    group_columns = {column["name"] for column in inspector.get_columns("groups")}
+    assert "template_learning_enabled" in group_columns
     execution_columns = {column["name"] for column in inspector.get_columns("executions")}
     assert "name" in execution_columns
     execution_item_columns = {

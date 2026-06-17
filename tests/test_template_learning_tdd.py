@@ -1,10 +1,13 @@
 """Contratos TDD da Sprint 4: aprendizado contínuo dos templates."""
 
+import asyncio
 from datetime import datetime, timezone
 from importlib import import_module
+from urllib.parse import urlencode
 
-import pytest
+from starlette.requests import Request
 
+from app.routers import executions as execution_routes
 from app.models.enums import RecurrenceType
 from app.services.execution_service import (
     add_item_to_execution,
@@ -13,17 +16,36 @@ from app.services.execution_service import (
     create_execution_standalone,
     finalize_execution,
 )
+from app.services.group_service import update_group_settings
 from app.services.template_service import add_item_to_template, create_template
-
-
-sprint4_contract = pytest.mark.xfail(
-    strict=True,
-    reason="Sprint 4 aguardando implementação",
-)
 
 
 def learning_service():
     return import_module("app.services.template_learning_service")
+
+
+def make_form_request(data: dict | list[tuple[str, str]]) -> Request:
+    body = urlencode(data, doseq=True).encode("ascii")
+    sent = False
+
+    async def receive():
+        nonlocal sent
+        if sent:
+            return {"type": "http.request", "body": b"", "more_body": False}
+        sent = True
+        return {"type": "http.request", "body": body, "more_body": False}
+
+    request = Request(
+        {
+            "type": "http",
+            "method": "POST",
+            "path": "/",
+            "headers": [(b"content-type", b"application/x-www-form-urlencoded")],
+        },
+        receive,
+    )
+    request.state.unread_count = 0
+    return request
 
 
 def test_bl029_detects_runtime_items_only_for_template_executions(
@@ -55,7 +77,6 @@ def test_bl029_detects_runtime_items_only_for_template_executions(
     assert standalone_suggestions == []
 
 
-@sprint4_contract
 def test_bl030_applies_only_selected_new_item_suggestions_to_future_executions(
     db, make_user, make_group, make_category
 ):
@@ -94,7 +115,64 @@ def test_bl030_applies_only_selected_new_item_suggestions_to_future_executions(
     assert ignored.name not in [item.name for item in template.items]
 
 
-@sprint4_contract
+def test_bl030_close_flow_applies_selected_new_item_suggestion(
+    db, make_user, make_group, make_category, monkeypatch
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Mantimentos")
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    runtime_item = add_item_to_execution(db, execution, "Feijão", 2)
+
+    async def fake_broadcast(*args, **kwargs):
+        return None
+
+    monkeypatch.setattr(execution_routes.manager, "broadcast", fake_broadcast)
+    suggestion_id = f"new_item:{runtime_item.id}"
+    request = make_form_request(
+        [
+            ("action", "discard"),
+            ("template_learning_present", suggestion_id),
+            ("template_learning_selected", suggestion_id),
+            (f"category_id_{suggestion_id}", str(category.id)),
+            (f"planned_quantity_{suggestion_id}", "3"),
+        ]
+    )
+
+    response = asyncio.run(
+        execution_routes.handle_close_execution(
+            request=request,
+            execution_id=execution.id,
+            action="discard",
+            new_date=None,
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(template)
+    assert response.status_code == 303
+    assert [(item.name, item.planned_quantity, item.category_id) for item in template.items] == [
+        ("Feijão", 3, category.id)
+    ]
+
+
+def test_bl030_close_page_exposes_template_learning_controls():
+    template = open("app/templates/pages/executions/close_pending.html", encoding="utf-8").read()
+
+    assert "learning_suggestions" in template
+    assert "history_suggestions.quantity" in template
+    assert "history_suggestions.notes" in template
+    assert 'name="template_learning_present"' in template
+    assert 'name="template_learning_selected"' in template
+    assert "planned_quantity_{{ suggestion.suggestion_id }}" in template
+    assert "category_id_{{ suggestion.suggestion_id }}" in template
+    assert "As alterações afetam compras futuras." in template
+
+
 def test_bl031_quantity_suggestions_require_recurrent_divergence(
     db, make_user, make_group
 ):
@@ -114,8 +192,10 @@ def test_bl031_quantity_suggestions_require_recurrent_divergence(
 
     assert suggestions.quantity == [
         {
+            "suggestion_id": f"quantity:{template_item.id}:3",
             "type": "quantity",
             "template_item_id": template_item.id,
+            "name": "Banana",
             "current_quantity": 1,
             "suggested_quantity": 3,
             "sample_size": 3,
@@ -124,7 +204,6 @@ def test_bl031_quantity_suggestions_require_recurrent_divergence(
     ]
 
 
-@sprint4_contract
 def test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence(
     db, make_user, make_group
 ):
@@ -144,7 +223,6 @@ def test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence(
     assert suggestions.quantity == []
 
 
-@sprint4_contract
 def test_bl032_applies_quantity_suggestion_only_to_template_future_runs(
     db, make_user, make_group
 ):
@@ -171,7 +249,6 @@ def test_bl032_applies_quantity_suggestion_only_to_template_future_runs(
     assert next_execution.items[0].planned_quantity == 4
 
 
-@sprint4_contract
 def test_bl033_detects_recurrent_notes_only_for_template_items(
     db, make_user, make_group
 ):
@@ -191,8 +268,10 @@ def test_bl033_detects_recurrent_notes_only_for_template_items(
 
     assert suggestions.notes == [
         {
+            "suggestion_id": f"notes:{template_item.id}:Comprar sem lactose",
             "type": "notes",
             "template_item_id": template_item.id,
+            "name": "Leite",
             "current_notes": None,
             "suggested_notes": "Comprar sem lactose",
             "sample_size": 3,
@@ -201,7 +280,6 @@ def test_bl033_detects_recurrent_notes_only_for_template_items(
     ]
 
 
-@sprint4_contract
 def test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones(
     db, make_user, make_group
 ):
@@ -211,10 +289,14 @@ def test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_
     template = create_template(db, group, "Mensal", RecurrenceType.monthly)
     accepted_item = add_item_to_template(db, template, "Leite", 1)
     ignored_item = add_item_to_template(db, template, "Café", 1)
-    execution = create_execution_from_template(
-        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
-    )
-    finalize_execution(db, execution)
+    execution = None
+    for day in [1, 8, 15]:
+        execution = create_execution_from_template(
+            db, template, datetime(2026, 6, day, tzinfo=timezone.utc), user
+        )
+        execution.items[0].notes = "Sem lactose"
+        execution.items[1].notes = "Moagem grossa"
+        finalize_execution(db, execution)
 
     learning.apply_template_suggestions(
         db,
@@ -227,16 +309,15 @@ def test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_
         [{"type": "notes", "template_item_id": ignored_item.id, "suggested_notes": "Moagem grossa"}],
     )
 
-    suggestions = learning.get_template_suggestions(db, execution)
+    suggestions = learning.analyze_template_history(db, template, execution)
 
     assert accepted_item.notes == "Sem lactose"
     assert all(
         suggestion.get("template_item_id") != ignored_item.id
-        for suggestion in suggestions
+        for suggestion in suggestions.notes
     )
 
 
-@sprint4_contract
 def test_rnf_s4_group_can_disable_template_learning_suggestions(
     db, make_user, make_group
 ):
@@ -253,3 +334,30 @@ def test_rnf_s4_group_can_disable_template_learning_suggestions(
 
     assert learning.get_template_suggestions(db, execution) == []
     assert learning.analyze_template_history(db, template).is_empty()
+
+
+def test_rnf_s4_group_owner_can_disable_template_learning_setting(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+
+    result = update_group_settings(
+        db,
+        group,
+        "Casa",
+        user,
+        template_learning_enabled=False,
+    )
+
+    assert result == {"success": True, "message": "Configurações do grupo atualizadas."}
+    assert group.name == "Casa"
+    assert group.template_learning_enabled is False
+
+
+def test_rnf_s4_group_detail_exposes_template_learning_setting():
+    template = open("app/templates/pages/groups/detail.html", encoding="utf-8").read()
+
+    assert 'name="template_learning_enabled"' in template
+    assert "Sugerir melhorias nos templates" in template
+    assert "Aprendizado dos templates" in template
