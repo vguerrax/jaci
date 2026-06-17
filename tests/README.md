@@ -56,4 +56,6 @@ seja revisado e marcado como implementado.
 | BL-032 Sugerir atualização de quantidades padrão | Implementado | `test_bl032_applies_quantity_suggestion_only_to_template_future_runs` |
 | BL-033 Detectar alterações recorrentes em observações | Implementado | `test_bl033_detects_recurrent_notes_only_for_template_items` |
 | BL-034 Sugerir atualização de observações do template | Implementado | `test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones` |
+| BL-075 Detectar divergências recorrentes de orçamento | Implementado | `test_bl075_budget_suggestion_uses_median_from_completed_template_executions`, `test_bl075_budget_learning_ignores_standalone_and_unfinished_executions` |
+| BL-076 Sugerir atualização do orçamento do template | Implementado | `test_bl076_accepts_budget_suggestion_only_for_future_executions`, `test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution`, `test_bl076_close_flow_accepts_or_rejects_budget_suggestion` |
 | RNF-S4.04 Desativar sugestões por grupo | Implementado | `test_rnf_s4_group_can_disable_template_learning_suggestions` |

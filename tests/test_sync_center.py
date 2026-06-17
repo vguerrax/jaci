@@ -51,6 +51,20 @@ def test_sync_center_frontend_reads_queue_and_resolves_conflicts():
     assert "data-sync-center" in script
     assert "renderSyncCenter" in script
     assert "classifyOperation" in script
+    assert "entityLabel" in script
+    assert "fieldLabel" in script
+    assert "fieldLabelForPayload" in script
+    assert "orderedPayloadEntries" in script
+    assert "operationTypeLabel" in script
+    assert "resolutionLabel" in script
+    assert "Valor unitário" in script
+    assert "Quantidade comprada" in script
+    assert "Item da compra" in script
+    assert "Alterar item da compra" in script
+    assert "Servidor mantido" in script
+    assert "Alteração local reenviada" in script
+    assert "user_name" in script
+    assert "if (key === 'id' && payload?.execution_id) return 'Item';" in script
     assert "isConflictOperation" in script
     assert "buildConflict" in script
     assert "response.status === 409" in script

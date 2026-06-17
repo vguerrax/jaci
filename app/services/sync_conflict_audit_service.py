@@ -96,11 +96,16 @@ def resolve_conflict_audit(
 
 
 def serialize_conflict_audit(audit: SyncConflictAudit) -> dict[str, Any]:
+    user_name = None
+    if audit.user:
+        user_name = audit.user.name or audit.user.email
+
     return {
         "id": audit.id,
         "group_id": audit.group_id,
         "execution_id": audit.execution_id,
         "user_id": audit.user_id,
+        "user_name": user_name,
         "operation_type": audit.operation_type,
         "entity": audit.entity,
         "entity_id": audit.entity_id,

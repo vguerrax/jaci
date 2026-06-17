@@ -59,7 +59,8 @@
                 <span class="sync-status-errors d-none"></span>
             </span>
         </span>
-        <button type="button" class="sync-status-action" data-sync-now title="Sincronizar agora" aria-label="Sincronizar agora">
+        <button type="button" class="sync-status-action" data-sync-now title="Sincronizar agora"
+            aria-label="Sincronizar agora">
             <i class="bi bi-arrow-repeat"></i>
         </button>
     </div>
@@ -134,20 +135,20 @@
                                     </div>
                                 </a>
                             </li>
+                            <li><a class="dropdown-item" href="/auth/profile">Meu perfil</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <span class="dropdown-item-text text-help small">
-                                    {{ active_group.name if active_group else 'Sem grupo ativo' }}
+                                    {{ 'Grupo: ' ~ active_group.name if active_group else 'Sem grupo ativo' }}
                                 </span>
                             </li>
+                            <li><a class="dropdown-item" href="/groups">Grupos</a></li>
+                            <li><a class="dropdown-item" href="/categories">Categorias</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/auth/profile">Meu perfil</a></li>
-                            <li><a class="dropdown-item" href="/groups">Grupos</a></li>
-                            <li><a class="dropdown-item" href="/categories">Categorias</a></li>
                             <li><a class="dropdown-item" href="/sync">Sincronização</a></li>
                             <li>
                                 <button class="dropdown-item" type="button" data-pwa-install hidden>
@@ -207,11 +208,13 @@
                         <input type="hidden" name="version">
                         <div class="modal-header">
                             <h3 class="modal-title h6" id="offlineCompleteItemModalLabel">Comprar item</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label" for="offlineCompletePurchasedQuantity">Quantidade comprada</label>
+                                <label class="form-label" for="offlineCompletePurchasedQuantity">Quantidade
+                                    comprada</label>
                                 <input id="offlineCompletePurchasedQuantity" type="number" class="form-control"
                                     name="purchased_quantity" step="0.001" min="0.001" required>
                                 <div class="form-text" data-offline-planned-quantity></div>
@@ -222,14 +225,15 @@
                                     name="unit_price" placeholder="0,00" step="0.01" min="0.01" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="offlineCompleteLocation">Local de compra (opcional)</label>
-                                <input id="offlineCompleteLocation" type="text" class="form-control"
-                                    name="location" placeholder="Ex: Supermercado X, Feira Y...">
+                                <label class="form-label" for="offlineCompleteLocation">Local de compra
+                                    (opcional)</label>
+                                <input id="offlineCompleteLocation" type="text" class="form-control" name="location"
+                                    placeholder="Ex: Supermercado X, Feira Y...">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="offlineCompleteNotes">Observações</label>
-                                <textarea id="offlineCompleteNotes" class="form-control form-control-sm"
-                                    name="notes" placeholder="Observações"></textarea>
+                                <textarea id="offlineCompleteNotes" class="form-control form-control-sm" name="notes"
+                                    placeholder="Observações"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer d-flex align-items-center justify-content-between g-1">
@@ -246,15 +250,16 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="offlineEditItemModal" tabindex="-1"
-            aria-labelledby="offlineEditItemModalLabel" aria-hidden="true">
+        <div class="modal fade" id="offlineEditItemModal" tabindex="-1" aria-labelledby="offlineEditItemModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <form data-offline-edit-item-form data-offline-edit-item-modal-form>
                         <input type="hidden" name="version">
                         <div class="modal-header">
                             <h3 class="modal-title h6" id="offlineEditItemModalLabel">Editar item</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
@@ -279,8 +284,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="offlineEditNotes">Observações</label>
-                                <textarea id="offlineEditNotes" class="form-control form-control-sm"
-                                    name="notes" placeholder="Observações"></textarea>
+                                <textarea id="offlineEditNotes" class="form-control form-control-sm" name="notes"
+                                    placeholder="Observações"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer d-flex align-items-center justify-content-between g-1">

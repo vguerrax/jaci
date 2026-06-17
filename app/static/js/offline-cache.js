@@ -721,6 +721,87 @@
         return labels[operation.action] || operation.tipo || 'Operação offline';
     }
 
+    function operationTypeLabel(operationType) {
+        const labels = {
+            StartExecutionOperation: 'Iniciar compra',
+            UpdateExecutionOperation: 'Editar compra agendada',
+            ExecutionItemOperation: 'Alterar item da compra',
+            AddExecutionItemOperation: 'Adicionar item',
+            RemoveExecutionItemOperation: 'Remover item',
+            FinalizeExecutionOperation: 'Finalizar compra',
+        };
+        return labels[operationType] || operationType || 'Operação de sincronização';
+    }
+
+    function entityLabel(entity) {
+        const labels = {
+            execution: 'Compra',
+            execucao: 'Compra',
+            execution_item: 'Item da compra',
+            item_execucao: 'Item da compra',
+            template: 'Lista',
+            template_item: 'Item da lista',
+            group: 'Grupo',
+        };
+        return labels[entity] || entity || 'Registro';
+    }
+
+    function fieldLabel(key) {
+        const labels = {
+            action: 'Ação',
+            budget: 'Orçamento',
+            category_id: 'Categoria',
+            conflict_detected_at: 'Conflito detectado em',
+            created_at: 'Criado em',
+            entity: 'Entidade',
+            entity_id: 'Identificador',
+            execution_id: 'Compra',
+            finished_at: 'Finalizada em',
+            group_id: 'Grupo',
+            id: 'Identificador',
+            is_completed: 'Comprado',
+            is_deleted: 'Removido',
+            item_id: 'Item',
+            location: 'Local de compra',
+            name: 'Nome',
+            new_date: 'Nova data',
+            notes: 'Observações',
+            planned_quantity: 'Quantidade planejada',
+            purchased_quantity: 'Quantidade comprada',
+            scheduled_date: 'Data agendada',
+            status: 'Status',
+            temp_id: 'Identificador temporário',
+            template_id: 'Lista',
+            unit_price: 'Valor unitário',
+            updated_at: 'Atualizado em',
+            user_id: 'Usuário',
+            version: 'Versão',
+        };
+        return labels[key] || key;
+    }
+
+    function valueLabel(key, value) {
+        if (value === true) return 'Sim';
+        if (value === false) return 'Não';
+        if (key === 'unit_price' || key === 'budget') {
+            const number = Number(value);
+            return Number.isFinite(number) ? `R$ ${number.toFixed(2)}` : value;
+        }
+        if (key === 'action') {
+            return operationLabel({ action: value });
+        }
+        if (key === 'status') {
+            const labels = {
+                scheduled: 'Agendada',
+                in_progress: 'Em andamento',
+                completed: 'Finalizada',
+                cancelled: 'Cancelada',
+            };
+            return labels[value] || value;
+        }
+        return value;
+    }
+
     function operationStatusLabel(operation) {
         const statusName = classifyOperation(operation);
         if (statusName === 'conflict') return 'Conflito';
@@ -728,11 +809,56 @@
         return 'Pendente';
     }
 
+    function resolutionLabel(resolution) {
+        const labels = {
+            discard_local: 'Servidor mantido',
+            retry_local: 'Alteração local reenviada',
+            local_applied: 'Alteração local aplicada',
+            remote_applied: 'Servidor mantido',
+        };
+        return labels[resolution] || resolution || 'Pendente';
+    }
+
+    function fieldLabelForPayload(key, payload) {
+        if (key === 'id' && payload?.execution_id) return 'Item';
+        return fieldLabel(key);
+    }
+
+    function orderedPayloadEntries(payload) {
+        const preferred = [
+            'execution_id',
+            'item_id',
+            'id',
+            'action',
+            'name',
+            'category_id',
+            'planned_quantity',
+            'purchased_quantity',
+            'unit_price',
+            'location',
+            'notes',
+            'scheduled_date',
+            'budget',
+            'status',
+            'version',
+        ];
+        return Object.entries(payload).sort(function ([left], [right]) {
+            const leftIndex = preferred.indexOf(left);
+            const rightIndex = preferred.indexOf(right);
+            if (leftIndex !== -1 || rightIndex !== -1) {
+                if (leftIndex === -1) return 1;
+                if (rightIndex === -1) return -1;
+                return leftIndex - rightIndex;
+            }
+            return left.localeCompare(right);
+        });
+    }
+
     function formatPayload(payload) {
         if (!payload || typeof payload !== 'object') return '';
-        return Object.entries(payload)
+        return orderedPayloadEntries(payload)
             .filter(function ([, value]) { return value !== null && value !== undefined && value !== ''; })
-            .map(function ([key, value]) { return `${key}: ${value}`; })
+            .map(function ([key, value]) { return `${fieldLabelForPayload(key, payload)}: ${valueLabel(key, value)}`; })
             .slice(0, 6)
             .join(' · ');
     }
@@ -806,7 +932,7 @@
             '<div class="sync-operation-main">',
             `<span class="sync-operation-status">${operationStatusLabel(operation)}</span>`,
             `<h2>${escapeHtml(operationLabel(operation))}</h2>`,
-            `<p>${escapeHtml(operation.entidade || operation.entity)} #${escapeHtml(operation.entidade_id || operation.entity_id)}</p>`,
+            `<p>${escapeHtml(entityLabel(operation.entidade || operation.entity))} #${escapeHtml(operation.entidade_id || operation.entity_id)}</p>`,
             payload ? `<dl><dt>Local</dt><dd>${escapeHtml(payload)}</dd></dl>` : '',
             remote ? `<dl><dt>Servidor</dt><dd>${escapeHtml(remote)}</dd></dl>` : '',
             failure ? `<p class="sync-operation-message">${escapeHtml(failure)}</p>` : '',
@@ -856,15 +982,16 @@
     function auditCard(conflict) {
         const local = formatPayload(conflict.local_state);
         const remote = formatPayload(conflict.remote_state);
-        const resolution = conflict.resolution_applied || 'Pendente';
+        const resolution = resolutionLabel(conflict.resolution_applied);
+        const userName = conflict.user_name || (conflict.user_id ? `usuário #${conflict.user_id}` : 'usuário não identificado');
 
         return [
             '<article class="sync-audit-card">',
             '<div>',
             `<span class="sync-operation-status">${escapeHtml(resolution)}</span>`,
-            `<h3>${escapeHtml(conflict.operation_type)}</h3>`,
+            `<h3>${escapeHtml(operationTypeLabel(conflict.operation_type))}</h3>`,
             `<p>${escapeHtml(conflict.message)}</p>`,
-            `<small>Execução ${escapeHtml(conflict.execution_id || 'n/a')} · usuário #${escapeHtml(conflict.user_id)} · ${formatDate(conflict.created_at)}</small>`,
+            `<small>Compra ${escapeHtml(conflict.execution_id || 'n/a')} · ${escapeHtml(userName)} · ${formatDate(conflict.created_at)}</small>`,
             local ? `<dl><dt>Local</dt><dd>${escapeHtml(local)}</dd></dl>` : '',
             remote ? `<dl><dt>Servidor</dt><dd>${escapeHtml(remote)}</dd></dl>` : '',
             conflict.resolved_at ? `<small>Resolvido em ${formatDate(conflict.resolved_at)}</small>` : '',

@@ -35,6 +35,23 @@ Observações repetidas em itens vinculados ao template também exigem pelo meno
 ocorrências. Ao aceitar a sugestão, a observação passa a ser copiada para execuções
 futuras geradas a partir do template.
 
+## BL-075 e BL-076 — Orçamentos recorrentes
+
+O aprendizado de orçamento considera apenas execuções finalizadas, vinculadas ao
+template e não avulsas. O orçamento padrão do template é comparado com a mediana
+dos orçamentos efetivamente usados nas execuções finalizadas.
+
+Uma sugestão de atualização é gerada quando:
+
+- existem pelo menos três execuções finalizadas com orçamento definido;
+- a mediana calculada difere em pelo menos 10% do orçamento atual do template;
+- o grupo mantém o aprendizado de templates habilitado.
+
+O template nunca é alterado automaticamente. No fechamento da execução, o usuário
+visualiza o orçamento atual, o orçamento sugerido e a explicação da mediana. Ao
+marcar a sugestão, apenas o orçamento padrão do template é atualizado, afetando
+execuções futuras. Execuções existentes preservam o orçamento usado originalmente.
+
 ## Sugestões ignoradas
 
 Sugestões exibidas e não selecionadas no fechamento são registradas em
