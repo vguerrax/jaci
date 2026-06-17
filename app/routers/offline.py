@@ -17,12 +17,15 @@ from app.services.execution_service import (
     create_execution_from_pending,
     finalize_execution,
     get_execution_by_id,
+    get_execution_display_name,
     get_pending_items,
     incomplete_item as incomplete_item_service,
     remove_item_from_execution,
     start_execution,
+    update_scheduled_execution,
     update_execution_item,
 )
+from app.services.notification_service import notify_execution_updated
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.sync_conflict_audit_service import (
     create_conflict_audit,
@@ -38,6 +41,13 @@ router = APIRouter(prefix="/api/offline", tags=["Offline"])
 
 class StartExecutionOperation(BaseModel):
     execution_id: int
+
+
+class UpdateExecutionOperation(BaseModel):
+    execution_id: int
+    name: str
+    scheduled_date: str
+    budget: float | None = None
 
 
 class ExecutionItemOperation(BaseModel):
@@ -82,8 +92,10 @@ def _execution_state(execution) -> dict:
     return {
         "id": execution.id,
         "group_id": execution.group_id,
+        "name": get_execution_display_name(execution),
         "status": execution.status.value if hasattr(execution.status, "value") else str(execution.status),
         "scheduled_date": execution.scheduled_date.isoformat() if execution.scheduled_date else None,
+        "budget": execution.budget,
         "finished_at": execution.finished_at.isoformat() if execution.finished_at else None,
     }
 
@@ -272,6 +284,92 @@ async def sync_start_execution_operation(
         "execution": {
             "id": execution.id,
             "status": ExecutionStatus.in_progress.value,
+        },
+    }
+
+
+@router.post("/operations/update-execution")
+async def sync_update_execution_operation(
+    operation: UpdateExecutionOperation,
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Aplica edição offline idempotente em uma execução agendada."""
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Autenticação necessária",
+        )
+
+    execution = get_execution_by_id(db, operation.execution_id, user)
+    if not execution:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Execução não encontrada",
+        )
+    if execution.status != ExecutionStatus.scheduled:
+        _raise_sync_conflict(
+            db,
+            user=user,
+            group_id=execution.group_id,
+            execution_id=execution.id,
+            operation=operation,
+            entity="execution",
+            entity_id=execution.id,
+            reason="execution_not_scheduled",
+            message="Apenas execuções agendadas podem ser editadas.",
+            remote_state=_execution_state(execution),
+        )
+
+    try:
+        scheduled_date = datetime.strptime(operation.scheduled_date, "%Y-%m-%d")
+        scheduled_date = scheduled_date.replace(tzinfo=timezone.utc)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Data agendada inválida.",
+        ) from exc
+
+    try:
+        update_scheduled_execution(
+            db,
+            execution,
+            operation.name,
+            scheduled_date,
+            operation.budget,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(exc),
+        ) from exc
+
+    execution_name = get_execution_display_name(execution)
+    notify_execution_updated(db, execution, user, execution_name)
+
+    try:
+        await manager.broadcast(
+            execution.id,
+            "execution_updated",
+            {
+                "execution_id": execution.id,
+                "name": execution_name,
+                "scheduled_date": execution.scheduled_date.date().isoformat(),
+                "budget": execution.budget,
+                "user_email": user.email,
+            },
+        )
+    except Exception:
+        pass
+
+    return {
+        "status": "applied",
+        "execution": {
+            "id": execution.id,
+            "name": execution_name,
+            "status": ExecutionStatus.scheduled.value,
+            "scheduled_date": execution.scheduled_date.date().isoformat(),
+            "budget": execution.budget,
         },
     }
 
