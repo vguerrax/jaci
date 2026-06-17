@@ -14,6 +14,7 @@
     const PENDING_CHANGES_KEY = 'jaci_pending_changes';
     const PENDING_ERRORS_KEY = 'jaci_pending_errors';
     const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
+    const SYNC_TIME_ZONE = 'America/Sao_Paulo';
     const STATES = {
         synced: {
             label: 'Sincronizado',
@@ -43,8 +44,13 @@
     function formatDateTime(value) {
         if (!value) return 'nunca';
         return new Intl.DateTimeFormat('pt-BR', {
-            dateStyle: 'short',
-            timeStyle: 'short',
+            timeZone: SYNC_TIME_ZONE,
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
         }).format(new Date(value));
     }
 

@@ -17,6 +17,7 @@ from app.services.agenda_service import (
 )
 from app.services.execution_service import (
     get_execution_by_id,
+    get_execution_display_name,
     get_execution_totals,
 )
 
@@ -165,6 +166,7 @@ async def agenda_list(
             "execution": exec_item,
             "totals": totals,
             "template_name": template_name,
+            "execution_name": get_execution_display_name(exec_item),
         })
 
     # Agrupa por data

@@ -56,6 +56,7 @@ def ensure_schema_compatibility() -> None:
     template_item_columns = {
         column["name"] for column in inspector.get_columns("template_items")
     }
+    execution_columns = {column["name"] for column in inspector.get_columns("executions")}
     user_columns = {column["name"] for column in inspector.get_columns("users")}
 
     with engine.begin() as connection:
@@ -96,6 +97,9 @@ def ensure_schema_compatibility() -> None:
             connection.execute(
                 text("ALTER TABLE template_items ADD COLUMN notes VARCHAR(255)")
             )
+
+        if "name" not in execution_columns:
+            connection.execute(text("ALTER TABLE executions ADD COLUMN name VARCHAR(150)"))
 
 
 # Dependency para injeção de sessão
