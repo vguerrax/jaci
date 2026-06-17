@@ -21,8 +21,10 @@ from app.services.execution_service import (
     get_execution_by_id,
     get_execution_items_grouped,
     get_execution_totals,
+    get_execution_display_name,
     create_execution_from_template,
     create_execution_standalone,
+    update_scheduled_execution,
     start_execution,
     complete_item as complete_item_service,
     incomplete_item as incomplete_item_service,
@@ -34,6 +36,12 @@ from app.services.execution_service import (
     cancel_execution,
     create_execution_from_pending,
     check_budget_alerts,
+)
+from app.services.template_learning_service import (
+    analyze_template_history,
+    apply_template_suggestions,
+    dismiss_template_suggestions,
+    get_template_suggestions,
 )
 
 router = APIRouter(prefix="/executions", tags=["Executions"])
@@ -54,6 +62,77 @@ STATUS_BADGE_CLASS = {
     ExecutionStatus.completed: "badge-completed",
     ExecutionStatus.cancelled: "badge-cancelled",
 }
+
+
+def _to_float(value, default=None):
+    if value in (None, ""):
+        return default
+    try:
+        return float(str(value).replace(",", "."))
+    except (TypeError, ValueError):
+        return default
+
+
+def _to_int(value, default=None):
+    if value in (None, ""):
+        return default
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _read_template_learning_choices(form) -> dict[str, list[dict]]:
+    selected_ids = set(form.getlist("template_learning_selected"))
+    present_ids = form.getlist("template_learning_present")
+    result = {"apply": [], "dismiss": []}
+
+    for suggestion_id in present_ids:
+        parts = suggestion_id.split(":")
+        if len(parts) < 2:
+            continue
+        suggestion_type = parts[0]
+        entity_id = _to_int(parts[1])
+        if not suggestion_type or not entity_id:
+            continue
+
+        accepted = suggestion_id in selected_ids
+        target = result["apply"] if accepted else result["dismiss"]
+        if suggestion_type == "new_item":
+            target.append(
+                {
+                    "suggestion_id": suggestion_id,
+                    "type": "new_item",
+                    "execution_item_id": entity_id,
+                    "category_id": _to_int(form.get(f"category_id_{suggestion_id}")),
+                    "planned_quantity": _to_float(
+                        form.get(f"planned_quantity_{suggestion_id}"),
+                        1,
+                    ),
+                }
+            )
+        elif suggestion_type == "quantity":
+            target.append(
+                {
+                    "suggestion_id": suggestion_id,
+                    "type": "quantity",
+                    "template_item_id": entity_id,
+                    "suggested_quantity": _to_float(
+                        form.get(f"suggested_quantity_{suggestion_id}"),
+                    ),
+                }
+            )
+        elif suggestion_type == "notes":
+            target.append(
+                {
+                    "suggestion_id": suggestion_id,
+                    "type": "notes",
+                    "template_item_id": entity_id,
+                    "suggested_notes": form.get(f"suggested_notes_{suggestion_id}"),
+                }
+            )
+
+    return result
 
 
 # ─── Pages ───
@@ -200,6 +279,9 @@ async def execution_detail(
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
     jwt_token = request.cookies.get("jaci_session")
+    messages = []
+    if request.query_params.get("updated") == "1":
+        messages.append(("success", "Compra atualizada e sincronizada."))
 
     return templates.TemplateResponse(
         request,
@@ -210,9 +292,11 @@ async def execution_detail(
             "active_group": active_group,
             "jwt_token": jwt_token,
             "execution": execution,
+            "execution_name": get_execution_display_name(execution),
             "grouped_items": grouped_items,
             "totals": totals,
             "budget_alerts": alerts,
+            "messages": messages,
             "status_labels": STATUS_LABELS,
             "status_badge_class": STATUS_BADGE_CLASS,
             "active_page": "executions",
@@ -246,6 +330,7 @@ async def _completed_page(
             "user": user,
             "active_group": active_group,
             "execution": execution,
+            "execution_name": get_execution_display_name(execution),
             "grouped_items": grouped_items,
             "totals": totals,
             "status_labels": STATUS_LABELS,
@@ -438,24 +523,13 @@ async def close_execution_page(
     pending = get_pending_items(db, execution_id)
     totals = get_execution_totals(db, execution_id)
 
-    # If no pending items, finalize directly
-    if not pending:
-        finalize_execution(db, execution, discard_pending=True)
-        from app.services.agenda_service import generate_next_execution
-
-        generate_next_execution(db, execution, user)
-
-        # Notificar membros
-        totals = get_execution_totals(db, execution.id)
-        template_name = execution.template.name if execution.template else "Compra Avulsa"
-        from app.services.notification_service import notify_execution_completed
-
-        notify_execution_completed(
-            db, execution, user, template_name, totals["total_spent"]
-        )
-        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
-
     tomorrow_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+    learning_suggestions = get_template_suggestions(db, execution)
+    history_suggestions = (
+        analyze_template_history(db, execution.template, execution)
+        if execution.template and not execution.is_standalone
+        else None
+    )
 
     return templates.TemplateResponse(
         request,
@@ -468,6 +542,8 @@ async def close_execution_page(
             "pending_items": pending,
             "totals": totals,
             "tomorrow": tomorrow_str,
+            "learning_suggestions": learning_suggestions,
+            "history_suggestions": history_suggestions,
             "active_page": "executions",
         },
     )
@@ -548,7 +624,7 @@ async def handle_start_execution(
 
     start_execution(db, execution)
 
-    template_name = execution.template.name if execution.template else "Compra Avulsa"
+    template_name = get_execution_display_name(execution)
     from app.services.notification_service import notify_execution_started
 
     notify_execution_started(db, execution, user, template_name)
@@ -563,6 +639,61 @@ async def handle_start_execution(
     )
 
     return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+
+@router.post("/{execution_id}/edit")
+async def handle_update_execution(
+    execution_id: int,
+    name: str = Form(...),
+    scheduled_date: str = Form(...),
+    budget: str | None = Form(None),
+    db: Session = Depends(get_db),
+    user: User | None = Depends(get_current_user),
+):
+    """Edita dados próprios de uma execução agendada."""
+    if not user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    execution = get_execution_by_id(db, execution_id, user)
+    if not execution:
+        return RedirectResponse(url="/executions", status_code=303)
+
+    try:
+        parsed_date = datetime.strptime(scheduled_date, "%Y-%m-%d")
+        parsed_date = parsed_date.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    parsed_budget = None
+    if budget not in (None, ""):
+        try:
+            parsed_budget = float(str(budget).replace(",", "."))
+        except ValueError:
+            return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    try:
+        update_scheduled_execution(db, execution, name, parsed_date, parsed_budget)
+    except ValueError:
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
+
+    execution_name = get_execution_display_name(execution)
+    from app.services.notification_service import notify_execution_updated
+
+    notify_execution_updated(db, execution, user, execution_name)
+
+    await manager.broadcast(
+        execution_id,
+        "execution_updated",
+        {
+            "execution_id": execution.id,
+            "name": execution_name,
+            "scheduled_date": execution.scheduled_date.date().isoformat(),
+            "budget": execution.budget,
+            "user_email": user.email,
+        },
+    )
+
+    return RedirectResponse(url=f"/executions/{execution_id}?updated=1", status_code=303)
 
 
 @router.post("/{execution_id}/items/{item_id}/complete")
@@ -859,6 +990,7 @@ async def handle_update_item(
 
 @router.post("/{execution_id}/close")
 async def handle_close_execution(
+    request: Request,
     execution_id: int,
     action: str = Form(...),
     new_date: str | None = Form(None),
@@ -873,6 +1005,12 @@ async def handle_close_execution(
         return RedirectResponse(url="/executions", status_code=303)
 
     pending = get_pending_items(db, execution_id)
+    form = await request.form()
+    template_suggestions = _read_template_learning_choices(form)
+    if execution.template and template_suggestions["apply"]:
+        apply_template_suggestions(db, execution.template, template_suggestions["apply"])
+    if template_suggestions["dismiss"]:
+        dismiss_template_suggestions(db, execution, template_suggestions["dismiss"])
     
 
     if action == "discard":
@@ -898,7 +1036,7 @@ async def handle_close_execution(
 
     # Notificar membros
     totals = get_execution_totals(db, execution.id)
-    template_name = execution.template.name if execution.template else "Compra Avulsa"
+    template_name = get_execution_display_name(execution)
     from app.services.notification_service import notify_execution_completed
 
     notify_execution_completed(

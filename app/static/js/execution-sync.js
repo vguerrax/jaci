@@ -153,6 +153,11 @@
                     this._onStatusChanged(msg.data);
                     break;
 
+                case 'execution_updated':
+                    // Dados da execução agendada mudaram
+                    this._onExecutionUpdated(msg.data);
+                    break;
+
                 case 'version_conflict':
                     // Conflito de versão: recarrega o item
                     this._onVersionConflict(msg.data);
@@ -213,6 +218,11 @@
 
         _onStatusChanged: function (data) {
             console.log(`[Jaci WS] Status alterado para: ${data.new_status}`);
+            window.location.reload();
+        },
+
+        _onExecutionUpdated: function (data) {
+            console.log(`[Jaci WS] Execução alterada: ${data.name}`);
             window.location.reload();
         },
 

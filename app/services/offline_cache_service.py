@@ -8,6 +8,7 @@ from app.models.category import Category
 from app.models.execution import Execution, ExecutionItem
 from app.models.template import Template, TemplateItem
 from app.models.user import User
+from app.services.execution_service import get_execution_display_name
 
 
 def _iso(value: datetime | None) -> str | None:
@@ -130,6 +131,7 @@ def build_offline_snapshot(db: Session, user: User) -> dict[str, Any]:
                 "id": execution.id,
                 "group_id": execution.group_id,
                 "template_id": execution.template_id,
+                "name": get_execution_display_name(execution),
                 "status": _enum_value(execution.status),
                 "scheduled_date": _iso(execution.scheduled_date),
                 "finished_at": _iso(execution.finished_at),
@@ -142,6 +144,7 @@ def build_offline_snapshot(db: Session, user: User) -> dict[str, Any]:
             {
                 "id": item.id,
                 "execution_id": item.execution_id,
+                "template_item_id": item.template_item_id,
                 "category_id": item.category_id,
                 "name": item.name,
                 "planned_quantity": item.planned_quantity,

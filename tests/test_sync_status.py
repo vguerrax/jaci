@@ -16,6 +16,8 @@ def test_sync_status_supports_all_required_states():
     assert "jaci_pending_errors" in script
     assert "jaci_pending_conflicts" in script
     assert "Última sync:" in script
+    assert "America/Sao_Paulo" in script
+    assert "hour12: false" in script
     assert "erro(s)" in script
     assert "conflito(s)" in script
 

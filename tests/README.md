@@ -36,7 +36,7 @@ venv/bin/pytest
 | FL-03 Geração de execução | Implementado | `test_fl03_manual_and_automatic_executions_are_available_in_agenda` |
 | FL-04 Execução da compra | Implementado | `test_fl04_critical_purchase_flow_preserves_history` |
 | FL-05 Compra colaborativa | Implementado | `test_fl05_collaborative_purchase_notifies_members_and_has_single_history`, `test_stale_item_version_fails_explicitly_without_overwriting` |
-| FL-06 Aprendizado do template | Contrato TDD (`xfail`) | `test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them`, `test_fl06_only_selected_suggestions_are_applied_to_template` |
+| FL-06 Aprendizado do template | Implementado | `test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them`, `test_fl06_only_selected_suggestions_are_applied_to_template` |
 | FL-07 Gestão de grupos | Implementado | `test_member_can_be_invited_to_the_group`, `test_fl07_accepted_member_can_access_shared_templates_and_executions` |
 | FL-08 Agenda e histórico | Parcial | `test_fl08_completed_execution_remains_available_in_agenda_history`; histórico de preços e análise de gastos estão em `xfail` |
 | FL-09 Operação offline | Contrato TDD (`xfail`) | fila local, sincronização e resolução explícita de conflitos |
@@ -45,3 +45,15 @@ venv/bin/pytest
 Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados, aparecem
 como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até que o fluxo
 seja revisado e marcado como implementado.
+
+# Sprint 4 — Aprendizado contínuo dos templates
+
+| Backlog | Estado | Cobertura TDD |
+|---|---|---|
+| BL-029 Detectar itens adicionados durante a execução | Implementado | `test_bl029_detects_runtime_items_only_for_template_executions` |
+| BL-030 Sugerir incorporação de itens ao template | Implementado | `test_bl030_applies_only_selected_new_item_suggestions_to_future_executions` |
+| BL-031 Detectar divergências recorrentes de quantidade | Implementado | `test_bl031_quantity_suggestions_require_recurrent_divergence`, `test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence` |
+| BL-032 Sugerir atualização de quantidades padrão | Implementado | `test_bl032_applies_quantity_suggestion_only_to_template_future_runs` |
+| BL-033 Detectar alterações recorrentes em observações | Implementado | `test_bl033_detects_recurrent_notes_only_for_template_items` |
+| BL-034 Sugerir atualização de observações do template | Implementado | `test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones` |
+| RNF-S4.04 Desativar sugestões por grupo | Implementado | `test_rnf_s4_group_can_disable_template_learning_suggestions` |

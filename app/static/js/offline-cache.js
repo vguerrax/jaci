@@ -5,6 +5,7 @@
     const DB_VERSION = 10;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
+    const UPDATE_EXECUTION_SYNC_URL = '/api/offline/operations/update-execution';
     const EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/execution-item';
     const ADD_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/add-execution-item';
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
@@ -204,6 +205,45 @@
         await updatePendingCount();
     }
 
+    function operationIdForExecution(executionId) {
+        return `update-execution-${executionId}`;
+    }
+
+    async function markExecutionUpdatedLocally(operation) {
+        const db = await openDatabase();
+        const execution = await getRecord(db, 'executions', operation.execution_id);
+        if (execution) {
+            execution.name = operation.name;
+            execution.scheduled_date = operation.scheduled_date;
+            execution.budget = operation.budget;
+            execution.offline_updated_at = new Date().toISOString();
+            await putRecord(db, 'executions', execution);
+        }
+        db.close();
+    }
+
+    async function enqueueUpdateExecutionOperation(operation) {
+        const db = await openDatabase();
+        const operationId = operationIdForExecution(operation.execution_id);
+        const existing = await getRecord(db, 'pending_operations', operationId);
+
+        await putRecord(db, 'pending_operations', Object.assign(
+            buildQueuedOperation({
+                id: operationId,
+                tipo: 'UPDATE_EXECUTION',
+                entidade: 'execution',
+                entidadeId: operation.execution_id,
+                action: 'update_execution',
+                payload: operation,
+                createdAt: existing?.created_at,
+            }),
+            { tentativas: Number(existing?.tentativas || 0) }
+        ));
+        db.close();
+        await markExecutionUpdatedLocally(operation);
+        await updatePendingCount();
+    }
+
     function operationIdForItem(itemId) {
         return `execution-item-${itemId}`;
     }
@@ -365,6 +405,7 @@
         await putRecord(db, 'execution_items', {
             id: operation.temp_id,
             execution_id: operation.execution_id,
+            template_item_id: null,
             category_id: operation.category_id,
             name: operation.name,
             planned_quantity: operation.planned_quantity,
@@ -483,6 +524,9 @@
 
         if (operation.action === 'start_execution') {
             url = START_EXECUTION_SYNC_URL;
+        }
+        if (operation.action === 'update_execution') {
+            url = UPDATE_EXECUTION_SYNC_URL;
         }
         if (
             operation.entity === 'execution_item'
@@ -666,6 +710,7 @@
     function operationLabel(operation) {
         const labels = {
             start_execution: 'Iniciar compra',
+            update_execution: 'Editar compra agendada',
             complete_item: 'Marcar item como comprado',
             incomplete_item: 'Desmarcar item',
             update_item: 'Editar item',
@@ -926,6 +971,36 @@
         button.innerHTML = 'Compra iniciada offline <i class="bi bi-cloud-arrow-up-fill"></i>';
     }
 
+    function readExecutionOperationFromForm(form) {
+        const formData = new FormData(form);
+        const budget = normalizeNumber(formData.get('budget'));
+        return {
+            execution_id: Number(form.dataset.executionId),
+            name: String(formData.get('name') || '').trim(),
+            scheduled_date: String(formData.get('scheduled_date') || ''),
+            budget: budget && budget > 0 ? budget : null,
+        };
+    }
+
+    function markExecutionPageAsOfflineUpdated(operation) {
+        document.querySelectorAll('[data-execution-name-label]').forEach(function (element) {
+            element.textContent = operation.name;
+        });
+        document.querySelectorAll('[data-execution-date-label]').forEach(function (element) {
+            element.textContent = operation.scheduled_date;
+        });
+        document.querySelectorAll('[data-execution-budget-label]').forEach(function (element) {
+            element.textContent = operation.budget
+                ? `R$ ${Number(operation.budget).toFixed(2)}`
+                : 'Não definido';
+        });
+
+        const status = document.querySelector('[data-execution-sync-feedback]');
+        if (status) {
+            status.classList.remove('d-none');
+        }
+    }
+
     function setupOfflineStartForms() {
         document.querySelectorAll('[data-offline-start-execution]').forEach(function (form) {
             form.addEventListener('submit', function (event) {
@@ -938,6 +1013,39 @@
                 enqueueStartExecution(executionId)
                     .then(function () {
                         renderQueuedStart(form);
+                        renderOfflineSummary();
+                    })
+                    .catch(function () {
+                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    });
+            });
+        });
+    }
+
+    function setupOfflineExecutionEditForms() {
+        document.querySelectorAll('[data-offline-edit-execution]').forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (navigator.onLine) return;
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                if (form.dataset.executionStatus !== 'scheduled') {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    return;
+                }
+
+                const operation = readExecutionOperationFromForm(form);
+                if (!operation.execution_id || !operation.name || !operation.scheduled_date) {
+                    window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                    return;
+                }
+
+                enqueueUpdateExecutionOperation(operation)
+                    .then(function () {
+                        markExecutionPageAsOfflineUpdated(operation);
+                        hideContainingModal(form);
+                        renderQueuedItemControl(form);
                         renderOfflineSummary();
                     })
                     .catch(function () {
@@ -1683,6 +1791,7 @@
         refreshCurrentExecutionFragments: refreshCurrentExecutionFragments,
         clearOfflineItemIndicators: clearOfflineItemIndicators,
         enqueueStartExecution: enqueueStartExecution,
+        enqueueUpdateExecutionOperation: enqueueUpdateExecutionOperation,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
         enqueueAddExecutionItemOperation: enqueueAddExecutionItemOperation,
         enqueueRemoveExecutionItemOperation: enqueueRemoveExecutionItemOperation,
@@ -1707,6 +1816,7 @@
     });
     window.addEventListener('load', function () {
         setupOfflineStartForms();
+        setupOfflineExecutionEditForms();
         setupOfflineAddItemForms();
         setupOfflineItemOperations();
         setupOfflineCompleteModalControls();
