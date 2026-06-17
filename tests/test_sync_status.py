@@ -77,5 +77,5 @@ def test_sync_status_is_visible_globally_and_styled_by_state():
     assert "--bs-btn-warning-color: var(--jaci-lunar);" in styles
     assert "bottom: 0.75rem;" in styles
     assert "display: none;" in styles
-    assert "bottom: 3.75rem;" in styles
+    assert "position: static;" in styles
     assert "--jaci-harvest" not in styles
