@@ -610,6 +610,8 @@
         }
         await updatePendingCount();
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
+        await refreshCurrentExecutionFragments();
+        await clearOfflineItemIndicatorsWhenSynced();
     }
 
     async function refreshSnapshot() {
@@ -626,6 +628,8 @@
         if (!response.ok) throw new Error('Falha ao atualizar cache offline.');
         await saveSnapshot(await response.json());
         window.dispatchEvent(new CustomEvent('jaci:sync-success'));
+        await applyPersistedOfflineItemState();
+        await clearOfflineItemIndicatorsWhenSynced();
     }
 
     function getNextRetryDelay() {
@@ -1125,13 +1129,80 @@
         button.dataset.offlineQueued = 'true';
     }
 
+    function offlineActionConfirmation(options) {
+        return new Promise(function (resolve) {
+            if (window.JaciConfirm) {
+                window.JaciConfirm.show({
+                    title: options.title || 'Confirmar',
+                    message: options.message || 'Tem certeza?',
+                    okLabel: options.okLabel || 'Confirmar',
+                    okClass: options.okClass || 'btn-primary',
+                    onConfirm: function () { resolve(true); },
+                    onCancel: function () { resolve(false); },
+                });
+                return;
+            }
+            resolve(window.confirm(options.message || 'Tem certeza?'));
+        });
+    }
+
+    function currentExecutionIdFromPage() {
+        const container = document.querySelector('[data-current-execution-id]');
+        if (container?.dataset.currentExecutionId) {
+            return container.dataset.currentExecutionId;
+        }
+        const row = document.querySelector('[data-execution-item-row][data-execution-id]');
+        return row?.dataset.executionId || null;
+    }
+
+    async function refreshCurrentExecutionFragments() {
+        if (!navigator.onLine || typeof htmx === 'undefined') return;
+        const executionId = currentExecutionIdFromPage();
+        const itemsContainer = document.getElementById('items-container');
+        if (!executionId || !itemsContainer) return;
+
+        await htmx.ajax('GET', `/executions/${executionId}/items-fragment`, {
+            target: '#items-container',
+            swap: 'innerHTML',
+        });
+        if (document.getElementById('sidebar-container')) {
+            htmx.ajax('GET', `/executions/${executionId}/sidebar-fragment`, {
+                target: '#sidebar-container',
+                swap: 'innerHTML',
+            });
+        }
+    }
+
+    function clearOfflineItemIndicators() {
+        document.querySelectorAll('[data-execution-item-row].is-offline-updated, [data-execution-item-row].is-offline-removed')
+            .forEach(function (row) {
+                row.classList.remove('is-offline-updated', 'is-offline-removed');
+                const badge = row.querySelector('[data-offline-item-badge]');
+                if (badge) {
+                    badge.classList.add('d-none');
+                    badge.innerHTML = '<i class="bi bi-cloud-arrow-up-fill"></i> Comprado offline';
+                }
+                row.querySelectorAll('button, form button').forEach(function (button) {
+                    button.disabled = false;
+                });
+            });
+    }
+
+    async function clearOfflineItemIndicatorsWhenSynced() {
+        const pendingCount = await updatePendingCount();
+        if (pendingCount === 0) {
+            clearOfflineItemIndicators();
+        }
+    }
+
     function markItemRowAsOfflineUpdated(operation) {
         if (!operation?.item_id) return;
         const row = document.querySelector(`[data-execution-item-row][data-item-id="${operation.item_id}"]`);
         if (!row) return;
 
         row.classList.add('is-offline-updated');
-        row.classList.toggle('opacity-75', operation.action === 'complete_item');
+        row.classList.toggle('opacity-75', operation.action === 'complete_item' || operation.action === 'remove_execution_item');
+        row.classList.toggle('is-offline-removed', operation.action === 'remove_execution_item');
 
         const check = row.querySelector('.check-jaci');
         if (check) {
@@ -1154,13 +1225,56 @@
             }
         }
 
+        if (operation.action === 'incomplete_item') {
+            const completedSummary = row.querySelector('[data-item-completed-summary]');
+            row.classList.remove('opacity-75');
+            if (completedSummary) completedSummary.hidden = true;
+        }
+
+        if (operation.action === 'remove_execution_item') {
+            row.querySelectorAll('button, form button').forEach(function (button) {
+                button.disabled = true;
+            });
+        }
+
         const badge = row.querySelector('[data-offline-item-badge]');
         if (badge) {
             badge.classList.remove('d-none');
-            badge.innerHTML = operation.action === 'complete_item'
-                ? '<i class="bi bi-cloud-arrow-up-fill"></i> Comprado offline'
-                : '<i class="bi bi-cloud-arrow-up-fill"></i> Alterado offline';
+            const labels = {
+                complete_item: 'Comprado offline',
+                incomplete_item: 'Não comprado offline',
+                remove_execution_item: 'Removido offline',
+                update_item: 'Alterado offline',
+            };
+            badge.innerHTML = `<i class="bi bi-cloud-arrow-up-fill"></i> ${labels[operation.action] || 'Alterado offline'}`;
         }
+    }
+
+    async function applyPersistedOfflineItemState() {
+        const snapshot = await readSnapshot();
+        snapshot.pending_operations.forEach(function (operation) {
+            if (operation.entity !== 'execution_item' && operation.entidade !== 'execution_item') return;
+            markItemRowAsOfflineUpdated(Object.assign({}, operation.payload, {
+                action: operation.action,
+                item_id: operation.payload?.item_id || operation.entity_id || operation.entidade_id,
+            }));
+        });
+        snapshot.execution_items.forEach(function (item) {
+            if (item.offline_removed_at || item.is_deleted) {
+                markItemRowAsOfflineUpdated({ action: 'remove_execution_item', item_id: item.id });
+            } else if (item.offline_updated_at && item.is_completed) {
+                markItemRowAsOfflineUpdated({ action: 'complete_item', item_id: item.id });
+            } else if (item.offline_updated_at) {
+                markItemRowAsOfflineUpdated({
+                    action: 'update_item',
+                    item_id: item.id,
+                    name: item.name,
+                    planned_quantity: item.planned_quantity,
+                    category_id: item.category_id,
+                    notes: item.notes,
+                });
+            }
+        });
     }
 
     function itemLocationTimestamp(item) {
@@ -1400,15 +1514,24 @@
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
-                const operation = readRemoveItemOperationFromButton(removeButton);
-                enqueueRemoveExecutionItemOperation(operation)
-                    .then(function () {
-                        renderQueuedItemControl(removeButton);
-                        renderOfflineSummary();
-                    })
-                    .catch(function () {
-                        window.dispatchEvent(new CustomEvent('jaci:sync-error'));
-                    });
+                offlineActionConfirmation({
+                    title: 'Remover item?',
+                    message: removeButton.getAttribute('hx-confirm') || 'Remover item da compra?',
+                    okLabel: removeButton.dataset.jaciConfirmOkLabel || 'Remover',
+                    okClass: removeButton.dataset.jaciConfirmOkClass || 'btn-danger',
+                }).then(function (confirmed) {
+                    if (!confirmed) return;
+                    const operation = readRemoveItemOperationFromButton(removeButton);
+                    enqueueRemoveExecutionItemOperation(operation)
+                        .then(function () {
+                            renderQueuedItemControl(removeButton);
+                            markItemRowAsOfflineUpdated(Object.assign({ action: 'remove_execution_item' }, operation));
+                            renderOfflineSummary();
+                        })
+                        .catch(function () {
+                            window.dispatchEvent(new CustomEvent('jaci:sync-error'));
+                        });
+                });
                 return;
             }
 
@@ -1448,6 +1571,24 @@
 
             const form = completeForm || editForm || incompleteForm;
             const action = completeForm ? 'complete_item' : 'incomplete_item';
+            if (incompleteForm && incompleteForm.dataset.offlineConfirmed !== 'true') {
+                offlineActionConfirmation({
+                    title: 'Marcar como não comprado?',
+                    message: incompleteForm.getAttribute('hx-confirm') || 'Marcar item como não comprado?',
+                    okLabel: incompleteForm.dataset.jaciConfirmOkLabel || 'Confirmar',
+                    okClass: incompleteForm.dataset.jaciConfirmOkClass || 'btn-danger',
+                }).then(function (confirmed) {
+                    if (!confirmed) return;
+                    incompleteForm.dataset.offlineConfirmed = 'true';
+                    if (typeof incompleteForm.requestSubmit === 'function') {
+                        incompleteForm.requestSubmit();
+                    } else {
+                        incompleteForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                    }
+                });
+                return;
+            }
+            if (incompleteForm) delete incompleteForm.dataset.offlineConfirmed;
             const operation = editForm
                 ? readEditItemOperationFromForm(form)
                 : readItemOperationFromForm(form, action);
@@ -1560,6 +1701,9 @@
         syncNow: runAutomaticSync,
         renderSyncCenter: renderSyncCenter,
         renderConflictAuditHistory: renderConflictAuditHistory,
+        applyPersistedOfflineItemState: applyPersistedOfflineItemState,
+        refreshCurrentExecutionFragments: refreshCurrentExecutionFragments,
+        clearOfflineItemIndicators: clearOfflineItemIndicators,
         enqueueStartExecution: enqueueStartExecution,
         enqueueUpdateExecutionOperation: enqueueUpdateExecutionOperation,
         enqueueExecutionItemOperation: enqueueExecutionItemOperation,
@@ -1595,6 +1739,10 @@
         setupOfflineFinalizeControls();
         setupSyncCenter();
         updatePendingCount().catch(function () {});
+        applyPersistedOfflineItemState().catch(function () {});
         runAutomaticSync();
+    });
+    document.body.addEventListener('htmx:afterSwap', function () {
+        applyPersistedOfflineItemState().catch(function () {});
     });
 })();

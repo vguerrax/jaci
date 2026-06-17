@@ -827,6 +827,21 @@ def test_offline_cache_frontend_uses_indexeddb_and_read_only_snapshot():
     assert "getLastLocationForExecution" in script
     assert "getLastLocationFromPage" in script
     assert "await getLastLocationForExecution(button.dataset.executionId, button.dataset.itemId)" in script
+    assert "offlineActionConfirmation" in script
+    assert "window.JaciConfirm.show" in script
+    assert "Removido offline" in script
+    assert "Não comprado offline" in script
+    assert "applyPersistedOfflineItemState" in script
+    assert "clearOfflineItemIndicators" in script
+    assert "clearOfflineItemIndicatorsWhenSynced" in script
+    assert "pendingCount === 0" in script
+    assert "badge.classList.add('d-none')" in script
+    assert "snapshot.pending_operations.forEach" in script
+    assert "window.addEventListener('load', function ()" in script
+    assert "document.body.addEventListener('htmx:afterSwap'" in script
+    assert "refreshCurrentExecutionFragments" in script
+    assert "`/executions/${executionId}/items-fragment`" in script
+    assert "`/executions/${executionId}/sidebar-fragment`" in script
     assert "markItemRowAsOfflineUpdated" in script
     assert "is-offline-updated" in script
     assert "Comprado offline" in script
@@ -989,6 +1004,7 @@ def test_execution_item_controls_are_offline_capable():
     assert "data-item-notes-label" in items
     assert "data-offline-item-badge" in items
     assert "Comprado offline" in items
+    assert "data-item-completed-summary" in items
     assert "data-purchased-quantity" in items
     assert "data-unit-price" in items
     assert "data-category-id" in items
@@ -1007,6 +1023,7 @@ def test_offline_item_state_is_visible_and_mobile_panel_does_not_overlay_content
 
     assert ".offline-item-badge" in styles
     assert ".list-group-jaci .list-group-item.is-offline-updated" in styles
+    assert ".list-group-jaci .list-group-item.is-offline-removed" in styles
     assert "@media (max-width: 767.98px)" in styles
     assert ".offline-cache-panel {\n        position: static;" in styles
     assert "box-shadow: none;" in styles

@@ -115,7 +115,8 @@ async function networkFirstPage(request) {
         }
         return response;
     } catch (error) {
-        return (await caches.match(request)) || caches.match(OFFLINE_PAGE);
+        return (await caches.match(request))
+            || caches.match(OFFLINE_PAGE);
     }
 }
 
