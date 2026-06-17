@@ -17,7 +17,7 @@
     <h3 class="h6 mb-3">Resumo</h3>
     <dl class="mb-0 small">
         <dt class="text-help">Data</dt>
-        <dd class="mb-2">{{ execution.scheduled_date| localdate }}</dd>
+        <dd class="mb-2" data-execution-date-label>{{ execution.scheduled_date| localdate }}</dd>
 
         <dt class="text-help">Template</dt>
         <dd class="mb-2">
@@ -34,6 +34,15 @@
         <dt class="text-help">Total gasto</dt>
         <dd class="fw-medium {% if totals.total_spent > (execution.budget or 999999) %}text-danger{% endif %}">
             R$ {{ "%.2f"|format(totals.total_spent) }}
+        </dd>
+
+        <dt class="text-help">Orçamento</dt>
+        <dd class="mb-0" data-execution-budget-label>
+            {% if execution.budget %}
+            R$ {{ "%.2f"|format(execution.budget) }}
+            {% else %}
+            <span class="text-clay">Não definido</span>
+            {% endif %}
         </dd>
     </dl>
 </div>

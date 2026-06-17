@@ -8,17 +8,21 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
                 <li class="breadcrumb-item active text-clay">
-                    {{ execution_name }}
+                    <span data-execution-name-label>{{ execution_name }}</span>
                 </li>
             </ol>
         </nav>
         <div class="d-flex align-items-center gap-3 flex-wrap">
-            <h1 class="h2 mb-0">
+            <h1 class="h2 mb-0" data-execution-name-label>
                 {{ execution_name }}
             </h1>
             <span class="badge-jaci {{ status_badge_class[execution.status] }}">
                 {{ status_labels[execution.status] }}
             </span>
+        </div>
+        <div class="alert alert-info alert-jaci small mt-3 mb-0 d-none" data-execution-sync-feedback>
+            <i class="bi bi-cloud-arrow-up-fill"></i>
+            Alteração salva neste dispositivo. A sincronização será automática quando houver conexão.
         </div>
         <!-- <p class="text-clay mt-1">
             {{ execution.scheduled_date| localdate }}
@@ -125,7 +129,10 @@
     aria-labelledby="editExecutionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" action="/executions/{{ execution.id }}/edit">
+            <form method="post" action="/executions/{{ execution.id }}/edit"
+                data-offline-edit-execution
+                data-execution-id="{{ execution.id }}"
+                data-execution-status="{{ execution.status }}">
                 <div class="modal-header">
                     <h3 class="modal-title h6" id="editExecutionModalLabel">Editar compra</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
