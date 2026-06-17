@@ -59,7 +59,7 @@ def test_base_template_declares_global_loading_indicator():
 def test_service_worker_caches_shell_and_falls_back_offline():
     worker = (STATIC / "js/service-worker.js").read_text()
 
-    assert "const CACHE_VERSION = 'v18'" in worker
+    assert "const CACHE_VERSION = 'v20'" in worker
     assert "SHELL_CACHE" in worker
     assert "STATIC_CACHE" in worker
     assert "PAGE_CACHE" in worker
@@ -76,6 +76,16 @@ def test_service_worker_caches_shell_and_falls_back_offline():
     assert "'/manifest.webmanifest'" in worker
     assert "'/static/js/loading-indicator.js'" in worker
     assert "'/static/js/offline-cache.js'" in worker
+    assert "|| caches.match(OFFLINE_PAGE)" in worker
+
+
+def test_offline_page_offers_retry_and_home_actions():
+    offline = (STATIC / "offline.html").read_text()
+
+    assert "Tentar novamente" in offline
+    assert "window.location.reload()" in offline
+    assert 'href="/"' in offline
+    assert "Ir para Home" in offline
 
 
 def test_service_worker_implements_bl004_cache_routing():

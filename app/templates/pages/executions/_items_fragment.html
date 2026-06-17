@@ -89,7 +89,7 @@
                                 </span>
                             </div>
                             {% if item.is_completed %}
-                            <div class="text-end small flex-shrink-0">
+                            <div class="text-end small flex-shrink-0" data-item-completed-summary>
                                 <div class="text-clay">
                                     {{ item.purchased_quantity|quantity }} x R$ {{ "%.2f"|format(item.unit_price) }}
                                 </div>
