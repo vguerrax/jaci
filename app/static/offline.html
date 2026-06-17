@@ -28,14 +28,31 @@
             width: 7rem;
             height: 7rem;
         }
-        button {
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        button,
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border: 0;
             border-radius: 999px;
             padding: 0.8rem 1.2rem;
-            background: #2a4b4a;
             color: white;
             font: inherit;
             font-weight: 600;
+            text-decoration: none;
+        }
+        button {
+            background: #2a4b4a;
+        }
+        a {
+            background: #203c3b;
         }
     </style>
 </head>
@@ -44,7 +61,10 @@
         <img src="/static/img/icon-192.png" alt="">
         <h1>Você está offline</h1>
         <p>As telas utilizadas recentemente continuam disponíveis. Reconecte-se para buscar dados novos.</p>
-        <button type="button" onclick="window.location.reload()">Tentar novamente</button>
+        <div class="actions">
+            <button type="button" onclick="window.location.reload()">Tentar novamente</button>
+            <a href="/">Ir para Home</a>
+        </div>
     </main>
 </body>
 </html>

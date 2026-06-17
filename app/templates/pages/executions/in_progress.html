@@ -2,6 +2,7 @@
 {% block title %}{{ execution.template.name if execution.template else 'Compra' }} — Jaci{% endblock %}
 
 {% block content %}
+<div data-current-execution-id="{{ execution.id }}">
 <div class="row mb-4">
     <div class="col mb-3">
         <nav aria-label="breadcrumb">
@@ -113,6 +114,7 @@
 
     <!-- Modal container (for dynamic modals) -->
     <div id="modal-container"></div>
+</div>
 </div>
 {% block extra_js %}
 <!-- WebSocket sync -->
