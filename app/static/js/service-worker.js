@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'jaci-';
-const CACHE_VERSION = 'v18';
+const CACHE_VERSION = 'v20';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -115,7 +115,8 @@ async function networkFirstPage(request) {
         }
         return response;
     } catch (error) {
-        return (await caches.match(request)) || caches.match(OFFLINE_PAGE);
+        return (await caches.match(request))
+            || caches.match(OFFLINE_PAGE);
     }
 }
 
