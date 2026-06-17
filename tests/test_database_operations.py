@@ -77,6 +77,10 @@ def test_migrations_create_schema_in_empty_sqlite_database(tmp_path):
     assert inspector.has_table("alembic_version")
     execution_columns = {column["name"] for column in inspector.get_columns("executions")}
     assert "name" in execution_columns
+    execution_item_columns = {
+        column["name"] for column in inspector.get_columns("execution_items")
+    }
+    assert "template_item_id" in execution_item_columns
     engine.dispose()
 
 
