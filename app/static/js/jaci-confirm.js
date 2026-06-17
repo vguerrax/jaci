@@ -16,8 +16,6 @@
 (function () {
     'use strict';
 
-    console.log("Iniciando Jaci Confirm...");
-
     window.JaciConfirm = {
         _pendingCallback: null,
         _pendingHtmxEvent: null,
@@ -148,5 +146,4 @@
             window.JaciConfirm._handleCancel();
         }
     });
-    console.log("Jaci Confirm iniciado!");
 })();

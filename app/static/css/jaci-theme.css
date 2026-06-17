@@ -1136,6 +1136,49 @@ HOME OPERATIONAL
     color: var(--jaci-clay);
 }
 
+.offline-item-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+    margin-top: 0.25rem;
+    padding: 0.16rem 0.42rem;
+    border: 1px solid rgba(75, 129, 93, 0.28);
+    border-radius: 999px;
+    background: rgba(237, 244, 239, 0.94);
+    color: var(--jaci-night);
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.list-group-jaci .list-group-item.is-offline-updated {
+    border-left: 4px solid var(--jaci-moss);
+    background: rgba(237, 244, 239, 0.76);
+}
+
+.list-group-jaci .list-group-item.is-offline-updated .check-jaci {
+    border-color: var(--jaci-moss);
+}
+
+.sync-conflict-panel {
+    position: fixed;
+    z-index: 1076;
+    right: 0.75rem;
+    bottom: 3.25rem;
+    width: min(24rem, calc(100vw - 1.5rem));
+    padding: 0.9rem 1rem;
+    border: 1px solid #B45309;
+    border-radius: 0.75rem;
+    background: rgba(255, 251, 235, 0.98);
+    color: var(--jaci-night);
+    box-shadow: 0 8px 24px rgba(146, 64, 14, 0.16);
+    font-size: 0.8rem;
+}
+
+.sync-conflict-panel[hidden] {
+    display: none;
+}
+
 .sync-center-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1383,9 +1426,21 @@ HOME OPERATIONAL
     }
 
     .offline-cache-panel {
-        right: 0.5rem;
-        top: auto;
-        bottom: 3.75rem;
+        position: static;
+        width: auto;
+        margin: 0.5rem;
+        padding: 0.7rem 0.8rem;
+        border-radius: 0.75rem;
+        box-shadow: none;
+        font-size: 0.74rem;
+    }
+
+    .offline-cache-panel ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.15rem 0.8rem;
+        margin: 0.3rem 0;
+        padding-left: 1rem;
     }
 
     .sync-center-stats {

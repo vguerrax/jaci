@@ -21,6 +21,7 @@ from app.services.execution_service import (
     incomplete_item as incomplete_item_service,
     remove_item_from_execution,
     start_execution,
+    update_execution_item,
 )
 from app.services.offline_cache_service import build_offline_snapshot
 from app.services.sync_conflict_audit_service import (
@@ -42,8 +43,11 @@ class StartExecutionOperation(BaseModel):
 class ExecutionItemOperation(BaseModel):
     execution_id: int
     item_id: int
-    action: str = Field(pattern="^(complete_item|incomplete_item)$")
+    action: str = Field(pattern="^(complete_item|incomplete_item|update_item)$")
     version: int
+    name: str | None = None
+    planned_quantity: float | None = None
+    category_id: int | None = None
     purchased_quantity: float | None = None
     unit_price: float | None = None
     location: str | None = None
@@ -330,7 +334,33 @@ async def sync_execution_item_operation(
             remote_state=_item_state(item),
         )
 
-    if operation.action == "complete_item":
+    if operation.action == "update_item":
+        if not operation.name or not operation.name.strip():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Nome do item é obrigatório.",
+            )
+        if operation.planned_quantity is None or operation.planned_quantity <= 0:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Quantidade planejada inválida.",
+            )
+        try:
+            update_execution_item(
+                db,
+                item,
+                operation.name.strip(),
+                operation.planned_quantity,
+                operation.category_id if operation.category_id and operation.category_id > 0 else None,
+                operation.notes,
+            )
+        except ValueError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=str(exc),
+            ) from exc
+        event_name = "item_updated"
+    elif operation.action == "complete_item":
         if operation.purchased_quantity is None or operation.purchased_quantity <= 0:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -352,7 +382,7 @@ async def sync_execution_item_operation(
         event_name = "item_completed"
     else:
         incomplete_item_service(db, item)
-        event_name = "item_completed"
+        event_name = "item_updated"
 
     try:
         await manager.broadcast(
@@ -373,6 +403,9 @@ async def sync_execution_item_operation(
         "item": {
             "id": item.id,
             "execution_id": item.execution_id,
+            "name": item.name,
+            "category_id": item.category_id,
+            "planned_quantity": item.planned_quantity,
             "is_completed": item.is_completed,
             "purchased_quantity": item.purchased_quantity,
             "unit_price": item.unit_price,
