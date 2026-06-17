@@ -1160,6 +1160,16 @@ HOME OPERATIONAL
     border-color: var(--jaci-moss);
 }
 
+.list-group-jaci .list-group-item.is-offline-removed {
+    border-left-color: #B45309;
+    background: rgba(255, 247, 237, 0.88);
+}
+
+.list-group-jaci .list-group-item.is-offline-removed .offline-item-badge {
+    border-color: rgba(180, 83, 9, 0.35);
+    background: rgba(255, 247, 237, 0.96);
+}
+
 .sync-conflict-panel {
     position: fixed;
     z-index: 1076;

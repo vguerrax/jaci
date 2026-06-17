@@ -175,11 +175,13 @@
     </nav>
     {% endblock %}
 
+    {% block offline_cache_panel %}
     <aside id="offline-cache-panel" class="offline-cache-panel" aria-live="polite" hidden>
         <strong>Dados offline disponíveis</strong>
         <ul id="offline-cache-summary"></ul>
         <small>Compras iniciadas offline serão sincronizadas automaticamente.</small>
     </aside>
+    {% endblock %}
 
     <!-- Flash Messages -->
     {% block messages %}
