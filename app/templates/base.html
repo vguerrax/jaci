@@ -123,10 +123,11 @@
                             <span class="me-2">{{ user.name or user.email }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
+                            <li><a class="dropdown-item" href="/auth/profile">Meu perfil</a></li>
+                            <li class="d-block d-lg-none">
                                 <a class="dropdown-item" href="/notifications">
                                     <div class="d-flex align-items-center justify-content-start">
-                                        <span class="d-block d-lg-none">Notificações</span>
+                                        <span>Notificações</span>
                                         {% if request.state.unread_count and request.state.unread_count > 0 %}
                                         <span class="ms-2 badge rounded-pill bg-danger" style="font-size: 0.6rem;">
                                             {{ request.state.unread_count if request.state.unread_count < 10 else '9+'
@@ -135,7 +136,6 @@
                                     </div>
                                 </a>
                             </li>
-                            <li><a class="dropdown-item" href="/auth/profile">Meu perfil</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
