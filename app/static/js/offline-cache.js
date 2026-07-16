@@ -1855,7 +1855,12 @@
     }
 
     function renderFinalizeConfirmation() {
-        alert('Compra finalizada offline. A recorrencia sera processada quando a sincronizacao concluir.');
+        if (window.JaciConfirm) {
+            window.JaciConfirm.alert({
+                title: 'Compra finalizada offline',
+                message: 'A recorrência será processada quando a sincronização concluir.',
+            });
+        }
     }
 
     function setupOfflineFinalizeControls() {
@@ -1867,7 +1872,12 @@
                 const executionId = Number(link.dataset.executionId);
                 countPendingItemsForExecution(executionId).then(function (pendingCount) {
                     if (pendingCount > 0) {
-                        alert('Existem itens pendentes. Trate os pendentes antes de finalizar offline.');
+                        if (window.JaciConfirm) {
+                            window.JaciConfirm.alert({
+                                title: 'Itens pendentes',
+                                message: 'Existem itens pendentes. Trate os pendentes antes de finalizar offline.',
+                            });
+                        }
                         return;
                     }
                     enqueueFinalizeExecutionOperation({

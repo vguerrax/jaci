@@ -12,6 +12,11 @@
  *       okClass: 'btn-danger',
  *       onConfirm: function() { ... }
  *   });
+ *
+ *   JaciConfirm.alert({
+ *       title: 'Atenção',
+ *       message: 'A operação foi registrada para sincronização.',
+ *   });
  */
 (function () {
     'use strict';
@@ -28,6 +33,7 @@
          * @param {string} [options.okLabel] - Texto do botão confirmar
          * @param {string} [options.okClass] - Classes extras do botão confirmar
          * @param {string} [options.cancelLabel] - Texto do botão cancelar
+         * @param {boolean} [options.hideCancel] - Oculta o botão cancelar
          * @param {Function} options.onConfirm - Callback ao confirmar
          * @param {Function} [options.onCancel] - Callback ao cancelar
          */
@@ -47,8 +53,9 @@
                 okBtn.textContent = options.okLabel || 'Confirmar';
                 okBtn.className = 'btn btn-sm ' + (options.okClass || 'btn-primary');
             }
-            if (cancelBtn && options.cancelLabel) {
-                cancelBtn.textContent = options.cancelLabel;
+            if (cancelBtn) {
+                cancelBtn.textContent = options.cancelLabel || 'Cancelar';
+                cancelBtn.hidden = Boolean(options.hideCancel);
             }
 
             // Salva callbacks
@@ -66,8 +73,30 @@
         hide: function () {
             const modalEl = document.getElementById('jaciConfirmModal');
             if (modalEl) {
-                bootstrap.Modal.getInstance(modalEl).hide();
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) modal.hide();
             }
+        },
+
+        /**
+         * Exibe uma mensagem informativa usando o modal global.
+         * @param {Object} options
+         * @param {string} [options.title] - Título do modal
+         * @param {string} options.message - Mensagem do corpo
+         * @param {string} [options.okLabel] - Texto do botão de fechamento
+         * @param {string} [options.okClass] - Classes extras do botão
+         * @param {Function} [options.onClose] - Callback ao fechar
+         */
+        alert: function (options) {
+            this.show({
+                title: options.title || 'Aviso',
+                message: options.message || '',
+                okLabel: options.okLabel || 'Entendi',
+                okClass: options.okClass || 'btn-primary',
+                hideCancel: true,
+                onConfirm: options.onClose || null,
+                onCancel: options.onClose || null,
+            });
         },
 
         /**
@@ -79,6 +108,7 @@
 
             this._pendingCallback = null;
             this._pendingHtmxEvent = null;
+            this._onCancel = null;
             this.hide();
 
             // Se veio de um evento HTMX (hx-confirm), dispara a requisição

@@ -227,7 +227,13 @@
         },
 
         _onVersionConflict: function (data) {
-            alert(data.message || 'Este item foi alterado por outro usuário. Recarregando...');
+            const message = data.message || 'Este item foi alterado por outro usuário. Recarregando...';
+            if (window.JaciConfirm) {
+                window.JaciConfirm.alert({
+                    title: 'Conflito de edição',
+                    message: message,
+                });
+            }
             this._refreshItems();
         },
 

@@ -1480,8 +1480,4 @@ HOME OPERATIONAL
         justify-self: stretch;
     }
 
-    .page-loading {
-        place-items: end center;
-        padding-bottom: 5rem;
-    }
 }
