@@ -2,15 +2,23 @@
     'use strict';
 
     const SHOW_DELAY_MS = 120;
+    const HIDE_GRACE_MS = 160;
     const indicator = document.getElementById('page-loading');
     if (!indicator) return;
 
-    let timer = null;
-    let activeRequests = 0;
+    let showTimer = null;
+    let hideTimer = null;
+    let anonymousRequests = 0;
+    const activeRequests = new Set();
 
     function show() {
-        clearTimeout(timer);
-        timer = window.setTimeout(function () {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+
+        if (!indicator.hidden || showTimer !== null) return;
+
+        showTimer = window.setTimeout(function () {
+            showTimer = null;
             document.body.classList.add('is-loading');
             indicator.hidden = false;
             indicator.setAttribute('aria-hidden', 'false');
@@ -18,23 +26,58 @@
     }
 
     function hide() {
-        clearTimeout(timer);
-        activeRequests = 0;
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+        showTimer = null;
+        hideTimer = null;
+        activeRequests.clear();
+        anonymousRequests = 0;
         document.body.classList.remove('is-loading');
         indicator.hidden = true;
         indicator.setAttribute('aria-hidden', 'true');
     }
 
-    function beginRequest() {
-        activeRequests += 1;
+    function requestCount() {
+        return activeRequests.size + anonymousRequests;
+    }
+
+    function beginRequest(event) {
+        const xhr = event.detail?.xhr;
+        if (xhr) {
+            activeRequests.add(xhr);
+        } else {
+            anonymousRequests += 1;
+        }
         show();
     }
 
-    function endRequest() {
-        activeRequests = Math.max(0, activeRequests - 1);
-        if (activeRequests === 0) {
-            hide();
+    function scheduleHide() {
+        if (requestCount() !== 0) return;
+
+        clearTimeout(showTimer);
+        showTimer = null;
+
+        if (indicator.hidden) return;
+
+        clearTimeout(hideTimer);
+        hideTimer = window.setTimeout(function () {
+            hideTimer = null;
+            if (requestCount() === 0) {
+                document.body.classList.remove('is-loading');
+                indicator.hidden = true;
+                indicator.setAttribute('aria-hidden', 'true');
+            }
+        }, HIDE_GRACE_MS);
+    }
+
+    function endRequest(event) {
+        const xhr = event.detail?.xhr;
+        if (xhr) {
+            activeRequests.delete(xhr);
+        } else {
+            anonymousRequests = Math.max(0, anonymousRequests - 1);
         }
+        scheduleHide();
     }
 
     function isPlainLeftClick(event) {
@@ -77,15 +120,11 @@
         }, 0);
     }, { capture: true });
 
-    document.body.addEventListener('htmx:beforeRequest', function () {
-        beginRequest();
-    });
-    document.body.addEventListener('htmx:afterRequest', function () {
-        endRequest();
-    });
-    document.body.addEventListener('htmx:sendError', hide);
-    document.body.addEventListener('htmx:responseError', hide);
-    document.body.addEventListener('htmx:timeout', hide);
+    document.body.addEventListener('htmx:beforeRequest', beginRequest);
+    document.body.addEventListener('htmx:afterRequest', endRequest);
+    document.body.addEventListener('htmx:sendError', endRequest);
+    document.body.addEventListener('htmx:responseError', endRequest);
+    document.body.addEventListener('htmx:timeout', endRequest);
 
     window.addEventListener('pageshow', hide);
     window.addEventListener('pagehide', hide);
