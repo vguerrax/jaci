@@ -1,41 +1,54 @@
 {% extends "base.html" %}
-{% block title %}{{ execution.template.name if execution.template else 'Compra' }} — Jaci{% endblock %}
+{% block title %}{{ execution_name }} — Jaci{% endblock %}
 
 {% block content %}
+<div data-current-execution-id="{{ execution.id }}">
 <div class="row mb-4">
     <div class="col mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
                 <li class="breadcrumb-item active text-clay">
-                    {{ execution.template.name if execution.template else 'Compra Avulsa' }}
+                    <span data-execution-name-label>{{ execution_name }}</span>
                 </li>
             </ol>
         </nav>
         <div class="d-flex align-items-center gap-3 flex-wrap">
-            <h1 class="h2 mb-0">
-                {{ execution.template.name if execution.template else 'Compra Avulsa' }}
+            <h1 class="h2 mb-0" data-execution-name-label>
+                {{ execution_name }}
             </h1>
             <span class="badge-jaci {{ status_badge_class[execution.status] }}">
                 {{ status_labels[execution.status] }}
             </span>
+        </div>
+        <div class="alert alert-info alert-jaci small mt-3 mb-0 d-none" data-execution-sync-feedback>
+            <i class="bi bi-cloud-arrow-up-fill"></i>
+            Alteração salva neste dispositivo. A sincronização será automática quando houver conexão.
         </div>
         <!-- <p class="text-clay mt-1">
             {{ execution.scheduled_date| localdate }}
             &middot; {{ totals.completed_items }}/{{ totals.total_items }} {'itens' if totals.total_items != 1 else 'item'}
         </p> -->
     </div>
-    <div class="col-auto align-self-end d-flex gap-2">
+    <div class="col-12 col-sm-auto align-self-sm-end d-flex flex-column flex-sm-row gap-2 execution-detail-actions">
         {% if execution.status == 'scheduled' %}
-        <form method="post" action="/executions/{{ execution.id }}/start">
+        <form method="post" action="/executions/{{ execution.id }}/start"
+            data-offline-start-execution data-execution-id="{{ execution.id }}">
             <button type="submit" class="btn btn-primary">
                 Iniciar Compra
                 <i class="bi bi-moon-stars-fill"></i>
             </button>
         </form>
+        <button type="button" class="btn btn-outline-secondary"
+            data-bs-toggle="modal" data-bs-target="#editExecutionModal">
+            <i class="bi bi-pencil-square"></i>
+            Editar compra
+        </button>
         {% endif %}
         {% if execution.status == 'in_progress' %}
-        <a href="/executions/{{ execution.id }}/close" class="btn btn-success">
+        <a href="/executions/{{ execution.id }}/close" class="btn btn-success"
+            data-offline-finalize-link
+            data-execution-id="{{ execution.id }}">
             Finalizar Compra
             <i class="bi bi-moon-stars-fill"></i>
         </a>
@@ -43,7 +56,7 @@
         {% if execution.status in ['scheduled', 'in_progress'] %}
         <form method="post" action="/executions/{{ execution.id }}/cancel"
             onsubmit="return confirm('Cancelar esta compra? Itens concluídos serão perdidos.')">
-            <button type="submit" class="btn btn-outline-secondary text-danger">
+            <button type="submit" class="btn btn-outline-danger text-danger">
                 <i class="bi bi-x-square"></i>
                 Cancelar
             </button>
@@ -60,6 +73,7 @@
         <div class="card-jaci p-4">
             <h3 class="h6 mb-3">Adicionar Item</h3>
             <form hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container" hx-swap="innerHTML"
+                data-offline-add-item data-execution-id="{{ execution.id }}"
                 hx-on::after-request="
                 htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',
@@ -109,6 +123,58 @@
 
     <!-- Modal container (for dynamic modals) -->
     <div id="modal-container"></div>
+</div>
+
+{% if execution.status == 'scheduled' %}
+<div class="modal fade" id="editExecutionModal" tabindex="-1"
+    aria-labelledby="editExecutionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="/executions/{{ execution.id }}/edit"
+                data-offline-edit-execution
+                data-execution-id="{{ execution.id }}"
+                data-execution-status="{{ execution.status }}">
+                <div class="modal-header">
+                    <h3 class="modal-title h6" id="editExecutionModalLabel">Editar compra</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info alert-jaci small mb-3">
+                        <i class="bi bi-cloud-check"></i>
+                        Alterações salvas são sincronizadas para o grupo.
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="executionName">Nome</label>
+                        <input id="executionName" type="text" class="form-control" name="name"
+                            value="{{ execution_name }}" maxlength="150" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="executionScheduledDate">Data agendada</label>
+                        <input id="executionScheduledDate" type="date" class="form-control" name="scheduled_date"
+                            value="{{ execution.scheduled_date|localdate('%Y-%m-%d') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="executionBudget">Orçamento</label>
+                        <input id="executionBudget" type="number" class="form-control" name="budget"
+                            value="{{ execution.budget if execution.budget else '' }}" step="0.01" min="0"
+                            placeholder="0,00">
+                    </div>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+                        <i class="bi bi-x-square"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        Salvar
+                        <i class="bi bi-check-circle"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
 </div>
 {% block extra_js %}
 <!-- WebSocket sync -->

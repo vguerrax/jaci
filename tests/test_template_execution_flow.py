@@ -38,6 +38,7 @@ def test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs(
 
     assert first.budget == 200
     assert [(item.name, item.planned_quantity) for item in first.items] == [("Banana", 2)]
+    assert first.items[0].template_item_id == template_item.id
     assert [(item.name, item.planned_quantity) for item in second.items] == [
         ("Banana prata", 4)
     ]
@@ -110,6 +111,7 @@ def test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template(
         "total_spent": 25.0,
     }
     assert added.name == "Sabão"
+    assert added.template_item_id is None
     assert [item.name for item in template.items] == ["Arroz"]
 
 

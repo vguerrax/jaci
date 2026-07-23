@@ -107,6 +107,10 @@ Em produção, configure `DATABASE_URL` com uma conexão PostgreSQL gerenciada:
 
 ```env
 DATABASE_URL=postgresql+psycopg://usuario:senha@host:5432/jaci
+DATABASE_SSL_MODE=require
+BACKUP_ENABLED=true
+BACKUP_DIR=/var/backups/jaci
+BACKUP_RETENTION_DAYS=30
 ```
 
 O script de publicação recebe um arquivo de ambiente opcional, cria o banco
@@ -129,6 +133,25 @@ docker-compose down
 # Recriar após alterações
 docker-compose up -d --build --force-recreate
 ```
+
+### Backup automático do PostgreSQL
+
+O container servidor cria um dump diário às 02:30 no fuso
+`America/Sao_Paulo`, mantém 30 dias por padrão e persiste os arquivos do
+container em `/opt/jaci/backups` no host. A rotina ignora SQLite.
+
+Para executar manualmente e consultar o log:
+
+```bash
+docker compose exec jaci /app/scripts/backup_database.sh
+docker compose exec jaci tail -n 100 /var/log/backup.log
+```
+
+Consulte o procedimento completo, incluindo retenção e restauração segura em
+banco isolado, em
+[docs/operations/postgresql-backups.md](docs/operations/postgresql-backups.md).
+O volume local é a única cópia automática atual; recomenda-se replicação futura
+para armazenamento externo.
 
 ## Banco de dados e migrações
 
@@ -221,6 +244,27 @@ podem ser recuperadas pelo cache do service worker.
 
 As regras detalhadas estão em
 [docs/domain/home-dashboard.md](docs/domain/home-dashboard.md).
+
+### PWA e acesso offline parcial
+
+O Jaci possui manifesto instalável para Android e iOS, abre em modo standalone e
+mantém em cache o shell da aplicação, recursos estáticos, APIs GET recentes e
+páginas visitadas recentemente. Em caso de indisponibilidade da rede, o
+indicador global comunica sincronizado, sincronizando, offline ou erro de
+sincronização, e uma tela própria explica quando o conteúdo solicitado ainda não
+está armazenado.
+
+No PWA instalado, um indicador global de carregamento aparece em navegações,
+formulários e requisições HTMX para evitar múltiplos toques durante o delay de
+carregamento.
+
+Também há cache local em IndexedDB para consulta offline de grupos, categorias,
+listas/templates e execuções recentes. Esse cache é atualizado automaticamente
+quando o usuário está online e autenticado, mas continua somente leitura.
+
+A fundação atual não inclui alterações offline, fila persistente de mutações nem
+resolução de conflitos. Detalhes e roteiro de validação manual estão em
+[docs/domain/pwa-offline-foundation.md](docs/domain/pwa-offline-foundation.md).
 
 ## Testes
 

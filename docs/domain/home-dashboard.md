@@ -51,8 +51,13 @@ O indicador de sincronização permanece visível em todas as telas e informa:
 * modo offline;
 * quantidade de alterações pendentes, quando disponível localmente.
 
-O service worker usa estratégia network-first para páginas visitadas e assets
-essenciais. Quando a rede falha, a última versão armazenada pode ser exibida.
+O service worker usa cache-first para o app shell, stale-while-revalidate para
+recursos estáticos e network-first para páginas visitadas e APIs GET. Quando a
+rede falha, a última versão armazenada pode ser exibida; se a página nunca tiver
+sido acessada, o usuário recebe uma tela offline explícita.
 
 A fila persistente de mutações e a resolução de conflitos continuam sendo
 evoluções separadas do módulo offline-first.
+
+A instalação, os ícones e as estratégias de cache estão detalhados em
+[pwa-offline-foundation.md](pwa-offline-foundation.md).

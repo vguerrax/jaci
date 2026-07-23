@@ -14,6 +14,7 @@ from app.services.execution_service import (
 )
 from app.services.home_service import build_home_dashboard
 from app.services.template_service import add_item_to_template, create_template
+from app.utils.datetime import parse_local_date
 
 
 NOW = datetime(2026, 6, 15, 12, tzinfo=timezone.utc)
@@ -55,6 +56,29 @@ def test_home_uses_next_scheduled_purchase_when_none_is_in_progress(
 
     assert dashboard["priority"]["execution"].id == next_execution.id
     assert dashboard["priority"]["execution"].id != later.id
+
+
+def test_home_keeps_today_scheduled_purchase_as_next_purchase(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    now = datetime(2026, 6, 30, 15, tzinfo=timezone.utc)
+    yesterday = create_execution_standalone(
+        db, group, parse_local_date("2026-06-29"), user
+    )
+    today = create_execution_standalone(
+        db, group, parse_local_date("2026-06-30"), user
+    )
+    tomorrow = create_execution_standalone(
+        db, group, parse_local_date("2026-07-01"), user
+    )
+
+    dashboard = build_home_dashboard(db, group.id, now)
+
+    assert dashboard["priority"]["execution"].id == today.id
+    assert dashboard["priority"]["execution"].id not in {yesterday.id, tomorrow.id}
+    assert any("próximas 24 horas" in alert["message"] for alert in dashboard["alerts"])
 
 
 def test_home_metrics_and_history_are_scoped_to_active_group(

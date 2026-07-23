@@ -17,6 +17,8 @@ def test_login_page_only_contains_login_form_and_registration_link():
     assert 'href="/auth/register"' in body
     assert "Não possui conta?" in body
     assert 'action="/auth/register"' not in body
+    assert 'id="sync-status"' in body
+    assert 'id="offline-cache-panel"' not in body
 
 
 def test_register_page_contains_registration_form_and_login_link():

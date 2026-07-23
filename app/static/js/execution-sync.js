@@ -128,6 +128,11 @@
                     this._onItemCompleted(msg.data);
                     break;
 
+                case 'item_updated':
+                    // Outro usuário editou ou desmarcou um item
+                    this._onItemUpdated(msg.data);
+                    break;
+
                 case 'item_added':
                     // Outro usuário adicionou um item
                     this._onItemAdded(msg.data);
@@ -146,6 +151,11 @@
                 case 'execution_status_changed':
                     // Status da execução mudou
                     this._onStatusChanged(msg.data);
+                    break;
+
+                case 'execution_updated':
+                    // Dados da execução agendada mudaram
+                    this._onExecutionUpdated(msg.data);
                     break;
 
                 case 'version_conflict':
@@ -187,6 +197,11 @@
             this._refreshItems();
         },
 
+        _onItemUpdated: function (data) {
+            console.log(`[Jaci WS] Item ${data.item_id} atualizado por outro usuário`);
+            this._refreshItems();
+        },
+
         _onItemAdded: function (data) {
             console.log(`[Jaci WS] Item "${data.item_name}" adicionado por outro usuário`);
             this._refreshItems();
@@ -206,8 +221,19 @@
             window.location.reload();
         },
 
+        _onExecutionUpdated: function (data) {
+            console.log(`[Jaci WS] Execução alterada: ${data.name}`);
+            window.location.reload();
+        },
+
         _onVersionConflict: function (data) {
-            alert(data.message || 'Este item foi alterado por outro usuário. Recarregando...');
+            const message = data.message || 'Este item foi alterado por outro usuário. Recarregando...';
+            if (window.JaciConfirm) {
+                window.JaciConfirm.alert({
+                    title: 'Conflito de edição',
+                    message: message,
+                });
+            }
             this._refreshItems();
         },
 

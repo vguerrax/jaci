@@ -71,7 +71,7 @@
             <div class="card-jaci p-3 h-100">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <h2 class="h6 mb-0">
-                        {{ exec_item.template.name if exec_item.template else 'Compra Avulsa' }}
+                        {{ exec_item.display_name }}
                     </h2>
                     <span class="badge-jaci {{ status_badge_class[exec_item.status] }} small">
                         {{ status_labels[exec_item.status] }}

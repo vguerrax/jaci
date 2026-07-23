@@ -26,6 +26,7 @@
             </div>
 
             <!-- Pending items -->
+            {% if pending_items %}
             <div class="mb-4">
                 <h2 class="h6 text-warning mb-2">
                     <i class="bi bi-exclamation-triangle"></i> {{ pending_items|length }} itens NÃO comprados
@@ -42,23 +43,136 @@
                     {% endfor %}
                 </ul>
             </div>
+            {% else %}
+            <div class="mb-4">
+                <h2 class="h6 text-success mb-2">
+                    <i class="bi bi-check-circle"></i> Todos os itens foram tratados
+                </h2>
+                <p class="text-help small mb-0">Revise as sugestões abaixo antes de concluir.</p>
+            </div>
+            {% endif %}
 
             <hr>
 
-            <h2 class="h6 mb-3">O que deseja fazer com os itens não comprados?</h2>
+            <form method="post" action="/executions/{{ execution.id }}/close"
+                data-offline-finalize-execution data-execution-id="{{ execution.id }}">
+                {% if learning_suggestions or (history_suggestions and not history_suggestions.is_empty()) %}
+                <div class="mb-4">
+                    <h2 class="h6 mb-2">Sugestões para a lista</h2>
+                    <p class="text-help small">Selecione apenas o que deseja aplicar ao template. As alterações afetam compras futuras.</p>
 
-            <form method="post" action="/executions/{{ execution.id }}/close">
+                    {% for suggestion in learning_suggestions %}
+                    <input type="hidden" name="template_learning_present" value="{{ suggestion.suggestion_id }}">
+                    <div class="border-top border-sand py-3">
+                        <label class="d-flex gap-2 align-items-start">
+                            <input class="form-check-input mt-1" type="checkbox"
+                                name="template_learning_selected" value="{{ suggestion.suggestion_id }}">
+                            <span>
+                                <strong>Adicionar {{ suggestion.name }}</strong>
+                                <span class="d-block text-help small">{{ suggestion.explanation }}</span>
+                            </span>
+                        </label>
+                        <div class="row g-2 mt-2">
+                            <div class="col-6">
+                                <label class="form-label small">Quantidade</label>
+                                <input type="number" class="form-control form-control-sm"
+                                    name="planned_quantity_{{ suggestion.suggestion_id }}"
+                                    value="{{ suggestion.planned_quantity|quantity }}" step="0.001" min="0.001">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Categoria</label>
+                                <select class="form-select form-select-sm" name="category_id_{{ suggestion.suggestion_id }}">
+                                    <option value="0">Sem categoria</option>
+                                    {% if active_group %}
+                                    {% for cat in active_group.categories %}
+                                    <option value="{{ cat.id }}" {% if cat.id == suggestion.category_id %}selected{% endif %}>{{ cat.name }}</option>
+                                    {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% if history_suggestions %}
+                    {% for suggestion in history_suggestions.quantity %}
+                    <input type="hidden" name="template_learning_present" value="{{ suggestion.suggestion_id }}">
+                    <input type="hidden" name="suggested_quantity_{{ suggestion.suggestion_id }}" value="{{ suggestion.suggested_quantity }}">
+                    <div class="border-top border-sand py-3">
+                        <label class="d-flex gap-2 align-items-start">
+                            <input class="form-check-input mt-1" type="checkbox"
+                                name="template_learning_selected" value="{{ suggestion.suggestion_id }}">
+                            <span>
+                                <strong>Atualizar quantidade de {{ suggestion.name }}</strong>
+                                <span class="d-block text-help small">
+                                    Atual: {{ suggestion.current_quantity|quantity }}x · Sugerida: {{ suggestion.suggested_quantity|quantity }}x
+                                </span>
+                                <span class="d-block text-help small">{{ suggestion.explanation }}</span>
+                            </span>
+                        </label>
+                    </div>
+                    {% endfor %}
+
+                    {% for suggestion in history_suggestions.notes %}
+                    <input type="hidden" name="template_learning_present" value="{{ suggestion.suggestion_id }}">
+                    <input type="hidden" name="suggested_notes_{{ suggestion.suggestion_id }}" value="{{ suggestion.suggested_notes }}">
+                    <div class="border-top border-sand py-3">
+                        <label class="d-flex gap-2 align-items-start">
+                            <input class="form-check-input mt-1" type="checkbox"
+                                name="template_learning_selected" value="{{ suggestion.suggestion_id }}">
+                            <span>
+                                <strong>Atualizar observação de {{ suggestion.name }}</strong>
+                                <span class="d-block text-help small">{{ suggestion.suggested_notes }}</span>
+                                <span class="d-block text-help small">{{ suggestion.explanation }}</span>
+                            </span>
+                        </label>
+                    </div>
+                    {% endfor %}
+
+                    {% for suggestion in history_suggestions.budget %}
+                    <input type="hidden" name="template_learning_present" value="{{ suggestion.suggestion_id }}">
+                    <input type="hidden" name="suggested_budget_{{ suggestion.suggestion_id }}" value="{{ suggestion.suggested_budget }}">
+                    <div class="border-top border-sand py-3">
+                        <label class="d-flex gap-2 align-items-start">
+                            <input class="form-check-input mt-1" type="checkbox"
+                                name="template_learning_selected" value="{{ suggestion.suggestion_id }}">
+                            <span>
+                                <strong>Atualizar orçamento da lista</strong>
+                                <span class="d-block text-help small">
+                                    Atual:
+                                    {% if suggestion.current_budget %}
+                                    R$ {{ "%.2f"|format(suggestion.current_budget) }}
+                                    {% else %}
+                                    não definido
+                                    {% endif %}
+                                    · Sugerido: R$ {{ "%.2f"|format(suggestion.suggested_budget) }}
+                                </span>
+                                <span class="d-block text-help small">{{ suggestion.explanation }}</span>
+                            </span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <h2 class="h6 mb-3">
+                    {% if pending_items %}O que deseja fazer com os itens não comprados?{% else %}Concluir compra{% endif %}
+                </h2>
                 <div class="d-grid gap-2 mb-3">
                     <!-- Option A: Discard -->
                     <button type="submit" name="action" value="discard"
                             class="btn btn-outline-secondary text-start d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>Descartar itens</strong>
-                            <div class="text-help small">Os itens serão removidos permanentemente.</div>
+                            <strong>{% if pending_items %}Descartar itens{% else %}Finalizar compra{% endif %}</strong>
+                            <div class="text-help small">
+                                {% if pending_items %}Os itens serão removidos permanentemente.{% else %}A recorrência será processada pelo servidor.{% endif %}
+                            </div>
                         </div>
-                        <i class="bi bi-trash"></i>
+                        <i class="bi {% if pending_items %}bi-trash{% else %}bi-check-circle{% endif %}"></i>
                     </button>
 
+                    {% if pending_items %}
                     <!-- Option B: New execution -->
                     <button type="button"
                             class="btn btn-outline-secondary text-start d-flex justify-content-between align-items-center"
@@ -84,6 +198,7 @@
                             <i class="bi bi-moon-stars-fill"></i>
                         </button>
                     </div>
+                    {% endif %}
 
                     <!-- Option C: Cancel -->
                     <a href="/executions/{{ execution.id }}"

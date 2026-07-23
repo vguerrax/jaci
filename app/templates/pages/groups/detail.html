@@ -109,7 +109,16 @@
                 </dd>
 
                 <dt class="text-help small">Membros</dt>
-                <dd>{{ members | length }}</dd>
+                <dd class="mb-2">{{ members | length }}</dd>
+
+                <dt class="text-help small">Aprendizado dos templates</dt>
+                <dd class="mb-0">
+                    {% if group.template_learning_enabled %}
+                    Ativado
+                    {% else %}
+                    Desativado
+                    {% endif %}
+                </dd>
             </dl>
         </div>
     </div>
@@ -129,6 +138,17 @@
                     <label for="groupName" class="form-label">Nome do grupo</label>
                     <input type="text" class="form-control" id="groupName" name="name" value="{{ group.name }}"
                         maxlength="150" required autofocus>
+                    <div class="form-check form-switch mt-3">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                            id="templateLearningEnabled" name="template_learning_enabled" value="true"
+                            {% if group.template_learning_enabled %}checked{% endif %}>
+                        <label class="form-check-label" for="templateLearningEnabled">
+                            Sugerir melhorias nos templates
+                        </label>
+                        <div class="form-text">
+                            Quando ativo, o Jaci mostra sugestões no fechamento das compras vinculadas a templates.
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer d-flex align-items-center justify-content-between">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

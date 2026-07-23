@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2A4B4A">
+    <title>Jaci - Modo offline</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: system-ui, sans-serif;
+            background: #f5efe4;
+            color: #203c3b;
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+        main {
+            max-width: 26rem;
+            text-align: center;
+        }
+        img {
+            width: 7rem;
+            height: 7rem;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        button,
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            font: inherit;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        button {
+            background: #2a4b4a;
+        }
+        a {
+            background: #203c3b;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <img src="/static/img/icon-192.png" alt="">
+        <h1>Você está offline</h1>
+        <p>As telas utilizadas recentemente continuam disponíveis. Reconecte-se para buscar dados novos.</p>
+        <div class="actions">
+            <button type="button" onclick="window.location.reload()">Tentar novamente</button>
+            <a href="/">Ir para Home</a>
+        </div>
+    </main>
+</body>
+</html>
