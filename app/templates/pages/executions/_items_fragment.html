@@ -63,7 +63,11 @@
     <div class="card-body collapse {% if show %}show{% endif %}" id="{{ cat_id }}">
         <div class="list-group list-group-flush list-group-jaci">
             {% for item in item_group.get('items') %}
-            <div class="list-group-item {% if item.is_completed %}opacity-75{% endif %}">
+            <div class="list-group-item {% if item.is_completed %}opacity-75{% endif %}"
+                data-execution-item-row
+                data-item-id="{{ item.id }}"
+                data-execution-id="{{ execution.id }}"
+                data-item-location="{{ item.location or '' }}">
                 <div class="d-flex align-items-center gap-2">
                     <!-- Checkbox visual -->
                     <div class="check-jaci {% if item.is_completed %}checked{% endif %} flex-shrink-0"></div>
@@ -73,15 +77,19 @@
                         <div class="d-flex justify-content-between align-items-start">
                             <div class="align-self-center">
                                 <span class="{% if item.is_completed %}text-strikethrough{% endif %}">
-                                    {{ item.name }}
-                                    <span class="badge-jaci badge-scheduled small ms-1">
+                                    <span data-item-name-label>{{ item.name }}</span>
+                                    <span class="badge-jaci badge-scheduled small ms-1" data-item-planned-quantity-label>
                                         {{ item.planned_quantity|quantity }}x
                                     </span>
                                 </span>
-                                <br><small class="text-muted">{{ item.notes or '' }}</small>
+                                <br><small class="text-muted" data-item-notes-label>{{ item.notes or '' }}</small>
+                                <span class="offline-item-badge d-none" data-offline-item-badge>
+                                    <i class="bi bi-cloud-arrow-up-fill"></i>
+                                    Comprado offline
+                                </span>
                             </div>
                             {% if item.is_completed %}
-                            <div class="text-end small flex-shrink-0">
+                            <div class="text-end small flex-shrink-0" data-item-completed-summary>
                                 <div class="text-clay">
                                     {{ item.purchased_quantity|quantity }} x R$ {{ "%.2f"|format(item.unit_price) }}
                                 </div>
@@ -100,8 +108,13 @@
                     <div class="flex-shrink-0 ms-2 d-flex gap-1">
                         {% if execution.status == 'in_progress' and not item.is_completed %}
                         <button type="button" class="btn btn-outline-secondary btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#completeItemModal{{ item.id }}"
+                                data-offline-complete-item
+                                data-execution-id="{{ execution.id }}"
+                                data-item-id="{{ item.id }}"
+                                data-item-name="{{ item.name }}"
+                                data-version="{{ item.version }}"
+                                data-planned-quantity="{{ item.planned_quantity }}"
+                                data-notes="{{ item.notes or '' }}"
                                 hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/complete-form"
                                 hx-target="#modal-container"
                                 hx-swap="innerHTML">
@@ -111,10 +124,17 @@
                         {% endif %}
                         {% if execution.status in ['scheduled', 'in_progress'] and not item.is_completed %}
                         <button type="button" class="btn btn-outline-secondary btn-sm text-danger"
-                            data-bs-target="#editItemModal{{ item.id }}"
+                            data-offline-edit-item
+                            data-execution-id="{{ execution.id }}"
+                            data-item-id="{{ item.id }}"
+                            data-item-name="{{ item.name }}"
+                            data-version="{{ item.version }}"
+                            data-planned-quantity="{{ item.planned_quantity }}"
+                            data-category-id="{{ item.category_id or '' }}"
+                            data-notes="{{ item.notes or '' }}"
                             hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/edit-form"
                             hx-target="#modal-container"
-                            hx-swap="innerHTML"">
+                            hx-swap="innerHTML">
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button type="button" class="btn btn-outline-secondary btn-sm text-danger"
@@ -123,15 +143,37 @@
                             hx-swap="innerHTML"
                             hx-confirm="Remover {{ item.name }}?"
                             data-jaci-confirm-ok-class="btn-danger"
-                            data-jaci-confirm-ok-label="Remover">
+                            data-jaci-confirm-ok-label="Remover"
+                            data-offline-remove-item
+                            data-execution-id="{{ execution.id }}"
+                            data-item-id="{{ item.id }}">
                             <i class="bi bi-trash"></i>
                         </button>
                         {% endif %}
                         {% if execution.status == 'in_progress' and item.is_completed %}
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                data-offline-complete-item
+                                data-execution-id="{{ execution.id }}"
+                                data-item-id="{{ item.id }}"
+                                data-item-name="{{ item.name }}"
+                                data-version="{{ item.version }}"
+                                data-planned-quantity="{{ item.planned_quantity }}"
+                                data-purchased-quantity="{{ item.purchased_quantity or '' }}"
+                                data-unit-price="{{ item.unit_price or '' }}"
+                                data-location="{{ item.location or '' }}"
+                                data-notes="{{ item.notes or '' }}"
+                                hx-get="/executions/{{ execution.id }}/items/{{ item.id }}/complete-form"
+                                hx-target="#modal-container"
+                                hx-swap="innerHTML">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                         <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/incomplete"
                             hx-confirm="Marcar {{ item.name }} como incompleto?"
                             hx-target="#items-container"
-                            hx-swap="innerHTML">
+                            hx-swap="innerHTML"
+                            data-offline-incomplete-item
+                            data-execution-id="{{ execution.id }}"
+                            data-item-id="{{ item.id }}">
                             <input type="hidden" name="version" value="{{ item.version }}">
                             <button type="submit" class="btn btn-outline-secondary btn-sm text-danger">
                                 <i class="bi bi-bag-dash"></i>

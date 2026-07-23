@@ -20,6 +20,7 @@ class Execution(Base):
         nullable=False,
         index=True,
     )
+    name: Mapped[str | None] = mapped_column(String(150), nullable=True)
     scheduled_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -69,6 +70,12 @@ class Execution(Base):
     def __repr__(self) -> str:
         return f"<Execution(id={self.id}, status='{self.status}')>"
 
+    @property
+    def display_name(self) -> str:
+        if self.name and self.name.strip():
+            return self.name.strip()
+        return self.template.name if self.template else "Compra Avulsa"
+
 
 class ExecutionItem(Base):
     __tablename__ = "execution_items"
@@ -83,6 +90,11 @@ class ExecutionItem(Base):
     category_id: Mapped[int | None] = mapped_column(
         ForeignKey("categories.id", ondelete="SET NULL"),
         nullable=True,
+    )
+    template_item_id: Mapped[int | None] = mapped_column(
+        ForeignKey("template_items.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
     )
     planned_quantity: Mapped[float] = mapped_column(Float, default=1, nullable=False)
     purchased_quantity: Mapped[float | None] = mapped_column(Float, nullable=True)
@@ -111,6 +123,7 @@ class ExecutionItem(Base):
         "Category",
         back_populates="execution_items",
     )
+    template_item: Mapped["TemplateItem | None"] = relationship("TemplateItem")
 
     @property
     def total_price(self) -> float | None:

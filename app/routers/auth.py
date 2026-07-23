@@ -34,6 +34,7 @@ async def login_page(request: Request):
     from app.main import templates
 
     return templates.TemplateResponse(
+        request,
         "pages/login.html",
         {
             "request": request,
@@ -49,6 +50,7 @@ async def register_page(request: Request):
     from app.main import templates
 
     return templates.TemplateResponse(
+        request,
         "pages/register.html",
         {
             "request": request,
@@ -64,6 +66,7 @@ async def login_sent_page(request: Request, email: str = Query(...)):
     from app.main import templates
 
     return templates.TemplateResponse(
+        request,
         "pages/login_sent.html",
         {
             "request": request,
@@ -86,6 +89,7 @@ async def login_error_page(request: Request, reason: str = Query("unknown")):
     }
 
     return templates.TemplateResponse(
+        request,
         "pages/login_error.html",
         {
             "request": request,
@@ -110,6 +114,7 @@ async def setup_profile_page(
         return RedirectResponse(url="/", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/setup_profile.html",
         {
             "request": request,
@@ -132,6 +137,7 @@ async def profile_page(
         return RedirectResponse(url="/auth/login", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/profile.html",
         {
             "request": request,
@@ -170,6 +176,7 @@ async def password_login(
     except TupaError as exc:
         if exc.status_code >= 500:
             return templates.TemplateResponse(
+                request,
                 "pages/login.html",
                 {"request": request, "user": None, "error": str(exc)},
                 status_code=502,
@@ -178,6 +185,7 @@ async def password_login(
 
     if not result:
         return templates.TemplateResponse(
+            request,
             "pages/login.html",
             {
                 "request": request,
@@ -196,6 +204,7 @@ async def password_login(
         return response
 
     response = templates.TemplateResponse(
+        request,
         "pages/auth_verify.html",
         {
             "request": request,
@@ -246,6 +255,7 @@ async def register(
 
     if error:
         return templates.TemplateResponse(
+            request,
             "pages/register.html",
             {
                 "request": request,
@@ -261,6 +271,7 @@ async def register(
         user, tokens = await register_with_password(db, name, email, password)
     except TupaError as exc:
         return templates.TemplateResponse(
+            request,
             "pages/register.html",
             {
                 "request": request,
@@ -341,6 +352,7 @@ async def handle_setup_profile(
     # Validações
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/setup_profile.html",
             {
                 "request": request,
@@ -380,6 +392,7 @@ async def handle_update_profile(
 
     if not name:
         return templates.TemplateResponse(
+            request,
             "pages/profile.html",
             {**context, "profile_error": "O nome é obrigatório."},
             status_code=400,
@@ -387,6 +400,7 @@ async def handle_update_profile(
 
     if len(name) > 100:
         return templates.TemplateResponse(
+            request,
             "pages/profile.html",
             {**context, "profile_error": "O nome deve ter no máximo 100 caracteres."},
             status_code=400,
@@ -394,6 +408,7 @@ async def handle_update_profile(
 
     update_profile(db, user, name, user.email)
     response = templates.TemplateResponse(
+        request,
         "pages/profile.html",
         {
             "request": request,
@@ -431,6 +446,7 @@ async def handle_change_password(
 
     if len(new_password) < 6:
         return templates.TemplateResponse(
+            request,
             "pages/profile.html",
             {**context, "password_error": "A nova senha deve ter pelo menos 6 caracteres."},
             status_code=400,
@@ -438,12 +454,14 @@ async def handle_change_password(
 
     if new_password != new_password_confirm:
         return templates.TemplateResponse(
+            request,
             "pages/profile.html",
             {**context, "password_error": "As novas senhas não conferem."},
             status_code=400,
         )
 
     return templates.TemplateResponse(
+        request,
         "pages/profile.html",
         {**context, "password_error": "A alteração de senha deve ser feita no serviço de autenticação."},
         status_code=501,
@@ -456,6 +474,7 @@ async def logout(request: Request):
     from app.main import templates
 
     response = templates.TemplateResponse(
+        request,
         "pages/logout.html",
         {
             "request": request,

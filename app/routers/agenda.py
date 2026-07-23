@@ -7,7 +7,7 @@ from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
 from app.models.enums import ExecutionStatus
-from app.utils.datetime import now_local
+from app.utils.datetime import now_local, parse_local_date, format_local_date
 from app.services.agenda_service import (
     build_calendar_data,
     get_executions_for_date,
@@ -17,6 +17,7 @@ from app.services.agenda_service import (
 )
 from app.services.execution_service import (
     get_execution_by_id,
+    get_execution_display_name,
     get_execution_totals,
 )
 
@@ -66,6 +67,7 @@ async def agenda_calendar(
 
     if not active_group:
         return templates.TemplateResponse(
+            request,
             "pages/executions/index.html",
             {
                 "request": request,
@@ -103,6 +105,7 @@ async def agenda_calendar(
         next_year += 1
 
     return templates.TemplateResponse(
+        request,
         "pages/agenda/calendar.html",
         {
             "request": request,
@@ -144,8 +147,7 @@ async def agenda_list(
     selected_date = None
     if date:
         try:
-            selected_date = datetime.strptime(date, "%Y-%m-%d")
-            selected_date = selected_date.replace(tzinfo=timezone.utc)
+            selected_date = parse_local_date(date)
         except ValueError:
             pass
 
@@ -163,12 +165,13 @@ async def agenda_list(
             "execution": exec_item,
             "totals": totals,
             "template_name": template_name,
+            "execution_name": get_execution_display_name(exec_item),
         })
 
     # Agrupa por data
     grouped_by_date = {}
     for item in executions_with_data:
-        date_key = item["execution"].scheduled_date.strftime("%Y-%m-%d")
+        date_key = format_local_date(item["execution"].scheduled_date, "%Y-%m-%d")
         if date_key not in grouped_by_date:
             grouped_by_date[date_key] = {
                 "date": item["execution"].scheduled_date,
@@ -184,6 +187,7 @@ async def agenda_list(
     )
 
     return templates.TemplateResponse(
+        request,
         "pages/agenda/list.html",
         {
             "request": request,
@@ -234,8 +238,7 @@ async def handle_reschedule(
         return RedirectResponse(url="/agenda", status_code=303)
 
     try:
-        date = datetime.strptime(new_date, "%Y-%m-%d")
-        date = date.replace(tzinfo=timezone.utc)
+        date = parse_local_date(new_date)
     except ValueError:
         return RedirectResponse(url="/agenda", status_code=303)
 

@@ -3,17 +3,20 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form hx-post="/executions/{{ execution.id }}/items/{{ item.id }}/complete" hx-target="#items-container"
-                hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful) { bootstrap.Modal.getInstance(document.getElementById('completeItemModal{{ item.id }}')).hide(); }
+                hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful) { window.JaciModal && window.JaciModal.hide(document.getElementById('completeItemModal{{ item.id }}')); }
                   htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',
                     swap: 'innerHTML'
                 });
                 this.reset();
-                ">
+                "
+                data-offline-complete-item-form
+                data-execution-id="{{ execution.id }}"
+                data-item-id="{{ item.id }}">
                 <input type="hidden" name="version" value="{{ item.version }}">
                 <div class="modal-header">
                     <h3 class="modal-title h6" id="completeItemLabel{{ item.id }}">
-                        Comprar: {{ item.name }}
+                        {% if item.is_completed %}Editar compra{% else %}Comprar{% endif %}: {{ item.name }}
                     </h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
@@ -21,7 +24,7 @@
                     <div class="mb-3">
                         <label class="form-label">Quantidade comprada</label>
                         <input type="number" class="form-control" name="purchased_quantity"
-                            value="{{ item.planned_quantity|quantity }}" step="0.001" min="0.001" required>
+                            value="{{ (item.purchased_quantity if item.purchased_quantity else item.planned_quantity)|quantity }}" step="0.001" min="0.001" required>
                         <div class="form-text">
                             Planejado: {{ item.planned_quantity|quantity }}
                         </div>
@@ -29,12 +32,12 @@
                     <div class="mb-3">
                         <label class="form-label">Valor unitário (R$)</label>
                         <input type="number" class="form-control" name="unit_price" placeholder="0,00" step="0.01"
-                            min="0.01" required>
+                            min="0.01" value="{{ item.unit_price if item.unit_price else '' }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Local de compra (opcional)</label>
                         <input type="text" class="form-control" name="location"
-                            placeholder="Ex: Supermercado X, Feira Y..." value="{{ execution.current_location or '' }}">
+                            placeholder="Ex: Supermercado X, Feira Y..." value="{{ item.location or execution.current_location or '' }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Observações</label>
@@ -61,23 +64,10 @@
     requestAnimationFrame(function () {
         var modalEl = document.getElementById('completeItemModal{{ item.id }}');
         if (modalEl) {
-            // Remove qualquer modal antigo para evitar conflitos
-            var existingModal = bootstrap.Modal.getInstance(modalEl);
-            if (existingModal) {
-                existingModal.dispose();
-            }
-
-            // Cria e abre novo modal
-            var modal = new bootstrap.Modal(modalEl, {
-                backdrop: true,
-                keyboard: true,
-                focus: true,
-            });
-            modal.show();
+            window.JaciModal && window.JaciModal.show(modalEl);
 
             // Limpa o modal do DOM quando fechar
             modalEl.addEventListener('hidden.bs.modal', function () {
-                modal.dispose();
                 modalEl.remove();
             });
         }

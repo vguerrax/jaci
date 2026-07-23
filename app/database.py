@@ -56,6 +56,10 @@ def ensure_schema_compatibility() -> None:
     template_item_columns = {
         column["name"] for column in inspector.get_columns("template_items")
     }
+    execution_item_columns = {
+        column["name"] for column in inspector.get_columns("execution_items")
+    }
+    execution_columns = {column["name"] for column in inspector.get_columns("executions")}
     user_columns = {column["name"] for column in inspector.get_columns("users")}
 
     with engine.begin() as connection:
@@ -92,9 +96,31 @@ def ensure_schema_compatibility() -> None:
                 )
             )
 
+        if "template_learning_enabled" not in group_columns:
+            connection.execute(
+                text(
+                    "ALTER TABLE groups ADD COLUMN template_learning_enabled "
+                    "BOOLEAN NOT NULL DEFAULT 1"
+                )
+            )
+
         if "notes" not in template_item_columns:
             connection.execute(
                 text("ALTER TABLE template_items ADD COLUMN notes VARCHAR(255)")
+            )
+
+        if "name" not in execution_columns:
+            connection.execute(text("ALTER TABLE executions ADD COLUMN name VARCHAR(150)"))
+
+        if "template_item_id" not in execution_item_columns:
+            connection.execute(
+                text("ALTER TABLE execution_items ADD COLUMN template_item_id INTEGER")
+            )
+            connection.execute(
+                text(
+                    "CREATE INDEX ix_execution_items_template_item_id "
+                    "ON execution_items (template_item_id)"
+                )
             )
 
 

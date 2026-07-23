@@ -12,6 +12,12 @@ class Settings(BaseSettings):
 
     # Database
     database_url: str = "sqlite:///./jaci.db"
+    database_ssl_mode: str | None = None
+
+    # Backup
+    backup_enabled: bool = True
+    backup_dir: str = "/var/backups/jaci"
+    backup_retention_days: int = 30
 
     # Auth
     jwt_secret_key: str = "change-me-jwt-secret-key"

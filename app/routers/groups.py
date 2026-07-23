@@ -11,7 +11,7 @@ from app.services.group_service import (
     get_group_by_id,
     get_group_members,
     is_group_owner,
-    update_group_name,
+    update_group_settings,
     invite_member,
     remove_member,
 )
@@ -40,6 +40,7 @@ async def list_groups(
     groups = get_user_groups(db, user)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/list.html",
         {
             "request": request,
@@ -64,6 +65,7 @@ async def create_group_page(
         return RedirectResponse(url="/auth/login", status_code=303)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/create.html",
         {
             "request": request,
@@ -96,6 +98,7 @@ async def group_detail(
     owner = is_group_owner(db, group_id, user)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -127,6 +130,7 @@ async def handle_create_group(
 
     if not name.strip():
         return templates.TemplateResponse(
+            request,
             "pages/groups/create.html",
             {
                 "request": request,
@@ -146,11 +150,12 @@ async def handle_edit_group(
     request: Request,
     group_id: int,
     name: str = Form(...),
+    template_learning_enabled: bool = Form(False),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group=Depends(get_active_group),
 ):
-    """Altera o nome do grupo."""
+    """Altera configurações do grupo."""
     from app.main import templates
 
     if not user:
@@ -160,10 +165,17 @@ async def handle_edit_group(
     if not group:
         return RedirectResponse(url="/groups", status_code=303)
 
-    result = update_group_name(db, group, name, user)
+    result = update_group_settings(
+        db,
+        group,
+        name,
+        user,
+        template_learning_enabled=template_learning_enabled,
+    )
     members = get_group_members(db, group_id)
 
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -205,6 +217,7 @@ async def handle_invite(
     owner = is_group_owner(db, group_id, user)
     
     return templates.TemplateResponse(
+        request,
         "pages/groups/detail.html",
         {
             "request": request,
@@ -243,6 +256,7 @@ async def handle_remove_member(
         owner = is_group_owner(db, group_id, user)
 
         return templates.TemplateResponse(
+            request,
             "pages/groups/detail.html",
             {
                 "request": request,
@@ -288,6 +302,7 @@ async def handle_switch_group(
 
     # A página intermediária garante que o navegador persista o cookie antes de navegar.
     response = templates.TemplateResponse(
+        request,
         "pages/switch_group.html",
         {
             "request": request,

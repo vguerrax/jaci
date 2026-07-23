@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Sincronização - Jaci{% endblock %}
+
+{% block content %}
+<div class="container py-4 sync-center" data-sync-center>
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center mb-4">
+        <div>
+            <p class="text-help text-uppercase mb-1">Central de sincronização</p>
+            <h1 class="mb-1">Alterações offline</h1>
+            <p class="text-help mb-0">
+                Acompanhe a fila local e resolva conflitos antes de tentar sincronizar novamente.
+            </p>
+        </div>
+        <button type="button" class="btn btn-primary" data-sync-center-sync-now>
+            <i class="bi bi-arrow-repeat me-1"></i>
+            Sincronizar agora
+        </button>
+    </div>
+
+    <div class="sync-center-stats" aria-live="polite">
+        <div>
+            <span data-sync-count-pending>0</span>
+            <small>Pendentes</small>
+        </div>
+        <div>
+            <span data-sync-count-failed>0</span>
+            <small>Com falha</small>
+        </div>
+        <div>
+            <span data-sync-count-conflict>0</span>
+            <small>Conflitos</small>
+        </div>
+    </div>
+
+    <div class="sync-center-toolbar" role="group" aria-label="Filtros de sincronização">
+        <button type="button" class="btn btn-sm btn-primary" data-sync-filter="all">Todas</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-sync-filter="pending">Pendentes</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-sync-filter="failed">Falhas</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-sync-filter="conflict">Conflitos</button>
+    </div>
+
+    <section class="sync-center-list" data-sync-operation-list aria-live="polite">
+        <div class="sync-center-empty" data-sync-empty>
+            <i class="bi bi-cloud-check-fill"></i>
+            <strong>Nenhuma operação pendente</strong>
+            <span>Tudo que está neste dispositivo já foi sincronizado ou ainda não há alterações locais.</span>
+        </div>
+    </section>
+
+    <section class="sync-audit-section mt-4">
+        <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+            <div>
+                <h2 class="h5 mb-1">Histórico de conflitos</h2>
+                <p class="text-help mb-0">Registros persistem após a resolução para rastreabilidade.</p>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary" data-sync-audit-refresh>
+                <i class="bi bi-clock-history me-1"></i>
+                Atualizar
+            </button>
+        </div>
+        <div class="sync-audit-list" data-sync-audit-list aria-live="polite">
+            <div class="sync-center-empty" data-sync-audit-empty>
+                <i class="bi bi-journal-check"></i>
+                <strong>Nenhum conflito registrado</strong>
+                <span>Conflitos detectados na sincronização aparecerão aqui.</span>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
