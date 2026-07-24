@@ -397,16 +397,83 @@ Ao implementar novas funcionalidades:
 
 ---
 
+## Gestão Obrigatória de Demandas
+
+O diretório [`docs/domain/backlog/`](docs/domain/backlog/README.md) é a fonte de
+verdade para bugs, ajustes e melhorias. Toda nova demanda deve ser registrada
+antes de refinamento ou implementação.
+
+### Registro e ciclo de vida
+
+1. Criar o item pelo template
+   [`docs/domain/backlog/TEMPLATE.md`](docs/domain/backlog/TEMPLATE.md).
+2. Usar o próximo identificador global `BL-NNNN`, sem reutilizar números.
+3. Registrar inicialmente o item como `recebido`, com severidade `a_triar` e
+   prioridade `a_definir`.
+4. Concluir triagem, riscos, duplicidades e próximo passo antes de promover para
+   `pronto_para_refinamento`.
+5. Criar o refinamento por
+   [`docs/domain/tasks/TEMPLATE.md`](docs/domain/tasks/TEMPLATE.md), mantendo
+   links recíprocos.
+
+O fluxo principal é:
+
+```text
+recebido -> em_triagem -> pronto_para_refinamento -> em_refinamento
+         -> pronto_para_implementacao -> em_implementacao -> em_validacao
+         -> concluido
+```
+
+### Git Flow
+
+Antes de alterar arquivos versionados de uma demanda:
+
+1. Executar `git status --short` e `git branch --show-current`.
+2. Partir de `develop` e criar `feature/BL-NNNN-slug`.
+3. Não misturar demandas distintas na mesma branch.
+4. Registrar a branch no refinamento.
+5. Não fazer merge, finalizar ou remover a branch sem solicitação explícita.
+
+### Refinamento e gate de aprovação
+
+O refinamento deve definir objetivo, critérios de sucesso, escopo, riscos,
+etapas, tickets, fatias, arquivos esperados, cenários TDD e validações.
+
+Pedidos de registro, triagem, planejamento ou refinamento autorizam somente
+mudanças documentais. Testes executáveis, código, migrações, templates e ativos
+só podem começar depois que o item estiver `pronto_para_implementacao` e o
+refinamento receber aprovação explícita.
+
+Um item só chega a `concluido` depois das validações obrigatórias e do registro
+da publicação. Itens concluídos antes deste processo permanecem referenciados no
+[`backlog legado`](docs/domain/decisions/backlog.md), sem consumir a numeração
+atual.
+
+---
+
 ## Ordem de Prioridade do Roadmap
 
-1. PWA e funcionamento offline.
-2. Sincronização e resolução de conflitos.
-3. Unidades de medida.
-4. Histórico de preços.
-5. Aprendizado dos templates.
-6. Inteligência de compras.
-7. Dashboards financeiros.
-8. Integrações externas.
+O backlog ativo mantém o estado operacional das demandas. Esta ordem preserva a
+sequência estratégica do produto:
+
+1. PWA e funcionamento offline — fundação legada concluída; cobertura
+   remanescente em
+   [`BL-0001`](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
+2. Sincronização e resolução de conflitos — entregas legadas concluídas.
+3. Unidades de medida —
+   [`BL-0002`](docs/domain/backlog/items/BL-0002-unidades-medida.md).
+4. Histórico de preços —
+   [`BL-0003`](docs/domain/backlog/items/BL-0003-historico-precos.md).
+5. Aprendizado dos templates — entregas legadas concluídas.
+6. Inteligência de compras —
+   [`BL-0005`](docs/domain/backlog/items/BL-0005-inteligencia-compras.md).
+7. Dashboards financeiros —
+   [`BL-0004`](docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md).
+8. Integrações externas —
+   [`BL-0006`](docs/domain/backlog/items/BL-0006-integracoes-externas.md).
+
+O inventário completo de itens ativos e legados está em
+[`docs/domain/backlog/`](docs/domain/backlog/README.md).
 
 ---
 
@@ -436,4 +503,3 @@ Ao propor alterações, responda internamente às perguntas:
 * Isso mantém a separação entre template e execução?
 
 Se qualquer resposta for negativa, reavalie a implementação.
-

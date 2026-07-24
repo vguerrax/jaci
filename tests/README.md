@@ -38,17 +38,18 @@ venv/bin/pytest
 | FL-05 Compra colaborativa | Implementado | `test_fl05_collaborative_purchase_notifies_members_and_has_single_history`, `test_stale_item_version_fails_explicitly_without_overwriting` |
 | FL-06 Aprendizado do template | Implementado | `test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them`, `test_fl06_only_selected_suggestions_are_applied_to_template` |
 | FL-07 Gestão de grupos | Implementado | `test_member_can_be_invited_to_the_group`, `test_fl07_accepted_member_can_access_shared_templates_and_executions` |
-| FL-08 Agenda e histórico | Parcial | `test_fl08_completed_execution_remains_available_in_agenda_history`; histórico de preços e análise de gastos estão em `xfail` |
-| FL-09 Operação offline | Contrato TDD (`xfail`) | fila local, sincronização e resolução explícita de conflitos |
+| FL-08 Agenda e histórico | Parcial | `test_fl08_completed_execution_remains_available_in_agenda_history`; histórico de preços está no [BL-0003](../docs/domain/backlog/items/BL-0003-historico-precos.md) e análise de gastos no [BL-0004](../docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md) |
+| FL-09 Operação offline | Implementado com rastreabilidade pendente | fila IndexedDB, sincronização e resolução explícita cobertas por `tests/test_offline_cache.py` e `tests/test_sync_center.py`; contratos Python legados permanecem em `xfail` e são acompanhados pelo [BL-0001](../docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) |
 | FL-10 Home operacional | Implementado | `test_home_renders_one_touch_purchase_actions_and_global_sync_indicator` e `tests/test_home_dashboard.py` |
 
-Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados, aparecem
-como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até que o fluxo
-seja revisado e marcado como implementado.
+Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados,
+aparecem como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até
+que o fluxo seja revisado. Os contratos legados de FL-09 não definem o estado
+atual da implementação e devem ser reconciliados no BL-0001.
 
-# Sprint 4 — Aprendizado contínuo dos templates
+# Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 
-| Backlog | Estado | Cobertura TDD |
+| Item legado | Estado | Cobertura TDD |
 |---|---|---|
 | BL-029 Detectar itens adicionados durante a execução | Implementado | `test_bl029_detects_runtime_items_only_for_template_executions` |
 | BL-030 Sugerir incorporação de itens ao template | Implementado | `test_bl030_applies_only_selected_new_item_suggestions_to_future_executions` |
