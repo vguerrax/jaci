@@ -399,22 +399,27 @@ Ao implementar novas funcionalidades:
 
 ## Gestão Obrigatória de Demandas
 
-O diretório [`docs/domain/backlog/`](docs/domain/backlog/README.md) é a fonte de
-verdade para bugs, ajustes e melhorias. Toda nova demanda deve ser registrada
-antes de refinamento ou implementação.
+Para registrar, triar, refinar, acompanhar, reabrir, arquivar ou concluir
+demandas, usar obrigatoriamente a skill global `vgx-doc-management`. Depois da
+aprovação explícita do refinamento, usar `vgx-development` para testes
+executáveis, implementação e validações.
 
-### Registro e ciclo de vida
+### Perfil documental do Jaci
 
-1. Criar o item pelo template
-   [`docs/domain/backlog/TEMPLATE.md`](docs/domain/backlog/TEMPLATE.md).
-2. Usar o próximo identificador global `BL-NNNN`, sem reutilizar números.
-3. Registrar inicialmente o item como `recebido`, com severidade `a_triar` e
-   prioridade `a_definir`.
-4. Concluir triagem, riscos, duplicidades e próximo passo antes de promover para
-   `pronto_para_refinamento`.
-5. Criar o refinamento por
-   [`docs/domain/tasks/TEMPLATE.md`](docs/domain/tasks/TEMPLATE.md), mantendo
-   links recíprocos.
+- Fonte de verdade: [`docs/domain/backlog/`](docs/domain/backlog/README.md).
+- Entrada: [`docs/domain/backlog/TEMPLATE.md`](docs/domain/backlog/TEMPLATE.md).
+- Refinamento:
+  [`docs/domain/tasks/TEMPLATE.md`](docs/domain/tasks/TEMPLATE.md).
+- Identificador: próximo `BL-NNNN` global, sem reutilização.
+- Estado inicial: `recebido`, severidade `a_triar` e prioridade `a_definir`.
+- Branch: `feature/BL-NNNN-slug` criada a partir de `develop`; registrar a
+  branch no refinamento e não integrar ou remover sem solicitação explícita.
+- Riscos obrigatórios: segurança, LGPD, isolamento por grupo,
+  offline/sincronização, histórico financeiro, recorrência e separação entre
+  template e execução.
+- Itens anteriores ao processo permanecem no
+  [`backlog legado`](docs/domain/decisions/backlog.md) e não consomem a
+  numeração atual.
 
 O fluxo principal é:
 
@@ -424,30 +429,14 @@ recebido -> em_triagem -> pronto_para_refinamento -> em_refinamento
          -> concluido
 ```
 
-### Git Flow
-
-Antes de alterar arquivos versionados de uma demanda:
-
-1. Executar `git status --short` e `git branch --show-current`.
-2. Partir de `develop` e criar `feature/BL-NNNN-slug`.
-3. Não misturar demandas distintas na mesma branch.
-4. Registrar a branch no refinamento.
-5. Não fazer merge, finalizar ou remover a branch sem solicitação explícita.
-
 ### Refinamento e gate de aprovação
 
-O refinamento deve definir objetivo, critérios de sucesso, escopo, riscos,
-etapas, tickets, fatias, arquivos esperados, cenários TDD e validações.
-
-Pedidos de registro, triagem, planejamento ou refinamento autorizam somente
-mudanças documentais. Testes executáveis, código, migrações, templates e ativos
-só podem começar depois que o item estiver `pronto_para_implementacao` e o
-refinamento receber aprovação explícita.
-
-Um item só chega a `concluido` depois das validações obrigatórias e do registro
-da publicação. Itens concluídos antes deste processo permanecem referenciados no
-[`backlog legado`](docs/domain/decisions/backlog.md), sem consumir a numeração
-atual.
+Aplicar o gate definido por `vgx-doc-management`: pedidos documentais autorizam
+somente backlog, refinamento e documentação de domínio. Testes, código,
+migrações, templates e ativos só começam quando o item estiver
+`pronto_para_implementacao` e o usuário aprovar explicitamente o refinamento já
+versionado. Um item só chega a `concluido` depois das validações obrigatórias e
+do registro da publicação.
 
 ---
 

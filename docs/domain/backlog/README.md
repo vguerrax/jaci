@@ -4,6 +4,9 @@ Este diretório é a fonte de verdade para novas demandas de produção do Jaci.
 Ele acompanha bugs, ajustes e melhorias desde a entrada até a publicação, sem
 substituir o refinamento técnico obrigatório em `docs/domain/tasks/`.
 
+Para automações Codex, usar a skill global `vgx-doc-management`; este documento,
+os templates e o índice abaixo definem o perfil local autoritativo do Jaci.
+
 O [backlog legado](../decisions/backlog.md) registra entregas anteriores à
 adoção deste processo. Seus identificadores não participam da numeração
 `BL-NNNN` e nunca devem ser reutilizados no backlog atual.
