@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0012](../backlog/items/BL-0012-vgx-doc-management.md)
 - Branch: `feature/BL-0012-vgx-doc-management`
 - Responsável pelo refinamento: Engenharia VGX
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `concluido`
 - Demandas coordenadas: Moara `BL-0030`; Potira `BL-0010`
 
 ## Objetivo e critérios de sucesso
@@ -182,15 +182,21 @@ das duas skills e a revisão estática das três integrações.
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 — Skill compartilhada | `0/1` | `1` | Aguardando aprovação |
-| Etapa 2 — Composição entre skills | `0/1` | `1` | Aguardando aprovação |
-| Etapa 3 — Adaptadores dos projetos | `0/2` | `2` | Aguardando aprovação |
+| Etapa 1 — Skill compartilhada | `1/1` | `0` | Concluída |
+| Etapa 2 — Composição entre skills | `1/1` | `0` | Concluída |
+| Etapa 3 — Adaptadores dos projetos | `2/2` | `0` | Concluída |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados
-- Resultado das validações focadas: ainda não iniciado
-- Resultado da validação manual: ainda não iniciado
+- Commits/PRs: Jaci `80f8ba9`; Moara `c11064f`; Potira `0c34a2e`; skills
+  globais não pertencem a um repositório Git
+- Resultado das validações focadas: `quick_validate.py` aprovado para
+  `vgx-doc-management` e `vgx-development`; buscas estáticas e
+  `git diff --check` aprovados nos três projetos
+- Resultado da validação manual: oito cenários documentais revisados; seleção
+  de perfis, gate, sanitização, coordenação entre repositórios e publicação
+  obedecem ao refinamento
 - Resultado da regressão total: `N/A` para as aplicações
 - `xfail(strict=True)` pendentes no escopo: nenhum
-- Documentação atualizada: item e refinamento `BL-0012`
+- Documentação atualizada: item e refinamento `BL-0012`, `AGENTS.md` e índice
+  local; itens coordenados Moara `BL-0030` e Potira `BL-0010`
