@@ -152,6 +152,7 @@ não muda de caminho nem é apagado.
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
+| [BL-0012](items/BL-0012-vgx-doc-management.md) | Gestão documental compartilhada dos projetos VGX | `ajuste` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia VGX | `2026-07-30` |
 
 ### Itens arquivados
 
