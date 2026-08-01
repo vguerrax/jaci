@@ -7,14 +7,14 @@
 | ID | `BL-0012` |
 | Título | Gestão documental compartilhada dos projetos VGX |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-07-30` |
 | Origem | Solicitação direta para consolidar as políticas de Moara e Potira |
 | Ambiente/versão | Configuração local do Codex e documentação dos repositórios Jaci, Moara e Potira |
 | Responsável | Engenharia VGX |
-| Atualizado em | `2026-07-31` |
+| Atualizado em | `2026-08-01` |
 
 ### Comportamento observado
 
@@ -75,18 +75,20 @@ Ler e reconciliar manualmente todas as políticas a cada demanda.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0012](../../tasks/BL-0012-vgx-doc-management.md)
-- Implementação (commits/PRs): `80f8ba9` no Jaci; `c11064f` no Moara;
-  `0c34a2e` no Potira; skills globais instaladas localmente sem repositório Git
+- Implementação (commits/PRs): `80f8ba9` e `a1ab978` no Jaci; `c11064f` e
+  `bd1b381` no Moara; `0c34a2e` e merge `14d753c` no Potira; skills globais
+  instaladas localmente sem repositório Git
 - Validações: `quick_validate.py` aprovado para `vgx-doc-management` e
   `vgx-development`; oito cenários documentais revisados; buscas estáticas e
   `git diff --check` aprovados nos três projetos
-- Publicação: skill instalada em `~/.codex/skills`; branches dos projetos ainda
-  não integradas
+- Publicação: skill instalada em `~/.codex/skills`; adaptadores integrados às
+  branches `develop` do Jaci (`a1ab978`), Moara (`bd1b381`) e Potira
+  (`14d753c`) em `2026-08-01`
 - Itens relacionados: Moara `BL-0030`; Potira `BL-0010`
 
 ### Impedimentos
 
-- Integração das três branches ainda não solicitada.
+- Nenhum.
 
 ## Histórico
 
@@ -98,3 +100,5 @@ Ler e reconciliar manualmente todas as políticas a cada demanda.
 | `2026-07-30 23:53 -03` | Codex | Estado alterado para `pronto_para_implementacao` | Refinamento completo, aguardando aprovação explícita |
 | `2026-07-31 00:07 -03` | Usuário/Codex | Refinamento aprovado; estado alterado para `em_implementacao` | Aprovação explícita recebida após apresentação dos três refinamentos |
 | `2026-07-31 00:07 -03` | Codex | Estado alterado para `em_validacao` | Skill criada, integração concluída e validações documentais aprovadas |
+| `2026-08-01 20:32 -03` | Usuário/Codex | Integração das branches autorizada e realizada | Adaptadores presentes em `develop` no Jaci (`a1ab978`), Moara (`bd1b381`) e Potira (`14d753c`) |
+| `2026-08-01 20:32 -03` | Codex | Estado alterado para `concluido` | Validações aprovadas, skill instalada e publicação coordenada registrada |

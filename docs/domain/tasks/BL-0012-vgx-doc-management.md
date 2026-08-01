@@ -188,8 +188,9 @@ das duas skills e a revisão estática das três integrações.
 
 ## Fechamento
 
-- Commits/PRs: Jaci `80f8ba9`; Moara `c11064f`; Potira `0c34a2e`; skills
-  globais não pertencem a um repositório Git
+- Commits/PRs: Jaci `80f8ba9` e `a1ab978`; Moara `c11064f` e `bd1b381`;
+  Potira `0c34a2e` e merge `14d753c`; skills globais não pertencem a um
+  repositório Git
 - Resultado das validações focadas: `quick_validate.py` aprovado para
   `vgx-doc-management` e `vgx-development`; buscas estáticas e
   `git diff --check` aprovados nos três projetos
@@ -200,3 +201,5 @@ das duas skills e a revisão estática das três integrações.
 - `xfail(strict=True)` pendentes no escopo: nenhum
 - Documentação atualizada: item e refinamento `BL-0012`, `AGENTS.md` e índice
   local; itens coordenados Moara `BL-0030` e Potira `BL-0010`
+- Publicação: skill instalada em `~/.codex/skills` e adaptadores integrados às
+  branches `develop` dos três projetos em `2026-08-01`
