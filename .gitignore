@@ -207,6 +207,8 @@ tempCodeRunnerFile.py
 # Ruff stuff:
 .ruff_cache/
 
+graphify-out/cache
+
 # PyPI configuration file
 .pypirc
 
