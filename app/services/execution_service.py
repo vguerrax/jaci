@@ -306,10 +306,18 @@ def add_item_to_execution(
     name: str,
     planned_quantity: float = 1,
     category_id: Optional[int] = None,
-    notes: Optional[str] = None
+    notes: Optional[str] = None,
+    unit_price: Optional[float] = None,
 ) -> ExecutionItem:
-    """Adiciona item durante a execução (não afeta o template)."""
+    """Adiciona item à execução sem alterar o template associado."""
     ensure_execution_is_mutable(execution)
+    if execution.status == ExecutionStatus.cancelled:
+        raise ValueError("Não é possível alterar execução cancelada.")
+
+    is_purchased = execution.status == ExecutionStatus.in_progress
+    if is_purchased and (unit_price is None or unit_price <= 0):
+        raise ValueError("Valor unitário deve ser maior que zero.")
+
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -326,6 +334,9 @@ def add_item_to_execution(
         execution_id=execution.id,
         name=name.strip(),
         planned_quantity=planned_quantity,
+        purchased_quantity=planned_quantity if is_purchased else None,
+        unit_price=unit_price if is_purchased else None,
+        is_completed=is_purchased,
         category_id=category_id,
         notes=notes,
         sort_order=(max_order or 0) + 1,
@@ -333,7 +344,11 @@ def add_item_to_execution(
     db.add(item)
     db.commit()
     db.refresh(item)
-    logger.info(f"Item '{item.name}' adicionado durante execução")
+    logger.info(
+        "Item '%s' adicionado à execução como %s",
+        item.name,
+        "comprado" if item.is_completed else "pendente",
+    )
     return item
 
 

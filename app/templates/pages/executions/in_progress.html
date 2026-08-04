@@ -74,6 +74,7 @@
             <h3 class="h6 mb-3">Adicionar Item</h3>
             <form hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container" hx-swap="innerHTML"
                 data-offline-add-item data-execution-id="{{ execution.id }}"
+                data-execution-status="{{ execution.status }}"
                 hx-on::after-request="
                 htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
                     target: '#sidebar-container',
@@ -86,9 +87,19 @@
                         required>
                 </div>
                 <div class="mb-2">
-                    <input type="number" class="form-control form-control-sm" name="planned_quantity" step="0.001"
+                    <label class="form-label small" for="addItemQuantity">
+                        {% if execution.status == 'in_progress' %}Quantidade comprada{% else %}Quantidade planejada{% endif %}
+                    </label>
+                    <input id="addItemQuantity" type="number" class="form-control form-control-sm" name="planned_quantity" step="0.001"
                         value="1" min="0.001">
                 </div>
+                {% if execution.status == 'in_progress' %}
+                <div class="mb-2">
+                    <label class="form-label small" for="addItemUnitPrice">Valor unitário (R$)</label>
+                    <input id="addItemUnitPrice" type="number" class="form-control form-control-sm" name="unit_price"
+                        placeholder="0,00" step="0.01" min="0.01" required>
+                </div>
+                {% endif %}
                 <div class="mb-2">
                     <select class="form-select form-select-sm" name="category_id">
                         <option value="0">Sem categoria</option>

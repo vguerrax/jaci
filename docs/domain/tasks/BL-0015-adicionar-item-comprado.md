@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0015](../backlog/items/BL-0015-adicionar-item-comprado.md)
 - Branch: `feature/BL-0015-adicionar-item-comprado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_implementacao`
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0016`
 
 ## Objetivo e critérios de sucesso
@@ -105,13 +105,14 @@ paridade confiável entre o fluxo online e o estado local offline.
 - Arquivos esperados:
   - `tests/test_business_rules.py`
   - `tests/test_template_execution_flow.py`
+  - `tests/test_user_flows.py`
   - `tests/test_execution_totals_regression.py`
   - `tests/test_offline_cache.py`
   - `app/services/execution_service.py`
   - `app/routers/executions.py`
   - `app/templates/pages/executions/in_progress.html`
 - Validações focadas:
-  - `timeout 180 venv/bin/pytest tests/test_business_rules.py tests/test_template_execution_flow.py tests/test_execution_totals_regression.py tests/test_offline_cache.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_business_rules.py tests/test_template_execution_flow.py tests/test_execution_totals_regression.py tests/test_offline_cache.py`
   - `timeout 180 env PYTHONPATH=. venv/bin/pylint app/services/execution_service.py app/routers/executions.py --errors-only`
   - validação manual online em viewport móvel e desktop
 - Documentação a atualizar:
@@ -135,7 +136,7 @@ paridade confiável entre o fluxo online e o estado local offline.
 - Validações focadas:
   - `node --check app/static/js/offline-cache.js`
   - `node --check app/static/js/service-worker.js`
-  - `timeout 180 venv/bin/pytest tests/test_offline_cache.py tests/test_sync_center.py tests/test_sync_status.py tests/test_pwa.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_offline_cache.py tests/test_sync_center.py tests/test_sync_status.py tests/test_pwa.py`
   - `timeout 180 env PYTHONPATH=. venv/bin/pylint app/routers/offline.py --errors-only`
   - validação manual offline, reconexão e reconciliação em viewport móvel
 - Documentação a atualizar:
@@ -230,14 +231,17 @@ ticket permanecer em `xfail(strict=True)`:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Inclusão comprada online/offline | `0/2` | `2` | Pendente |
+| Etapa 1 / Ticket 1.1 — Inclusão comprada online/offline | `1/2` | `1` | Em andamento |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados.
-- Resultado das validações focadas: ainda não executadas.
+- Commits/PRs: fatia 1.1.1 implementada; commit a registrar.
+- Resultado das validações focadas: fatia 1.1.1 com 54 testes aprovados e 3
+  contratos offline em `xfail(strict=True)`; `git diff --check` aprovado;
+  `pylint` não está instalado no ambiente virtual.
 - Resultado da validação manual: ainda não executada.
 - Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: contratos offline futuros das
-  fatias 1.1.2, ainda não criados.
+- `xfail(strict=True)` pendentes no escopo: 3 contratos da fatia 1.1.2 em
+  `tests/test_offline_cache.py` e 1 contrato de cache PWA em
+  `tests/test_pwa.py`.
 - Documentação atualizada: item, índice e este refinamento.

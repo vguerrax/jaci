@@ -7,7 +7,7 @@
 | ID | `BL-0015` |
 | Título | Adicionar item como comprado durante execução |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -75,14 +75,15 @@ quantidade e valor unitário.
 | Dependências | Serviço e rota de itens, fragmentos HTMX, totais e alertas, IndexedDB/fila offline, reconciliação e cache PWA |
 | Duplicidades | Nenhuma identificada; BL-0013, BL-0014 e BL-0016 são melhorias correlatas de interface, não substitutas |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita do refinamento versionado antes de criar testes executáveis ou código |
+| Próximo passo | Executar a fatia 1.1.1 — contratos TDD e fluxo online atômico |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0015](../../tasks/BL-0015-adicionar-item-comprado.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: consistência documental e `git diff --check`; nenhuma validação
-  executável iniciada.
+- Implementação (commits/PRs): fatia 1.1.1 implementada; commit a registrar.
+- Validações: fatia 1.1.1 com 54 testes aprovados e 3 contratos offline em
+  `xfail(strict=True)`; `git diff --check` aprovado; `pylint` indisponível no
+  ambiente virtual.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0014` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
@@ -100,3 +101,5 @@ quantidade e valor unitário.
 | `2026-08-04 00:22 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Quantidade compartilhada, valor maior que zero e atualização offline imediata definidos com o usuário |
 | `2026-08-04 00:22 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Documento técnico criado e ligado ao item |
 | `2026-08-04 00:22 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, duas fatias, contratos TDD e validações refinados; aguarda nova aprovação explícita |
+| `2026-08-04 00:30 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `4e5aa92` |
+| `2026-08-04 00:36 -03` | Codex | Fatia 1.1.1 concluída (`1/2`) | Contratos completos escritos; fluxo online validado com 54 testes aprovados e 3 `xfail(strict=True)` da fatia offline |
