@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0016](../backlog/items/BL-0016-botao-flutuante-adicionar-itens.md)
 - Branch: `feature/BL-0016-botao-flutuante-adicionar-itens`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_implementacao`
+- Estado do refinamento: `concluido`
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0015`
 - Revisão de produto: em `2026-08-04`, o link que rolava até o formulário
   foi rejeitado por retirar o usuário da posição atual; esta versão o substitui
@@ -254,14 +254,21 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Adição contextual por modal | `0/1` | `1` | Em implementação |
+| Etapa 1 / Ticket 1.1 — Adição contextual por modal | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados.
-- Resultado das validações focadas: ainda não executadas.
-- Resultado da validação manual: ainda não executada.
-- Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado.
-- Documentação atualizada: item e este refinamento; rastreabilidade de testes
-  será atualizada na implementação.
+- Commits/PRs: commit da fatia a registrar no fechamento de rastreabilidade;
+  branch `feature/BL-0016-botao-flutuante-adicionar-itens`.
+- Resultado das validações focadas: 97 testes aprovados; sintaxe de
+  `item-add-modal.js`, `offline-cache.js` e `service-worker.js` aprovada;
+  módulos Python compilados sem erro. O `pylint` não está instalado no
+  ambiente virtual e a opção `--no-cov` não está disponível nesta instalação
+  do pytest.
+- Resultado da validação manual: pendente em navegador real; infraestrutura
+  Playwright continua acompanhada pela BL-0011 e não foi criada neste item.
+- Resultado da regressão total: migrações no head; 209 testes aprovados e 5
+  `xfail` legados fora do escopo.
+- `xfail(strict=True)` pendentes no escopo: nenhum.
+- Documentação atualizada: item, índice, rastreabilidade de testes e este
+  refinamento; grafo atualizado após a implementação.

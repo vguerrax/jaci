@@ -1068,6 +1068,15 @@ def test_add_item_form_is_offline_capable():
     assert 'name="notes"' in detail
 
 
+def test_offline_add_item_notifies_modal_only_after_local_queue_success():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    success_event = "new CustomEvent('jaci:item-add-success', { bubbles: true })"
+    enqueue_call = "enqueueAddExecutionItemOperation(operation)"
+    assert success_event in script
+    assert script.index(enqueue_call) < script.index(success_event)
+
+
 def test_offline_added_purchase_updates_local_state_and_reconciles_temp_id():
     script = Path("app/static/js/offline-cache.js").read_text()
     items = Path("app/templates/pages/executions/_items_fragment.html").read_text()

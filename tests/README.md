@@ -52,6 +52,7 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | Item | Estado | Cobertura principal |
 |---|---|---|
 | [BL-0014](../docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md) Resumo de orçamento fixo | Em validação | `tests/test_sticky_budget.py`, `tests/test_agenda_and_budget_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py` e `tests/test_pwa.py` |
+| [BL-0016](../docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md) Adição contextual por modal | Em validação | `tests/test_item_add_fab.py`, `tests/test_template_execution_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py`, `tests/test_item_filter.py` e `tests/test_sticky_budget.py` |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 

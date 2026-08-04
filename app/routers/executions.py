@@ -866,6 +866,19 @@ async def handle_add_item(
         return RedirectResponse(url="/executions", status_code=303)
 
     if not name.strip():
+        if request.headers.get("HX-Request", "").lower() == "true":
+            from app.main import templates
+
+            return templates.TemplateResponse(
+                request,
+                "components/item_add_feedback.html",
+                {"message": "O nome do item é obrigatório."},
+                headers={
+                    "HX-Retarget": "#executionItemAddFeedback",
+                    "HX-Reswap": "innerHTML",
+                    "X-Jaci-Item-Add-Error": "true",
+                },
+            )
         return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
     try:
@@ -878,7 +891,20 @@ async def handle_add_item(
             notes,
             unit_price,
         )
-    except ValueError:
+    except ValueError as error:
+        if request.headers.get("HX-Request", "").lower() == "true":
+            from app.main import templates
+
+            return templates.TemplateResponse(
+                request,
+                "components/item_add_feedback.html",
+                {"message": str(error)},
+                headers={
+                    "HX-Retarget": "#executionItemAddFeedback",
+                    "HX-Reswap": "innerHTML",
+                    "X-Jaci-Item-Add-Error": "true",
+                },
+            )
         return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
     # Broadcast

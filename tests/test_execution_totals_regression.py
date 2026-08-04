@@ -132,3 +132,47 @@ def test_add_item_route_persists_purchase_before_totals_and_broadcast(
     assert response == "fragment"
     assert [event for event, _ in events] == ["item_added", "budget_alert"]
     assert events[0][1]["total_price"] == 18
+
+
+def test_execution_add_item_htmx_error_stays_in_modal_without_mutation(
+    db, make_user, make_group
+):
+    user = make_user("ana-modal-error@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+    request = Request(
+        {
+            "type": "http",
+            "method": "POST",
+            "path": f"/executions/{execution.id}/items/add",
+            "headers": [(b"hx-request", b"true")],
+        }
+    )
+
+    response = asyncio.run(
+        execution_routes.handle_add_item(
+            request=request,
+            execution_id=execution.id,
+            name="   ",
+            planned_quantity=1,
+            unit_price=5,
+            category_id=0,
+            notes=None,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    assert response.status_code == 200
+    assert response.headers["hx-retarget"] == "#executionItemAddFeedback"
+    assert response.headers["x-jaci-item-add-error"] == "true"
+    assert "O nome do item" in response.body.decode()
+    assert execution.items == []

@@ -3,6 +3,7 @@ from pathlib import Path
 
 SCRIPT_PATH = Path("app/static/js/item-filter.js")
 TEMPLATE_DETAIL_PATH = Path("app/templates/pages/templates/detail.html")
+TEMPLATE_ITEMS_FRAGMENT_PATH = Path("app/templates/pages/templates/_items_fragment.html")
 MUTABLE_EXECUTION_PATH = Path("app/templates/pages/executions/in_progress.html")
 ITEMS_FRAGMENT_PATH = Path("app/templates/pages/executions/_items_fragment.html")
 COMPLETED_EXECUTION_PATH = Path("app/templates/pages/executions/completed.html")
@@ -78,17 +79,19 @@ def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
 
 def test_template_detail_exposes_accessible_filter_contract():
     page = read(TEMPLATE_DETAIL_PATH)
+    fragment = read(TEMPLATE_ITEMS_FRAGMENT_PATH)
 
     assert "data-item-filter-root" in page
-    assert 'type="search"' in page
-    assert 'aria-label="Buscar itens por nome"' in page
-    assert "data-item-filter-input" in page
-    assert "data-item-filter-clear" not in page
-    assert "data-item-filter-empty" in page
-    assert "data-item-filter-group" in page
-    assert "data-item-filter-row" in page
-    assert "data-item-filter-name" in page
-    assert "data-item-filter-count" in page
+    assert "pages/templates/_items_fragment.html" in page
+    assert 'type="search"' in fragment
+    assert 'aria-label="Buscar itens por nome"' in fragment
+    assert "data-item-filter-input" in fragment
+    assert "data-item-filter-clear" not in fragment
+    assert "data-item-filter-empty" in fragment
+    assert "data-item-filter-group" in fragment
+    assert "data-item-filter-row" in fragment
+    assert "data-item-filter-name" in fragment
+    assert "data-item-filter-count" in fragment
     assert '/static/js/item-filter.js' in page
 
 
