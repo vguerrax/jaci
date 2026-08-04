@@ -85,11 +85,14 @@ produto desejado.
 
 - Documento refinado: [Refinamento BL-0013](../../tasks/BL-0013-filtrar-itens-lista-compra.md).
 - Implementação (commits/PRs): fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3
-  `4c897ae`.
+  `4c897ae`; ajuste visual `64b38d1`; correção do collapse com hash a registrar
+  após o commit técnico.
 - Validações: fatia 1 com 8 testes aprovados; fatia 2 com verificações
   sintáticas JavaScript e 35 testes aprovados; fatia 3 com 6 testes aprovados
   e 4 templates compilados; migrações no head; regressão com 178 testes
-  aprovados e 5 `xfail` legados fora do escopo.
+  aprovados e 5 `xfail` legados fora do escopo. Após a correção do collapse:
+  16 testes focados aprovados, smoke test Chrome com resultado `closed` e nova
+  regressão com 179 testes aprovados e 5 `xfail` legados.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`; `BL-0011`
   acompanha a infraestrutura futura de testes em navegador e os demais itens
@@ -113,3 +116,5 @@ produto desejado.
 | `2026-08-03 21:25 -03` | Codex | Fatia 1.1.2 concluída (`2/3`) | Compras mutáveis e atualizações dinâmicas validadas com 35 testes aprovados |
 | `2026-08-03 21:27 -03` | Codex | Fatia 1.1.3 concluída (`3/3`) | Compra finalizada padronizada; 6 contratos aprovados e 4 templates compilados |
 | `2026-08-03 21:28 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 178 testes aprovados e 5 `xfail` legados fora do escopo |
+| `2026-08-03 21:45 -03` | Usuário | Falha no botão global reportada durante validação | Remoção do botão Limpar em `64b38d1` deixou a referência JavaScript `clear` sem declaração |
+| `2026-08-03 21:48 -03` | Codex | Defeito de validação corrigido | Listener restaurado com segurança, cache PWA `v24`, 16 testes focados, Chrome headless `closed` e regressão 179/5 |

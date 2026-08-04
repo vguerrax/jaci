@@ -216,14 +216,18 @@ pendentes:
 
 ## Fechamento
 
-- Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 `4c897ae`
+- Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 `4c897ae`;
+  ajuste visual `64b38d1`; correção do collapse com hash a registrar após o
+  commit técnico
 - Resultado das validações focadas: fatia 1 — `node --check` e 8 testes
   aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados;
   fatia 3 — 6 testes aprovados e 4 templates Jinja2 compilados
-- Resultado da validação manual: pendente de navegador; o Jaci ainda não possui
-  a infraestrutura Playwright acompanhada pela BL-0011
+- Resultado da validação manual: smoke test Chrome headless confirmou o grupo
+  global de `collapse show` para `collapse` (`closed`); fluxo completo em
+  navegador permanece pendente da infraestrutura Playwright da BL-0011
 - Resultado da regressão total: migrações no head em `.env.test`; 178 testes
-  aprovados e 5 `xfail` legados fora do escopo
+  aprovados e 5 `xfail` legados fora do escopo; após a correção do collapse,
+  179 testes aprovados e os mesmos 5 `xfail` legados
 - `xfail(strict=True)` pendentes no escopo: nenhum
 - Documentação atualizada: item, índice, este refinamento e `tests/README.md`
 - Publicação: ainda não publicada

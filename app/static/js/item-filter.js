@@ -7,6 +7,7 @@
 
     const ROOT_SELECTOR = '[data-item-filter-root]';
     const INPUT_SELECTOR = '[data-item-filter-input]';
+    const CLEAR_SELECTOR = '[data-item-filter-clear]';
     const GROUP_SELECTOR = '[data-item-filter-group]';
     const ROW_SELECTOR = '[data-item-filter-row]';
     const COUNT_SELECTOR = '[data-item-filter-count]';
@@ -105,6 +106,9 @@
         root.querySelectorAll(INPUT_SELECTOR).forEach(function (input) {
             if (input.value !== query) input.value = query;
         });
+        root.querySelectorAll(CLEAR_SELECTOR).forEach(function (button) {
+            button.hidden = query.length === 0;
+        });
     }
 
     function apply(root) {
@@ -189,6 +193,7 @@
             apply(root);
         });
         root.addEventListener('click', function (event) {
+            const clear = event.target.closest(CLEAR_SELECTOR);
             if (clear) {
                 root._jaciItemFilterState.query = '';
                 apply(root);

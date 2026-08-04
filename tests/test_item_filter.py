@@ -41,6 +41,20 @@ def test_shared_item_filter_controls_rows_groups_counts_and_empty_state():
     assert "data-item-filter-original-count" in script
 
 
+def test_clear_and_collapse_controls_share_a_safe_click_handler():
+    script = read(SCRIPT_PATH)
+    mutable_execution = read(ITEMS_FRAGMENT_PATH)
+
+    clear_declaration = "const clear = event.target.closest(CLEAR_SELECTOR)"
+    collapse_handler = "event.target.closest(COLLAPSE_ALL_SELECTOR)"
+
+    assert "const CLEAR_SELECTOR = '[data-item-filter-clear]'" in script
+    assert clear_declaration in script
+    assert collapse_handler in script
+    assert script.index(clear_declaration) < script.index(collapse_handler)
+    assert "data-item-filter-clear" not in mutable_execution
+
+
 def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
     script = read(SCRIPT_PATH)
     page = read(MUTABLE_EXECUTION_PATH)
