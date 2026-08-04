@@ -38,29 +38,21 @@
     <div class="col-lg-8" data-item-filter-root>
         {% if grouped_items %}
         <div class="mb-3 d-flex flex-column flex-sm-row align-items-stretch gap-2">
-            <div class="input-group flex-grow-1">
-                <label for="completedExecutionItemFilter" class="visually-hidden">
-                    Buscar itens por nome
-                </label>
+            <div class="input-group w-100">
                 <span class="input-group-text" aria-hidden="true">
                     <i class="bi bi-search"></i>
                 </span>
-                <input id="completedExecutionItemFilter" type="search" class="form-control"
-                    placeholder="Buscar item" aria-label="Buscar itens por nome"
-                    autocomplete="off" data-item-filter-input>
-                <button type="button" class="btn btn-outline-secondary"
-                    data-item-filter-clear hidden>
-                    Limpar
-                </button>
+                <input id="executionItemFilter" type="search" class="form-control" placeholder="Buscar item"
+                    aria-label="Buscar itens por nome" autocomplete="off" data-item-filter-input>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary"
-                data-item-filter-collapse-all>
+        </div>
+        <div class="mb-3 text-end">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-item-filter-collapse-all>
                 <i class="bi bi-chevron-expand"></i>
                 Expandir/Recolher Todos
             </button>
         </div>
-        <p class="alert alert-info alert-jaci" role="status" aria-live="polite"
-            data-item-filter-empty hidden>
+        <p class="alert alert-info alert-jaci" role="status" aria-live="polite" data-item-filter-empty hidden>
             Nenhum item encontrado.
         </p>
         {% endif %}
@@ -68,7 +60,8 @@
         {% for item_group in grouped_items %}
         {% set completed_items = item_group.get('items') | selectattr('is_completed', 'equalto', true) | list %}
         {% if completed_items %}
-        {% set completed_cat_id = ('completed-cat-' ~ item_group.category.id ~ '-items') if item_group.category else 'completed-sem-categoria-items' %}
+        {% set completed_cat_id = ('completed-cat-' ~ item_group.category.id ~ '-items') if item_group.category else
+        'completed-sem-categoria-items' %}
         <div class="card-jaci mb-3" data-item-filter-group>
             <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
                 <div>
@@ -80,23 +73,19 @@
                     {% else %}
                     <span>Sem categoria</span>
                     {% endif %}
-                    <span class="text-help small" data-item-filter-count
-                        data-item-filter-count-mode="completed">({{ completed_items|length }} comprados)</span>
+                    <span class="text-help small" data-item-filter-count data-item-filter-count-mode="completed">({{
+                        completed_items|length }} comprados)</span>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary"
-                    data-bs-toggle="collapse" data-bs-target="#{{ completed_cat_id }}"
-                    aria-expanded="true">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
+                    data-bs-target="#{{ completed_cat_id }}" aria-expanded="true">
                     <i class="bi bi-chevron-expand"></i>
                 </button>
             </div>
-            <div class="card-body collapse show" id="{{ completed_cat_id }}"
-                data-item-filter-collapse>
+            <div class="card-body collapse show" id="{{ completed_cat_id }}" data-item-filter-collapse>
                 <div class="list-group list-group-flush list-group-jaci">
                     {% for item in completed_items %}
-                    <div class="list-group-item" data-item-filter-row
-                        data-item-filter-name="{{ item.name }}"
-                        data-item-filter-completed="true"
-                        data-item-filter-total-price="{{ item.total_price or 0 }}">
+                    <div class="list-group-item" data-item-filter-row data-item-filter-name="{{ item.name }}"
+                        data-item-filter-completed="true" data-item-filter-total-price="{{ item.total_price or 0 }}">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
                                 <span class="text-strikethrough">{{ item.name }}</span>
@@ -140,23 +129,19 @@
             <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
                 <div>
                     <span>Não comprados</span>
-                    <span class="text-help small" data-item-filter-count
-                        data-item-filter-count-mode="pending">({{ not_purchased|length }})</span>
+                    <span class="text-help small" data-item-filter-count data-item-filter-count-mode="pending">({{
+                        not_purchased|length }})</span>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary"
-                    data-bs-toggle="collapse" data-bs-target="#completed-not-purchased-items"
-                    aria-expanded="true">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
+                    data-bs-target="#completed-not-purchased-items" aria-expanded="true">
                     <i class="bi bi-chevron-expand"></i>
                 </button>
             </div>
-            <div class="card-body collapse show" id="completed-not-purchased-items"
-                data-item-filter-collapse>
+            <div class="card-body collapse show" id="completed-not-purchased-items" data-item-filter-collapse>
                 <div class="list-group list-group-flush list-group-jaci">
                     {% for item in not_purchased %}
-                    <div class="list-group-item text-clay" data-item-filter-row
-                        data-item-filter-name="{{ item.name }}"
-                        data-item-filter-completed="false"
-                        data-item-filter-total-price="0">
+                    <div class="list-group-item text-clay" data-item-filter-row data-item-filter-name="{{ item.name }}"
+                        data-item-filter-completed="false" data-item-filter-total-price="0">
                         <span>{{ item.name }}</span>
                         <span class="badge-jaci badge-cancelled small ms-1">
                             {{ item.planned_quantity|quantity }}x planejado
