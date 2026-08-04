@@ -78,11 +78,14 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0016](../../tasks/BL-0016-botao-flutuante-adicionar-itens.md).
-- Implementação (commits/PRs): fatia 1.1.1 `90393f9`.
-- Validações: 97 testes focados aprovados; sintaxe JavaScript e compilação dos
-  módulos Python aprovadas; migrações no head; regressão com 209 testes
-  aprovados e 5 `xfail` legados fora do escopo; `pylint` indisponível no
-  ambiente virtual. Validação manual em navegador real permanece pendente.
+- Implementação (commits/PRs): fatia 1.1.1 `90393f9`; correção do filtro
+  dinâmico a registrar no fechamento de rastreabilidade.
+- Validações: 98 testes focados aprovados; sintaxe JavaScript e compilação dos
+  módulos Python aprovadas; migrações no head; regressão com 210 testes
+  aprovados e 5 `xfail` legados fora do escopo; smoke test Chrome headless
+  confirmou a busca após recriação da visualização (`true|false|(1 item)`);
+  `pylint` indisponível no ambiente virtual. Validação manual completa em
+  navegador real permanece pendente.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0015`; a BL-0011
   acompanha a infraestrutura Playwright e as demais são melhorias correlatas
@@ -104,3 +107,5 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 17:05 -03` | Usuário/Codex | Refinamento revisado; estado mantido em `pronto_para_implementacao` | Link com rolagem rejeitado por perder o contexto; escopo substituído por modal com formulário único, preservação da posição e retorno de foco; exige aprovação do novo commit |
 | `2026-08-04 17:10 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `b777d55` |
 | `2026-08-04 17:23 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` -> `em_validacao` | Modal com formulário único, fallback progressivo, atualização parcial e fila offline implementados no commit `90393f9`; 97 testes focados e regressão 209/5 aprovados; aguarda validação manual e publicação |
+| `2026-08-04 17:41 -03` | Usuário | Falha na busca de itens da Lista reportada durante validação | Campo permanecia visível, mas a inicialização presa ao nó original era frágil quando a visualização fosse recriada dinamicamente |
+| `2026-08-04 17:41 -03` | Codex | Defeito de validação corrigido; estado mantido em `em_validacao` | Eventos delegados e reinicialização após `htmx:afterSwap`; cache PWA `v28`; 98 testes focados, Chrome headless e regressão 210/5 aprovados |

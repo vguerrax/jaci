@@ -187,25 +187,6 @@
             scheduled: false,
         };
 
-        root.addEventListener('input', function (event) {
-            if (!event.target.matches(INPUT_SELECTOR)) return;
-            root._jaciItemFilterState.query = event.target.value;
-            apply(root);
-        });
-        root.addEventListener('click', function (event) {
-            const clear = event.target.closest(CLEAR_SELECTOR);
-            if (clear) {
-                root._jaciItemFilterState.query = '';
-                apply(root);
-                const input = root.querySelector(INPUT_SELECTOR);
-                if (input) input.focus();
-                return;
-            }
-            if (event.target.closest(COLLAPSE_ALL_SELECTOR)) {
-                toggleAll(root);
-            }
-        });
-
         const observer = new MutationObserver(function () {
             scheduleApply(root);
         });
@@ -217,6 +198,43 @@
     function initAll() {
         document.querySelectorAll(ROOT_SELECTOR).forEach(initRoot);
     }
+
+    document.addEventListener('input', function (event) {
+        if (!event.target.matches(INPUT_SELECTOR)) return;
+        const root = event.target.closest(ROOT_SELECTOR);
+        if (!root) return;
+        initRoot(root);
+        root._jaciItemFilterState.query = event.target.value;
+        apply(root);
+    });
+
+    document.addEventListener('click', function (event) {
+        const root = event.target.closest(ROOT_SELECTOR);
+        if (!root) return;
+        initRoot(root);
+
+        const clear = event.target.closest(CLEAR_SELECTOR);
+        if (clear) {
+            root._jaciItemFilterState.query = '';
+            apply(root);
+            const input = root.querySelector(INPUT_SELECTOR);
+            if (input) input.focus();
+            return;
+        }
+        if (event.target.closest(COLLAPSE_ALL_SELECTOR)) {
+            toggleAll(root);
+        }
+    });
+
+    document.body.addEventListener('htmx:afterSwap', function (event) {
+        initAll();
+        const target = event.detail.target;
+        if (!target) return;
+        const root = target.matches(ROOT_SELECTOR)
+            ? target
+            : target.closest(ROOT_SELECTOR);
+        if (root) scheduleApply(root);
+    });
 
     document.body.addEventListener('htmx:configRequest', function (event) {
         const target = event.detail.target;

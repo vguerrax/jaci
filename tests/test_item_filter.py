@@ -77,6 +77,16 @@ def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
     assert "row.dataset.itemFilterTotalPrice" in offline_cache
 
 
+def test_shared_item_filter_reinitializes_replaced_filter_roots():
+    script = read(SCRIPT_PATH)
+
+    assert "document.addEventListener('input'" in script
+    assert "event.target.closest(ROOT_SELECTOR)" in script
+    assert "document.body.addEventListener('htmx:afterSwap'" in script
+    assert "initAll()" in script
+    assert "scheduleApply(root)" in script
+
+
 def test_template_detail_exposes_accessible_filter_contract():
     page = read(TEMPLATE_DETAIL_PATH)
     fragment = read(TEMPLATE_ITEMS_FRAGMENT_PATH)

@@ -232,5 +232,5 @@ def test_offline_item_mutations_recalculate_budget_from_local_snapshot():
 def test_budget_controller_is_cached_for_offline_execution():
     worker = Path("app/static/js/service-worker.js").read_text()
 
-    assert "const CACHE_VERSION = 'v27'" in worker
+    assert "const CACHE_VERSION = 'v28'" in worker
     assert "'/static/js/execution-budget.js'" in worker

@@ -258,16 +258,19 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `90393f9`; branch
-  `feature/BL-0016-botao-flutuante-adicionar-itens`.
-- Resultado das validações focadas: 97 testes aprovados; sintaxe de
-  `item-add-modal.js`, `offline-cache.js` e `service-worker.js` aprovada;
+- Commits/PRs: fatia 1.1.1 `90393f9`; correção do filtro dinâmico a registrar;
+  branch `feature/BL-0016-botao-flutuante-adicionar-itens`.
+- Resultado das validações focadas: 98 testes aprovados; sintaxe de
+  `item-add-modal.js`, `item-filter.js`, `offline-cache.js` e
+  `service-worker.js` aprovada;
   módulos Python compilados sem erro. O `pylint` não está instalado no
   ambiente virtual e a opção `--no-cov` não está disponível nesta instalação
   do pytest.
-- Resultado da validação manual: pendente em navegador real; infraestrutura
-  Playwright continua acompanhada pela BL-0011 e não foi criada neste item.
-- Resultado da regressão total: migrações no head; 209 testes aprovados e 5
+- Resultado da validação manual: smoke test Chrome headless confirmou a busca
+  normalizada após recriação completa do nó do filtro, com resultado
+  `true|false|(1 item)`; fluxo completo permanece pendente em navegador real e
+  a infraestrutura Playwright continua acompanhada pela BL-0011.
+- Resultado da regressão total: migrações no head; 210 testes aprovados e 5
   `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, rastreabilidade de testes e este
