@@ -80,8 +80,7 @@ quantidade e valor unitário.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0015](../../tasks/BL-0015-adicionar-item-comprado.md).
-- Implementação (commits/PRs): fatia 1.1.1 `69cfd64`; fatia 1.1.2 no commit
-  desta atualização.
+- Implementação (commits/PRs): fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`.
 - Validações: 83 testes focados aprovados; sintaxe dos dois JavaScript
   aprovada; migrações no head; regressão com 181 testes aprovados e 5 `xfail`
   legados fora do escopo; `pylint` indisponível no ambiente virtual.

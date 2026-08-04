@@ -235,7 +235,7 @@ ticket permanecer em `xfail(strict=True)`:
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `69cfd64`; fatia 1.1.2 no commit desta atualização.
+- Commits/PRs: fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`.
 - Resultado das validações focadas: fatia 1.1.1 com 54 testes aprovados e 3
   contratos futuros; fatia 1.1.2 com 50 testes aprovados e nenhum contrato
   futuro; consolidação com 83 testes aprovados; sintaxe dos dois JavaScript
