@@ -1,16 +1,16 @@
 # Graph Report - jaci  (2026-08-03)
 
 ## Corpus Check
-- 124 files · ~124,735 words
+- 124 files · ~124,612 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1544 nodes · 3914 edges · 90 communities (86 shown, 4 thin omitted)
+- 1544 nodes · 3914 edges · 89 communities (85 shown, 4 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 230 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c4c4ff67`
+- Built from commit: `64b38d1b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,7 +24,7 @@
 - datetime.py
 - Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX
 - tupa_auth_service.py
-- User
+- categories.py
 - AGENTS.md
 - groups.py
 - auth.py
@@ -78,7 +78,7 @@
 - FL-08 — Consulta da Agenda e Histórico
 - FL-09 — Operação Offline
 - FL-06 — Aprendizado do Template
-- handle_create_execution
+- User
 - ensure_schema_compatibility
 - test_pwa.py
 - FL-07 — Gestão de Grupos
@@ -93,7 +93,6 @@
 - add_unread_count
 - FL-05 — Compra Colaborativa
 - FL-02 — Criação de Template
-- Group
 
 ## God Nodes (most connected - your core abstractions)
 1. `User` - 144 edges
@@ -122,7 +121,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (90 total, 4 thin omitted)
+## Communities (89 total, 4 thin omitted)
 
 ### Community 0 - "make_user"
 Cohesion: 0.07
@@ -134,7 +133,7 @@ Nodes (104): applyPersistedOfflineItemState(), auditCard(), buildConflict(), bui
 
 ### Community 2 - "executions.py"
 Cohesion: 0.10
-Nodes (54): close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment(), execution_sidebar_fragment() (+46 more)
+Nodes (57): Group, close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment() (+49 more)
 
 ### Community 3 - "Execution"
 Cohesion: 0.09
@@ -160,9 +159,9 @@ Nodes (40): Acompanhamento até produção, BL-0012 — Gestão documental compa
 Cohesion: 0.14
 Nodes (20): get_settings(), create_user(), _credentials(), decode_access_token(), _jwks(), logout(), migrate_user(), Any (+12 more)
 
-### Community 9 - "User"
-Cohesion: 0.11
-Nodes (42): Category, User, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category() (+34 more)
+### Community 9 - "categories.py"
+Cohesion: 0.12
+Nodes (38): Category, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category() (+30 more)
 
 ### Community 10 - "AGENTS.md"
 Cohesion: 0.05
@@ -213,7 +212,7 @@ Cohesion: 0.10
 Nodes (19): Regras de negócio críticas, RN01, RN02, RN03, RN04, RN05, RN06, RN07 (+11 more)
 
 ### Community 23 - "notification_service.py"
-Cohesion: 0.24
+Cohesion: 0.22
 Nodes (13): create_notification(), mark_as_read(), notify_execution_completed(), notify_execution_started(), notify_execution_updated(), notify_group_members(), Session, Notifica membros que uma compra agendada foi alterada. (+5 more)
 
 ### Community 24 - "Fundação PWA e Offline"
@@ -337,8 +336,8 @@ Cohesion: 0.29
 Nodes (7): Agenda e logs, Backups do PostgreSQL, Configuração, Execução manual, Restauração manual em banco isolado, Retenção, Visão geral
 
 ### Community 54 - "execution_service.py"
-Cohesion: 0.18
-Nodes (19): cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_execution_items_grouped(), get_executions_for_group(), incomplete_item(), datetime (+11 more)
+Cohesion: 0.16
+Nodes (21): cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_execution_items_grouped(), get_executions_for_group(), get_pending_items(), incomplete_item() (+13 more)
 
 ### Community 55 - "privacy_policy"
 Cohesion: 0.47
@@ -376,9 +375,9 @@ Nodes (6): Atores, Estado e rastreabilidade, FL-09 — Operação Offline, Fluxo
 Cohesion: 0.33
 Nodes (6): FL-06 — Aprendizado do Template, Fluxo Principal, Objetivo, Pré-condições, Resultado Esperado, Tipos de Sugestão
 
-### Community 64 - "handle_create_execution"
-Cohesion: 0.17
-Nodes (16): agenda_calendar(), agenda_day(), agenda_list(), handle_reschedule(), get, post, Request, Session (+8 more)
+### Community 64 - "User"
+Cohesion: 0.14
+Nodes (20): home(), Painel operacional do grupo ativo., User, agenda_calendar(), agenda_day(), agenda_list(), handle_reschedule(), get (+12 more)
 
 ### Community 66 - "ensure_schema_compatibility"
 Cohesion: 0.50
@@ -420,10 +419,6 @@ Nodes (5): Atores, FL-05 — Compra Colaborativa, Fluxo Principal, Objetivo, Res
 Cohesion: 0.40
 Nodes (5): Atores, FL-02 — Criação de Template, Fluxo Principal, Objetivo, Resultado Esperado
 
-### Community 89 - "Group"
-Cohesion: 0.29
-Nodes (5): home(), Painel operacional do grupo ativo., Group, get_user_groups(), Retorna todos os grupos do usuário.
-
 ## Knowledge Gaps
 - **374 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+369 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -432,7 +427,7 @@ Nodes (5): home(), Painel operacional do grupo ativo., Group, get_user_groups(),
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `make_user`, `executions.py`, `Execution`, `main.py`, `datetime.py`, `tupa_auth_service.py`, `groups.py`, `auth.py`, `template_service.py`, `offline_cache_service.py`, `template_learning_service.py`, `notification_service.py`, `auth_service.py`, `sync_center`, `offline.py`, `execution_service.py`, `handle_create_execution`, `list_notifications`, `Group`?**
+- **Why does `User` connect `User` to `make_user`, `executions.py`, `Execution`, `main.py`, `datetime.py`, `tupa_auth_service.py`, `categories.py`, `sync_center`, `groups.py`, `auth.py`, `template_service.py`, `offline.py`, `offline_cache_service.py`, `template_learning_service.py`, `list_notifications`, `execution_service.py`, `notification_service.py`, `auth_service.py`?**
   _High betweenness centrality (0.107) - this node is a cross-community bridge._
 - **Why does `Execution` connect `Execution` to `make_user`, `executions.py`, `datetime.py`, `template_service.py`, `offline_cache_service.py`, `template_learning_service.py`, `home_service.py`, `execution_service.py`, `notification_service.py`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._

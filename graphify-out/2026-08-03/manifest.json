@@ -740,8 +740,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785804640.1953676,
-    "ast_hash": "da4e36ad453f75e5c9372d5eb63c1994",
+    "mtime": 1785803352.9409816,
+    "ast_hash": "46cd6f8087416604542fc903c257ec1f",
     "semantic_hash": ""
   },
   "docs/domain/business-rules.md": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785804640.3193698,
-    "ast_hash": "4ceaf4d616df31c45233d085a0a86f57",
+    "mtime": 1785803353.0599833,
+    "ast_hash": "7afa291600f3250ddb5b52ec58e6b301",
     "semantic_hash": ""
   },
   "docs/domain/tasks/TEMPLATE.md": {

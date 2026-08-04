@@ -1298,6 +1298,9 @@
         if (!executionId || !itemsContainer) return false;
 
         const expandedIds = Array.from(itemsContainer.querySelectorAll('.collapse.show'))
+            .filter(function (element) {
+                return !element.hasAttribute('data-item-filter-forced-expanded');
+            })
             .map(function (element) { return element.id; })
             .filter(Boolean);
         let response;
@@ -1369,6 +1372,8 @@
         if (operation.action !== 'incomplete_item') return;
 
         row.classList.remove('opacity-75', 'is-offline-updated', 'is-offline-removed');
+        row.dataset.itemFilterCompleted = 'false';
+        row.dataset.itemFilterTotalPrice = '0';
         const check = row.querySelector('.check-jaci');
         if (check) check.classList.remove('checked');
         row.querySelectorAll('.text-strikethrough').forEach(function (element) {
@@ -1419,6 +1424,7 @@
         }
 
         if (operation.action === 'update_item') {
+            row.dataset.itemFilterName = operation.name;
             const nameLabel = row.querySelector('[data-item-name-label]');
             const plannedQuantityLabel = row.querySelector('[data-item-planned-quantity-label]');
             const notesLabel = row.querySelector('[data-item-notes-label]');
@@ -1435,9 +1441,18 @@
         }
 
         if (operation.action === 'incomplete_item') {
+            row.dataset.itemFilterCompleted = 'false';
+            row.dataset.itemFilterTotalPrice = '0';
             const completedSummary = row.querySelector('[data-item-completed-summary]');
             row.classList.remove('opacity-75');
             if (completedSummary) completedSummary.hidden = true;
+        }
+
+        if (operation.action === 'complete_item') {
+            row.dataset.itemFilterCompleted = 'true';
+            row.dataset.itemFilterTotalPrice = String(
+                Number(operation.purchased_quantity || 0) * Number(operation.unit_price || 0)
+            );
         }
 
         if (operation.action === 'remove_execution_item') {
@@ -1472,7 +1487,12 @@
             if (item.offline_removed_at || item.is_deleted) {
                 markItemRowAsOfflineUpdated({ action: 'remove_execution_item', item_id: item.id });
             } else if (item.offline_updated_at && item.is_completed) {
-                markItemRowAsOfflineUpdated({ action: 'complete_item', item_id: item.id });
+                markItemRowAsOfflineUpdated({
+                    action: 'complete_item',
+                    item_id: item.id,
+                    purchased_quantity: item.purchased_quantity,
+                    unit_price: item.unit_price,
+                });
             } else if (item.offline_updated_at) {
                 markItemRowAsOfflineUpdated({
                     action: 'update_item',

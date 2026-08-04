@@ -8,7 +8,7 @@
   "6": "datetime.py",
   "7": "Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX",
   "8": "tupa_auth_service.py",
-  "9": "User",
+  "9": "categories.py",
   "10": "AGENTS.md",
   "11": "groups.py",
   "12": "auth.py",
@@ -63,7 +63,7 @@
   "61": "FL-08 — Consulta da Agenda e Histórico",
   "62": "FL-09 — Operação Offline",
   "63": "FL-06 — Aprendizado do Template",
-  "64": "handle_create_execution",
+  "64": "User",
   "65": "test_loading_indicator.py",
   "66": "ensure_schema_compatibility",
   "67": "test_pwa.py",
@@ -87,6 +87,5 @@
   "85": "list_notifications",
   "86": "add_unread_count",
   "87": "FL-05 — Compra Colaborativa",
-  "88": "FL-02 — Criação de Template",
-  "89": "Group"
+  "88": "FL-02 — Criação de Template"
 }
