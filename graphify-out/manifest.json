@@ -855,13 +855,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811064.6313856,
-    "ast_hash": "246fa296b32861641f7870140af030e3",
+    "mtime": 1785811114.7591233,
+    "ast_hash": "1912abfe9edd45f5bc0cc4f9be550e43",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811064.866025,
-    "ast_hash": "2d712e7e845b78bef22ef2812c19d5fa",
+    "mtime": 1785811114.8751252,
+    "ast_hash": "c03e8481690837b26f66905d41be4539",
     "semantic_hash": ""
   }
 }

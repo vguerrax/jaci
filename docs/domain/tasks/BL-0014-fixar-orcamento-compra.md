@@ -192,7 +192,7 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
 
 ## Fechamento
 
-- Commits/PRs: commit da fatia a registrar após a consolidação das evidências
+- Commits/PRs: `6c6bd17`
 - Resultado das validações focadas: 54 testes aprovados; `node --check`
   aprovado para `execution-budget.js`, `execution-sync.js` e
   `offline-cache.js`; migrações no head

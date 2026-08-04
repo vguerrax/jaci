@@ -12267,8 +12267,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql",
-      "community": 41,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "0002-backup-postgresql.md"
     },
     {
@@ -14104,8 +14104,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0011_ampliar_cobertura_testes_ui",
-      "community": 35,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "bl-0011-ampliar-cobertura-testes-ui.md"
     },
     {
@@ -14390,8 +14390,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "items/bl-0014-fixar-orcamento-compra.md"
     },
     {
@@ -14508,7 +14508,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L89",
+      "source_location": "L88",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_impedimentos",
       "community": 83,
@@ -14519,7 +14519,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_hist\u00f3rico",
       "community": 83,
@@ -15710,8 +15710,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0014_fixar_orcamento_compra",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "tasks/bl-0014-fixar-orcamento-compra.md"
     },
     {
@@ -16293,8 +16293,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_user_flows",
-      "community": 16,
-      "community_name": "backlog/README.md",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "user-flows.md"
     },
     {
@@ -16304,8 +16304,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxos_principais_do_usu\u00e1rio_jaci",
-      "community": 87,
-      "community_name": "Fluxos Principais do Usu\u00e1rio \u2014 Jaci",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fluxos principais do usuario \u2014 jaci"
     },
     {
@@ -16315,8 +16315,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo",
-      "community": 87,
-      "community_name": "Fluxos Principais do Usu\u00e1rio \u2014 Jaci",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -16326,8 +16326,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_domain_user_flows_princ\u00edpios_gerais",
-      "community": 87,
-      "community_name": "Fluxos Principais do Usu\u00e1rio \u2014 Jaci",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "principios gerais"
     },
     {
@@ -16392,8 +16392,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_02_cria\u00e7\u00e3o_de_template",
-      "community": 77,
-      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fl-02 \u2014 criacao de template"
     },
     {
@@ -16403,8 +16403,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_65",
-      "community": 77,
-      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -16414,8 +16414,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_69",
-      "community": 77,
-      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "atores"
     },
     {
@@ -16425,8 +16425,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_73",
-      "community": 77,
-      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -16436,8 +16436,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_97",
-      "community": 77,
-      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -16579,8 +16579,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_05_compra_colaborativa",
-      "community": 76,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fl-05 \u2014 compra colaborativa"
     },
     {
@@ -16590,8 +16590,8 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_200",
-      "community": 76,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -16601,8 +16601,8 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_204",
-      "community": 76,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "atores"
     },
     {
@@ -16612,8 +16612,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_209",
-      "community": 76,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -16623,8 +16623,8 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_227",
-      "community": 76,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -16822,7 +16822,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_09_opera\u00e7\u00e3o_offline",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "fl-09 \u2014 operacao offline"
     },
     {
@@ -16833,7 +16833,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_348",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -16844,7 +16844,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_352",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "atores"
     },
     {
@@ -16855,7 +16855,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_357",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -16866,7 +16866,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_375",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -16877,7 +16877,7 @@
       "_origin": "ast",
       "id": "docs_domain_user_flows_estado_e_rastreabilidade_380",
       "community": 52,
-      "community_name": "FL-09 \u2014 Opera\u00e7\u00e3o Offline",
+      "community_name": "user-flows.md",
       "norm_label": "estado e rastreabilidade"
     },
     {
@@ -16887,8 +16887,8 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_cr\u00edtico_do_produto",
-      "community": 16,
-      "community_name": "backlog/README.md",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo critico do produto"
     },
     {
@@ -16898,8 +16898,8 @@
       "source_location": "L413",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_10_home_operacional",
-      "community": 78,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fl-10 \u2014 home operacional"
     },
     {
@@ -16909,8 +16909,8 @@
       "source_location": "L415",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_415",
-      "community": 78,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -16920,8 +16920,8 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_419",
-      "community": 78,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -16931,8 +16931,8 @@
       "source_location": "L433",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_433",
-      "community": 78,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 52,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -17030,8 +17030,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_readme",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "tests/readme.md"
     },
     {
@@ -17041,8 +17041,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_readme_rastreabilidade_das_regras_de_neg\u00f3cio",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "rastreabilidade das regras de negocio"
     },
     {
@@ -17052,8 +17052,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_readme_rastreabilidade_dos_fluxos_do_usu\u00e1rio",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "rastreabilidade dos fluxos do usuario"
     },
     {
@@ -17063,8 +17063,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "tests_readme_demandas_do_backlog_ativo",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "demandas do backlog ativo"
     },
     {
@@ -17074,8 +17074,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_readme_backlog_legado_sprint_4_aprendizado_cont\u00ednuo_dos_templates",
-      "community": 17,
-      "community_name": "tests/README.md",
+      "community": 16,
+      "community_name": "backlog/README.md",
       "norm_label": "backlog legado \u2014 sprint 4 \u2014 aprendizado continuo dos templates"
     }
   ],
@@ -60470,7 +60470,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_bl_0014_fixar_resumo_de_or\u00e7amento_durante_a_compra",
@@ -60569,7 +60569,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L89",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -63031,5 +63031,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b472c2085b55c803fff77b79e6b76c372d886b02"
+  "built_at_commit": "6c6bd1721c2766f2f393337cda200b018086bbea"
 }

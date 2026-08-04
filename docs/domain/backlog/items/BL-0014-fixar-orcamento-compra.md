@@ -77,8 +77,7 @@ total realizado e o orçamento previsto.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0014](../../tasks/BL-0014-fixar-orcamento-compra.md).
-- Implementação (commits/PRs): fatia concluída; commit a registrar após a
-  consolidação das evidências.
+- Implementação (commits/PRs): `6c6bd17`.
 - Validações: 54 testes focados e regressão com 178 testes aprovados e 5
   `xfail` legados fora do escopo; três scripts aprovados por `node --check`;
   migrações no head; validação manual em navegador pendente.
@@ -102,3 +101,4 @@ total realizado e o orçamento previsto.
 | `2026-08-03 23:30 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita recebida após o commit documental `b472c20` |
 | `2026-08-03 23:37 -03` | Codex | Fatia 1.1.1 concluída (`1/1`) | Resumo fixo, toasts e atualização offline implementados; 54 testes focados aprovados |
 | `2026-08-03 23:37 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head e regressão com 178 testes aprovados e 5 `xfail` legados |
+| `2026-08-03 23:37 -03` | Codex | Commit técnico registrado | Implementação e evidências consolidadas em `6c6bd17` |

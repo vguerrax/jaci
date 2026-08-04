@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1549 nodes · 3950 edges · 88 communities (83 shown, 5 thin omitted)
+- 1549 nodes · 3950 edges · 83 communities (79 shown, 4 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 234 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b472c208`
+- Built from commit: `6c6bd172`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,7 +32,6 @@
 - 🌙 Jaci
 - Base
 - backlog/README.md
-- tests/README.md
 - Refinamento — BL-NNNN — Título
 - Regras de negócio críticas
 - Fundação PWA e Offline
@@ -67,7 +66,7 @@
 - FL-03 — Geração de Execução
 - FL-04 — Execução da Compra
 - FL-08 — Consulta da Agenda e Histórico
-- FL-09 — Operação Offline
+- user-flows.md
 - FL-06 — Aprendizado do Template
 - test_auth_pages.py
 - FL-01 — Primeiro Acesso e Onboarding
@@ -81,9 +80,6 @@
 - template_learning_service.py
 - execution-budget.js
 - ensure_schema_compatibility
-- FL-05 — Compra Colaborativa
-- FL-02 — Criação de Template
-- FL-10 — Home Operacional
 - Execution
 - test_pwa.py
 - sync_conflict_audit_service.py
@@ -92,7 +88,6 @@
 - offline_cache_service.py
 - execution_ws_handler
 - Edição de execuções agendadas
-- Fluxos Principais do Usuário — Jaci
 
 ## God Nodes (most connected - your core abstractions)
 1. `User` - 144 edges
@@ -121,7 +116,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (88 total, 5 thin omitted)
+## Communities (83 total, 4 thin omitted)
 
 ### Community 0 - "make_user"
 Cohesion: 0.05
@@ -187,8 +182,8 @@ Nodes (28): 1. Clone o repositório, 3. Instale as dependências, 4. Execute, Ba
 Cohesion: 0.16
 Nodes (16): Base, Notification, create_notification(), get_notifications(), notify_execution_completed(), notify_execution_started(), notify_execution_updated(), notify_group_members() (+8 more)
 
-### Community 17 - "tests/README.md"
-Cohesion: 0.29
+### Community 16 - "backlog/README.md"
+Cohesion: 0.17
 Nodes (4): Backlog legado — Sprint 4 — Aprendizado contínuo dos templates, Demandas do backlog ativo, Rastreabilidade das regras de negócio, Rastreabilidade dos fluxos do usuário
 
 ### Community 18 - "Refinamento — BL-NNNN — Título"
@@ -260,7 +255,7 @@ Cohesion: 0.17
 Nodes (12): Acompanhamento até produção, BL-0009 — Implementar criptografia de dados em repouso, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 35 - "Identificação e entrada"
-Cohesion: 0.15
+Cohesion: 0.17
 Nodes (12): Acompanhamento até produção, BL-0011 — Ampliar cobertura automatizada e testes de UI, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 36 - "Identificação e entrada"
@@ -284,7 +279,7 @@ Cohesion: 0.42
 Nodes (8): failSync(), finishSync(), formatDateTime(), render(), renderDetails(), setState(), startSync(), waitForRetry()
 
 ### Community 41 - "0002 - Backup automático do PostgreSQL"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (13): 0002 - Backup automático do PostgreSQL, Consequências, Contexto, Decisão, Plano refinado, Progresso, Status, Validação (+5 more)
 
 ### Community 42 - "Pricipais Entidades"
@@ -327,9 +322,9 @@ Nodes (6): Atores, Cenários Alternativos, FL-04 — Execução da Compra, Fluxo
 Cohesion: 0.33
 Nodes (6): Atores, Estado e rastreabilidade, FL-08 — Consulta da Agenda e Histórico, Fluxo Principal, Objetivo, Resultado Esperado
 
-### Community 52 - "FL-09 — Operação Offline"
-Cohesion: 0.33
-Nodes (6): Atores, Estado e rastreabilidade, FL-09 — Operação Offline, Fluxo Principal, Objetivo, Resultado Esperado
+### Community 52 - "user-flows.md"
+Cohesion: 0.08
+Nodes (24): Atores, Atores, Atores, Estado e rastreabilidade, FL-02 — Criação de Template, FL-05 — Compra Colaborativa, FL-09 — Operação Offline, FL-10 — Home Operacional (+16 more)
 
 ### Community 53 - "FL-06 — Aprendizado do Template"
 Cohesion: 0.33
@@ -367,18 +362,6 @@ Nodes (15): alertMessage(), applyVisualState(), budgetBand(), ensureToastContain
 Cohesion: 0.50
 Nodes (4): ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., apply_migrations(), Aplica migrações Alembic e adota bancos SQLite legados.
 
-### Community 76 - "FL-05 — Compra Colaborativa"
-Cohesion: 0.40
-Nodes (5): Atores, FL-05 — Compra Colaborativa, Fluxo Principal, Objetivo, Resultado Esperado
-
-### Community 77 - "FL-02 — Criação de Template"
-Cohesion: 0.40
-Nodes (5): Atores, FL-02 — Criação de Template, Fluxo Principal, Objetivo, Resultado Esperado
-
-### Community 78 - "FL-10 — Home Operacional"
-Cohesion: 0.50
-Nodes (4): FL-10 — Home Operacional, Fluxo Principal, Objetivo, Resultado Esperado
-
 ### Community 79 - "Execution"
 Cohesion: 0.17
 Nodes (20): Execution, cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_executions_for_group(), get_pending_items(), incomplete_item() (+12 more)
@@ -411,14 +394,10 @@ Nodes (6): websocket, WebSocket para sincronização em tempo real de uma execu�
 Cohesion: 0.33
 Nodes (5): Campos editáveis, Edição de execuções agendadas, Notificações e sincronização, Regras, Sincronização offline
 
-### Community 87 - "Fluxos Principais do Usuário — Jaci"
-Cohesion: 0.67
-Nodes (3): Fluxos Principais do Usuário — Jaci, Objetivo, Princípios Gerais
-
 ## Knowledge Gaps
 - **374 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+369 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -427,7 +406,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.107) - this node is a cross-community bridge._
 - **Why does `Execution` connect `Execution` to `make_user`, `template_service.py`, `test_offline_cache.py`, `executions.py`, `home_service.py`, `template_learning_service.py`, `Base`, `offline_cache_service.py`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `Refinamento — BL-0014 — Resumo de orçamento fixo durante a compra` connect `Refinamento — BL-0014 — Resumo de orçamento fixo durante a compra` to `tests/README.md`?**
+- **Why does `Refinamento — BL-0014 — Resumo de orçamento fixo durante a compra` connect `Refinamento — BL-0014 — Resumo de orçamento fixo durante a compra` to `backlog/README.md`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `User` (e.g. with `Base` and `AddExecutionItemOperation`) actually correct?**
   _`User` has 8 INFERRED edges - model-reasoned connections that need verification._
