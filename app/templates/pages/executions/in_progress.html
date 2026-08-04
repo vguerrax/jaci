@@ -2,7 +2,7 @@
 {% block title %}{{ execution_name }} — Jaci{% endblock %}
 
 {% block content %}
-<div data-current-execution-id="{{ execution.id }}">
+<div class="page-with-item-add-fab" data-current-execution-id="{{ execution.id }}">
     <div class="row mb-4">
         <div class="col mb-3">
             <nav aria-label="breadcrumb">
@@ -67,60 +67,6 @@
     <div class="row g-4">
         <!-- Sidebar -->
         <div class="col-lg-4 order-lg-2">
-            <!-- Add item (only scheduled and in progress) -->
-            {% if execution.status in ['scheduled', 'in_progress'] %}
-            <div class="card-jaci p-4">
-                <h3 class="h6 mb-3">Adicionar Item</h3>
-                <form class="row" hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container"
-                    hx-swap="innerHTML" data-offline-add-item data-execution-id="{{ execution.id }}"
-                    data-execution-status="{{ execution.status }}" data-execution-budget="{{ execution.budget or '' }}"
-                    hx-on::after-request="
-                htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
-                    target: '#sidebar-container',
-                    swap: 'innerHTML'
-                });
-                this.reset();
-            ">
-                    <div class="col-12 mb-2">
-                        <input type="text" class="form-control form-control-sm" name="name" placeholder="Nome do item"
-                            required>
-                    </div>
-                    <div class="{% if execution.status == 'in_progress' %}col-6{% else %}col-4{% endif %} mb-2">
-                        <input id="addItemQuantity" type="number" class="form-control form-control-sm"
-                            name="planned_quantity" step="0.001" value="1" min="0.001">
-                    </div>
-                    {% if execution.status == 'in_progress' %}
-                    <div class="col-6">
-                        <div class="input-group">
-                            <span class="input-group-text input-group-text-sm">R$</span>
-                            <input id="addItemUnitPrice" type="number" class="form-control form-control-sm"
-                                name="unit_price" placeholder="0,00" step="0.01" min="0.01" required>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div class="{% if execution.status == 'in_progress' %}col-12{% else %}col-8{% endif %} mb-2">
-                        <select class="form-select form-select-sm" name="category_id">
-                            <option value="0">Sem categoria</option>
-                            {% if active_group %}
-                            {% for cat in active_group.categories %}
-                            <option value="{{ cat.id }}">{{ cat.name }}</option>
-                            {% endfor %}
-                            {% endif %}
-                        </select>
-                    </div>
-                    <div class="col-12 mb-3">
-                        <textarea class="form-control form-control-sm" name="notes"
-                            placeholder="Observações"></textarea>
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-sm w-100">
-                            <i class="bi bi-plus"></i>
-                            Adicionar
-                        </button>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
             <div id="sidebar-container">
                 {% include "pages/executions/_sidebar_fragment.html" %}
             </div>
@@ -136,6 +82,88 @@
         <!-- Modal container (for dynamic modals) -->
         <div id="modal-container"></div>
     </div>
+
+    {% if execution.status in ['scheduled', 'in_progress'] %}
+    <button type="button" class="btn btn-fab item-add-fab mb-3" data-item-add-trigger
+        aria-controls="executionAddItemModal" aria-haspopup="dialog" aria-label="Adicionar item"
+        title="Adicionar item">
+        <i class="bi bi-plus" aria-hidden="true"></i>
+    </button>
+
+    <div class="modal fade item-add-modal" id="executionAddItemModal" tabindex="-1"
+        aria-labelledby="executionAddItemModalLabel" data-item-add-modal>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <form class="row g-0" method="post" action="/executions/{{ execution.id }}/items/add"
+                    hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container"
+                    hx-swap="innerHTML" data-item-add-form data-offline-add-item
+                    data-execution-id="{{ execution.id }}" data-execution-status="{{ execution.status }}"
+                    data-execution-budget="{{ execution.budget or '' }}"
+                    data-item-add-sidebar-url="/executions/{{ execution.id }}/sidebar-fragment">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5" id="executionAddItemModalLabel">Adicionar item</h2>
+                        <button type="button" class="btn-close" data-item-add-dismiss aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="executionItemAddFeedback" class="mb-3" role="status" aria-live="assertive"
+                            data-item-add-feedback></div>
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemName">Nome do item</label>
+                            <input id="executionAddItemName" type="text" class="form-control" name="name"
+                                maxlength="150" required data-item-add-initial-focus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="addItemQuantity">Quantidade planejada</label>
+                            <input id="addItemQuantity" type="number" class="form-control"
+                                name="planned_quantity" step="0.001" value="1" min="0.001" required>
+                        </div>
+                        {% if execution.status == 'in_progress' %}
+                        <div class="mb-3">
+                            <label class="form-label" for="addItemUnitPrice">Valor unitário</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input id="addItemUnitPrice" type="number" class="form-control"
+                                    name="unit_price" placeholder="0,00" step="0.01" min="0.01" required>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemCategory">Categoria</label>
+                            <select id="executionAddItemCategory" class="form-select" name="category_id">
+                                <option value="0">Sem categoria</option>
+                                {% if active_group %}
+                                {% for cat in active_group.categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemNotes">Observações</label>
+                            <textarea id="executionAddItemNotes" class="form-control" name="notes"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex align-items-center justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-item-add-dismiss>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus" aria-hidden="true"></i>
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <style data-item-add-noscript>
+            .item-add-fab { display: none !important; }
+            .item-add-modal { display: block !important; position: static !important; opacity: 1 !important; }
+            .item-add-modal .modal-dialog { margin: 1rem 0 !important; transform: none !important; }
+        </style>
+    </noscript>
+    {% endif %}
 
     {% if execution.status == 'scheduled' %}
     <div class="modal fade" id="editExecutionModal" tabindex="-1" aria-labelledby="editExecutionModalLabel"
@@ -189,6 +217,7 @@
 {% block extra_js %}
 <!-- WebSocket sync -->
 <script src="/static/js/item-filter.js"></script>
+<script src="/static/js/item-add-modal.js"></script>
 <script src="/static/js/execution-budget.js"></script>
 <script src="/static/js/execution-sync.js"></script>
 

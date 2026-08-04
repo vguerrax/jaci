@@ -488,6 +488,56 @@ BUTTONS
     box-shadow: 0 6px 20px rgba(42, 75, 74, 0.4);
 }
 
+.page-with-item-add-fab {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.item-add-fab {
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    z-index: 1055;
+}
+
+.item-add-fab:focus-visible {
+    outline: 3px solid var(--jaci-peach);
+    outline-offset: 3px;
+}
+
+.item-add-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1070;
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: transparent;
+}
+
+.item-add-modal.show {
+    display: block;
+}
+
+.item-add-modal .modal-dialog {
+    width: min(32rem, calc(100vw - 2rem));
+}
+
+.item-add-modal .modal-content {
+    max-height: calc(100dvh - 2rem - env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+}
+
+.item-add-modal .modal-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+[data-jaci-modal-backdrop] {
+    position: fixed;
+    inset: 0;
+    z-index: 1060;
+    background: rgba(42, 75, 74, 0.52);
+}
+
 /* ============================================================
 FORMS
 ============================================================ */
@@ -739,6 +789,10 @@ LIST GROUP
     color: var(--jaci-night);
     padding: 0.75rem 1rem;
     transition: background 0.15s ease;
+}
+
+[data-item-filter-row][hidden] {
+    display: none !important;
 }
 
 .list-group-jaci .list-group-item:hover {
@@ -1443,6 +1497,18 @@ HOME OPERATIONAL
     .home-actions a {
         min-height: 82px;
         font-size: 0.8rem;
+    }
+
+    .item-add-modal .modal-dialog {
+        width: auto;
+        margin: max(0.5rem, env(safe-area-inset-top, 0px)) 0.5rem
+            max(0.5rem, env(safe-area-inset-bottom, 0px));
+    }
+
+    .item-add-modal .modal-content {
+        max-height: calc(
+            100dvh - 1rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+        );
     }
 
     .sync-status {

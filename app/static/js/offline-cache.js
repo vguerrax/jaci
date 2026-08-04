@@ -2112,6 +2112,9 @@
                         form.reset();
                         renderQueuedItemControl(form);
                         renderOfflineSummary();
+                        form.dispatchEvent(
+                            new CustomEvent('jaci:item-add-success', { bubbles: true })
+                        );
                     })
                     .catch(function () {
                         window.dispatchEvent(new CustomEvent('jaci:sync-error'));

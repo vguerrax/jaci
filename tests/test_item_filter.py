@@ -3,10 +3,12 @@ from pathlib import Path
 
 SCRIPT_PATH = Path("app/static/js/item-filter.js")
 TEMPLATE_DETAIL_PATH = Path("app/templates/pages/templates/detail.html")
+TEMPLATE_ITEMS_FRAGMENT_PATH = Path("app/templates/pages/templates/_items_fragment.html")
 MUTABLE_EXECUTION_PATH = Path("app/templates/pages/executions/in_progress.html")
 ITEMS_FRAGMENT_PATH = Path("app/templates/pages/executions/_items_fragment.html")
 COMPLETED_EXECUTION_PATH = Path("app/templates/pages/executions/completed.html")
 OFFLINE_CACHE_PATH = Path("app/static/js/offline-cache.js")
+THEME_PATH = Path("app/static/css/jaci-theme.css")
 
 
 def read(path: Path) -> str:
@@ -39,6 +41,13 @@ def test_shared_item_filter_controls_rows_groups_counts_and_empty_state():
     assert "group.hidden" in script
     assert "empty.hidden" in script
     assert "data-item-filter-original-count" in script
+
+
+def test_hidden_filter_rows_override_bootstrap_display_utilities():
+    theme = read(THEME_PATH)
+
+    assert "[data-item-filter-row][hidden]" in theme
+    assert "display: none !important;" in theme
 
 
 def test_clear_and_collapse_controls_share_a_safe_click_handler():
@@ -76,19 +85,31 @@ def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
     assert "row.dataset.itemFilterTotalPrice" in offline_cache
 
 
+def test_shared_item_filter_reinitializes_replaced_filter_roots():
+    script = read(SCRIPT_PATH)
+
+    assert "document.addEventListener('input'" in script
+    assert "event.target.closest(ROOT_SELECTOR)" in script
+    assert "document.body.addEventListener('htmx:afterSwap'" in script
+    assert "initAll()" in script
+    assert "scheduleApply(root)" in script
+
+
 def test_template_detail_exposes_accessible_filter_contract():
     page = read(TEMPLATE_DETAIL_PATH)
+    fragment = read(TEMPLATE_ITEMS_FRAGMENT_PATH)
 
     assert "data-item-filter-root" in page
-    assert 'type="search"' in page
-    assert 'aria-label="Buscar itens por nome"' in page
-    assert "data-item-filter-input" in page
-    assert "data-item-filter-clear" not in page
-    assert "data-item-filter-empty" in page
-    assert "data-item-filter-group" in page
-    assert "data-item-filter-row" in page
-    assert "data-item-filter-name" in page
-    assert "data-item-filter-count" in page
+    assert "pages/templates/_items_fragment.html" in page
+    assert 'type="search"' in fragment
+    assert 'aria-label="Buscar itens por nome"' in fragment
+    assert "data-item-filter-input" in fragment
+    assert "data-item-filter-clear" not in fragment
+    assert "data-item-filter-empty" in fragment
+    assert "data-item-filter-group" in fragment
+    assert "data-item-filter-row" in fragment
+    assert "data-item-filter-name" in fragment
+    assert "data-item-filter-count" in fragment
     assert '/static/js/item-filter.js' in page
 
 

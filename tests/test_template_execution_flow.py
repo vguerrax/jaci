@@ -1,9 +1,12 @@
+import asyncio
 from datetime import datetime, timezone
 
 import pytest
+from starlette.requests import Request
 
 from app.models import TemplateItem
 from app.models.enums import ExecutionStatus, RecurrenceType
+from app.routers import templates as template_routes
 from app.services.execution_service import (
     add_item_to_execution,
     complete_item,
@@ -17,6 +20,124 @@ from app.services.template_service import (
     create_template,
     update_template_item,
 )
+
+
+def make_template_item_request(*, htmx: bool) -> Request:
+    headers = [(b"hx-request", b"true")] if htmx else []
+    request = Request(
+        {
+            "type": "http",
+            "method": "POST",
+            "path": "/templates/1/items/add",
+            "headers": headers,
+        }
+    )
+    request.state.unread_count = 0
+    return request
+
+
+def test_template_add_item_htmx_returns_only_the_updated_items_fragment(
+    db, make_user, make_group
+):
+    user = make_user("ana-fragment@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+
+    response = asyncio.run(
+        template_routes.handle_add_item(
+            request=make_template_item_request(htmx=True),
+            template_id=template.id,
+            name="Banana",
+            planned_quantity=2,
+            category_id=None,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    body = response.body.decode()
+    assert response.status_code == 200
+    assert "Banana" in body
+    assert "data-item-filter-row" in body
+    assert "<!DOCTYPE html>" not in body
+    assert "data-item-add-modal" not in body
+
+
+def test_template_add_item_without_htmx_keeps_post_redirect_fallback(
+    db, make_user, make_group
+):
+    user = make_user("ana-fallback@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+
+    response = asyncio.run(
+        template_routes.handle_add_item(
+            request=make_template_item_request(htmx=False),
+            template_id=template.id,
+            name="Banana",
+            planned_quantity=2,
+            category_id=None,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    assert response.status_code == 303
+    assert response.headers["location"] == f"/templates/{template.id}"
+
+
+def test_template_add_item_htmx_error_retargets_modal_feedback_without_mutation(
+    db, make_user, make_group
+):
+    user = make_user("ana-error@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+
+    response = asyncio.run(
+        template_routes.handle_add_item(
+            request=make_template_item_request(htmx=True),
+            template_id=template.id,
+            name="   ",
+            planned_quantity=2,
+            category_id=0,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    assert response.status_code == 200
+    assert response.headers["hx-retarget"] == "#templateItemAddFeedback"
+    assert response.headers["x-jaci-item-add-error"] == "true"
+    assert "O nome do item" in response.body.decode()
+    assert template.items == []
+
+
+def test_template_detail_renders_modal_and_fragment_as_a_complete_page(
+    db, make_user, make_group
+):
+    user = make_user("ana-detail@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Banana", 2)
+
+    response = asyncio.run(
+        template_routes.template_detail(
+            request=make_template_item_request(htmx=False),
+            template_id=template.id,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    body = response.body.decode()
+    assert response.status_code == 200
+    assert body.count("data-item-add-form") == 1
+    assert 'id="template-items-container"' in body
+    assert "Banana" in body
 
 
 def test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs(
