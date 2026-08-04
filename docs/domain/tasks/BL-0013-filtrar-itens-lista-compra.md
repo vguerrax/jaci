@@ -212,14 +212,15 @@ pendentes:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Busca e padronização | `2/3` | `1` | Em implementação |
+| Etapa 1 / Ticket 1.1 — Busca e padronização | `3/3` | `0` | Aguardando regressão total |
 
 ## Fechamento
 
-- Commits/PRs: fatia 1 `518cff5`; fatia 2 concluída e com hash a registrar após
-  o commit técnico
+- Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 concluída e com
+  hash a registrar após o commit técnico
 - Resultado das validações focadas: fatia 1 — `node --check` e 8 testes
-  aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados
+  aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados;
+  fatia 3 — 6 testes aprovados e 4 templates Jinja2 compilados
 - Resultado da validação manual: ainda não iniciada
 - Resultado da regressão total: ainda não iniciada
 - `xfail(strict=True)` pendentes no escopo: nenhum planejado

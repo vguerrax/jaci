@@ -84,10 +84,11 @@ produto desejado.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0013](../../tasks/BL-0013-filtrar-itens-lista-compra.md).
-- Implementação (commits/PRs): fatia 1 `518cff5`; fatia 2 concluída e com hash
-  a registrar após o commit técnico.
+- Implementação (commits/PRs): fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3
+  concluída e com hash a registrar após o commit técnico.
 - Validações: fatia 1 com 8 testes aprovados; fatia 2 com verificações
-  sintáticas JavaScript e 35 testes Pytest aprovados.
+  sintáticas JavaScript e 35 testes aprovados; fatia 3 com 6 testes aprovados
+  e 4 templates compilados.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`; `BL-0011`
   acompanha a infraestrutura futura de testes em navegador e os demais itens
@@ -109,3 +110,4 @@ produto desejado.
 | `2026-08-03 21:18 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `2d703bf` |
 | `2026-08-03 21:21 -03` | Codex | Fatia 1.1.1 concluída (`1/3`) | Contratos TDD, filtro compartilhado e detalhe da Lista validados com 8 testes aprovados |
 | `2026-08-03 21:25 -03` | Codex | Fatia 1.1.2 concluída (`2/3`) | Compras mutáveis e atualizações dinâmicas validadas com 35 testes aprovados |
+| `2026-08-03 21:27 -03` | Codex | Fatia 1.1.3 concluída (`3/3`) | Compra finalizada padronizada; 6 contratos aprovados e 4 templates compilados |
