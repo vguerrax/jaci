@@ -193,12 +193,13 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
 ## Fechamento
 
 - Commits/PRs: `6c6bd17`
-- Resultado das validações focadas: 54 testes aprovados; `node --check`
+- Resultado das validações focadas: 55 testes aprovados, incluindo duas
+  instâncias concorrentes do controlador com apenas um toast; `node --check`
   aprovado para `execution-budget.js`, `execution-sync.js` e
   `offline-cache.js`; migrações no head
 - Resultado da validação manual: pendente em navegador móvel e desktop; não há
   infraestrutura Playwright no Jaci
-- Resultado da regressão total: 178 testes aprovados e 5 `xfail` legados fora
+- Resultado da regressão total: 179 testes aprovados e 5 `xfail` legados fora
   do escopo
 - `xfail(strict=True)` pendentes no escopo: nenhum
 - Documentação atualizada: item, índice, este refinamento, matriz de testes e

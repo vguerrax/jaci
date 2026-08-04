@@ -73,8 +73,15 @@
         if (!message || !root.document || !root.bootstrap?.Toast) return;
 
         const container = ensureToastContainer();
+        const toastKey = `${level}:${message}`;
+        const duplicate = Array.from(container.children).some(function (toast) {
+            return toast.dataset.budgetToastKey === toastKey;
+        });
+        if (duplicate) return;
+
         const toastElement = root.document.createElement('div');
         toastElement.className = `toast toast-jaci toast-${level}`;
+        toastElement.dataset.budgetToastKey = toastKey;
         toastElement.setAttribute('role', 'alert');
         toastElement.setAttribute('aria-live', 'assertive');
         toastElement.setAttribute('aria-atomic', 'true');

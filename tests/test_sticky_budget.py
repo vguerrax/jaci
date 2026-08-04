@@ -115,6 +115,88 @@ process.stdout.write(JSON.stringify({ names, notifications }));
     }
 
 
+def test_budget_toast_is_deduplicated_across_controller_instances():
+    script = r"""
+class Element {
+  constructor(tag) {
+    this.tag = tag;
+    this.children = [];
+    this.dataset = {};
+    this.listeners = {};
+    this.style = { setProperty() {} };
+    this.classList = { toggle() {} };
+    this.parent = null;
+    this.textContent = '';
+  }
+  appendChild(child) { child.parent = this; this.children.push(child); return child; }
+  replaceChildren() { this.children = []; }
+  setAttribute() {}
+  addEventListener(name, callback) { this.listeners[name] = callback; }
+  querySelector(selector) {
+    if (selector === '.toast-body') {
+      if (!this.toastBody) this.toastBody = new Element('div');
+      return this.toastBody;
+    }
+    return null;
+  }
+  remove() {
+    if (this.parent) this.parent.children = this.parent.children.filter((child) => child !== this);
+  }
+}
+
+const body = new Element('body');
+const summary = new Element('summary');
+summary.dataset.budget = '100';
+summary.dataset.totalSpent = '0';
+summary.dataset.budgetLevel = 'normal';
+summary.dataset.budgetMessage = '';
+summary.dataset.budgetSticky = 'false';
+const alerts = new Element('alerts');
+let toastContainer = null;
+const document = {
+  readyState: 'complete',
+  body,
+  createElement(tag) { return new Element(tag); },
+  querySelector(selector) {
+    if (selector === '[data-execution-budget-summary]') return summary;
+    if (selector === '[data-budget-alerts]') return alerts;
+    if (selector === '[data-budget-toast-container]') return toastContainer;
+    return null;
+  },
+};
+const originalAppendChild = body.appendChild.bind(body);
+body.appendChild = function (child) {
+  if (Object.hasOwn(child.dataset, 'budgetToastContainer')) toastContainer = child;
+  return originalAppendChild(child);
+};
+
+let shown = 0;
+global.window = {
+  document,
+  addEventListener() {},
+  bootstrap: { Toast: class { show() { shown += 1; } } },
+};
+
+const path = require.resolve('./app/static/js/execution-budget.js');
+const first = require(path);
+delete require.cache[path];
+const second = require(path);
+const alert = [{ level: 'info', message: 'Atenção ao orçamento' }];
+first.handleRemoteAlerts(alert);
+second.handleRemoteAlerts(alert);
+process.stdout.write(String(shown));
+"""
+    result = subprocess.run(
+        ["node", "-e", script],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.stdout == "1"
+
+
 def test_budget_controller_handles_dynamic_fragments_navbar_and_toasts():
     controller = Path("app/static/js/execution-budget.js").read_text()
     detail = Path("app/templates/pages/executions/in_progress.html").read_text()
@@ -150,5 +232,5 @@ def test_offline_item_mutations_recalculate_budget_from_local_snapshot():
 def test_budget_controller_is_cached_for_offline_execution():
     worker = Path("app/static/js/service-worker.js").read_text()
 
-    assert "const CACHE_VERSION = 'v24'" in worker
+    assert "const CACHE_VERSION = 'v25'" in worker
     assert "'/static/js/execution-budget.js'" in worker

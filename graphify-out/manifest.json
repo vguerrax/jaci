@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1785810831.820402,
-    "ast_hash": "86f35f8a41d7cd34cb6db6914ec31b5f",
+    "mtime": 1785811680.7771182,
+    "ast_hash": "ded717ac162009208f7b0e6a175a4a5c",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
-    "mtime": 1785810718.5341997,
-    "ast_hash": "8bb18502e8ec9cdb4119a851f0dd63fd",
+    "mtime": 1785811666.7660913,
+    "ast_hash": "91b8a16fbb8aa68eaad6e6f27f02ef43",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -845,23 +845,23 @@
     "semantic_hash": ""
   },
   "app/static/js/execution-budget.js": {
-    "mtime": 1785810831.9365952,
-    "ast_hash": "dbe2821e2d8d708b9f1341bf3a238c9a",
+    "mtime": 1785811680.6592894,
+    "ast_hash": "cd46d40e22988cd8f66cd6d571328d25",
     "semantic_hash": ""
   },
   "tests/test_sticky_budget.py": {
-    "mtime": 1785810939.0795214,
-    "ast_hash": "45462f26d1e4bfbe85a8ea126a3a5784",
+    "mtime": 1785811666.6480896,
+    "ast_hash": "d6c5443c2271cedd4397f4f00546a0a3",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811114.7591233,
-    "ast_hash": "1912abfe9edd45f5bc0cc4f9be550e43",
+    "mtime": 1785811745.7012155,
+    "ast_hash": "e330904956d60ae2bf1bf0e1e0d9b31c",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811114.8751252,
-    "ast_hash": "c03e8481690837b26f66905d41be4539",
+    "mtime": 1785811745.8192172,
+    "ast_hash": "72aeebf52636527e78a84e5be6ab2399",
     "semantic_hash": ""
   }
 }
