@@ -79,7 +79,7 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 
 - Documento refinado: [Refinamento BL-0016](../../tasks/BL-0016-botao-flutuante-adicionar-itens.md).
 - Implementação (commits/PRs): fatia 1.1.1 `90393f9`; correção do filtro
-  dinâmico `3ec1bd1`; correção visual das linhas filtradas a registrar.
+  dinâmico `3ec1bd1`; correção visual das linhas filtradas `4a2ced3`.
 - Validações: 99 testes focados aprovados; sintaxe JavaScript e compilação dos
   módulos Python aprovadas; migrações no head; regressão com 211 testes
   aprovados e 5 `xfail` legados fora do escopo; smoke tests Chrome headless
@@ -111,4 +111,4 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 17:41 -03` | Usuário | Falha na busca de itens da Lista reportada durante validação | Campo permanecia visível, mas a inicialização presa ao nó original era frágil quando a visualização fosse recriada dinamicamente |
 | `2026-08-04 17:41 -03` | Codex | Defeito de validação corrigido; estado mantido em `em_validacao` | Eventos delegados e reinicialização após `htmx:afterSwap` no commit `3ec1bd1`; cache PWA `v28`; 98 testes focados, Chrome headless e regressão 210/5 aprovados |
 | `2026-08-04 17:49 -03` | Usuário | Filtragem parcial reportada durante validação | Categorias sem correspondência eram ocultadas, mas a classe Bootstrap `d-flex` mantinha visíveis as linhas marcadas com `hidden` |
-| `2026-08-04 17:49 -03` | Codex | Precedência visual das linhas corrigida; estado mantido em `em_validacao` | Regra específica `[data-item-filter-row][hidden]`, cache PWA `v29`, Chrome headless `none|flex|(1 item)`, 99 testes focados e regressão 211/5 aprovados |
+| `2026-08-04 17:49 -03` | Codex | Precedência visual das linhas corrigida; estado mantido em `em_validacao` | Regra específica `[data-item-filter-row][hidden]` no commit `4a2ced3`; cache PWA `v29`, Chrome headless `none|flex|(1 item)`, 99 testes focados e regressão 211/5 aprovados |
