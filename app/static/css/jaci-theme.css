@@ -513,6 +513,12 @@ FORMS
     margin-bottom: 0.375rem;
 }
 
+.input-group-text-sm {
+    min-height: calc(1.5em + .5rem + calc(var(--bs-border-width) * 2));
+    padding: .25rem .5rem;
+    font-size: .875rem;
+}
+
 /* ============================================================
 CUSTOM CHECKBOX (Item Check)
 ============================================================ */
@@ -641,6 +647,22 @@ PROGRESS (Budget Bar)
 
 .progress-jaci .progress-bar.bg-danger-progress {
     background: var(--jaci-error);
+}
+
+.execution-budget-sticky {
+    position: sticky;
+    top: var(--jaci-execution-budget-top, 4.75rem);
+    z-index: 1010;
+    padding-top: 0.25rem;
+    background: var(--jaci-lunar);
+}
+
+.execution-budget-sticky .card-jaci {
+    box-shadow: 0 4px 14px rgba(42, 75, 74, 0.12);
+}
+
+[data-budget-toast-container] {
+    z-index: 1090;
 }
 
 /* ============================================================

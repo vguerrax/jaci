@@ -1,9 +1,11 @@
 import asyncio
 from datetime import datetime, timezone
 
+from sqlalchemy import select
 from starlette.requests import Request
 
-from app.models.enums import RecurrenceType
+from app.models import Execution, ExecutionItem
+from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers import executions as execution_routes
 from app.services.execution_service import (
     complete_item,
@@ -69,3 +71,64 @@ def test_total_spent_matches_sum_of_visible_item_totals(
     totals = execution_routes.get_execution_totals(db, execution.id)
 
     assert totals["total_spent"] == visible_sum
+
+
+def test_add_item_route_persists_purchase_before_totals_and_broadcast(
+    db, make_user, make_group, monkeypatch
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        budget=20,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+    events = []
+
+    async def fake_broadcast(execution_id, event, data, exclude=None):
+        stored = db.scalar(
+            select(ExecutionItem).where(
+                ExecutionItem.execution_id == execution_id,
+                ExecutionItem.name == "Banana",
+            )
+        )
+        assert stored is not None
+        assert stored.is_completed is True
+        assert stored.total_price == 18
+        events.append((event, data))
+
+    async def fake_fragment(*args, **kwargs):
+        totals = execution_routes.get_execution_totals(db, execution.id)
+        assert totals == {
+            "total_items": 1,
+            "completed_items": 1,
+            "remaining_items": 0,
+            "total_spent": 18,
+        }
+        return "fragment"
+
+    monkeypatch.setattr(execution_routes.manager, "broadcast", fake_broadcast)
+    monkeypatch.setattr(execution_routes, "_get_items_fragment", fake_fragment)
+
+    response = asyncio.run(
+        execution_routes.handle_add_item(
+            request=make_request(),
+            execution_id=execution.id,
+            name="Banana",
+            planned_quantity=3,
+            unit_price=6,
+            category_id=None,
+            notes="Prata",
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    assert response == "fragment"
+    assert [event for event, _ in events] == ["item_added", "budget_alert"]
+    assert events[0][1]["total_price"] == 18

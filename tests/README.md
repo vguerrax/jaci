@@ -32,9 +32,9 @@ venv/bin/pytest
 | Fluxo | Estado | Cobertura principal |
 |---|---|---|
 | FL-01 Primeiro acesso e onboarding | Implementado | `test_first_access_creates_default_home_and_categories`, `test_repeated_login_does_not_duplicate_default_home` |
-| FL-02 Criação de template | Implementado | `test_fl02_template_is_active_and_items_are_grouped_with_notes` |
+| FL-02 Criação de template | Implementado | `test_fl02_template_is_active_and_items_are_grouped_with_notes`, `test_template_detail_exposes_accessible_filter_contract` |
 | FL-03 Geração de execução | Implementado | `test_fl03_manual_and_automatic_executions_are_available_in_agenda` |
-| FL-04 Execução da compra | Implementado | `test_fl04_critical_purchase_flow_preserves_history` |
+| FL-04 Execução da compra | Implementado | `test_fl04_critical_purchase_flow_preserves_history`, `test_mutable_execution_exposes_filter_and_visible_financial_metadata`, `test_completed_execution_is_searchable_collapsible_and_read_only` |
 | FL-05 Compra colaborativa | Implementado | `test_fl05_collaborative_purchase_notifies_members_and_has_single_history`, `test_stale_item_version_fails_explicitly_without_overwriting` |
 | FL-06 Aprendizado do template | Implementado | `test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them`, `test_fl06_only_selected_suggestions_are_applied_to_template` |
 | FL-07 Gestão de grupos | Implementado | `test_member_can_be_invited_to_the_group`, `test_fl07_accepted_member_can_access_shared_templates_and_executions` |
@@ -46,6 +46,12 @@ Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados,
 aparecem como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até
 que o fluxo seja revisado. Os contratos legados de FL-09 não definem o estado
 atual da implementação e devem ser reconciliados no BL-0001.
+
+# Demandas do backlog ativo
+
+| Item | Estado | Cobertura principal |
+|---|---|---|
+| [BL-0014](../docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md) Resumo de orçamento fixo | Em validação | `tests/test_sticky_budget.py`, `tests/test_agenda_and_budget_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py` e `tests/test_pwa.py` |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 
