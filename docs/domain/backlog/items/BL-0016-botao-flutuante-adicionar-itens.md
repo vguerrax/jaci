@@ -78,8 +78,7 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0016](../../tasks/BL-0016-botao-flutuante-adicionar-itens.md).
-- Implementação (commits/PRs): fatia 1.1.1 concluída; commit a registrar no
-  fechamento de rastreabilidade.
+- Implementação (commits/PRs): fatia 1.1.1 `90393f9`.
 - Validações: 97 testes focados aprovados; sintaxe JavaScript e compilação dos
   módulos Python aprovadas; migrações no head; regressão com 209 testes
   aprovados e 5 `xfail` legados fora do escopo; `pylint` indisponível no
@@ -104,4 +103,4 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 16:55 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, fatia única, contratos TDD, cenários UI e validações refinados; aguarda nova aprovação explícita |
 | `2026-08-04 17:05 -03` | Usuário/Codex | Refinamento revisado; estado mantido em `pronto_para_implementacao` | Link com rolagem rejeitado por perder o contexto; escopo substituído por modal com formulário único, preservação da posição e retorno de foco; exige aprovação do novo commit |
 | `2026-08-04 17:10 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `b777d55` |
-| `2026-08-04 17:23 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` -> `em_validacao` | Modal com formulário único, fallback progressivo, atualização parcial e fila offline implementados; 97 testes focados e regressão 209/5 aprovados; aguarda validação manual e publicação |
+| `2026-08-04 17:23 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` -> `em_validacao` | Modal com formulário único, fallback progressivo, atualização parcial e fila offline implementados no commit `90393f9`; 97 testes focados e regressão 209/5 aprovados; aguarda validação manual e publicação |

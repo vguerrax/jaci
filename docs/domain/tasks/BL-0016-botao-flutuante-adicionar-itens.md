@@ -258,8 +258,8 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: commit da fatia a registrar no fechamento de rastreabilidade;
-  branch `feature/BL-0016-botao-flutuante-adicionar-itens`.
+- Commits/PRs: fatia 1.1.1 `90393f9`; branch
+  `feature/BL-0016-botao-flutuante-adicionar-itens`.
 - Resultado das validações focadas: 97 testes aprovados; sintaxe de
   `item-add-modal.js`, `offline-cache.js` e `service-worker.js` aprovada;
   módulos Python compilados sem erro. O `pylint` não está instalado no
