@@ -127,7 +127,7 @@
         </div>
 
         <!-- Items list -->
-        <div class="col-lg-8 order-lg-1" hx-preserve>
+        <div class="col-lg-8 order-lg-1" hx-preserve data-item-filter-root>
             <div id="items-container">
                 {% include "pages/executions/_items_fragment.html" %}
             </div>
@@ -188,6 +188,8 @@
 </div>
 {% block extra_js %}
 <!-- WebSocket sync -->
+<script src="/static/js/item-filter.js"></script>
+<script src="/static/js/execution-budget.js"></script>
 <script src="/static/js/execution-sync.js"></script>
 
 <script>
@@ -212,49 +214,6 @@
         });
     }
     )();
-    (function () {
-        'use strict';
-
-        const CONTAINER_ID = 'items-container';
-
-        // Intercepta toda requisição HTMX que vai substituir o container
-        document.body.addEventListener('htmx:configRequest', function (event) {
-            const target = event.detail.target;
-            if (!target || target.id !== CONTAINER_ID) return;
-
-            const container = document.getElementById(CONTAINER_ID);
-            if (!container) return;
-
-            // Coleta IDs dos collapses expandidos
-            const expandedIds = [];
-            container.querySelectorAll('.collapse.show').forEach(function (el) {
-                if (el.id) expandedIds.push(el.id);
-            });
-
-            // Adiciona cabeçalho
-            event.detail.headers['X-Collapse-State'] = expandedIds.join(',');
-        });
-    })()
-
-    function collapseAll() {
-        const collapseElementList = document.querySelectorAll('.card-body.collapse');
-        const collapseElementListOpened = [];
-        const collapseElementListClosed = [];
-        collapseElementList.forEach((el) => {
-            if (el.classList.contains('show')) collapseElementListOpened.push(el);
-            else collapseElementListClosed.push(el);
-        });
-
-        const collapseList = [];
-        if (collapseElementListOpened.length == 0 || collapseElementListClosed.length == 0) {
-            [...collapseElementList].forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        } else if (collapseElementListOpened.length > collapseElementListClosed.length) {
-            collapseElementListClosed.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        } else {
-            collapseElementListOpened.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        }
-        collapseList.forEach((collapse) => { collapse.toggle() });
-    }
 </script>
 {% endblock %}
 {% endblock %}

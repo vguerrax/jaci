@@ -649,6 +649,22 @@ PROGRESS (Budget Bar)
     background: var(--jaci-error);
 }
 
+.execution-budget-sticky {
+    position: sticky;
+    top: var(--jaci-execution-budget-top, 4.75rem);
+    z-index: 1010;
+    padding-top: 0.25rem;
+    background: var(--jaci-lunar);
+}
+
+.execution-budget-sticky .card-jaci {
+    box-shadow: 0 4px 14px rgba(42, 75, 74, 0.12);
+}
+
+[data-budget-toast-container] {
+    z-index: 1090;
+}
+
 /* ============================================================
 TABLES
 ============================================================ */

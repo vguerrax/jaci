@@ -398,6 +398,7 @@
         db.close();
         await markExecutionItemLocally(payload);
         await updatePendingCount();
+        await refreshLocalExecutionBudget(operation.execution_id);
     }
 
     async function markAddedExecutionItemLocally(operation) {
@@ -465,6 +466,7 @@
             db.close();
             await markRemovedExecutionItemLocally(operation);
             await updatePendingCount();
+            await refreshLocalExecutionBudget(operation.execution_id);
             return;
         }
 
@@ -480,6 +482,7 @@
         db.close();
         await markRemovedExecutionItemLocally(operation);
         await updatePendingCount();
+        await refreshLocalExecutionBudget(operation.execution_id);
     }
 
     async function markExecutionFinalizedLocally(operation) {
@@ -1471,6 +1474,38 @@
         return row?.dataset.executionId || null;
     }
 
+    function roundMoney(value) {
+        return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100;
+    }
+
+    function calculateExecutionTotal(items, executionId) {
+        const currentId = Number(executionId);
+        const total = items
+            .filter(function (item) {
+                return Number(item.execution_id) === currentId
+                    && item.is_completed
+                    && !item.is_deleted
+                    && !item.offline_removed_at;
+            })
+            .reduce(function (sum, item) {
+                return sum + roundMoney(
+                    Number(item.purchased_quantity || 0) * Number(item.unit_price || 0)
+                );
+            }, 0);
+        return roundMoney(total);
+    }
+
+    async function refreshLocalExecutionBudget(executionId, notify) {
+        if (!executionId || !window.JaciExecutionBudget) return;
+        const db = await openDatabase();
+        const items = await readStore(db, 'execution_items');
+        db.close();
+        window.JaciExecutionBudget.updateTotal(
+            calculateExecutionTotal(items, executionId),
+            { notify: notify !== false }
+        );
+    }
+
     async function refreshCurrentExecutionFragments() {
         if (!navigator.onLine) return false;
         const executionId = currentExecutionIdFromPage();
@@ -1478,6 +1513,9 @@
         if (!executionId || !itemsContainer) return false;
 
         const expandedIds = Array.from(itemsContainer.querySelectorAll('.collapse.show'))
+            .filter(function (element) {
+                return !element.hasAttribute('data-item-filter-forced-expanded');
+            })
             .map(function (element) { return element.id; })
             .filter(Boolean);
         let response;
@@ -1506,6 +1544,9 @@
             outOfBand.remove();
         });
         itemsContainer.innerHTML = fragment.innerHTML;
+        if (window.JaciExecutionBudget) {
+            window.JaciExecutionBudget.refreshFromDocument({ notify: true });
+        }
 
         const sidebar = document.getElementById('sidebar-container');
         if (sidebar) {
@@ -1560,6 +1601,8 @@
         if (operation.action !== 'incomplete_item') return;
 
         row.classList.remove('opacity-75', 'is-offline-updated', 'is-offline-removed');
+        row.dataset.itemFilterCompleted = 'false';
+        row.dataset.itemFilterTotalPrice = '0';
         const check = row.querySelector('.check-jaci');
         if (check) check.classList.remove('checked');
         row.querySelectorAll('.text-strikethrough').forEach(function (element) {
@@ -1610,6 +1653,7 @@
         }
 
         if (operation.action === 'update_item') {
+            row.dataset.itemFilterName = operation.name;
             const nameLabel = row.querySelector('[data-item-name-label]');
             const plannedQuantityLabel = row.querySelector('[data-item-planned-quantity-label]');
             const notesLabel = row.querySelector('[data-item-notes-label]');
@@ -1626,9 +1670,18 @@
         }
 
         if (operation.action === 'incomplete_item') {
+            row.dataset.itemFilterCompleted = 'false';
+            row.dataset.itemFilterTotalPrice = '0';
             const completedSummary = row.querySelector('[data-item-completed-summary]');
             row.classList.remove('opacity-75');
             if (completedSummary) completedSummary.hidden = true;
+        }
+
+        if (operation.action === 'complete_item') {
+            row.dataset.itemFilterCompleted = 'true';
+            row.dataset.itemFilterTotalPrice = String(
+                Number(operation.purchased_quantity || 0) * Number(operation.unit_price || 0)
+            );
         }
 
         if (operation.action === 'remove_execution_item') {
@@ -1669,7 +1722,12 @@
             if (item.offline_removed_at || item.is_deleted) {
                 markItemRowAsOfflineUpdated({ action: 'remove_execution_item', item_id: item.id });
             } else if (item.offline_updated_at && item.is_completed) {
-                markItemRowAsOfflineUpdated({ action: 'complete_item', item_id: item.id });
+                markItemRowAsOfflineUpdated({
+                    action: 'complete_item',
+                    item_id: item.id,
+                    purchased_quantity: item.purchased_quantity,
+                    unit_price: item.unit_price,
+                });
             } else if (item.offline_updated_at) {
                 markItemRowAsOfflineUpdated({
                     action: 'update_item',
@@ -1681,6 +1739,15 @@
                 });
             }
         });
+        const currentExecutionId = Number(currentExecutionIdFromPage());
+        const hasPendingItems = snapshot.pending_operations.some(function (operation) {
+            const operationExecutionId = operation.payload?.execution_id;
+            return Number(operationExecutionId) === currentExecutionId
+                && (operation.entity === 'execution_item' || operation.entidade === 'execution_item');
+        });
+        if (!navigator.onLine || hasPendingItems) {
+            refreshLocalExecutionBudget(currentExecutionIdFromPage(), false).catch(function () {});
+        }
     }
 
     function itemLocationTimestamp(item) {

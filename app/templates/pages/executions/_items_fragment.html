@@ -1,50 +1,75 @@
 <!-- Budget alerts -->
-<div data-budget-alerts>
-{% if budget_alerts %}
-{% for alert in budget_alerts %}
-<div class="alert alert-{{ alert.level }} alert-jaci mb-3 d-flex align-items-center gap-2">
-    <span>{{ alert.message }}</span>
-</div>
-{% endfor %}
-{% endif %}
+<div data-budget-alerts aria-live="polite">
+    {% if budget_alerts %}
+    {% for alert in budget_alerts %}
+    <div class="alert alert-{{ alert.level }} alert-jaci mb-3 d-flex align-items-center gap-2">
+        <span>{{ alert.message }}</span>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 
 <!-- Budget progress bar -->
 {% if execution.budget and execution.budget > 0 %}
-<div class="card-jaci p-3 mb-4" data-offline-budget-summary
-    data-total-spent="{{ totals.total_spent }}" data-budget="{{ execution.budget }}">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="small text-clay">Orçamento</span>
-        <span class="small fw-medium" data-offline-budget-values>
-            R$ {{ "%.2f"|format(totals.total_spent) }} / R$ {{ "%.2f"|format(execution.budget) }}
-        </span>
-    </div>
-    <div class="progress-jaci">
-        {% set percent = (totals.total_spent / execution.budget * 100) if execution.budget > 0 else 0 %}
-        <div class="progress-bar {% if percent >= 95 %}bg-danger-progress{% elif percent >= 80 %}bg-warning-progress{% endif %}"
-            data-offline-budget-progress
-            style="width: {{ percent if percent <= 100 else 100 }}%" aria-valuenow="{{ percent }}" aria-valuemin="0"
-            aria-valuemax="100">
+{% set percent = (totals.total_spent / execution.budget * 100) if execution.budget > 0 else 0 %}
+{% set budget_alert = budget_alerts[0] if budget_alerts else none %}
+<div class="{% if execution.status == 'in_progress' %}execution-budget-sticky {% endif %}mb-4"
+    data-execution-budget-summary
+    data-offline-budget-summary
+    data-budget-sticky="{{ 'true' if execution.status == 'in_progress' else 'false' }}"
+    data-budget="{{ execution.budget }}"
+    data-total-spent="{{ totals.total_spent }}"
+    data-budget-level="{{ budget_alert.level if budget_alert else 'normal' }}"
+    data-budget-message="{{ budget_alert.message if budget_alert else '' }}">
+    <div class="card-jaci p-3" data-item-filter-global-summary>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small text-clay">Orçamento</span>
+            <span class="small fw-medium" data-budget-values data-offline-budget-values>
+                R$ {{ "%.2f"|format(totals.total_spent) }} / R$ {{ "%.2f"|format(execution.budget) }}
+            </span>
         </div>
-    </div>
-    <div class="text-help small mt-1" data-offline-budget-percent>
-        {{ "%.0f"|format(percent) }}% utilizado
+        <div class="progress-jaci">
+            <div data-budget-progress data-offline-budget-progress
+                class="progress-bar {% if percent >= 95 %}bg-danger-progress{% elif percent >= 80 %}bg-warning-progress{% endif %}"
+                style="width: {{ percent if percent <= 100 else 100 }}%" aria-valuenow="{{ percent }}"
+                aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+        <div class="text-help small mt-1" data-budget-percent data-offline-budget-percent>
+            {{ "%.0f"|format(percent) }}% utilizado
+        </div>
     </div>
 </div>
 {% endif %}
 
 <!-- Items list -->
 {% if grouped_items %}
-<div class="mb-3 d-flex align-items-center justify-content-end">
-    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="collapseAll()">
+<div class="mb-3 d-flex flex-column flex-sm-row align-items-stretch gap-2">
+    <div class="input-group w-100">
+        <span class="input-group-text" aria-hidden="true">
+            <i class="bi bi-search"></i>
+        </span>
+        <input id="executionItemFilter" type="search" class="form-control"
+            placeholder="Buscar item" aria-label="Buscar itens por nome"
+            autocomplete="off" data-item-filter-input>
+    </div>
+</div>
+<div class="mb-3 text-end">
+    <button type="button" class="btn btn-sm btn-outline-secondary"
+        data-item-filter-collapse-all>
         <i class="bi bi-chevron-expand"></i>
         Expandir/Recolher Todos
     </button>
 </div>
+<p class="alert alert-info alert-jaci" role="status" aria-live="polite"
+    data-item-filter-empty hidden>
+    Nenhum item encontrado.
+</p>
 {% for item_group in grouped_items %}
 {% set cat_id = ('cat-' ~ item_group.category.id ~ '-items') if item_group.category else 'sem-categoria-items' %}
 <div class="card-jaci mb-3" data-execution-category-card
-    data-category-id="{{ item_group.category.id if item_group.category else '' }}">
+    data-category-id="{{ item_group.category.id if item_group.category else '' }}"
+    data-item-filter-group>
     <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
         <div>
             {% if item_group.category %}
@@ -59,9 +84,11 @@
             <span class="text-help small" data-offline-category-summary
                 data-completed-count="{{ completed_count }}"
                 data-total-count="{{ item_group.get('items')|length }}"
-                data-subtotal="{{ category_subtotal }}">({{ completed_count }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(category_subtotal) }})</span>
+                data-subtotal="{{ category_subtotal }}" data-item-filter-count
+                data-item-filter-count-mode="execution">({{ completed_count }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(category_subtotal) }})</span>
             {% else %}
-            <span class="text-help small">({{ item_group.get('items')|length }})</span>
+            <span class="text-help small" data-item-filter-count
+                data-item-filter-count-mode="plain">({{ item_group.get('items')|length }})</span>
             {% endif %}
         </div>
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#{{ cat_id }}" aria-expanded="false">
@@ -70,7 +97,8 @@
     </div>
     {% set show = expanded_ids | length == 0 or cat_id in expanded_ids %}
 
-    <div class="card-body collapse {% if show %}show{% endif %}" id="{{ cat_id }}">
+    <div class="card-body collapse {% if show %}show{% endif %}" id="{{ cat_id }}"
+        data-item-filter-collapse>
         <div class="list-group list-group-flush list-group-jaci">
             {% for item in item_group.get('items') %}
             <div class="list-group-item {% if item.is_completed %}opacity-75{% endif %}"
@@ -80,7 +108,11 @@
                 data-category-id="{{ item.category_id or '' }}"
                 data-item-completed="{{ 'true' if item.is_completed else 'false' }}"
                 data-item-total="{{ item.total_price or 0 }}"
-                data-item-location="{{ item.location or '' }}">
+                data-item-location="{{ item.location or '' }}"
+                data-item-filter-row
+                data-item-filter-name="{{ item.name }}"
+                data-item-filter-completed="{{ 'true' if item.is_completed else 'false' }}"
+                data-item-filter-total-price="{{ item.total_price or 0 }}">
                 <div class="d-flex align-items-center gap-2">
                     <!-- Checkbox visual -->
                     <div class="check-jaci {% if item.is_completed %}checked{% endif %} flex-shrink-0"></div>
