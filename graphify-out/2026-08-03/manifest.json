@@ -1,9 +1,4 @@
 {
-  ".codex/hooks.json": {
-    "mtime": 1785810462.960949,
-    "ast_hash": "5f1762276fe1ecb343b8e1e98bd48168",
-    "semantic_hash": ""
-  },
   "app/__init__.py": {
     "mtime": 1777242145.5643637,
     "ast_hash": "c75706a40fce275cf3f28292c40d3c32",
@@ -199,6 +194,11 @@
     "ast_hash": "6a12a179c28790f7a70105ab78d90400",
     "semantic_hash": ""
   },
+  "app/static/js/item-filter.js": {
+    "mtime": 1785804411.3450916,
+    "ast_hash": "f16375493d6a511499ed4badedab9b54",
+    "semantic_hash": ""
+  },
   "app/static/js/jaci-confirm.js": {
     "mtime": 1784832781.1419535,
     "ast_hash": "b3cb0a598df083eb96a450cf5136418c",
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "app/static/js/offline-cache.js": {
-    "mtime": 1785810939.1984887,
-    "ast_hash": "19d18fcabea39fd40b1251dad4f6ca3b",
+    "mtime": 1785803086.5707817,
+    "ast_hash": "c034b996fc0b8953440a66c353526618",
     "semantic_hash": ""
   },
   "app/static/js/pwa-install.js": {
@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1785811680.7771182,
-    "ast_hash": "ded717ac162009208f7b0e6a175a4a5c",
+    "mtime": 1785804411.463093,
+    "ast_hash": "c6b63640f71bf9101ea675c18fb4fbb3",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
-    "mtime": 1785811666.7660913,
-    "ast_hash": "91b8a16fbb8aa68eaad6e6f27f02ef43",
+    "mtime": 1785804397.0929494,
+    "ast_hash": "138a6fe345f6dacb560c75fea7051dc7",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1785810462.9613886,
-    "ast_hash": "7778d2ae9cb3afd5d694f67419740650",
+    "mtime": 1785802185.313177,
+    "ast_hash": "f4682e94f9e174fd26dd434b84583590",
     "semantic_hash": ""
   },
   "README.md": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_items_fragment.html": {
-    "mtime": 1785810831.2441022,
-    "ast_hash": "75acd95bcdd9e6daaced4b4091eefbff",
+    "mtime": 1785804119.1463964,
+    "ast_hash": "d0a62aee2289aa43a1113bbcc3bb018c",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_sidebar_fragment.html": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/completed.html": {
-    "mtime": 1785810462.9616313,
-    "ast_hash": "add321f43840f9a7d8be9dc8575c0fec",
+    "mtime": 1785803185.195754,
+    "ast_hash": "cf0a2fcc375327af249696b5c101eec2",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/create.html": {
@@ -545,8 +545,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/in_progress.html": {
-    "mtime": 1785810831.4037032,
-    "ast_hash": "7e8f4d02085eb6511f1bc60cac1a73b0",
+    "mtime": 1785803066.8861861,
+    "ast_hash": "a9bdc6ede871d1614ea6deb1fc59f253",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/index.html": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/templates/detail.html": {
-    "mtime": 1785809263.5847309,
-    "ast_hash": "619a28e9e4bd16e9b74f2c53cb0e2437",
+    "mtime": 1785802878.6356983,
+    "ast_hash": "4dbaf31e007ffa4f3236759785ac5f6c",
     "semantic_hash": ""
   },
   "app/templates/pages/templates/edit.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785811064.7473874,
-    "ast_hash": "49440d1a18e31aeea4b541513a2540dd",
+    "mtime": 1785803352.82398,
+    "ast_hash": "81f95eb4a81097f4b874135667fcf8d3",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -740,8 +740,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785804640.1953676,
-    "ast_hash": "da4e36ad453f75e5c9372d5eb63c1994",
+    "mtime": 1785803352.9409816,
+    "ast_hash": "46cd6f8087416604542fc903c257ec1f",
     "semantic_hash": ""
   },
   "docs/domain/business-rules.md": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785804640.3193698,
-    "ast_hash": "4ceaf4d616df31c45233d085a0a86f57",
+    "mtime": 1785803353.0599833,
+    "ast_hash": "7afa291600f3250ddb5b52ec58e6b301",
     "semantic_hash": ""
   },
   "docs/domain/tasks/TEMPLATE.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785811029.134861,
-    "ast_hash": "3ce9b3499748f931623031ddd77b8f1f",
+    "mtime": 1785803241.8905065,
+    "ast_hash": "b39b1fdf71c2795f8d02024e11cff2f2",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -857,26 +857,6 @@
   "app/static/img/jaci-2.png": {
     "mtime": 1773864520.0,
     "ast_hash": "b30106a359db13ebb130a8c856957c41",
-    "semantic_hash": ""
-  },
-  "app/static/js/execution-budget.js": {
-    "mtime": 1785811680.6592894,
-    "ast_hash": "cd46d40e22988cd8f66cd6d571328d25",
-    "semantic_hash": ""
-  },
-  "tests/test_sticky_budget.py": {
-    "mtime": 1785811666.6480896,
-    "ast_hash": "d6c5443c2271cedd4397f4f00546a0a3",
-    "semantic_hash": ""
-  },
-  "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811775.5256398,
-    "ast_hash": "12934726fe7ce20c4e61ee7872b7d85b",
-    "semantic_hash": ""
-  },
-  "docs/domain/tasks/BL-0014-fixar-orcamento-compra.md": {
-    "mtime": 1785811775.6416414,
-    "ast_hash": "820c3de38717e89301e2912a8525b42f",
     "semantic_hash": ""
   }
 }

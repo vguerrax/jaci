@@ -13,6 +13,7 @@ const SHELL_ASSETS = [
     '/static/js/jaci-confirm.js',
     '/static/js/execution-budget.js',
     '/static/js/execution-sync.js',
+    '/static/js/item-filter.js',
     '/static/js/loading-indicator.js',
     '/static/js/offline-cache.js',
     '/static/js/pwa-install.js',

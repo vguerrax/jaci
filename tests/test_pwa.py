@@ -76,6 +76,7 @@ def test_service_worker_caches_shell_and_falls_back_offline():
     assert "'/manifest.webmanifest'" in worker
     assert "'/static/js/loading-indicator.js'" in worker
     assert "'/static/js/offline-cache.js'" in worker
+    assert "'/static/js/item-filter.js'" in worker
     assert "'/static/js/execution-budget.js'" in worker
     assert "|| caches.match(OFFLINE_PAGE)" in worker
 
