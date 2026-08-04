@@ -8,6 +8,7 @@ MUTABLE_EXECUTION_PATH = Path("app/templates/pages/executions/in_progress.html")
 ITEMS_FRAGMENT_PATH = Path("app/templates/pages/executions/_items_fragment.html")
 COMPLETED_EXECUTION_PATH = Path("app/templates/pages/executions/completed.html")
 OFFLINE_CACHE_PATH = Path("app/static/js/offline-cache.js")
+THEME_PATH = Path("app/static/css/jaci-theme.css")
 
 
 def read(path: Path) -> str:
@@ -40,6 +41,13 @@ def test_shared_item_filter_controls_rows_groups_counts_and_empty_state():
     assert "group.hidden" in script
     assert "empty.hidden" in script
     assert "data-item-filter-original-count" in script
+
+
+def test_hidden_filter_rows_override_bootstrap_display_utilities():
+    theme = read(THEME_PATH)
+
+    assert "[data-item-filter-row][hidden]" in theme
+    assert "display: none !important;" in theme
 
 
 def test_clear_and_collapse_controls_share_a_safe_click_handler():

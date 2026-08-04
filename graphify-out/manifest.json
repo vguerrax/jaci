@@ -220,8 +220,8 @@
     "semantic_hash": "2fb77115c7a3a790c8e9f6953992e051"
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1785876004.7233138,
-    "ast_hash": "fb7e9af12ad6eefa81e731420ad523ad",
+    "mtime": 1785876613.8645499,
+    "ast_hash": "2cc220a1385e358421138f5eb6ed30a1",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": "e2cd19c635af108bf44de10fb8242caf"
   },
   "tests/test_item_filter.py": {
-    "mtime": 1785875973.5508595,
-    "ast_hash": "9e85a318d0cdabc62954e0f69501bc8c",
+    "mtime": 1785876602.0293946,
+    "ast_hash": "58e0c2553f18bfaf42673291a088f4c1",
     "semantic_hash": ""
   },
   "tests/test_loading_indicator.py": {
@@ -415,8 +415,8 @@
     "semantic_hash": "ed90fc9103091a7e87f45b1033fe8371"
   },
   "tests/test_pwa.py": {
-    "mtime": 1785875973.6698613,
-    "ast_hash": "c5a15f7499b7e1479deaeb9847261fbf",
+    "mtime": 1785876602.1493962,
+    "ast_hash": "a14d986bc0a621a1a10a03a2fb5dd97f",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -865,8 +865,8 @@
     "semantic_hash": "cd46d40e22988cd8f66cd6d571328d25"
   },
   "tests/test_sticky_budget.py": {
-    "mtime": 1785875973.787863,
-    "ast_hash": "c598a2fe68474127c91bae8c00a88f9a",
+    "mtime": 1785876602.2703977,
+    "ast_hash": "0c3825560df3832510aa786b40a877b6",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
@@ -915,13 +915,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md": {
-    "mtime": 1785876110.905862,
-    "ast_hash": "9bd6588c8e1850dca71a4d95e1efe04f",
+    "mtime": 1785876788.0968702,
+    "ast_hash": "5323dbd145039d86fb865441c30b3904",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0016-botao-flutuante-adicionar-itens.md": {
-    "mtime": 1785876111.0211713,
-    "ast_hash": "380a696e7e55f5b186851ce614c444fc",
+    "mtime": 1785876781.459781,
+    "ast_hash": "0c72ebbeff7831abc76f1285cd922045",
     "semantic_hash": ""
   }
 }

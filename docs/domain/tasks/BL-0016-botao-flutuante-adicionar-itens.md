@@ -259,8 +259,9 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 ## Fechamento
 
 - Commits/PRs: fatia 1.1.1 `90393f9`; correção do filtro dinâmico `3ec1bd1`;
-  branch `feature/BL-0016-botao-flutuante-adicionar-itens`.
-- Resultado das validações focadas: 98 testes aprovados; sintaxe de
+  correção visual das linhas filtradas a registrar; branch
+  `feature/BL-0016-botao-flutuante-adicionar-itens`.
+- Resultado das validações focadas: 99 testes aprovados; sintaxe de
   `item-add-modal.js`, `item-filter.js`, `offline-cache.js` e
   `service-worker.js` aprovada;
   módulos Python compilados sem erro. O `pylint` não está instalado no
@@ -268,9 +269,11 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
   do pytest.
 - Resultado da validação manual: smoke test Chrome headless confirmou a busca
   normalizada após recriação completa do nó do filtro, com resultado
-  `true|false|(1 item)`; fluxo completo permanece pendente em navegador real e
-  a infraestrutura Playwright continua acompanhada pela BL-0011.
-- Resultado da regressão total: migrações no head; 210 testes aprovados e 5
+  `true|false|(1 item)`, e o estilo calculado confirmou que a linha divergente
+  fica `none` apesar de `d-flex`, com resultado `none|flex|(1 item)`; fluxo
+  completo permanece pendente em navegador real e a infraestrutura Playwright
+  continua acompanhada pela BL-0011.
+- Resultado da regressão total: migrações no head; 211 testes aprovados e 5
   `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, rastreabilidade de testes e este

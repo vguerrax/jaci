@@ -791,6 +791,10 @@ LIST GROUP
     transition: background 0.15s ease;
 }
 
+[data-item-filter-row][hidden] {
+    display: none !important;
+}
+
 .list-group-jaci .list-group-item:hover {
     background: rgba(217, 196, 176, 0.15);
 }

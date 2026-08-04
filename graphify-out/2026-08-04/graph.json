@@ -32,8 +32,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_config",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "config.py"
     },
     {
@@ -120,8 +120,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_config_get_settings",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "get_settings()"
     },
     {
@@ -165,7 +165,7 @@
       "_origin": "ast",
       "id": "app_database",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "database.py"
     },
     {
@@ -198,7 +198,7 @@
       "_origin": "ast",
       "id": "listens_for",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "listens_for"
     },
     {
@@ -209,7 +209,7 @@
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -219,7 +219,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_database_base",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "base"
     },
@@ -230,7 +230,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "declarativebase",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "declarativebase"
     },
@@ -241,8 +241,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_database_ensure_schema_compatibility",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "ensure_schema_compatibility()"
     },
     {
@@ -253,7 +253,7 @@
       "_origin": "ast",
       "id": "app_database_get_db",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get_db()"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_database_rationale_46",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "compatibilidade temporaria para bancos sqlite anteriores ao alembic."
     },
     {
@@ -286,7 +286,7 @@
       "_origin": "ast",
       "id": "app_dependencies",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "dependencies.py"
     },
     {
@@ -297,7 +297,7 @@
       "_origin": "ast",
       "id": "app_dependencies_get_current_user",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get_current_user()"
     },
     {
@@ -308,7 +308,7 @@
       "_origin": "ast",
       "id": "app_dependencies_py_request",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "request"
     },
     {
@@ -319,7 +319,7 @@
       "_origin": "ast",
       "id": "app_dependencies_py_session",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "session"
     },
     {
@@ -330,7 +330,7 @@
       "_origin": "ast",
       "id": "app_dependencies_get_active_group",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get_active_group()"
     },
     {
@@ -341,7 +341,7 @@
       "_origin": "ast",
       "id": "app_dependencies_require_user",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "require_user()"
     },
     {
@@ -352,7 +352,7 @@
       "_origin": "ast",
       "id": "app_dependencies_get_current_user_ws",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get_current_user_ws()"
     },
     {
@@ -363,7 +363,7 @@
       "_origin": "ast",
       "id": "app_dependencies_get_unread_notification_count",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get_unread_notification_count()"
     },
     {
@@ -374,7 +374,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_1",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "dependencias reutilizaveis para injecao em rotas."
     },
     {
@@ -385,7 +385,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_18",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "obtem o usuario autenticado a partir do cookie de sessao. funciona como..."
     },
     {
@@ -396,7 +396,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_45",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "obtem o grupo ativo do usuario a partir do cookie. se nao houver cookie mas o..."
     },
     {
@@ -407,7 +407,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_78",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "dependencia que exige usuario autenticado. levanta excecao se nao autenticado."
     },
     {
@@ -418,7 +418,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_95",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get authenticated user from jwt token (for websocket)."
     },
     {
@@ -429,7 +429,7 @@
       "_origin": "ast",
       "id": "app_dependencies_rationale_119",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "get unread notification count for navbar badge."
     },
     {
@@ -440,7 +440,7 @@
       "_origin": "ast",
       "id": "app_main",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "main.py"
     },
     {
@@ -505,8 +505,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_main_py_websocket",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "websocket"
     },
     {
@@ -516,8 +516,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "app_main_websocket_execution",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "websocket_execution()"
     },
     {
@@ -582,8 +582,8 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "app_main_rationale_140",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "websocket para sincronizacao em tempo real de uma execucao. autenticacao via..."
     },
     {
@@ -615,7 +615,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_init",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "models/__init__.py"
     },
@@ -627,7 +627,7 @@
       "_origin": "ast",
       "id": "app_models_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "category.py"
     },
     {
@@ -638,7 +638,7 @@
       "_origin": "ast",
       "id": "app_models_category_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "category"
     },
     {
@@ -649,7 +649,7 @@
       "_origin": "ast",
       "id": "app_models_category_category_repr",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -659,8 +659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_enums",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 97,
+      "community_name": "enums.py",
       "norm_label": "enums.py"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_models_enums_recurrencetype",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 97,
+      "community_name": "enums.py",
       "norm_label": "recurrencetype"
     },
     {
@@ -791,8 +791,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_group",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 7,
+      "community_name": "datetime.py",
       "norm_label": "group.py"
     },
     {
@@ -824,7 +824,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_notification",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "notification.py"
     },
@@ -835,8 +835,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_models_notification_notification",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notification"
     },
     {
@@ -846,8 +846,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_models_notification_notification_repr",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -857,7 +857,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "sync_conflict_audit.py"
     },
@@ -868,8 +868,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit_syncconflictaudit",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "syncconflictaudit"
     },
     {
@@ -879,8 +879,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_template",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 7,
+      "community_name": "datetime.py",
       "norm_label": "template.py"
     },
     {
@@ -934,7 +934,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_template_learning",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "template_learning.py"
     },
@@ -945,7 +945,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_models_template_learning_templatelearningdismissal",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "templatelearningdismissal"
     },
@@ -957,7 +957,7 @@
       "_origin": "ast",
       "id": "app_models_user",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "user.py"
     },
     {
@@ -967,7 +967,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_models_user_user",
-      "community": 8,
+      "community": 9,
       "community_name": "User",
       "norm_label": "user"
     },
@@ -978,7 +978,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_models_user_user_repr",
-      "community": 8,
+      "community": 9,
       "community_name": "User",
       "norm_label": ".__repr__()"
     },
@@ -1001,7 +1001,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "agenda.py"
     },
     {
@@ -1011,8 +1011,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_get",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get"
     },
     {
@@ -1022,8 +1022,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_calendar",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "agenda_calendar()"
     },
     {
@@ -1033,8 +1033,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_request",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "request"
     },
     {
@@ -1044,8 +1044,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_session",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "session"
     },
     {
@@ -1055,8 +1055,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_list",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "agenda_list()"
     },
     {
@@ -1066,8 +1066,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_day",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "agenda_day()"
     },
     {
@@ -1077,8 +1077,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_post",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "post"
     },
     {
@@ -1088,8 +1088,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "app_routers_agenda_handle_reschedule",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "handle_reschedule()"
     },
     {
@@ -1099,8 +1099,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_62",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "visualizacao da agenda em calendario mensal."
     },
     {
@@ -1110,8 +1110,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_137",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "visualizacao da agenda em lista cronologica."
     },
     {
@@ -1121,8 +1121,8 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_215",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "redireciona para a lista filtrada por uma data especifica."
     },
     {
@@ -1132,8 +1132,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_232",
-      "community": 91,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "adianta ou adia uma execucao."
     },
     {
@@ -1496,7 +1496,7 @@
       "_origin": "ast",
       "id": "app_routers_categories",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "categories.py"
     },
     {
@@ -1507,7 +1507,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_get",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "get"
     },
     {
@@ -1518,7 +1518,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_list_categories",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "list_categories()"
     },
     {
@@ -1529,7 +1529,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_request",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "request"
     },
     {
@@ -1540,7 +1540,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_session",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -1551,7 +1551,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_create_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "create_category_page()"
     },
     {
@@ -1562,7 +1562,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_edit_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "edit_category_page()"
     },
     {
@@ -1573,7 +1573,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_delete_category_confirm_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "delete_category_confirm_page()"
     },
     {
@@ -1584,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_post",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "post"
     },
     {
@@ -1595,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_create_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "handle_create_category()"
     },
     {
@@ -1606,7 +1606,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_move_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "handle_move_category()"
     },
     {
@@ -1617,7 +1617,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_uncategorized_position",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "handle_uncategorized_position()"
     },
     {
@@ -1628,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_edit_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "handle_edit_category()"
     },
     {
@@ -1639,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "handle_delete_category()"
     },
     {
@@ -1650,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_32",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "list all categories for the active group."
     },
     {
@@ -1661,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_82",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "create category form."
     },
     {
@@ -1672,7 +1672,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_142",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "delete confirmation page."
     },
     {
@@ -1683,7 +1683,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_179",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "create a new category."
     },
     {
@@ -1694,7 +1694,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_210",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "move uma categoria na ordem de exibicao."
     },
     {
@@ -1705,7 +1705,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_228",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "define a posicao do grupo sem categoria."
     },
     {
@@ -1716,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_283",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "delete a category after confirmation."
     },
     {
@@ -2243,7 +2243,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_groups",
-      "community": 8,
+      "community": 9,
       "community_name": "User",
       "norm_label": "groups.py"
     },
@@ -2255,7 +2255,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_py_get",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "get"
     },
     {
@@ -2266,7 +2266,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_list_groups",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "list_groups()"
     },
     {
@@ -2277,7 +2277,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_py_request",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "request"
     },
     {
@@ -2288,7 +2288,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_py_session",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "session"
     },
     {
@@ -2299,7 +2299,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_create_group_page",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "create_group_page()"
     },
     {
@@ -2310,7 +2310,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_group_detail",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "group_detail()"
     },
     {
@@ -2321,7 +2321,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_py_post",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "post"
     },
     {
@@ -2332,7 +2332,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_handle_create_group",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "handle_create_group()"
     },
     {
@@ -2343,7 +2343,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_handle_edit_group",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "handle_edit_group()"
     },
     {
@@ -2354,7 +2354,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_handle_invite",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "handle_invite()"
     },
     {
@@ -2365,7 +2365,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_handle_remove_member",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "handle_remove_member()"
     },
     {
@@ -2376,7 +2376,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_handle_switch_group",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "handle_switch_group()"
     },
     {
@@ -2387,7 +2387,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_34",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "lista todos os grupos do usuario."
     },
     {
@@ -2398,7 +2398,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_61",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "formulario de criacao de grupo."
     },
     {
@@ -2409,7 +2409,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_87",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "detalhes do grupo: membros, opcoes de gestao."
     },
     {
@@ -2420,7 +2420,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_158",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "altera configuracoes do grupo."
     },
     {
@@ -2431,7 +2431,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_204",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "convida um novo membro para o grupo."
     },
     {
@@ -2442,7 +2442,7 @@
       "_origin": "ast",
       "id": "app_routers_groups_rationale_245",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "remove um membro do grupo."
     },
     {
@@ -2518,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_notifications",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 9,
+      "community_name": "User",
       "norm_label": "notifications.py"
     },
     {
@@ -2530,7 +2530,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_py_get",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "get"
     },
     {
@@ -2541,7 +2541,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_list_notifications",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "list_notifications()"
     },
     {
@@ -2552,7 +2552,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_py_request",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "request"
     },
     {
@@ -2563,7 +2563,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_py_session",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "session"
     },
     {
@@ -2574,7 +2574,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_py_post",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "post"
     },
     {
@@ -2585,7 +2585,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_handle_mark_read",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "handle_mark_read()"
     },
     {
@@ -2596,7 +2596,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_handle_mark_all_read",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "handle_mark_all_read()"
     },
     {
@@ -2607,7 +2607,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_rationale_25",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "list notifications for the current user."
     },
     {
@@ -2618,7 +2618,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_rationale_53",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "mark a notification as read."
     },
     {
@@ -2629,7 +2629,7 @@
       "_origin": "ast",
       "id": "app_routers_notifications_rationale_66",
       "community": 83,
-      "community_name": "notification_service.py",
+      "community_name": "list_notifications",
       "norm_label": "mark all notifications as read."
     },
     {
@@ -3003,7 +3003,7 @@
       "_origin": "ast",
       "id": "app_routers_sync_center",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "sync_center.py"
     },
     {
@@ -3432,7 +3432,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "agenda_service.py"
     },
     {
@@ -3443,7 +3443,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_month",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "get_executions_for_month()"
     },
     {
@@ -3454,7 +3454,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_session",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "session"
     },
     {
@@ -3465,7 +3465,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_date",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "get_executions_for_date()"
     },
     {
@@ -3476,7 +3476,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_datetime",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "datetime"
     },
     {
@@ -3487,7 +3487,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_build_calendar_data",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "build_calendar_data()"
     },
     {
@@ -3498,7 +3498,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_date",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "date"
     },
     {
@@ -3509,7 +3509,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_list_executions",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "get_list_executions()"
     },
     {
@@ -3519,8 +3519,8 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "app_services_agenda_service_calculate_next_date",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "calculate_next_date()"
     },
     {
@@ -3531,7 +3531,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_reschedule_execution",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "reschedule_execution()"
     },
     {
@@ -3541,8 +3541,8 @@
       "source_location": "L278",
       "_origin": "ast",
       "id": "app_services_agenda_service_generate_next_execution",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "generate_next_execution()"
     },
     {
@@ -3553,7 +3553,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_38",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "retorna todas as execucoes de um mes para o grupo."
     },
     {
@@ -3564,7 +3564,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_65",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "retorna execucoes de uma data especifica."
     },
     {
@@ -3575,7 +3575,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_92",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "constroi os dados para o calendario mensal. retorna semanas com dias e..."
     },
     {
@@ -3586,7 +3586,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_186",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "retorna execucoes para visualizacao em lista cronologica. filtros: status,..."
     },
     {
@@ -3596,8 +3596,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_219",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "calcula a proxima data baseada na recorrencia. usado para geracao automatica de..."
     },
     {
@@ -3608,7 +3608,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_262",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "adianta ou adia uma execucao. nao altera o ciclo do template."
     },
     {
@@ -3618,8 +3618,8 @@
       "source_location": "L283",
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_283",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "gera a proxima execucao do ciclo, se aplicavel. condicoes: - execucao vinculada..."
     },
     {
@@ -3630,7 +3630,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "auth_service.py"
     },
     {
@@ -3641,7 +3641,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_get_or_create_tupa_user",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "get_or_create_tupa_user()"
     },
     {
@@ -3652,7 +3652,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_py_session",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -3663,7 +3663,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_authenticate_with_password",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "authenticate_with_password()"
     },
     {
@@ -3674,7 +3674,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_register_with_password",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "register_with_password()"
     },
     {
@@ -3684,8 +3684,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "app_services_auth_service_setup_profile",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 4,
+      "community_name": "auth.py",
       "norm_label": "setup_profile()"
     },
     {
@@ -3696,7 +3696,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_update_profile",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "update_profile()"
     },
     {
@@ -3707,7 +3707,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_18",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "associa uma identidade tupa ao perfil local do jaci."
     },
     {
@@ -3718,7 +3718,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_62",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "autentica no tupa e carrega o perfil local."
     },
     {
@@ -3729,7 +3729,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_77",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "cria a identidade no tupa e o perfil local no jaci."
     },
     {
@@ -3739,8 +3739,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_89",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 4,
+      "community_name": "auth.py",
       "norm_label": "completa os dados locais do perfil."
     },
     {
@@ -3751,7 +3751,7 @@
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_99",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "atualiza os dados pessoais do usuario."
     },
     {
@@ -3762,7 +3762,7 @@
       "_origin": "ast",
       "id": "app_services_category_service",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "category_service.py"
     },
     {
@@ -3773,7 +3773,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_get_categories_by_group",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "get_categories_by_group()"
     },
     {
@@ -3784,7 +3784,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_py_session",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -3795,7 +3795,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_get_category_by_id",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "get_category_by_id()"
     },
     {
@@ -3806,7 +3806,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_create_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "create_category()"
     },
     {
@@ -3817,7 +3817,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_move_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "move_category()"
     },
     {
@@ -3828,7 +3828,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_set_uncategorized_position",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "set_uncategorized_position()"
     },
     {
@@ -3839,7 +3839,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_update_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "update_category()"
     },
     {
@@ -3850,7 +3850,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_count_items_using_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "count_items_using_category()"
     },
     {
@@ -3861,7 +3861,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "delete_category()"
     },
     {
@@ -3872,7 +3872,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_16",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "retorna todas as categorias de um grupo na ordem configurada."
     },
     {
@@ -3883,7 +3883,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_31",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "retorna uma categoria se pertencer a um grupo do usuario."
     },
     {
@@ -3894,7 +3894,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_48",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "cria uma nova categoria no grupo."
     },
     {
@@ -3905,7 +3905,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_66",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "move uma categoria uma posicao para cima ou para baixo."
     },
     {
@@ -3916,7 +3916,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_91",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "define se o grupo sem categoria aparece primeiro ou por ultimo."
     },
     {
@@ -3927,7 +3927,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_104",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "atualiza nome e/ou cor da categoria."
     },
     {
@@ -3938,7 +3938,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_115",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "conta quantos itens (template e execucao) usam esta categoria. retorna dict com..."
     },
     {
@@ -3949,7 +3949,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_137",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "exclui a categoria e define category_id = null nos itens afetados. retorna dict..."
     },
     {
@@ -3981,8 +3981,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_services_execution_service_get_execution_display_name",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get_execution_display_name()"
     },
     {
@@ -4058,7 +4058,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_services_execution_service_create_execution_from_template",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "create_execution_from_template()"
     },
@@ -4080,8 +4080,8 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "app_services_execution_service_update_scheduled_execution",
-      "community": 94,
-      "community_name": "test_scheduled_execution_editing.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "update_scheduled_execution()"
     },
     {
@@ -4102,8 +4102,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "app_services_execution_service_complete_item",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "complete_item()"
     },
     {
@@ -4124,7 +4124,7 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "app_services_execution_service_add_item_to_execution",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "add_item_to_execution()"
     },
@@ -4135,8 +4135,8 @@
       "source_location": "L355",
       "_origin": "ast",
       "id": "app_services_execution_service_remove_item_from_execution",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "remove_item_from_execution()"
     },
     {
@@ -4147,7 +4147,7 @@
       "_origin": "ast",
       "id": "app_services_execution_service_update_execution_item",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "update_execution_item()"
     },
     {
@@ -4169,7 +4169,7 @@
       "_origin": "ast",
       "id": "app_services_execution_service_finalize_execution",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "finalize_execution()"
     },
     {
@@ -4234,8 +4234,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_24",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "retorna o nome proprio da execucao, preservando fallback legado."
     },
     {
@@ -4289,7 +4289,7 @@
       "source_location": "L156",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_156",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "cria uma execucao a partir de um template, copiando seus itens."
     },
@@ -4311,8 +4311,8 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_224",
-      "community": 94,
-      "community_name": "test_scheduled_execution_editing.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "edita somente dados proprios de uma execucao agendada."
     },
     {
@@ -4333,8 +4333,8 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_266",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "marca item como comprado com quantidade e valor."
     },
     {
@@ -4355,7 +4355,7 @@
       "source_location": "L312",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_312",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "adiciona item a execucao sem alterar o template associado."
     },
@@ -4366,8 +4366,8 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_356",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "remove item nao concluido da execucao."
     },
     {
@@ -4389,7 +4389,7 @@
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_411",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "finaliza a execucao. se discard_pending=true, remove itens nao concluidos. se..."
     },
     {
@@ -4421,8 +4421,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_group_service",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "group_service.py"
     },
     {
@@ -4432,8 +4432,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_services_group_service_create_group",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "create_group()"
     },
     {
@@ -4443,8 +4443,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_group_service_py_session",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "session"
     },
     {
@@ -4454,8 +4454,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_services_group_service_get_user_groups",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "get_user_groups()"
     },
     {
@@ -4466,7 +4466,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_get_group_by_id",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "get_group_by_id()"
     },
     {
@@ -4477,7 +4477,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_get_group_members",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "get_group_members()"
     },
     {
@@ -4488,7 +4488,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_is_group_owner",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "is_group_owner()"
     },
     {
@@ -4498,8 +4498,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "app_services_group_service_update_group_settings",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "update_group_settings()"
     },
     {
@@ -4509,8 +4509,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "app_services_group_service_update_group_name",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "update_group_name()"
     },
     {
@@ -4520,8 +4520,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "app_services_group_service_invite_member",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "invite_member()"
     },
     {
@@ -4531,8 +4531,8 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "app_services_group_service_add_member_to_group",
-      "community": 8,
-      "community_name": "User",
+      "community": 4,
+      "community_name": "auth.py",
       "norm_label": "add_member_to_group()"
     },
     {
@@ -4542,8 +4542,8 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "app_services_group_service_remove_member",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "remove_member()"
     },
     {
@@ -4553,8 +4553,8 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "app_services_group_service_switch_active_group",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "switch_active_group()"
     },
     {
@@ -4564,8 +4564,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_18",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "cria um novo grupo e adiciona o owner como membro."
     },
     {
@@ -4575,8 +4575,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_49",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "retorna todos os grupos do usuario."
     },
     {
@@ -4587,7 +4587,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_rationale_63",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "retorna um grupo se o usuario for membro."
     },
     {
@@ -4598,7 +4598,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_rationale_75",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "retorna todos os membros de um grupo."
     },
     {
@@ -4609,7 +4609,7 @@
       "_origin": "ast",
       "id": "app_services_group_service_rationale_89",
       "community": 8,
-      "community_name": "User",
+      "community_name": "get_group_by_id",
       "norm_label": "verifica se o usuario e o criador/dono do grupo."
     },
     {
@@ -4619,8 +4619,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_104",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "atualiza configuracoes do grupo quando solicitado pelo criador."
     },
     {
@@ -4630,8 +4630,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_132",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "atualiza o nome do grupo quando solicitado pelo criador."
     },
     {
@@ -4641,8 +4641,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_145",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "convida um novo membro para o grupo via magic link. retorna dict com success,..."
     },
     {
@@ -4652,8 +4652,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_192",
-      "community": 8,
-      "community_name": "User",
+      "community": 4,
+      "community_name": "auth.py",
       "norm_label": "adiciona usuario a um grupo. retorna true se adicionado, false se ja membro."
     },
     {
@@ -4663,8 +4663,8 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_215",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "remove um membro do grupo. apenas o owner pode remover (exceto ele mesmo, com..."
     },
     {
@@ -4674,8 +4674,8 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_275",
-      "community": 8,
-      "community_name": "User",
+      "community": 24,
+      "community_name": "group_service.py",
       "norm_label": "troca o grupo ativo na sessao."
     },
     {
@@ -4685,8 +4685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_home_service",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "home_service.py"
     },
     {
@@ -4696,8 +4696,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_home_service_as_utc",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "_as_utc()"
     },
     {
@@ -4707,8 +4707,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_home_service_py_datetime",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "datetime"
     },
     {
@@ -4718,8 +4718,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_home_service_local_day_start_utc",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "_local_day_start_utc()"
     },
     {
@@ -4729,8 +4729,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_home_service_get_priority_execution",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get_priority_execution()"
     },
     {
@@ -4740,8 +4740,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_home_service_py_session",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "session"
     },
     {
@@ -4751,8 +4751,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_services_home_service_get_home_metrics",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get_home_metrics()"
     },
     {
@@ -4762,8 +4762,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "app_services_home_service_get_recent_history",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get_recent_history()"
     },
     {
@@ -4773,8 +4773,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_services_home_service_get_home_alerts",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "get_home_alerts()"
     },
     {
@@ -4784,8 +4784,8 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "app_services_home_service_build_home_dashboard",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "build_home_dashboard()"
     },
     {
@@ -4795,8 +4795,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_29",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "retorna a compra mais relevante: em andamento, depois agendada."
     },
     {
@@ -4806,8 +4806,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_59",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "calcula indicadores rapidos do grupo ativo."
     },
     {
@@ -4817,8 +4817,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_123",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "retorna as compras concluidas mais recentes do grupo."
     },
     {
@@ -4828,8 +4828,8 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_149",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "retorna alertas contextuais ordenados por criticidade."
     },
     {
@@ -4839,8 +4839,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_211",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "monta os dados operacionais da home para um unico grupo."
     },
     {
@@ -4850,8 +4850,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_notification_service",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notification_service.py"
     },
     {
@@ -4861,8 +4861,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_notification_service_create_notification",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "create_notification()"
     },
     {
@@ -4872,8 +4872,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_notification_service_py_session",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "session"
     },
     {
@@ -4883,8 +4883,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_services_notification_service_notify_group_members",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notify_group_members()"
     },
     {
@@ -4894,8 +4894,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_services_notification_service_notify_execution_started",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notify_execution_started()"
     },
     {
@@ -4905,8 +4905,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "app_services_notification_service_notify_execution_completed",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notify_execution_completed()"
     },
     {
@@ -4916,8 +4916,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "app_services_notification_service_notify_execution_updated",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notify_execution_updated()"
     },
     {
@@ -4927,8 +4927,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "app_services_notification_service_get_unread_count",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 9,
+      "community_name": "User",
       "norm_label": "get_unread_count()"
     },
     {
@@ -4938,8 +4938,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "app_services_notification_service_get_notifications",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_notifications()"
     },
     {
@@ -4949,8 +4949,8 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "app_services_notification_service_mark_as_read",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "mark_as_read()"
     },
     {
@@ -4960,8 +4960,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "app_services_notification_service_mark_all_as_read",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "mark_all_as_read()"
     },
     {
@@ -4971,8 +4971,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_24",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "cria uma notificacao para um usuario."
     },
     {
@@ -4982,8 +4982,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_51",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "envia notificacao para todos os membros do grupo, exceto o usuario que gerou o..."
     },
     {
@@ -4993,8 +4993,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_79",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notifica membros que uma compra foi iniciada."
     },
     {
@@ -5004,8 +5004,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_98",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notifica membros que uma compra foi finalizada."
     },
     {
@@ -5015,8 +5015,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_116",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "notifica membros que uma compra agendada foi alterada."
     },
     {
@@ -5026,8 +5026,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_130",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 9,
+      "community_name": "User",
       "norm_label": "retorna contagem de notificacoes nao lidas."
     },
     {
@@ -5037,8 +5037,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_145",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna notificacoes do usuario, mais recentes primeiro."
     },
     {
@@ -5048,8 +5048,8 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_158",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "marca uma notificacao como lida."
     },
     {
@@ -5059,8 +5059,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_173",
-      "community": 83,
-      "community_name": "notification_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "marca todas as notificacoes do usuario como lidas."
     },
     {
@@ -5158,8 +5158,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "sync_conflict_audit_service.py"
     },
     {
@@ -5169,8 +5169,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_jsonable",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "_jsonable()"
     },
     {
@@ -5180,8 +5180,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_any",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "any"
     },
     {
@@ -5191,8 +5191,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_create_conflict_audit",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "create_conflict_audit()"
     },
     {
@@ -5202,8 +5202,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_session",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "session"
     },
     {
@@ -5213,8 +5213,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_basemodel",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "basemodel"
     },
     {
@@ -5224,8 +5224,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_list_conflict_audits",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "list_conflict_audits()"
     },
     {
@@ -5235,8 +5235,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_resolve_conflict_audit",
-      "community": 5,
-      "community_name": "datetime.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "resolve_conflict_audit()"
     },
     {
@@ -5268,8 +5268,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_template_learning_service_suggestionlist",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "suggestionlist"
     },
     {
@@ -5279,8 +5279,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "list",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "list"
     },
     {
@@ -5290,8 +5290,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_services_template_learning_service_suggestionlist_by_execution_item",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": ".by_execution_item()"
     },
     {
@@ -5301,8 +5301,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "templatehistorysuggestions"
     },
     {
@@ -5312,8 +5312,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions_init",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": ".__init__()"
     },
     {
@@ -5323,8 +5323,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions_is_empty",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": ".is_empty()"
     },
     {
@@ -5620,7 +5620,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_template_service_create_template",
-      "community": 79,
+      "community": 91,
       "community_name": "create_template",
       "norm_label": "create_template()"
     },
@@ -5687,7 +5687,7 @@
       "_origin": "ast",
       "id": "app_services_template_service_add_item_to_template",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "add_item_to_template()"
     },
     {
@@ -5774,7 +5774,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "app_services_template_service_rationale_111",
-      "community": 79,
+      "community": 91,
       "community_name": "create_template",
       "norm_label": "cria um novo template no grupo."
     },
@@ -5841,7 +5841,7 @@
       "_origin": "ast",
       "id": "app_services_template_service_rationale_214",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "adiciona um item ao template."
     },
     {
@@ -6585,7 +6585,7 @@
       "label": "initAll()",
       "file_type": "code",
       "source_file": "app/static/js/item-filter.js",
-      "source_location": "L217",
+      "source_location": "L198",
       "_origin": "ast",
       "id": "app_static_js_item_filter_initall",
       "community": 17,
@@ -8216,7 +8216,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_templating",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "templating.py"
     },
@@ -8227,7 +8227,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_templating_localdatetime_filter",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "localdatetime_filter()"
     },
@@ -8238,7 +8238,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_templating_localdate_filter",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "localdate_filter()"
     },
@@ -8249,7 +8249,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_templating_quantity_filter",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "quantity_filter()"
     },
@@ -8260,8 +8260,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_init",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "utils/__init__.py"
     },
     {
@@ -8271,7 +8271,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_datetime",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "datetime.py"
     },
@@ -8282,7 +8282,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_utils_datetime_format_local_datetime",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "format_local_datetime()"
     },
@@ -8293,8 +8293,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_datetime_py_datetime",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "datetime"
     },
     {
@@ -8304,7 +8304,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_utils_datetime_format_local_date",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "format_local_date()"
     },
@@ -8315,7 +8315,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_datetime_py_date",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "date"
     },
@@ -8337,8 +8337,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "app_utils_datetime_to_utc",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "to_utc()"
     },
     {
@@ -8348,8 +8348,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_utils_datetime_to_local",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "to_local()"
     },
     {
@@ -8360,7 +8360,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_parse_local_date",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "parse_local_date()"
     },
     {
@@ -8370,7 +8370,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_20",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "convert utc datetime to local timezone for display"
     },
@@ -8381,7 +8381,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_34",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "convert utc datetime to local date only"
     },
@@ -8403,8 +8403,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_54",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "convert local datetime to utc for storage"
     },
     {
@@ -8414,8 +8414,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_61",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "convert utc datetime to local"
     },
     {
@@ -8426,7 +8426,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_73",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "parse a date string from form and convert to utc for storage."
     },
     {
@@ -8437,7 +8437,7 @@
       "_origin": "ast",
       "id": "app_utils_email",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "email.py"
     },
     {
@@ -8448,7 +8448,7 @@
       "_origin": "ast",
       "id": "app_utils_email_build_magic_link",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "_build_magic_link()"
     },
     {
@@ -8459,7 +8459,7 @@
       "_origin": "ast",
       "id": "app_utils_email_send_magic_link",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "send_magic_link()"
     },
     {
@@ -8470,7 +8470,7 @@
       "_origin": "ast",
       "id": "app_utils_email_build_login_email",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "_build_login_email()"
     },
     {
@@ -8481,7 +8481,7 @@
       "_origin": "ast",
       "id": "app_utils_email_build_invite_email",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "_build_invite_email()"
     },
     {
@@ -8492,7 +8492,7 @@
       "_origin": "ast",
       "id": "app_utils_email_rationale_26",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "monta a url completa do magic link."
     },
     {
@@ -8503,7 +8503,7 @@
       "_origin": "ast",
       "id": "app_utils_email_rationale_31",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "envia e-mail com magic link. se smtp nao configurado, faz log do link (modo..."
     },
     {
@@ -8514,7 +8514,7 @@
       "_origin": "ast",
       "id": "app_utils_email_rationale_75",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "template html para e-mail de login."
     },
     {
@@ -8525,7 +8525,7 @@
       "_origin": "ast",
       "id": "app_utils_email_rationale_120",
       "community": 24,
-      "community_name": "config.py",
+      "community_name": "group_service.py",
       "norm_label": "template html para e-mail de convite para grupo."
     },
     {
@@ -8535,8 +8535,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_security",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "security.py"
     },
     {
@@ -8546,8 +8546,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_utils_security_create_magic_token",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "create_magic_token()"
     },
     {
@@ -8557,8 +8557,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_utils_security_decode_magic_token",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "decode_magic_token()"
     },
     {
@@ -8568,8 +8568,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_utils_security_set_auth_cookies",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "set_auth_cookies()"
     },
     {
@@ -8579,8 +8579,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_security_py_response",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "response"
     },
     {
@@ -8590,8 +8590,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "app_utils_security_clear_auth_cookies",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "clear_auth_cookies()"
     },
     {
@@ -8601,8 +8601,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_utils_security_rationale_12",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "cria token para magic link (15 minutos)."
     },
     {
@@ -8612,8 +8612,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_utils_security_rationale_23",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "decodifica magic token. retorna o e-mail se valido, none caso contrario."
     },
     {
@@ -8623,8 +8623,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "app_utils_security_rationale_47",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "define os cookies httponly emitidos pelo tupa."
     },
     {
@@ -8634,8 +8634,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "app_utils_security_rationale_69",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "remove os cookies de autenticacao."
     },
     {
@@ -8657,7 +8657,7 @@
       "_origin": "ast",
       "id": "app_websocket_handlers",
       "community": 9,
-      "community_name": "main.py",
+      "community_name": "User",
       "norm_label": "handlers.py"
     },
     {
@@ -8667,8 +8667,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_websocket_handlers_execution_ws_handler",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "execution_ws_handler()"
     },
     {
@@ -8678,8 +8678,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_websocket_handlers_py_websocket",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "websocket"
     },
     {
@@ -8689,8 +8689,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_websocket_handlers_rationale_21",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 98,
+      "community_name": "execution_ws_handler",
       "norm_label": "gerencia a conexao websocket para uma execucao especifica. autentica via token..."
     },
     {
@@ -8854,8 +8854,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "migrations_env",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "env.py"
     },
     {
@@ -8865,8 +8865,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "migrations_env_run_migrations_offline",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "run_migrations_offline()"
     },
     {
@@ -8876,8 +8876,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "migrations_env_run_migrations_online",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "run_migrations_online()"
     },
     {
@@ -9137,8 +9137,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations.py"
     },
     {
@@ -9148,8 +9148,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "scripts_apply_migrations_apply_migrations",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations()"
     },
     {
@@ -9159,8 +9159,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations_rationale_1",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "aplica migracoes alembic e adota bancos sqlite legados."
     },
     {
@@ -9215,8 +9215,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_create_database",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "create_database.py"
     },
     {
@@ -9237,8 +9237,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_create_database_rationale_1",
-      "community": 24,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "utils/__init__.py",
       "norm_label": "cria o banco configurado em database_url quando ele ainda nao existe."
     },
     {
@@ -9462,7 +9462,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_conftest",
-      "community": 5,
+      "community": 7,
       "community_name": "datetime.py",
       "norm_label": "conftest.py"
     },
@@ -9540,7 +9540,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "test_agenda_and_budget_flow.py"
     },
     {
@@ -9551,7 +9551,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_lists_group_executions_and_prioritizes_in_progress_status",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "test_calendar_lists_group_executions_and_prioritizes_in_progress_status()"
     },
     {
@@ -9562,7 +9562,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_groups_executions_by_local_scheduled_date",
       "community": 65,
-      "community_name": "test_user_flows.py",
+      "community_name": "agenda_service.py",
       "norm_label": "test_calendar_groups_executions_by_local_scheduled_date()"
     },
     {
@@ -9572,8 +9572,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_py_parametrize",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "parametrize"
     },
     {
@@ -9583,8 +9583,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_budget_alert_thresholds",
-      "community": 6,
-      "community_name": "executions.py",
+      "community": 65,
+      "community_name": "agenda_service.py",
       "norm_label": "test_budget_alert_thresholds()"
     },
     {
@@ -9661,7 +9661,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_business_rules.py"
     },
     {
@@ -9672,7 +9672,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_make_completed_execution",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "make_completed_execution()"
     },
     {
@@ -9683,7 +9683,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_py_parametrize",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "parametrize"
     },
     {
@@ -9694,7 +9694,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn02_completed_execution_is_immutable",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_rn02_completed_execution_is_immutable()"
     },
     {
@@ -9705,7 +9705,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn03_recurrence_is_only_generated_after_completion",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_rn03_recurrence_is_only_generated_after_completion()"
     },
     {
@@ -9716,7 +9716,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn08_execution_edits_never_modify_template_items",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_rn08_execution_edits_never_modify_template_items()"
     },
     {
@@ -9727,7 +9727,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn09_foreign_category_is_rejected_when_items_are_edited",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_rn09_foreign_category_is_rejected_when_items_are_edited()"
     },
     {
@@ -9738,7 +9738,7 @@
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn12_websocket_failure_does_not_undo_persisted_api_mutation",
       "community": 11,
-      "community_name": "create_execution_from_template",
+      "community_name": "add_item_to_template",
       "norm_label": "test_rn12_websocket_failure_does_not_undo_persisted_api_mutation()"
     },
     {
@@ -9748,8 +9748,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_collaboration_and_isolation_flow",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 97,
+      "community_name": "enums.py",
       "norm_label": "test_collaboration_and_isolation_flow.py"
     },
     {
@@ -9770,8 +9770,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "tests_test_collaboration_and_isolation_flow_test_category_ids_from_another_group_are_rejected",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 97,
+      "community_name": "enums.py",
       "norm_label": "test_category_ids_from_another_group_are_rejected()"
     },
     {
@@ -9781,8 +9781,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "tests_test_collaboration_and_isolation_flow_test_stale_item_version_fails_explicitly_without_overwriting",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 97,
+      "community_name": "enums.py",
       "norm_label": "test_stale_item_version_fails_explicitly_without_overwriting()"
     },
     {
@@ -9792,8 +9792,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "test_completion_and_recurrence_flow.py"
     },
     {
@@ -9803,8 +9803,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_py_parametrize",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "parametrize"
     },
     {
@@ -9814,8 +9814,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_supported_recurrences_calculate_the_next_cycle",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "test_supported_recurrences_calculate_the_next_cycle()"
     },
     {
@@ -9836,8 +9836,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_discarded_pending_items_remain_as_soft_deleted_history",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 67,
+      "community_name": "execution_service.py",
       "norm_label": "test_discarded_pending_items_remain_as_soft_deleted_history()"
     },
     {
@@ -9847,8 +9847,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_next_cycle_uses_completion_date_and_not_rescheduled_date",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_next_cycle_uses_completion_date_and_not_rescheduled_date()"
     },
     {
@@ -9858,8 +9858,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_standalone_execution_never_generates_recurrence",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 0,
+      "community_name": "make_user",
       "norm_label": "test_standalone_execution_never_generates_recurrence()"
     },
     {
@@ -9869,8 +9869,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_in_progress_execution_cannot_be_rescheduled",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 0,
+      "community_name": "make_user",
       "norm_label": "test_in_progress_execution_cannot_be_rescheduled()"
     },
     {
@@ -10034,8 +10034,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "test_execution_totals_regression.py"
     },
     {
@@ -10045,8 +10045,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_make_request",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "make_request()"
     },
     {
@@ -10056,8 +10056,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_py_request",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "request"
     },
     {
@@ -10067,8 +10067,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_item_mutation_fragment_refreshes_sidebar_with_current_total",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "test_item_mutation_fragment_refreshes_sidebar_with_current_total()"
     },
     {
@@ -10078,8 +10078,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_total_spent_matches_sum_of_visible_item_totals",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "test_total_spent_matches_sum_of_visible_item_totals()"
     },
     {
@@ -10089,8 +10089,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_add_item_route_persists_purchase_before_totals_and_broadcast",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "test_add_item_route_persists_purchase_before_totals_and_broadcast()"
     },
     {
@@ -10100,8 +10100,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_execution_add_item_htmx_error_stays_in_modal_without_mutation",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 95,
+      "community_name": "complete_item",
       "norm_label": "test_execution_add_item_htmx_error_stays_in_modal_without_mutation()"
     },
     {
@@ -10112,7 +10112,7 @@
       "_origin": "ast",
       "id": "tests_test_first_access_flow",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "test_first_access_flow.py"
     },
     {
@@ -10123,7 +10123,7 @@
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_first_access_creates_default_home_and_categories",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "test_first_access_creates_default_home_and_categories()"
     },
     {
@@ -10134,7 +10134,7 @@
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_repeated_login_does_not_duplicate_default_home",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "datetime.py",
       "norm_label": "test_repeated_login_does_not_duplicate_default_home()"
     },
     {
@@ -10166,7 +10166,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them()"
     },
@@ -10177,7 +10177,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl06_only_selected_suggestions_are_applied_to_template",
-      "community": 11,
+      "community": 79,
       "community_name": "create_execution_from_template",
       "norm_label": "test_fl06_only_selected_suggestions_are_applied_to_template()"
     },
@@ -10589,10 +10589,21 @@
       "norm_label": "test_shared_item_filter_preserves_query_across_dynamic_fragment_updates()"
     },
     {
-      "label": "test_template_detail_exposes_accessible_filter_contract()",
+      "label": "test_shared_item_filter_reinitializes_replaced_filter_roots()",
       "file_type": "code",
       "source_file": "tests/test_item_filter.py",
       "source_location": "L80",
+      "_origin": "ast",
+      "id": "tests_test_item_filter_test_shared_item_filter_reinitializes_replaced_filter_roots",
+      "community": 21,
+      "community_name": "read",
+      "norm_label": "test_shared_item_filter_reinitializes_replaced_filter_roots()"
+    },
+    {
+      "label": "test_template_detail_exposes_accessible_filter_contract()",
+      "file_type": "code",
+      "source_file": "tests/test_item_filter.py",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "tests_test_item_filter_test_template_detail_exposes_accessible_filter_contract",
       "community": 21,
@@ -10603,7 +10614,7 @@
       "label": "test_mutable_execution_exposes_filter_and_visible_financial_metadata()",
       "file_type": "code",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L98",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "tests_test_item_filter_test_mutable_execution_exposes_filter_and_visible_financial_metadata",
       "community": 21,
@@ -10614,7 +10625,7 @@
       "label": "test_completed_execution_is_searchable_collapsible_and_read_only()",
       "file_type": "code",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L113",
+      "source_location": "L123",
       "_origin": "ast",
       "id": "tests_test_item_filter_test_completed_execution_is_searchable_collapsible_and_read_only",
       "community": 21,
@@ -11553,7 +11564,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_sticky_budget.py"
     },
     {
@@ -11564,7 +11575,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_make_request",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "make_request()"
     },
     {
@@ -11575,7 +11586,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_py_request",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "request"
     },
     {
@@ -11586,7 +11597,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_render_items_fragment",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "render_items_fragment()"
     },
     {
@@ -11597,7 +11608,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_in_progress_budget_fragment_exposes_sticky_summary_contract",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_in_progress_budget_fragment_exposes_sticky_summary_contract()"
     },
     {
@@ -11608,7 +11619,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_scheduled_budget_is_not_sticky_and_missing_budget_has_no_summary",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_scheduled_budget_is_not_sticky_and_missing_budget_has_no_summary()"
     },
     {
@@ -11619,7 +11630,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_classifies_thresholds_and_only_notifies_on_rise",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_classifies_thresholds_and_only_notifies_on_rise()"
     },
     {
@@ -11630,7 +11641,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_toast_is_deduplicated_across_controller_instances",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_toast_is_deduplicated_across_controller_instances()"
     },
     {
@@ -11641,7 +11652,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_handles_dynamic_fragments_navbar_and_toasts",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_handles_dynamic_fragments_navbar_and_toasts()"
     },
     {
@@ -11652,7 +11663,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_offline_item_mutations_recalculate_budget_from_local_snapshot",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_offline_item_mutations_recalculate_budget_from_local_snapshot()"
     },
     {
@@ -11663,7 +11674,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_is_cached_for_offline_execution",
       "community": 97,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_is_cached_for_offline_execution()"
     },
     {
@@ -11805,8 +11816,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_execution_flow.py"
     },
     {
@@ -11816,8 +11827,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_make_template_item_request",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "make_template_item_request()"
     },
     {
@@ -11827,8 +11838,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_py_request",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "request"
     },
     {
@@ -11838,8 +11849,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_add_item_htmx_returns_only_the_updated_items_fragment",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_add_item_htmx_returns_only_the_updated_items_fragment()"
     },
     {
@@ -11849,8 +11860,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_add_item_without_htmx_keeps_post_redirect_fallback",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_add_item_without_htmx_keeps_post_redirect_fallback()"
     },
     {
@@ -11860,8 +11871,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_add_item_htmx_error_retargets_modal_feedback_without_mutation",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_add_item_htmx_error_retargets_modal_feedback_without_mutation()"
     },
     {
@@ -11871,8 +11882,8 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_detail_renders_modal_and_fragment_as_a_complete_page",
-      "community": 0,
-      "community_name": "make_user",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_detail_renders_modal_and_fragment_as_a_complete_page()"
     },
     {
@@ -11882,8 +11893,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs()"
     },
     {
@@ -11893,8 +11904,8 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_notes_are_copied_without_linking_future_execution_edits",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_template_notes_are_copied_without_linking_future_execution_edits()"
     },
     {
@@ -11904,8 +11915,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_execution_budget_can_override_template_budget",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_execution_budget_can_override_template_budget()"
     },
     {
@@ -11915,8 +11926,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template()"
     },
     {
@@ -11926,8 +11937,8 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_scheduled_execution_adds_pending_item_without_financial_data",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_scheduled_execution_adds_pending_item_without_financial_data()"
     },
     {
@@ -11937,8 +11948,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_py_parametrize",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "parametrize"
     },
     {
@@ -11948,8 +11959,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_in_progress_execution_requires_positive_unit_price_for_new_item",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_in_progress_execution_requires_positive_unit_price_for_new_item()"
     },
     {
@@ -11959,8 +11970,8 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_cancelled_execution_rejects_new_item",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_cancelled_execution_rejects_new_item()"
     },
     {
@@ -11970,8 +11981,8 @@
       "source_location": "L302",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_completed_item_cannot_be_removed",
-      "community": 11,
-      "community_name": "create_execution_from_template",
+      "community": 91,
+      "community_name": "create_template",
       "norm_label": "test_completed_item_cannot_be_removed()"
     },
     {
@@ -11982,7 +11993,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_template_learning_tdd.py"
     },
     {
@@ -11993,7 +12004,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_learning_service",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "learning_service()"
     },
     {
@@ -12004,7 +12015,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_make_form_request",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "make_form_request()"
     },
     {
@@ -12015,7 +12026,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_py_request",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "request"
     },
     {
@@ -12026,7 +12037,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl029_detects_runtime_items_only_for_template_executions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl029_detects_runtime_items_only_for_template_executions()"
     },
     {
@@ -12037,7 +12048,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl030_applies_only_selected_new_item_suggestions_to_future_executions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl030_applies_only_selected_new_item_suggestions_to_future_executions()"
     },
     {
@@ -12048,7 +12059,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl030_close_flow_applies_selected_new_item_suggestion",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl030_close_flow_applies_selected_new_item_suggestion()"
     },
     {
@@ -12059,7 +12070,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl030_close_page_exposes_template_learning_controls",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl030_close_page_exposes_template_learning_controls()"
     },
     {
@@ -12070,7 +12081,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl031_quantity_suggestions_require_recurrent_divergence",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl031_quantity_suggestions_require_recurrent_divergence()"
     },
     {
@@ -12081,7 +12092,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence()"
     },
     {
@@ -12092,7 +12103,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl032_applies_quantity_suggestion_only_to_template_future_runs",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl032_applies_quantity_suggestion_only_to_template_future_runs()"
     },
     {
@@ -12103,7 +12114,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl033_detects_recurrent_notes_only_for_template_items",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl033_detects_recurrent_notes_only_for_template_items()"
     },
     {
@@ -12114,7 +12125,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl034_accepts_or_rejects_note_suggestions_without_representing_ignored_ones()"
     },
     {
@@ -12125,7 +12136,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl075_budget_suggestion_uses_median_from_completed_template_executions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl075_budget_suggestion_uses_median_from_completed_template_executions()"
     },
     {
@@ -12136,7 +12147,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl075_budget_learning_ignores_standalone_and_unfinished_executions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl075_budget_learning_ignores_standalone_and_unfinished_executions()"
     },
     {
@@ -12147,7 +12158,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl076_accepts_budget_suggestion_only_for_future_executions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl076_accepts_budget_suggestion_only_for_future_executions()"
     },
     {
@@ -12158,7 +12169,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution()"
     },
     {
@@ -12169,7 +12180,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_bl076_close_flow_accepts_or_rejects_budget_suggestion",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_bl076_close_flow_accepts_or_rejects_budget_suggestion()"
     },
     {
@@ -12180,7 +12191,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_rnf_s4_group_can_disable_template_learning_suggestions",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_rnf_s4_group_can_disable_template_learning_suggestions()"
     },
     {
@@ -12202,7 +12213,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_test_rnf_s4_group_detail_exposes_template_learning_setting",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "test_rnf_s4_group_detail_exposes_template_learning_setting()"
     },
     {
@@ -12213,7 +12224,7 @@
       "_origin": "ast",
       "id": "tests_test_template_learning_tdd_rationale_1",
       "community": 79,
-      "community_name": "create_template",
+      "community_name": "create_execution_from_template",
       "norm_label": "contratos tdd da sprint 4: aprendizado continuo dos templates."
     },
     {
@@ -12223,8 +12234,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_user_flows",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_user_flows.py"
     },
     {
@@ -12245,8 +12256,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl03_manual_and_automatic_executions_are_available_in_agenda",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_fl03_manual_and_automatic_executions_are_available_in_agenda()"
     },
     {
@@ -12256,8 +12267,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl04_critical_purchase_flow_preserves_history",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 79,
+      "community_name": "create_execution_from_template",
       "norm_label": "test_fl04_critical_purchase_flow_preserves_history()"
     },
     {
@@ -12267,8 +12278,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl05_collaborative_purchase_notifies_members_and_has_single_history",
-      "community": 67,
-      "community_name": "execution_service.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_fl05_collaborative_purchase_notifies_members_and_has_single_history()"
     },
     {
@@ -12278,8 +12289,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl07_accepted_member_can_access_shared_templates_and_executions",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_fl07_accepted_member_can_access_shared_templates_and_executions()"
     },
     {
@@ -12289,8 +12300,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl08_completed_execution_remains_available_in_agenda_history",
-      "community": 65,
-      "community_name": "test_user_flows.py",
+      "community": 11,
+      "community_name": "add_item_to_template",
       "norm_label": "test_fl08_completed_execution_remains_available_in_agenda_history()"
     },
     {
@@ -14995,8 +15006,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0011_ampliar_cobertura_testes_ui",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "bl-0011-ampliar-cobertura-testes-ui.md"
     },
     {
@@ -15281,8 +15292,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "items/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -15828,7 +15839,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L92",
+      "source_location": "L94",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_impedimentos",
       "community": 93,
@@ -15839,7 +15850,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L96",
+      "source_location": "L98",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_hist\u00f3rico",
       "community": 93,
@@ -17030,8 +17041,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "tasks/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -17294,8 +17305,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0014_fixar_orcamento_compra",
-      "community": 29,
-      "community_name": "tests/README.md",
+      "community": 33,
+      "community_name": "Refinamento \u2014 BL-0014 \u2014 Resumo de or\u00e7amento fixo durante a compra",
       "norm_label": "tasks/bl-0014-fixar-orcamento-compra.md"
     },
     {
@@ -17789,8 +17800,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0016_botao_flutuante_adicionar_itens",
-      "community": 29,
-      "community_name": "tests/README.md",
+      "community": 81,
+      "community_name": "Refinamento \u2014 BL-0016 \u2014 Bot\u00e3o flutuante para adicionar itens",
       "norm_label": "tasks/bl-0016-botao-flutuante-adicionar-itens.md"
     },
     {
@@ -49015,7 +49026,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/static/js/item-filter.js",
-      "source_location": "L217",
+      "source_location": "L198",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_static_js_item_filter",
@@ -49246,7 +49257,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/static/js/item-filter.js",
-      "source_location": "L193",
+      "source_location": "L195",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_static_js_item_filter_initroot",
@@ -49270,7 +49281,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/static/js/item-filter.js",
-      "source_location": "L210",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_static_js_item_filter_initroot",
@@ -49278,23 +49289,11 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/item-filter.js",
-      "source_location": "L205",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "app_static_js_item_filter_initroot",
-      "target": "app_static_js_item_filter_toggleall",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "indirect_call",
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "app/static/js/item-filter.js",
-      "source_location": "L218",
+      "source_location": "L199",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_static_js_item_filter_initall",
@@ -59187,7 +59186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L113",
+      "source_location": "L123",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter",
@@ -59198,7 +59197,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L98",
+      "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter",
@@ -59246,6 +59245,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter",
+      "target": "tests_test_item_filter_test_shared_item_filter_reinitializes_replaced_filter_roots",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_filter.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_filter",
       "target": "tests_test_item_filter_test_template_detail_exposes_accessible_filter_contract",
       "confidence_score": 1.0
     },
@@ -59278,7 +59288,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L114",
+      "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter_test_completed_execution_is_searchable_collapsible_and_read_only",
@@ -59290,7 +59300,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_filter.py",
-      "source_location": "L99",
+      "source_location": "L109",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter_test_mutable_execution_exposes_filter_and_visible_financial_metadata",
@@ -59339,6 +59349,18 @@
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_filter.py",
       "source_location": "L81",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_filter_test_shared_item_filter_reinitializes_replaced_filter_roots",
+      "target": "tests_test_item_filter_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_filter.py",
+      "source_location": "L91",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_filter_test_template_detail_exposes_accessible_filter_contract",
@@ -65612,7 +65634,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L96",
+      "source_location": "L98",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_bl_0016_disponibilizar_bot\u00e3o_flutuante_para_adicionar_itens",
@@ -65711,7 +65733,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L92",
+      "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -68899,5 +68921,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "dafe92c64feb505fe5a8c36d5d8f76a893183098"
+  "built_at_commit": "a9715800b92b112a10eccde5f4a2e4b9621d349a"
 }
