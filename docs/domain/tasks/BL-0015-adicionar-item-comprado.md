@@ -235,14 +235,18 @@ ticket permanecer em `xfail(strict=True)`:
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`.
+- Commits/PRs: fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`; integração de
+  `develop` `49618ef`.
 - Resultado das validações focadas: fatia 1.1.1 com 54 testes aprovados e 3
   contratos futuros; fatia 1.1.2 com 50 testes aprovados e nenhum contrato
-  futuro; consolidação com 83 testes aprovados; sintaxe dos dois JavaScript
-  aprovada. `pylint` não está instalado no ambiente virtual.
+  futuro; após integrar BL-0013 e BL-0014, 95 testes de inclusão, sincronização,
+  filtro, orçamento e PWA aprovados; sintaxe de `service-worker.js`,
+  `item-filter.js`, `execution-budget.js` e `offline-cache.js` aprovada.
+  `pylint` não está instalado no ambiente virtual.
 - Resultado da validação manual: pendente em navegador real; infraestrutura
   Playwright continua acompanhada pela BL-0011.
-- Resultado da regressão total: migrações no head; 181 testes aprovados e 5
-  `xfail` legados fora do escopo.
+- Resultado da regressão total: migrações no head; após o merge, 195 testes
+  aprovados e 5 `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
-- Documentação atualizada: item, índice e este refinamento.
+- Documentação atualizada: item, índice e este refinamento; grafo atualizado e
+  consultável após a resolução dos conflitos.

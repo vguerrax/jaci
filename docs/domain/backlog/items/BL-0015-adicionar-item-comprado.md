@@ -80,10 +80,13 @@ quantidade e valor unitário.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0015](../../tasks/BL-0015-adicionar-item-comprado.md).
-- Implementação (commits/PRs): fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`.
-- Validações: 83 testes focados aprovados; sintaxe dos dois JavaScript
-  aprovada; migrações no head; regressão com 181 testes aprovados e 5 `xfail`
-  legados fora do escopo; `pylint` indisponível no ambiente virtual.
+- Implementação (commits/PRs): fatia 1.1.1 `69cfd64`; fatia 1.1.2 `ae32ca5`;
+  integração de `develop` `49618ef`.
+- Validações: após a integração das BL-0013 e BL-0014, 95 testes focados
+  aprovados; sintaxe de `service-worker.js`, `item-filter.js`,
+  `execution-budget.js` e `offline-cache.js` aprovada; migrações no head;
+  regressão com 195 testes aprovados e 5 `xfail` legados fora do escopo;
+  grafo atualizado e consultável; `pylint` indisponível no ambiente virtual.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0014` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
@@ -105,3 +108,4 @@ quantidade e valor unitário.
 | `2026-08-04 00:36 -03` | Codex | Fatia 1.1.1 concluída (`1/2`) | Contratos completos escritos; fluxo online validado com 54 testes aprovados e 3 `xfail(strict=True)` da fatia offline |
 | `2026-08-04 00:42 -03` | Codex | Fatia 1.1.2 concluída (`2/2`) | Estado local, totais, alertas, sincronização, reconciliação e cache PWA validados com 50 testes aprovados |
 | `2026-08-04 00:42 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 181 testes aprovados e 5 `xfail` legados fora do escopo; aguarda validação manual e publicação |
+| `2026-08-04 16:01 -03` | Codex | `develop` integrado à branch | Conflitos com BL-0013 e BL-0014 combinados; cache PWA elevado para `v26`; 95 testes focados e regressão 195/5 aprovados; merge `49618ef` |
