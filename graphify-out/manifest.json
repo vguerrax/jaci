@@ -195,7 +195,7 @@
     "semantic_hash": ""
   },
   "app/static/js/item-filter.js": {
-    "mtime": 1785802878.5066965,
+    "mtime": 1785804411.3450916,
     "ast_hash": "f16375493d6a511499ed4badedab9b54",
     "semantic_hash": ""
   },
@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1784832781.1426587,
-    "ast_hash": "9c66520682085822b52fb11b8254f6fb",
+    "mtime": 1785804411.463093,
+    "ast_hash": "c6b63640f71bf9101ea675c18fb4fbb3",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "tests/test_item_filter.py": {
-    "mtime": 1785802977.2079997,
-    "ast_hash": "f4fd36e55836b12fc02f0835da7f2935",
+    "mtime": 1785804396.9718995,
+    "ast_hash": "507321ea57a78b70d464cb602406e975",
     "semantic_hash": ""
   },
   "tests/test_loading_indicator.py": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
-    "mtime": 1784832781.1524937,
-    "ast_hash": "aad56427410e057ef2a043020b46c664",
+    "mtime": 1785804397.0929494,
+    "ast_hash": "138a6fe345f6dacb560c75fea7051dc7",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_items_fragment.html": {
-    "mtime": 1785803067.019188,
-    "ast_hash": "f2a7e02ae5e8956f6a70a60af268b90e",
+    "mtime": 1785804119.1463964,
+    "ast_hash": "d0a62aee2289aa43a1113bbcc3bb018c",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_sidebar_fragment.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785802739.2248635,
-    "ast_hash": "b857333d178c068194b5cc2d834fa666",
+    "mtime": 1785803352.82398,
+    "ast_hash": "81f95eb4a81097f4b874135667fcf8d3",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -740,8 +740,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785803242.0125082,
-    "ast_hash": "e2a8a47c7a847ec65fded72dfe93fb09",
+    "mtime": 1785804640.1953676,
+    "ast_hash": "da4e36ad453f75e5c9372d5eb63c1994",
     "semantic_hash": ""
   },
   "docs/domain/business-rules.md": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0013-filtrar-itens-lista-compra.md": {
-    "mtime": 1785803242.1335096,
-    "ast_hash": "1e15ba8cd89ec0b17e1ed02eb8887db2",
+    "mtime": 1785804640.3193698,
+    "ast_hash": "4ceaf4d616df31c45233d085a0a86f57",
     "semantic_hash": ""
   },
   "docs/domain/tasks/TEMPLATE.md": {

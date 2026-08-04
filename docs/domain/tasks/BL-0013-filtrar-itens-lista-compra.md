@@ -217,8 +217,7 @@ pendentes:
 ## Fechamento
 
 - Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 `4c897ae`;
-  ajuste visual `64b38d1`; correção do collapse com hash a registrar após o
-  commit técnico
+  ajuste visual `64b38d1`; correção do collapse `c4c4ff6`
 - Resultado das validações focadas: fatia 1 — `node --check` e 8 testes
   aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados;
   fatia 3 — 6 testes aprovados e 4 templates Jinja2 compilados

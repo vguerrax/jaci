@@ -85,8 +85,7 @@ produto desejado.
 
 - Documento refinado: [Refinamento BL-0013](../../tasks/BL-0013-filtrar-itens-lista-compra.md).
 - Implementação (commits/PRs): fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3
-  `4c897ae`; ajuste visual `64b38d1`; correção do collapse com hash a registrar
-  após o commit técnico.
+  `4c897ae`; ajuste visual `64b38d1`; correção do collapse `c4c4ff6`.
 - Validações: fatia 1 com 8 testes aprovados; fatia 2 com verificações
   sintáticas JavaScript e 35 testes aprovados; fatia 3 com 6 testes aprovados
   e 4 templates compilados; migrações no head; regressão com 178 testes
