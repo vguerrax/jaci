@@ -7,14 +7,14 @@
 | ID | `BL-0015` |
 | Título | Adicionar item como comprado durante execução |
 | Tipo | `melhoria` |
-| Estado | `recebido` |
-| Severidade | `a_triar` |
-| Prioridade | `a_definir` |
+| Estado | `pronto_para_implementacao` |
+| Severidade | `N/A` |
+| Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
-| Responsável | `a_definir` |
-| Atualizado em | `2026-08-03` |
+| Responsável | Engenharia Jaci |
+| Atualizado em | `2026-08-04` |
 
 ### Comportamento observado
 
@@ -61,38 +61,42 @@ quantidade e valor unitário.
 
 | Campo | Valor |
 | --- | --- |
-| Confirmação | `a_triar` |
-| Classificação | `a_triar` |
-| Domínio afetado | `a_triar` |
-| Regras de negócio afetadas | `a_triar` |
-| Risco de segurança | `a_avaliar` |
-| Risco de LGPD | `a_avaliar` |
-| Risco de isolamento por grupo | `a_avaliar` |
-| Risco offline/sincronização | `a_avaliar` |
-| Risco ao histórico financeiro | `a_avaliar` |
-| Risco à recorrência | `a_avaliar` |
-| Risco à separação template/execução | `a_avaliar` |
-| Dependências | Contrato de adição online/offline, totais e alertas de orçamento; detalhamento `a_triar` |
-| Duplicidades | Nenhuma identificada no diagnóstico inicial; confirmar na triagem |
-| Responsável pela próxima etapa | `a_definir` |
-| Próximo passo | Triar quantidade comprada, validação do valor, sincronização, conflitos e atualização dos totais |
+| Confirmação | `confirmado` |
+| Classificação | Melhoria de experiência e persistência para eliminar a segunda ação de compra ao incluir item não planejado |
+| Domínio afetado | Execuções, itens executados, totais financeiros e sincronização offline |
+| Regras de negócio afetadas | Item incluído em execução não altera template; dados financeiros pertencem somente à execução; persistência precede atualização visual |
+| Risco de segurança | Baixo — preservar autenticação e autorização da execução antes de aceitar a mutação |
+| Risco de LGPD | Baixo — não introduz novo dado pessoal; textos e valores continuam no grupo autorizado |
+| Risco de isolamento por grupo | Médio — execução e categoria recebidas do cliente devem continuar validadas contra o grupo do usuário |
+| Risco offline/sincronização | Alto — o item comprado deve existir localmente, atualizar a interface e reconciliar o ID temporário sem duplicação |
+| Risco ao histórico financeiro | Médio — quantidade e valor passam a compor total e alertas no mesmo ato da inclusão e não podem ser perdidos na sincronização |
+| Risco à recorrência | Baixo — a inclusão não altera cálculo de recorrência nem gera execução automaticamente |
+| Risco à separação template/execução | Médio — o item permanece sem `template_item_id` e qualquer incorporação ao template continua manual |
+| Dependências | Serviço e rota de itens, fragmentos HTMX, totais e alertas, IndexedDB/fila offline, reconciliação e cache PWA |
+| Duplicidades | Nenhuma identificada; BL-0013, BL-0014 e BL-0016 são melhorias correlatas de interface, não substitutas |
+| Responsável pela próxima etapa | Engenharia Jaci |
+| Próximo passo | Obter aprovação explícita do refinamento versionado antes de criar testes executáveis ou código |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [Refinamento BL-0015](../../tasks/BL-0015-adicionar-item-comprado.md).
 - Implementação (commits/PRs): ainda não iniciada.
-- Validações: somente diagnóstico documental; nenhuma validação executável
-  iniciada.
+- Validações: consistência documental e `git diff --check`; nenhuma validação
+  executável iniciada.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0014` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
 
 ### Impedimentos
 
-- Nenhum registrado; critérios detalhados dependem da triagem.
+- Nenhum.
 
 ## Histórico
 
 | Data/hora | Autor | Mudança | Motivo/evidência |
 | --- | --- | --- | --- |
 | `2026-08-03 18:03 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
+| `2026-08-04 00:22 -03` | Codex | `recebido` -> `em_triagem` | Fluxos online/offline, totais, autorização e regras críticas diagnosticados |
+| `2026-08-04 00:22 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Quantidade compartilhada, valor maior que zero e atualização offline imediata definidos com o usuário |
+| `2026-08-04 00:22 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Documento técnico criado e ligado ao item |
+| `2026-08-04 00:22 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, duas fatias, contratos TDD e validações refinados; aguarda nova aprovação explícita |
