@@ -258,7 +258,7 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `90393f9`; correção do filtro dinâmico a registrar;
+- Commits/PRs: fatia 1.1.1 `90393f9`; correção do filtro dinâmico `3ec1bd1`;
   branch `feature/BL-0016-botao-flutuante-adicionar-itens`.
 - Resultado das validações focadas: 98 testes aprovados; sintaxe de
   `item-add-modal.js`, `item-filter.js`, `offline-cache.js` e
