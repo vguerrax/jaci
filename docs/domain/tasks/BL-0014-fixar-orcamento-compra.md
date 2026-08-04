@@ -192,7 +192,7 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
 
 ## Fechamento
 
-- Commits/PRs: `6c6bd17`
+- Commits/PRs: `6c6bd17` e correção `440a68d`
 - Resultado das validações focadas: 55 testes aprovados, incluindo duas
   instâncias concorrentes do controlador com apenas um toast; `node --check`
   aprovado para `execution-budget.js`, `execution-sync.js` e

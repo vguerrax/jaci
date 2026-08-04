@@ -77,7 +77,7 @@ total realizado e o orçamento previsto.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0014](../../tasks/BL-0014-fixar-orcamento-compra.md).
-- Implementação (commits/PRs): `6c6bd17`.
+- Implementação (commits/PRs): `6c6bd17` e correção `440a68d`.
 - Validações: 55 testes focados e regressão com 179 testes aprovados e 5
   `xfail` legados fora do escopo; três scripts aprovados por `node --check`;
   migrações no head; validação manual em navegador pendente.
@@ -104,3 +104,4 @@ total realizado e o orçamento previsto.
 | `2026-08-03 23:37 -03` | Codex | Commit técnico registrado | Implementação e evidências consolidadas em `6c6bd17` |
 | `2026-08-03 23:48 -03` | Usuário | Toast duplicado reportado durante validação | Duas mensagens simultâneas observadas ao disparar alerta de orçamento |
 | `2026-08-03 23:48 -03` | Codex | Deduplicação de toast corrigida | Contrato reproduziu duas instâncias concorrentes; chave global no DOM e cache PWA `v25` validados com 55 testes focados e regressão 179/5 |
+| `2026-08-03 23:48 -03` | Codex | Commit corretivo registrado | Correção e evidências consolidadas em `440a68d` |
