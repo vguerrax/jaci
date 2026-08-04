@@ -410,10 +410,10 @@
             category_id: operation.category_id,
             name: operation.name,
             planned_quantity: operation.planned_quantity,
-            purchased_quantity: null,
-            unit_price: null,
+            purchased_quantity: operation.unit_price ? operation.planned_quantity : null,
+            unit_price: operation.unit_price || null,
             location: null,
-            is_completed: false,
+            is_completed: Boolean(operation.unit_price),
             notes: operation.notes,
             version: 1,
             sort_order: Date.now(),
@@ -436,6 +436,9 @@
         }));
         db.close();
         await markAddedExecutionItemLocally(operation);
+        if (renderTemporaryExecutionItem(operation)) {
+            updateOfflineExecutionSummary(operation);
+        }
         await updatePendingCount();
     }
 
@@ -1248,15 +1251,192 @@
         const name = String(formData.get('name') || '').trim();
         const plannedQuantity = normalizeNumber(formData.get('planned_quantity')) || 1;
         const categoryId = normalizeNumber(formData.get('category_id'));
+        const categorySelect = form.querySelector('[name="category_id"]');
 
         return {
             execution_id: Number(form.dataset.executionId),
+            execution_status: form.dataset.executionStatus,
+            execution_budget: normalizeNumber(form.dataset.executionBudget),
             temp_id: createTempId(),
             name: name,
             planned_quantity: plannedQuantity,
+            unit_price: normalizeNumber(formData.get('unit_price')),
             category_id: categoryId && categoryId > 0 ? categoryId : null,
+            category_name: categorySelect?.selectedOptions?.[0]?.textContent?.trim() || 'Sem categoria',
             notes: formData.get('notes') || null,
         };
+    }
+
+    function moneyValue(value) {
+        return Number(value || 0).toFixed(2);
+    }
+
+    function temporaryItemRow(operation) {
+        const purchased = Boolean(operation.unit_price);
+        const total = purchased
+            ? Number(operation.planned_quantity) * Number(operation.unit_price)
+            : 0;
+        const completedSummary = purchased
+            ? `<div class="text-end small flex-shrink-0" data-item-completed-summary>
+                <div class="text-clay">${escapeHtml(operation.planned_quantity)} x R$ ${moneyValue(operation.unit_price)}</div>
+                <div class="fw-medium">R$ ${moneyValue(total)}</div>
+            </div>`
+            : '';
+        const badgeLabel = purchased ? 'Comprado offline' : 'Adicionado offline';
+
+        return `<div class="list-group-item is-offline-updated ${purchased ? 'opacity-75' : ''}"
+            data-execution-item-row data-item-id="${escapeHtml(operation.temp_id)}"
+            data-execution-id="${escapeHtml(operation.execution_id)}"
+            data-category-id="${escapeHtml(operation.category_id || '')}"
+            data-item-completed="${purchased ? 'true' : 'false'}"
+            data-item-total="${total}" data-item-location="">
+            <div class="d-flex align-items-center gap-2">
+                <div class="check-jaci ${purchased ? 'checked' : ''} flex-shrink-0"></div>
+                <div class="flex-grow-1 min-w-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="align-self-center">
+                            <span class="${purchased ? 'text-strikethrough' : ''}">
+                                <span data-item-name-label>${escapeHtml(operation.name)}</span>
+                                <span class="badge-jaci badge-scheduled small ms-1" data-item-planned-quantity-label>${escapeHtml(operation.planned_quantity)}x</span>
+                            </span>
+                            <br><small class="text-muted" data-item-notes-label>${escapeHtml(operation.notes || '')}</small>
+                            <span class="offline-item-badge" data-offline-item-badge>
+                                <i class="bi bi-cloud-arrow-up-fill"></i> ${badgeLabel}
+                            </span>
+                        </div>
+                        ${completedSummary}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    function createTemporaryCategoryCard(operation) {
+        const purchased = Boolean(operation.unit_price);
+        const total = purchased
+            ? Number(operation.planned_quantity) * Number(operation.unit_price)
+            : 0;
+        const categoryId = operation.category_id || '';
+        const collapseId = `offline-category-${operation.category_id || 'none'}-${operation.temp_id}`;
+        const summary = purchased
+            ? `<span class="text-help small" data-offline-category-summary
+                data-completed-count="1" data-total-count="1" data-subtotal="${total}">(1/1 - R$ ${moneyValue(total)})</span>`
+            : '<span class="text-help small">(1)</span>';
+
+        return `<div class="card-jaci mb-3" data-execution-category-card data-category-id="${escapeHtml(categoryId)}">
+            <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
+                <div><span>${escapeHtml(operation.category_name || 'Sem categoria')}</span> ${summary}</div>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
+                    data-bs-target="#${escapeHtml(collapseId)}" aria-expanded="true">
+                    <i class="bi bi-chevron-expand"></i>
+                </button>
+            </div>
+            <div class="card-body collapse show" id="${escapeHtml(collapseId)}">
+                <div class="list-group list-group-flush list-group-jaci">${temporaryItemRow(operation)}</div>
+            </div>
+        </div>`;
+    }
+
+    function renderTemporaryExecutionItem(operation) {
+        const itemsContainer = document.getElementById('items-container');
+        if (!itemsContainer || String(currentExecutionIdFromPage()) !== String(operation.execution_id)) {
+            return false;
+        }
+        if (itemsContainer.querySelector(`[data-execution-item-row][data-item-id="${operation.temp_id}"]`)) {
+            return false;
+        }
+
+        const categoryId = String(operation.category_id || '');
+        const categoryCard = Array.from(itemsContainer.querySelectorAll('[data-execution-category-card]'))
+            .find(function (card) { return String(card.dataset.categoryId || '') === categoryId; });
+        const emptyState = itemsContainer.querySelector('.card-jaci.p-5.text-center');
+        if (emptyState) emptyState.remove();
+
+        if (!categoryCard) {
+            itemsContainer.insertAdjacentHTML('beforeend', createTemporaryCategoryCard(operation));
+            return true;
+        }
+
+        const list = categoryCard.querySelector('.list-group-jaci');
+        if (list) list.insertAdjacentHTML('beforeend', temporaryItemRow(operation));
+        const summary = categoryCard.querySelector('[data-offline-category-summary]');
+        if (summary && operation.unit_price) {
+            const completed = Number(summary.dataset.completedCount || 0) + 1;
+            const totalItems = Number(summary.dataset.totalCount || 0) + 1;
+            const subtotal = Number(summary.dataset.subtotal || 0)
+                + (Number(operation.planned_quantity) * Number(operation.unit_price));
+            summary.dataset.completedCount = String(completed);
+            summary.dataset.totalCount = String(totalItems);
+            summary.dataset.subtotal = String(subtotal);
+            summary.textContent = `(${completed}/${totalItems} - R$ ${moneyValue(subtotal)})`;
+        }
+        return true;
+    }
+
+    function renderOfflineBudgetAlert(totalSpent, budget) {
+        const container = document.querySelector('[data-budget-alerts]');
+        if (!container || !budget || budget <= 0) return;
+
+        const percent = (totalSpent / budget) * 100;
+        let level = null;
+        let message = '';
+        if (percent >= 100) {
+            level = 'danger';
+            message = `💸 Orçamento estourado em R$ ${moneyValue(totalSpent - budget)}!`;
+        } else if (percent >= 95) {
+            level = 'warning';
+            message = `🔴 Alerta: você está a R$ ${moneyValue(budget - totalSpent)} de estourar o orçamento!`;
+        } else if (percent >= 80) {
+            level = 'info';
+            message = `⚠️ Atenção: você atingiu ${percent.toFixed(0)}% do orçamento (R$ ${moneyValue(totalSpent)} de R$ ${moneyValue(budget)})`;
+        }
+        container.innerHTML = level
+            ? `<div class="alert alert-${level} alert-jaci mb-3 d-flex align-items-center gap-2"><span>${message}</span></div>`
+            : '';
+    }
+
+    function updateOfflineExecutionSummary(operation) {
+        const purchased = Boolean(operation.unit_price);
+        const itemTotal = purchased
+            ? Number(operation.planned_quantity) * Number(operation.unit_price)
+            : 0;
+        const completedSummary = document.querySelector('[data-offline-completed-summary]');
+        if (completedSummary) {
+            const completed = Number(completedSummary.dataset.completedItems || 0) + (purchased ? 1 : 0);
+            const totalItems = Number(completedSummary.dataset.totalItems || 0) + 1;
+            completedSummary.dataset.completedItems = String(completed);
+            completedSummary.dataset.totalItems = String(totalItems);
+            completedSummary.textContent = `${completed} de ${totalItems}`;
+        }
+
+        const totalSpent = document.querySelector('[data-offline-total-spent]');
+        if (totalSpent && purchased) {
+            const total = Number(totalSpent.dataset.totalSpent || 0) + itemTotal;
+            const budget = Number(totalSpent.dataset.budget || operation.execution_budget || 0);
+            totalSpent.dataset.totalSpent = String(total);
+            totalSpent.textContent = `R$ ${moneyValue(total)}`;
+            totalSpent.classList.toggle('text-danger', Boolean(budget && total > budget));
+        }
+
+        const budgetSummary = document.querySelector('[data-offline-budget-summary]');
+        if (budgetSummary && purchased) {
+            const total = Number(budgetSummary.dataset.totalSpent || 0) + itemTotal;
+            const budget = Number(budgetSummary.dataset.budget || operation.execution_budget || 0);
+            const percent = budget > 0 ? (total / budget) * 100 : 0;
+            budgetSummary.dataset.totalSpent = String(total);
+            const values = budgetSummary.querySelector('[data-offline-budget-values]');
+            const progress = budgetSummary.querySelector('[data-offline-budget-progress]');
+            const percentLabel = budgetSummary.querySelector('[data-offline-budget-percent]');
+            if (values) values.textContent = `R$ ${moneyValue(total)} / R$ ${moneyValue(budget)}`;
+            if (progress) {
+                progress.style.width = `${Math.min(percent, 100)}%`;
+                progress.setAttribute('aria-valuenow', String(percent));
+                progress.classList.toggle('bg-danger-progress', percent >= 95);
+                progress.classList.toggle('bg-warning-progress', percent >= 80 && percent < 95);
+            }
+            if (percentLabel) percentLabel.textContent = `${percent.toFixed(0)}% utilizado`;
+            renderOfflineBudgetAlert(total, budget);
+        }
     }
 
     function renderQueuedItemControl(element) {
@@ -1397,6 +1577,17 @@
     function reconcileAppliedOperationInDom(applied) {
         const operation = applied.operation || {};
         const result = applied.result || {};
+        if (operation.action === 'add_execution_item') {
+            const tempId = result.temp_id || operation.payload?.temp_id || operation.entity_id;
+            const row = document.querySelector(`[data-execution-item-row][data-item-id="${tempId}"]`);
+            if (row && result.item?.id) {
+                row.dataset.itemId = String(result.item.id);
+                row.classList.remove('is-offline-updated');
+                const badge = row.querySelector('[data-offline-item-badge]');
+                if (badge) badge.classList.add('d-none');
+            }
+            return;
+        }
         const itemId = operation.payload?.item_id || operation.entity_id || operation.entidade_id || result.item?.id;
         if (!itemId) return;
 
@@ -1516,6 +1707,12 @@
         const snapshot = await readSnapshot();
         snapshot.pending_operations.forEach(function (operation) {
             if (operation.entity !== 'execution_item' && operation.entidade !== 'execution_item') return;
+            if (operation.action === 'add_execution_item') {
+                if (renderTemporaryExecutionItem(operation.payload)) {
+                    updateOfflineExecutionSummary(operation.payload);
+                }
+                return;
+            }
             markItemRowAsOfflineUpdated(Object.assign({}, operation.payload, {
                 action: operation.action,
                 item_id: operation.payload?.item_id || operation.entity_id || operation.entidade_id,
@@ -1903,7 +2100,9 @@
                 event.stopImmediatePropagation();
 
                 const operation = readAddItemOperationFromForm(form);
-                if (!operation.name || operation.planned_quantity <= 0) {
+                const missingPurchasedValue = form.dataset.executionStatus === 'in_progress'
+                    && (!operation.unit_price || operation.unit_price <= 0);
+                if (!operation.name || operation.planned_quantity <= 0 || missingPurchasedValue) {
                     window.dispatchEvent(new CustomEvent('jaci:sync-error'));
                     return;
                 }

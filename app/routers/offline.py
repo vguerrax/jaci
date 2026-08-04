@@ -13,11 +13,13 @@ from app.models.execution import ExecutionItem
 from app.models.user import User
 from app.services.execution_service import (
     add_item_to_execution,
+    check_budget_alerts,
     complete_item as complete_item_service,
     create_execution_from_pending,
     finalize_execution,
     get_execution_by_id,
     get_execution_display_name,
+    get_execution_totals,
     get_pending_items,
     incomplete_item as incomplete_item_service,
     remove_item_from_execution,
@@ -70,6 +72,7 @@ class AddExecutionItemOperation(BaseModel):
     temp_id: str
     name: str
     planned_quantity: float = 1
+    unit_price: float | None = Field(default=None, gt=0)
     category_id: int | None = None
     notes: str | None = None
 
@@ -565,6 +568,7 @@ async def sync_add_execution_item_operation(
             operation.planned_quantity,
             operation.category_id if operation.category_id and operation.category_id > 0 else None,
             operation.notes,
+            operation.unit_price,
         )
     except ValueError as exc:
         raise HTTPException(
@@ -580,8 +584,15 @@ async def sync_add_execution_item_operation(
                 "item_id": item.id,
                 "item_name": item.name,
                 "user_email": user.email,
+                "is_completed": item.is_completed,
+                "total_price": item.total_price,
             },
         )
+        if item.is_completed and execution.budget and execution.budget > 0:
+            totals = get_execution_totals(db, execution.id)
+            alerts = check_budget_alerts(totals["total_spent"], execution.budget)
+            if alerts:
+                await manager.broadcast(execution.id, "budget_alert", {"alerts": alerts})
     except Exception:
         pass
 
@@ -594,6 +605,10 @@ async def sync_add_execution_item_operation(
             "category_id": item.category_id,
             "name": item.name,
             "planned_quantity": item.planned_quantity,
+            "purchased_quantity": item.purchased_quantity,
+            "unit_price": item.unit_price,
+            "is_completed": item.is_completed,
+            "total_price": item.total_price,
             "notes": item.notes,
             "version": item.version,
             "sort_order": item.sort_order,

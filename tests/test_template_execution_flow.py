@@ -97,7 +97,7 @@ def test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template(
 
     start_execution(db, execution)
     complete_item(db, execution.items[0], 2, 12.50, location="Mercado")
-    added = add_item_to_execution(db, execution, "Sabão", 3)
+    added = add_item_to_execution(db, execution, "Sabão", 3, unit_price=5)
 
     totals = get_execution_totals(db, execution.id)
     db.refresh(template)
@@ -106,13 +106,76 @@ def test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template(
     assert execution.current_location == "Mercado"
     assert totals == {
         "total_items": 2,
-        "completed_items": 1,
-        "remaining_items": 1,
-        "total_spent": 25.0,
+        "completed_items": 2,
+        "remaining_items": 0,
+        "total_spent": 40.0,
     }
     assert added.name == "Sabão"
+    assert added.planned_quantity == 3
+    assert added.purchased_quantity == 3
+    assert added.unit_price == 5
+    assert added.is_completed is True
+    assert added.version == 1
     assert added.template_item_id is None
     assert [item.name for item in template.items] == ["Arroz"]
+
+
+def test_scheduled_execution_adds_pending_item_without_financial_data(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+
+    item = add_item_to_execution(db, execution, "Feijão", 2)
+
+    assert item.planned_quantity == 2
+    assert item.purchased_quantity is None
+    assert item.unit_price is None
+    assert item.is_completed is False
+
+
+@pytest.mark.parametrize("unit_price", [None, 0, -1])
+def test_in_progress_execution_requires_positive_unit_price_for_new_item(
+    db, make_user, make_group, unit_price
+):
+    user = make_user(f"ana-{unit_price}@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    start_execution(db, execution)
+
+    with pytest.raises(ValueError, match="Valor unitário"):
+        add_item_to_execution(
+            db,
+            execution,
+            "Feijão",
+            2,
+            unit_price=unit_price,
+        )
+
+    assert execution.items == []
+
+
+def test_cancelled_execution_rejects_new_item(db, make_user, make_group):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    execution.status = ExecutionStatus.cancelled
+    db.commit()
+
+    with pytest.raises(ValueError, match="cancelada"):
+        add_item_to_execution(db, execution, "Feijão", 1, unit_price=8)
+
+    assert execution.items == []
 
 
 def test_completed_item_cannot_be_removed(db, make_user, make_group):

@@ -157,6 +157,7 @@ não muda de caminho nem é apagado.
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-03` |
 | [BL-0014](items/BL-0014-fixar-orcamento-compra.md) | Fixar resumo de orçamento durante a compra | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-03` |
+| [BL-0015](items/BL-0015-adicionar-item-comprado.md) | Adicionar item como comprado durante execução | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-04` |
 
 ### Itens arquivados
 
