@@ -60,17 +60,17 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | Campo | Valor |
 | --- | --- |
 | Confirmação | `confirmado` |
-| Classificação | Melhoria de experiência mobile-first por atalho progressivo para o formulário de adição existente |
+| Classificação | Melhoria de experiência mobile-first por FAB que abre o formulário existente em modal sem alterar a posição da lista |
 | Domínio afetado | Detalhes de Lista e Compra, acessibilidade, layout responsivo e distribuição PWA |
 | Regras de negócio afetadas | Nenhuma regra de persistência nova; preservar validações, estados mutáveis, autorização e semântica dos formulários existentes |
 | Risco de segurança | Baixo — o atalho não cria endpoint nem mutação e as submissões continuam autenticadas e autorizadas pelas rotas atuais |
 | Risco de LGPD | Baixo — nenhum dado pessoal, financeiro ou identificador adicional será coletado ou exposto |
 | Risco de isolamento por grupo | Baixo — o alvo pertence à página já autorizada e IDs de template, execução e categoria continuam validados no servidor |
-| Risco offline/sincronização | Médio — o atalho deve funcionar sem JavaScript e a Compra deve continuar submetendo o mesmo formulário marcado para fila offline, com o CSS vigente distribuído pelo cache PWA |
+| Risco offline/sincronização | Médio — o controlador do modal deve estar no cache local, oferecer fallback sem CDN e manter a Compra no mesmo formulário marcado para fila offline; sem JavaScript, o formulário único permanece disponível inline |
 | Risco ao histórico financeiro | Baixo — não altera quantidade, valor, total ou histórico; em compra em andamento o valor unitário continua obrigatório |
 | Risco à recorrência | Baixo — não altera finalização, data-base nem geração de execuções |
 | Risco à separação template/execução | Baixo — cada atalho aponta somente para o formulário da tela corrente, sem copiar ou promover dados entre os domínios |
-| Dependências | Formulários atuais, `.btn-fab`, indicador global de sincronização, áreas seguras mobile, cache PWA e entregas integradas BL-0013 a BL-0015 |
+| Dependências | Formulários e fragmentos atuais, HTMX, controlador local de modal, `.btn-fab`, indicador de sincronização, áreas seguras mobile, cache PWA e entregas integradas BL-0013 a BL-0015 |
 | Duplicidades | Nenhuma; BL-0013, BL-0014 e BL-0015 são melhorias correlatas, e a BL-0011 acompanha infraestrutura de testes UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
 | Próximo passo | Aguardar aprovação explícita do refinamento versionado antes de criar contratos executáveis ou alterar a interface |
@@ -99,3 +99,4 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 16:55 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Solução progressiva sem formulário duplicado nem nova persistência definida |
 | `2026-08-04 16:55 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Documento técnico criado e ligado ao item |
 | `2026-08-04 16:55 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, fatia única, contratos TDD, cenários UI e validações refinados; aguarda nova aprovação explícita |
+| `2026-08-04 17:05 -03` | Usuário/Codex | Refinamento revisado; estado mantido em `pronto_para_implementacao` | Link com rolagem rejeitado por perder o contexto; escopo substituído por modal com formulário único, preservação da posição e retorno de foco; exige aprovação do novo commit |
