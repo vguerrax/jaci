@@ -7,13 +7,13 @@
 | ID | `BL-0014` |
 | Título | Fixar resumo de orçamento durante a compra |
 | Tipo | `melhoria` |
-| Estado | `recebido` |
-| Severidade | `a_triar` |
-| Prioridade | `a_definir` |
+| Estado | `pronto_para_implementacao` |
+| Severidade | `N/A` |
+| Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
-| Responsável | `a_definir` |
+| Responsável | Engenharia Jaci |
 | Atualizado em | `2026-08-03` |
 
 ### Comportamento observado
@@ -58,25 +58,25 @@ total realizado e o orçamento previsto.
 
 | Campo | Valor |
 | --- | --- |
-| Confirmação | `a_triar` |
-| Classificação | `a_triar` |
-| Domínio afetado | `a_triar` |
-| Regras de negócio afetadas | `a_triar` |
-| Risco de segurança | `a_avaliar` |
-| Risco de LGPD | `a_avaliar` |
-| Risco de isolamento por grupo | `a_avaliar` |
-| Risco offline/sincronização | `a_avaliar` |
-| Risco ao histórico financeiro | `a_avaliar` |
-| Risco à recorrência | `a_avaliar` |
-| Risco à separação template/execução | `a_avaliar` |
-| Dependências | Atualização dos totais e composição responsiva da tela; detalhamento `a_triar` |
-| Duplicidades | Nenhuma identificada no diagnóstico inicial; confirmar na triagem |
-| Responsável pela próxima etapa | `a_definir` |
-| Próximo passo | Triar comportamento responsivo, atualização dos valores e interação com cabeçalhos fixos |
+| Confirmação | `confirmado` |
+| Classificação | Melhoria de apresentação e feedback local, sem mudança de domínio ou persistência remota |
+| Domínio afetado | Execução de compras, resumo financeiro e experiência offline |
+| Regras de negócio afetadas | Preservar o orçamento da execução, os totais persistidos e a independência entre template e execução |
+| Risco de segurança | Não — reutiliza somente dados já autorizados e renderizados na execução |
+| Risco de LGPD | Não — não cria coleta, transmissão ou persistência de dados pessoais |
+| Risco de isolamento por grupo | Baixo — nenhum endpoint ou consulta nova; manter as rotas autorizadas existentes |
+| Risco offline/sincronização | Médio — o resumo deve refletir o estado local e deduplicar alertas após sincronização e WebSocket |
+| Risco ao histórico financeiro | Baixo — apresentação local não pode modificar valores persistidos nem substituir o cálculo do servidor |
+| Risco à recorrência | Não — não altera status, datas ou geração de execuções futuras |
+| Risco à separação template/execução | Não — o resumo usa exclusivamente orçamento e itens da execução atual |
+| Dependências | Fragmento de itens, IndexedDB/fila offline, Socket.IO, Bootstrap Toast, navbar fixa e cache PWA |
+| Duplicidades | Nenhuma identificada nos backlogs ativo e legado |
+| Responsável pela próxima etapa | Engenharia Jaci |
+| Próximo passo | Obter aprovação explícita do refinamento versionado antes de criar testes ou código |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [Refinamento BL-0014](../../tasks/BL-0014-fixar-orcamento-compra.md).
 - Implementação (commits/PRs): ainda não iniciada.
 - Validações: somente diagnóstico documental; nenhuma validação executável
   iniciada.
@@ -86,10 +86,15 @@ total realizado e o orçamento previsto.
 
 ### Impedimentos
 
-- Nenhum registrado; critérios detalhados dependem da triagem.
+- Implementação bloqueada pelo gate documental até aprovação explícita deste
+  refinamento versionado.
 
 ## Histórico
 
 | Data/hora | Autor | Mudança | Motivo/evidência |
 | --- | --- | --- | --- |
 | `2026-08-03 18:03 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
+| `2026-08-03 23:27 -03` | Codex | `recebido` -> `em_triagem` | Tela, fragmentos HTMX, WebSocket, estado offline e cobertura existente diagnosticados |
+| `2026-08-03 23:27 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Impacto, prioridade, riscos, dependências e limites definidos |
+| `2026-08-03 23:27 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Refinamento técnico criado e ligado ao item |
+| `2026-08-03 23:27 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Escopo, fatia, cenários TDD e validações completos; aguarda aprovação explícita |
