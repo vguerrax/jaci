@@ -1,0 +1,124 @@
+{% if grouped_items %}
+<div class="mb-3">
+    <label for="templateItemFilter" class="visually-hidden">Buscar itens por nome</label>
+    <div class="input-group">
+        <span class="input-group-text" aria-hidden="true">
+            <i class="bi bi-search"></i>
+        </span>
+        <input id="templateItemFilter" type="search" class="form-control"
+            placeholder="Buscar item" aria-label="Buscar itens por nome"
+            autocomplete="off" data-item-filter-input>
+    </div>
+</div>
+<p class="alert alert-info alert-jaci" role="status" aria-live="polite"
+    data-item-filter-empty hidden>
+    Nenhum item encontrado.
+</p>
+{% for item_group in grouped_items %}
+<div class="card-jaci mb-3" data-item-filter-group>
+    <div class="card-header d-flex align-items-center justify-content-between gap-2 p-1">
+        <div>
+            {% if item_group.category %}
+            <span class="rounded-circle d-inline-block me-1"
+                style="width: 12px; height: 12px; background: {{ item_group.category.color or '#D9C4B0' }};">
+            </span>
+            <span>{{ item_group.category.name }}</span>
+            {% else %}
+            <span>Sem Categoria</span>
+            {% endif %}
+            <span class="text-help small" data-item-filter-count
+                data-item-filter-count-mode="template">({{ item_group.get('items')|length }} {% if item_group.get('items') |
+                length > 1 %}itens{% else %}item{% endif %})</span>
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse"
+            data-bs-target="#{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}"
+            aria-expanded="false">
+            <i class="bi bi-chevron-expand"></i>
+        </button>
+    </div>
+    <div class="card-body collapse show" data-item-filter-collapse
+        id="{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}">
+        <div class="list-group list-group-flush list-group-jaci">
+            {% for item in item_group.get('items') %}
+            <div class="list-group-item d-flex justify-content-between align-items-center"
+                data-item-filter-row data-item-filter-name="{{ item.name }}">
+                <div class="d-flex align-items-center gap-3">
+                    <span>{{ item.name }}</span>
+                    <span class="badge-jaci badge-scheduled small">
+                        {{ item.planned_quantity|quantity }}x
+                    </span>
+                </div>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#editItemModal{{ item.id }}" aria-label="Editar {{ item.name }}">
+                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                    </button>
+                    <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/remove"
+                        onsubmit="return confirm('Remover {{ item.name }}?')" class="d-inline">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm text-danger"
+                            aria-label="Remover {{ item.name }}">
+                            <i class="bi bi-trash" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal fade" id="editItemModal{{ item.id }}" tabindex="-1"
+                aria-labelledby="editItemLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/edit">
+                            <div class="modal-header">
+                                <h3 class="modal-title h6" id="editItemLabel{{ item.id }}">Editar Item</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nome</label>
+                                    <input type="text" class="form-control" name="name" value="{{ item.name }}"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Quantidade planejada</label>
+                                    <input type="number" class="form-control" name="planned_quantity"
+                                        value="{{ item.planned_quantity|quantity }}" step="0.001" min="0.001"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Categoria</label>
+                                    <select class="form-select" name="category_id">
+                                        <option value="0">Sem categoria</option>
+                                        {% for cat in categories %}
+                                        <option value="{{ cat.id }}" {% if item.category_id==cat.id %}selected{% endif %}>
+                                            {{ cat.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex align-items-center justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    data-bs-dismiss="modal">
+                                    <i class="bi bi-x-square" aria-hidden="true"></i>
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    Salvar
+                                    <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card-jaci p-5 text-center">
+    <p class="text-clay mb-0">Nenhum item cadastrado.</p>
+</div>
+{% endif %}

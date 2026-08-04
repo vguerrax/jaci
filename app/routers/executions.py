@@ -850,6 +850,7 @@ async def handle_add_item(
     execution_id: int,
     name: str = Form(...),
     planned_quantity: float = Form(1, gt=0, multiple_of=0.001),
+    unit_price: float | None = Form(None, gt=0),
     category_id: int | None = Form(None),
     notes: str | None = Form(None),
     db: Session = Depends(get_db),
@@ -865,11 +866,46 @@ async def handle_add_item(
         return RedirectResponse(url="/executions", status_code=303)
 
     if not name.strip():
+        if request.headers.get("HX-Request", "").lower() == "true":
+            from app.main import templates
+
+            return templates.TemplateResponse(
+                request,
+                "components/item_add_feedback.html",
+                {"message": "O nome do item é obrigatório."},
+                headers={
+                    "HX-Retarget": "#executionItemAddFeedback",
+                    "HX-Reswap": "innerHTML",
+                    "X-Jaci-Item-Add-Error": "true",
+                },
+            )
         return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
-    item = add_item_to_execution(
-        db, execution, name, planned_quantity, category_id if category_id > 0 else None, notes
-    )
+    try:
+        item = add_item_to_execution(
+            db,
+            execution,
+            name,
+            planned_quantity,
+            category_id if category_id and category_id > 0 else None,
+            notes,
+            unit_price,
+        )
+    except ValueError as error:
+        if request.headers.get("HX-Request", "").lower() == "true":
+            from app.main import templates
+
+            return templates.TemplateResponse(
+                request,
+                "components/item_add_feedback.html",
+                {"message": str(error)},
+                headers={
+                    "HX-Retarget": "#executionItemAddFeedback",
+                    "HX-Reswap": "innerHTML",
+                    "X-Jaci-Item-Add-Error": "true",
+                },
+            )
+        return RedirectResponse(url=f"/executions/{execution_id}", status_code=303)
 
     # Broadcast
     await manager.broadcast(
@@ -879,8 +915,16 @@ async def handle_add_item(
             "item_id": item.id,
             "item_name": item.name,
             "user_email": user.email,
+            "is_completed": item.is_completed,
+            "total_price": item.total_price,
         },
     )
+
+    if item.is_completed and execution.budget and execution.budget > 0:
+        totals = get_execution_totals(db, execution_id)
+        alerts = check_budget_alerts(totals["total_spent"], execution.budget)
+        if alerts:
+            await manager.broadcast(execution_id, "budget_alert", {"alerts": alerts})
 
     return await _get_items_fragment(request, execution_id, db, user, active_group)
 

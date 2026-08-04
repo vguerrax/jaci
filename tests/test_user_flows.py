@@ -84,8 +84,7 @@ def test_fl04_critical_purchase_flow_preserves_history(
 
     start_execution(db, execution)
     complete_item(db, execution.items[0], 2, 10)
-    forgotten = add_item_to_execution(db, execution, "Feijão")
-    complete_item(db, forgotten, 1, 8)
+    forgotten = add_item_to_execution(db, execution, "Feijão", unit_price=8)
     totals_before_finish = get_execution_totals(db, execution.id)
     finalize_execution(db, execution)
 
@@ -160,4 +159,3 @@ def test_fl08_completed_execution_remains_available_in_agenda_history(
     assert history == [execution]
     assert history[0].status == ExecutionStatus.completed
     assert get_execution_totals(db, history[0].id)["total_spent"] == 10
-
