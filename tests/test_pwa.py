@@ -3,8 +3,6 @@ import json
 import struct
 from pathlib import Path
 
-import pytest
-
 from app.main import service_worker, web_app_manifest
 
 
@@ -58,7 +56,6 @@ def test_base_template_declares_global_loading_indicator():
     assert "/static/js/loading-indicator.js" in base
 
 
-@pytest.mark.xfail(strict=True, reason="BL-0015 fatia 1.1.2")
 def test_service_worker_caches_shell_and_falls_back_offline():
     worker = (STATIC / "js/service-worker.js").read_text()
 

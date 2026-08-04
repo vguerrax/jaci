@@ -496,7 +496,6 @@ def test_offline_conflict_history_lists_and_resolves_audits(db, make_user, make_
     assert history_after_resolution["conflicts"][0]["resolution_applied"] == "discard_local"
 
 
-@pytest.mark.xfail(strict=True, reason="BL-0015 fatia 1.1.2")
 def test_offline_add_item_operation_creates_real_item_from_temp_id(
     db, make_user, make_group, make_category
 ):
@@ -578,7 +577,6 @@ def test_offline_add_item_operation_requires_price_for_in_progress_execution(
     assert error.value.status_code == 422
 
 
-@pytest.mark.xfail(strict=True, reason="BL-0015 fatia 1.1.2")
 def test_offline_add_item_operation_preserves_scheduled_item_as_pending(
     db, make_user, make_group
 ):
@@ -1070,7 +1068,6 @@ def test_add_item_form_is_offline_capable():
     assert 'name="notes"' in detail
 
 
-@pytest.mark.xfail(strict=True, reason="BL-0015 fatia 1.1.2")
 def test_offline_added_purchase_updates_local_state_and_reconciles_temp_id():
     script = Path("app/static/js/offline-cache.js").read_text()
     items = Path("app/templates/pages/executions/_items_fragment.html").read_text()

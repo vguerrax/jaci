@@ -1,4 +1,5 @@
 <!-- Budget alerts -->
+<div data-budget-alerts>
 {% if budget_alerts %}
 {% for alert in budget_alerts %}
 <div class="alert alert-{{ alert.level }} alert-jaci mb-3 d-flex align-items-center gap-2">
@@ -6,24 +7,27 @@
 </div>
 {% endfor %}
 {% endif %}
+</div>
 
 <!-- Budget progress bar -->
 {% if execution.budget and execution.budget > 0 %}
-<div class="card-jaci p-3 mb-4">
+<div class="card-jaci p-3 mb-4" data-offline-budget-summary
+    data-total-spent="{{ totals.total_spent }}" data-budget="{{ execution.budget }}">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <span class="small text-clay">Orçamento</span>
-        <span class="small fw-medium">
+        <span class="small fw-medium" data-offline-budget-values>
             R$ {{ "%.2f"|format(totals.total_spent) }} / R$ {{ "%.2f"|format(execution.budget) }}
         </span>
     </div>
     <div class="progress-jaci">
         {% set percent = (totals.total_spent / execution.budget * 100) if execution.budget > 0 else 0 %}
         <div class="progress-bar {% if percent >= 95 %}bg-danger-progress{% elif percent >= 80 %}bg-warning-progress{% endif %}"
+            data-offline-budget-progress
             style="width: {{ percent if percent <= 100 else 100 }}%" aria-valuenow="{{ percent }}" aria-valuemin="0"
             aria-valuemax="100">
         </div>
     </div>
-    <div class="text-help small mt-1">
+    <div class="text-help small mt-1" data-offline-budget-percent>
         {{ "%.0f"|format(percent) }}% utilizado
     </div>
 </div>
@@ -39,7 +43,8 @@
 </div>
 {% for item_group in grouped_items %}
 {% set cat_id = ('cat-' ~ item_group.category.id ~ '-items') if item_group.category else 'sem-categoria-items' %}
-<div class="card-jaci mb-3">
+<div class="card-jaci mb-3" data-execution-category-card
+    data-category-id="{{ item_group.category.id if item_group.category else '' }}">
     <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
         <div>
             {% if item_group.category %}
@@ -49,7 +54,12 @@
             <span>Sem categoria</span>
             {% endif %}
             {% if execution.status == 'in_progress' %}
-            <span class="text-help small">({{ item_group.get('items') | selectattr("is_completed") | list | length }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(item_group.get('items')| map(attribute='total_price') | select('number') | sum) }})</span>
+            {% set completed_count = item_group.get('items') | selectattr("is_completed") | list | length %}
+            {% set category_subtotal = item_group.get('items') | map(attribute='total_price') | select('number') | sum %}
+            <span class="text-help small" data-offline-category-summary
+                data-completed-count="{{ completed_count }}"
+                data-total-count="{{ item_group.get('items')|length }}"
+                data-subtotal="{{ category_subtotal }}">({{ completed_count }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(category_subtotal) }})</span>
             {% else %}
             <span class="text-help small">({{ item_group.get('items')|length }})</span>
             {% endif %}
@@ -67,6 +77,9 @@
                 data-execution-item-row
                 data-item-id="{{ item.id }}"
                 data-execution-id="{{ execution.id }}"
+                data-category-id="{{ item.category_id or '' }}"
+                data-item-completed="{{ 'true' if item.is_completed else 'false' }}"
+                data-item-total="{{ item.total_price or 0 }}"
                 data-item-location="{{ item.location or '' }}">
                 <div class="d-flex align-items-center gap-2">
                     <!-- Checkbox visual -->

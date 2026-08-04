@@ -7,7 +7,7 @@
 | ID | `BL-0015` |
 | Título | Adicionar item como comprado durante execução |
 | Tipo | `melhoria` |
-| Estado | `em_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -75,15 +75,16 @@ quantidade e valor unitário.
 | Dependências | Serviço e rota de itens, fragmentos HTMX, totais e alertas, IndexedDB/fila offline, reconciliação e cache PWA |
 | Duplicidades | Nenhuma identificada; BL-0013, BL-0014 e BL-0016 são melhorias correlatas de interface, não substitutas |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Executar a fatia 1.1.1 — contratos TDD e fluxo online atômico |
+| Próximo passo | Validar manualmente os fluxos mobile online/offline e registrar a publicação |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0015](../../tasks/BL-0015-adicionar-item-comprado.md).
-- Implementação (commits/PRs): fatia 1.1.1 implementada; commit a registrar.
-- Validações: fatia 1.1.1 com 54 testes aprovados e 3 contratos offline em
-  `xfail(strict=True)`; `git diff --check` aprovado; `pylint` indisponível no
-  ambiente virtual.
+- Implementação (commits/PRs): fatia 1.1.1 `69cfd64`; fatia 1.1.2 no commit
+  desta atualização.
+- Validações: 83 testes focados aprovados; sintaxe dos dois JavaScript
+  aprovada; migrações no head; regressão com 181 testes aprovados e 5 `xfail`
+  legados fora do escopo; `pylint` indisponível no ambiente virtual.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0014` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
@@ -103,3 +104,5 @@ quantidade e valor unitário.
 | `2026-08-04 00:22 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, duas fatias, contratos TDD e validações refinados; aguarda nova aprovação explícita |
 | `2026-08-04 00:30 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `4e5aa92` |
 | `2026-08-04 00:36 -03` | Codex | Fatia 1.1.1 concluída (`1/2`) | Contratos completos escritos; fluxo online validado com 54 testes aprovados e 3 `xfail(strict=True)` da fatia offline |
+| `2026-08-04 00:42 -03` | Codex | Fatia 1.1.2 concluída (`2/2`) | Estado local, totais, alertas, sincronização, reconciliação e cache PWA validados com 50 testes aprovados |
+| `2026-08-04 00:42 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 181 testes aprovados e 5 `xfail` legados fora do escopo; aguarda validação manual e publicação |

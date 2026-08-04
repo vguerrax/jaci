@@ -1,6 +1,6 @@
 {
   ".codex/hooks.json": {
-    "mtime": 1785801950.2209198,
+    "mtime": 1785813754.532854,
     "ast_hash": "5f1762276fe1ecb343b8e1e98bd48168",
     "semantic_hash": ""
   },
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "app/routers/executions.py": {
-    "mtime": 1784832781.1364157,
-    "ast_hash": "a2a806ec0cc2f57c3167f3ab78e58009",
+    "mtime": 1785814532.5373466,
+    "ast_hash": "6f6c6a44fa23130fbb90550f01ea5afe",
     "semantic_hash": ""
   },
   "app/routers/groups.py": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "app/routers/offline.py": {
-    "mtime": 1784832781.1369538,
-    "ast_hash": "622792dc4635bb8383cad42641c2efdc",
+    "mtime": 1785814665.6526017,
+    "ast_hash": "5437a43ed94bff10d38597df448e66b4",
     "semantic_hash": ""
   },
   "app/routers/sync_center.py": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "app/services/execution_service.py": {
-    "mtime": 1784832781.1374302,
-    "ast_hash": "d5db6d3b66fcd35f11461e09951d54b7",
+    "mtime": 1785814532.4210513,
+    "ast_hash": "0968c08520c51312d8b4d2e2638d8b0b",
     "semantic_hash": ""
   },
   "app/services/group_service.py": {
@@ -195,7 +195,7 @@
     "semantic_hash": ""
   },
   "app/static/js/execution-sync.js": {
-    "mtime": 1784832781.1419535,
+    "mtime": 1785811894.046812,
     "ast_hash": "6a12a179c28790f7a70105ab78d90400",
     "semantic_hash": ""
   },
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "app/static/js/offline-cache.js": {
-    "mtime": 1784832781.1426587,
-    "ast_hash": "bba1eb26a12f44b786a0513aae18fbd2",
+    "mtime": 1785814810.787039,
+    "ast_hash": "57945143427d666d3f33c67a7d3a6013",
     "semantic_hash": ""
   },
   "app/static/js/pwa-install.js": {
@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1784832781.1426587,
-    "ast_hash": "9c66520682085822b52fb11b8254f6fb",
+    "mtime": 1785814821.2451854,
+    "ast_hash": "deef84318fa4b81e05138382d9af0bd4",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -375,8 +375,8 @@
     "semantic_hash": ""
   },
   "tests/test_execution_totals_regression.py": {
-    "mtime": 1781556843.170474,
-    "ast_hash": "0addadef526acf4584a9d49a5088818d",
+    "mtime": 1785814473.4933236,
+    "ast_hash": "eb5e7124093fc018dfbd6d1ba60290ef",
     "semantic_hash": ""
   },
   "tests/test_first_access_flow.py": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "tests/test_offline_cache.py": {
-    "mtime": 1784832781.1520882,
-    "ast_hash": "63cdb42681eb85396624a07b7cdb12ec",
+    "mtime": 1785814645.6096828,
+    "ast_hash": "698a955cde7e02eccf9568166975242e",
     "semantic_hash": ""
   },
   "tests/test_postgresql_backup.py": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
-    "mtime": 1784832781.1524937,
-    "ast_hash": "aad56427410e057ef2a043020b46c664",
+    "mtime": 1785814645.7267313,
+    "ast_hash": "2cc4933fc5c8173f566f9a9ae3dfae4b",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "tests/test_template_execution_flow.py": {
-    "mtime": 1784832781.1529887,
-    "ast_hash": "2d03717819755ae48d194d9d6181ca02",
+    "mtime": 1785814473.2513201,
+    "ast_hash": "fd061d9a5b6f2f595fab36e6eb85ebd4",
     "semantic_hash": ""
   },
   "tests/test_template_learning_tdd.py": {
@@ -440,12 +440,12 @@
     "semantic_hash": ""
   },
   "tests/test_user_flows.py": {
-    "mtime": 1781542818.4391365,
-    "ast_hash": "86862c426f8ca98a7d5faef709b23998",
+    "mtime": 1785814532.778744,
+    "ast_hash": "38f2dcb25d100335323f79ad994578fc",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1785801950.2154324,
+    "mtime": 1785813754.5338252,
     "ast_hash": "7778d2ae9cb3afd5d694f67419740650",
     "semantic_hash": ""
   },
@@ -515,13 +515,13 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_items_fragment.html": {
-    "mtime": 1784832781.1444802,
-    "ast_hash": "65b4db6b316d2c8ef9af851593c0a4fb",
+    "mtime": 1785814688.414328,
+    "ast_hash": "7d8ea9e4956ac75e7eb8196780a3e4b9",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_sidebar_fragment.html": {
-    "mtime": 1784832781.1444802,
-    "ast_hash": "22276a2d131cf2a11d793520259c1f49",
+    "mtime": 1785814688.5403297,
+    "ast_hash": "14713b5e455b390c76829de57c1953cb",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/close_pending.html": {
@@ -530,7 +530,7 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/completed.html": {
-    "mtime": 1785801643.8686244,
+    "mtime": 1785813754.5343444,
     "ast_hash": "add321f43840f9a7d8be9dc8575c0fec",
     "semantic_hash": ""
   },
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/in_progress.html": {
-    "mtime": 1784832781.1446586,
-    "ast_hash": "ddd20567c324ca7b9eb057b303f93def",
+    "mtime": 1785814688.3003263,
+    "ast_hash": "f041d727a7003a7e00020e46367572d2",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/index.html": {
@@ -635,7 +635,7 @@
     "semantic_hash": ""
   },
   "app/templates/pages/templates/detail.html": {
-    "mtime": 1784832781.1456587,
+    "mtime": 1785809263.5847309,
     "ast_hash": "619a28e9e4bd16e9b74f2c53cb0e2437",
     "semantic_hash": ""
   },
@@ -665,8 +665,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785793255.3600922,
-    "ast_hash": "c4f3d1d712bfda681de84c63692724b1",
+    "mtime": 1785814997.1287377,
+    "ast_hash": "e746361b67bf5e202c4ff8a3b046c851",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -810,7 +810,7 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1784865095.5949192,
+    "mtime": 1785811894.069555,
     "ast_hash": "6c255b112194aa9a3b1cca1b711ec574",
     "semantic_hash": ""
   },
@@ -842,6 +842,16 @@
   "app/static/img/jaci-2.png": {
     "mtime": 1773864520.0,
     "ast_hash": "b30106a359db13ebb130a8c856957c41",
+    "semantic_hash": ""
+  },
+  "docs/domain/backlog/items/BL-0015-adicionar-item-comprado.md": {
+    "mtime": 1785814997.011736,
+    "ast_hash": "19461867b1c67e8ebdf05da70927f632",
+    "semantic_hash": ""
+  },
+  "docs/domain/tasks/BL-0015-adicionar-item-comprado.md": {
+    "mtime": 1785814997.2504115,
+    "ast_hash": "41995d0729bf86e36d479e1b8e5e01f6",
     "semantic_hash": ""
   }
 }

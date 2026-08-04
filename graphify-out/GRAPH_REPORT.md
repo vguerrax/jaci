@@ -1,16 +1,16 @@
-# Graph Report - jaci  (2026-08-03)
+# Graph Report - jaci  (2026-08-04)
 
 ## Corpus Check
-- 121 files · ~121,027 words
+- 123 files · ~125,220 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1484 nodes · 3833 edges · 73 communities (69 shown, 4 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 229 edges (avg confidence: 0.73)
+- 1534 nodes · 3939 edges · 82 communities (78 shown, 4 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 241 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `18c9a507`
+- Built from commit: `69cfd64a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,20 +23,20 @@
 - test_database_operations.py
 - auth.py
 - User
-- Group
+- categories.py
 - datetime.py
 - main.py
 - Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX
 - tupa_auth_service.py
 - AGENTS.md
 - 🌙 Jaci
-- database.py
+- ExecutionStatus
 - backlog/README.md
 - user-flows.md
 - Refinamento — BL-NNNN — Título
 - Regras de negócio críticas
 - Fundação PWA e Offline
-- security.py
+- utils/__init__.py
 - ConnectionManager
 - Backlog de produção
 - Identificação e entrada
@@ -69,7 +69,7 @@
 - FL-08 — Consulta da Agenda e Histórico
 - FL-09 — Operação Offline
 - FL-06 — Aprendizado do Template
-- test_auth_pages.py
+- Refinamento — BL-0015 — Adicionar item como comprado durante execução
 - FL-01 — Primeiro Acesso e Onboarding
 - FL-07 — Gestão de Grupos
 - run.py
@@ -78,15 +78,24 @@
 - backup_database.sh
 - app/__init__.py
 - publish.sh
+- notification_service.py
+- offline.py
+- execution_service.py
+- test_pwa.py
+- Execution
+- auth_service.py
+- sync_conflict_audit_service.py
+- ensure_schema_compatibility
+- sync_finalize_execution_operation
 
 ## God Nodes (most connected - your core abstractions)
 1. `User` - 144 edges
-2. `make_user()` - 83 edges
-3. `make_group()` - 82 edges
-4. `create_template()` - 68 edges
-5. `create_execution_from_template()` - 67 edges
-6. `Execution` - 61 edges
-7. `ExecutionItem` - 49 edges
+2. `make_user()` - 89 edges
+3. `make_group()` - 88 edges
+4. `create_template()` - 71 edges
+5. `create_execution_from_template()` - 70 edges
+6. `Execution` - 65 edges
+7. `ExecutionItem` - 50 edges
 8. `add_item_to_template()` - 48 edges
 9. `Group` - 44 edges
 10. `finalize_execution()` - 36 edges
@@ -106,59 +115,59 @@
 ## Import Cycles
 - None detected.
 
-## Communities (73 total, 4 thin omitted)
+## Communities (82 total, 4 thin omitted)
 
 ### Community 0 - "make_user"
-Cohesion: 0.05
-Nodes (150): home(), Painel operacional do grupo ativo., ExecutionStatus, RecurrenceType, Execution, build_calendar_data(), calculate_next_date(), generate_next_execution() (+142 more)
+Cohesion: 0.06
+Nodes (132): home(), Painel operacional do grupo ativo., RecurrenceType, build_calendar_data(), calculate_next_date(), generate_next_execution(), get_executions_for_date(), get_executions_for_month() (+124 more)
 
 ### Community 1 - "offline-cache.js"
 Cohesion: 0.05
-Nodes (104): applyPersistedOfflineItemState(), auditCard(), buildConflict(), buildQueuedOperation(), classifyOperation(), clearOfflineItemIndicators(), clearOfflineItemIndicatorsWhenSynced(), closeManualModal() (+96 more)
+Nodes (110): applyPersistedOfflineItemState(), auditCard(), buildConflict(), buildQueuedOperation(), classifyOperation(), clearOfflineItemIndicators(), clearOfflineItemIndicatorsWhenSynced(), closeManualModal() (+102 more)
 
 ### Community 2 - "template_service.py"
 Cohesion: 0.06
 Nodes (78): TemplateLearningDismissal, Template, TemplateItem, create_template_page(), edit_template_page(), _get_template_context(), handle_add_item(), handle_create_template() (+70 more)
 
 ### Community 3 - "test_offline_cache.py"
-Cohesion: 0.06
-Nodes (67): ExecutionItem, Calcula o valor total do item (qtd * preço unitário)., SyncConflictAudit, AddExecutionItemOperation, ConflictResolutionOperation, _execution_state(), ExecutionItemOperation, FinalizeExecutionOperation (+59 more)
+Cohesion: 0.12
+Nodes (10): AddExecutionItemOperation, offline_snapshot(), Snapshot somente leitura dos dados essenciais para cache local., Cria no servidor um item de execução gerado offline com ID temporário., sync_add_execution_item_operation(), test_offline_add_item_operation_creates_real_item_from_temp_id(), test_offline_add_item_operation_preserves_scheduled_item_as_pending(), test_offline_add_item_operation_rejects_foreign_category() (+2 more)
 
 ### Community 4 - "executions.py"
-Cohesion: 0.07
-Nodes (69): close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment(), execution_sidebar_fragment() (+61 more)
+Cohesion: 0.10
+Nodes (57): Group, close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment() (+49 more)
 
 ### Community 5 - "test_database_operations.py"
 Cohesion: 0.06
 Nodes (48): Aceita nomes usuais de ambiente além de booleanos., Usa psycopg 3 para URLs PostgreSQL fornecidas por provedores., Permite autenticação em desenvolvimento servido por HTTP., Settings, create_database_engine(), Cria engine com ajustes específicos para SQLite ou PostgreSQL., BaseSettings, CompletedProcess (+40 more)
 
 ### Community 6 - "auth.py"
-Cohesion: 0.07
-Nodes (51): handle_change_password(), handle_setup_profile(), handle_update_profile(), login_error_page(), login_page(), login_sent_page(), logout(), password_login() (+43 more)
+Cohesion: 0.10
+Nodes (36): handle_change_password(), handle_setup_profile(), handle_update_profile(), login_error_page(), login_page(), login_sent_page(), logout(), password_login() (+28 more)
 
 ### Community 7 - "User"
-Cohesion: 0.11
-Nodes (44): User, create_group_page(), group_detail(), handle_create_group(), handle_edit_group(), handle_invite(), handle_remove_member(), handle_switch_group() (+36 more)
-
-### Community 8 - "Group"
 Cohesion: 0.12
-Nodes (39): Category, Group, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category() (+31 more)
+Nodes (42): User, create_group_page(), group_detail(), handle_create_group(), handle_edit_group(), handle_invite(), handle_remove_member(), handle_switch_group() (+34 more)
+
+### Community 8 - "categories.py"
+Cohesion: 0.12
+Nodes (38): Category, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category() (+30 more)
 
 ### Community 9 - "datetime.py"
-Cohesion: 0.09
-Nodes (38): agenda_calendar(), agenda_day(), agenda_list(), handle_reschedule(), get, post, Request, Session (+30 more)
+Cohesion: 0.08
+Nodes (40): agenda_calendar(), agenda_day(), agenda_list(), handle_reschedule(), get, post, Request, Session (+32 more)
 
 ### Community 10 - "main.py"
-Cohesion: 0.09
-Nodes (36): get_db(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session, Dependências reutilizáveis para injeção em rotas. (+28 more)
+Cohesion: 0.12
+Nodes (28): get_db(), set_sqlite_pragma(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session (+20 more)
 
 ### Community 11 - "Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX"
 Cohesion: 0.05
 Nodes (40): Acompanhamento até produção, BL-0012 — Gestão documental compartilhada dos projetos VGX, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+32 more)
 
 ### Community 12 - "tupa_auth_service.py"
-Cohesion: 0.09
-Nodes (32): add_unread_count(), health_check(), get, Request, Serve o service worker na raiz para permitir cache offline da aplicação., Serve o manifesto PWA com o tipo de conteúdo esperado pelos navegadores., Injeta unread_count no request.state para todas as requisições. Lê o cookie de…, service_worker() (+24 more)
+Cohesion: 0.24
+Nodes (16): create_user(), _credentials(), decode_access_token(), _jwks(), logout(), migrate_user(), Any, refresh() (+8 more)
 
 ### Community 13 - "AGENTS.md"
 Cohesion: 0.05
@@ -168,9 +177,9 @@ Nodes (39): Arquitetura, Backend, Backend, Banco de Dados, Cache e Mensageria, C
 Cohesion: 0.07
 Nodes (28): 1. Clone o repositório, 3. Instale as dependências, 4. Execute, Backup automático do PostgreSQL, Banco de dados e migrações, Com Caddy (HTTPS automático), 📧 Configuração de e-mail, Configure o ambiente (+20 more)
 
-### Community 15 - "database.py"
-Cohesion: 0.15
-Nodes (13): Base, ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., set_sqlite_pragma(), Notification, get_notifications(), Retorna notificações do usuário, mais recentes primeiro., _iso() (+5 more)
+### Community 15 - "ExecutionStatus"
+Cohesion: 0.20
+Nodes (11): Base, ExecutionStatus, build_offline_snapshot(), _enum_value(), _iso(), Any, datetime, Session (+3 more)
 
 ### Community 16 - "backlog/README.md"
 Cohesion: 0.21
@@ -192,9 +201,9 @@ Nodes (19): Regras de negócio críticas, RN01, RN02, RN03, RN04, RN05, RN06, RN
 Cohesion: 0.11
 Nodes (18): BL-004 — Estratégia de Cache, BL-005 a BL-013 — Cache Local e Operações Offline, BL-014 — Fila Local de Operações, BL-015 — Sincronização Automática, BL-016 — Status Detalhado de Sincronização, BL-017 — Retentativa Automática, BL-019 — Resolução de Conflitos, BL-020 — Central de Sincronização (+10 more)
 
-### Community 21 - "security.py"
-Cohesion: 0.17
-Nodes (10): get_settings(), _build_invite_email(), _build_login_email(), _build_magic_link(), Template HTML para e-mail de convite para grupo., Monta a URL completa do magic link., Envia e-mail com magic link. Se SMTP não configurado, faz log do link (modo…, Template HTML para e-mail de login. (+2 more)
+### Community 21 - "utils/__init__.py"
+Cohesion: 0.11
+Nodes (19): get_settings(), _build_invite_email(), _build_login_email(), _build_magic_link(), Template HTML para e-mail de convite para grupo., Monta a URL completa do magic link., Envia e-mail com magic link. Se SMTP não configurado, faz log do link (modo…, Template HTML para e-mail de login. (+11 more)
 
 ### Community 22 - "ConnectionManager"
 Cohesion: 0.18
@@ -324,9 +333,9 @@ Nodes (6): Atores, Estado e rastreabilidade, FL-09 — Operação Offline, Fluxo
 Cohesion: 0.33
 Nodes (6): FL-06 — Aprendizado do Template, Fluxo Principal, Objetivo, Pré-condições, Resultado Esperado, Tipos de Sugestão
 
-### Community 54 - "test_auth_pages.py"
-Cohesion: 0.53
-Nodes (5): make_request(), Request, test_invalid_registration_renders_register_page_and_preserves_identity_fields(), test_login_page_only_contains_login_form_and_registration_link(), test_register_page_contains_registration_form_and_login_link()
+### Community 54 - "Refinamento — BL-0015 — Adicionar item como comprado durante execução"
+Cohesion: 0.06
+Nodes (34): Acompanhamento até produção, BL-0015 — Adicionar item como comprado durante execução, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+26 more)
 
 ### Community 56 - "FL-01 — Primeiro Acesso e Onboarding"
 Cohesion: 0.40
@@ -344,25 +353,61 @@ Nodes (4): main(), parse_args(), Namespace, Executa o Jaci aplicando migrações
 Cohesion: 0.83
 Nodes (3): is_server_process(), docker-entrypoint.sh script, write_cron_environment()
 
+### Community 73 - "notification_service.py"
+Cohesion: 0.10
+Nodes (28): Notification, handle_mark_all_read(), handle_mark_read(), list_notifications(), get, post, Request, Session (+20 more)
+
+### Community 74 - "offline.py"
+Cohesion: 0.17
+Nodes (23): ConflictResolutionOperation, _execution_state(), _item_state(), BaseModel, post, Session, _raise_sync_conflict(), Registra a resolução aplicada a um conflito sem apagar sua auditoria. (+15 more)
+
+### Community 75 - "execution_service.py"
+Cohesion: 0.16
+Nodes (21): cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_execution_display_name(), get_executions_for_group(), get_pending_items(), incomplete_item() (+13 more)
+
+### Community 76 - "test_pwa.py"
+Cohesion: 0.15
+Nodes (12): health_check(), get, Serve o service worker na raiz para permitir cache offline da aplicação., Serve o manifesto PWA com o tipo de conteúdo esperado pelos navegadores., service_worker(), web_app_manifest(), png_dimensions(), Path (+4 more)
+
+### Community 77 - "Execution"
+Cohesion: 0.23
+Nodes (14): Execution, ExecutionItem, Calcula o valor total do item (qtd * preço unitário)., ExecutionItemOperation, Aplica uma alteração offline em item de execução com bloqueio otimista., RemoveExecutionItemOperation, sync_execution_item_operation(), test_offline_complete_item_operation_applies_pending_change() (+6 more)
+
+### Community 78 - "auth_service.py"
+Cohesion: 0.22
+Nodes (13): authenticate_with_password(), get_or_create_tupa_user(), Session, Associa uma identidade Tupã ao perfil local do Jaci., Autentica no Tupã e carrega o perfil local., Cria a identidade no Tupã e o perfil local no Jaci., Completa os dados locais do perfil., Atualiza os dados pessoais do usuário. (+5 more)
+
+### Community 79 - "sync_conflict_audit_service.py"
+Cohesion: 0.26
+Nodes (12): SyncConflictAudit, offline_conflict_history(), get, Histórico auditável de conflitos de sincronização dos grupos do usuário., create_conflict_audit(), _jsonable(), list_conflict_audits(), Any (+4 more)
+
+### Community 80 - "ensure_schema_compatibility"
+Cohesion: 0.50
+Nodes (4): ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., apply_migrations(), Aplica migrações Alembic e adota bancos SQLite legados.
+
+### Community 81 - "sync_finalize_execution_operation"
+Cohesion: 0.60
+Nodes (5): FinalizeExecutionOperation, Finaliza no servidor uma execução encerrada offline., sync_finalize_execution_operation(), test_offline_finalize_execution_operation_generates_next_cycle_on_sync(), test_offline_finalize_execution_operation_handles_pending_items_on_sync()
+
 ## Knowledge Gaps
-- **351 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+346 more)
+- **374 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+369 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `make_user`, `template_service.py`, `test_offline_cache.py`, `executions.py`, `sync_center`, `auth.py`, `Group`, `datetime.py`, `main.py`, `tupa_auth_service.py`, `database.py`?**
-  _High betweenness centrality (0.119) - this node is a cross-community bridge._
-- **Why does `Execution` connect `make_user` to `template_service.py`, `test_offline_cache.py`, `executions.py`, `datetime.py`, `database.py`?**
+- **Why does `User` connect `User` to `make_user`, `template_service.py`, `test_offline_cache.py`, `executions.py`, `sync_center`, `auth.py`, `categories.py`, `datetime.py`, `main.py`, `notification_service.py`, `offline.py`, `Execution`, `auth_service.py`, `ExecutionStatus`, `sync_conflict_audit_service.py`, `sync_finalize_execution_operation`, `execution_service.py`, `tupa_auth_service.py`?**
+  _High betweenness centrality (0.110) - this node is a cross-community bridge._
+- **Why does `Execution` connect `Execution` to `make_user`, `template_service.py`, `test_offline_cache.py`, `executions.py`, `datetime.py`, `notification_service.py`, `execution_service.py`, `offline.py`, `ExecutionStatus`, `sync_finalize_execution_operation`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `User` (e.g. with `Base` and `AddExecutionItemOperation`) actually correct?**
   _`User` has 8 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 80 inferred relationships involving `make_user()` (e.g. with `test_calendar_groups_executions_by_local_scheduled_date()` and `test_calendar_lists_group_executions_and_prioritizes_in_progress_status()`) actually correct?**
-  _`make_user()` has 80 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 79 inferred relationships involving `make_group()` (e.g. with `test_calendar_groups_executions_by_local_scheduled_date()` and `test_calendar_lists_group_executions_and_prioritizes_in_progress_status()`) actually correct?**
-  _`make_group()` has 79 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 86 inferred relationships involving `make_user()` (e.g. with `test_calendar_groups_executions_by_local_scheduled_date()` and `test_calendar_lists_group_executions_and_prioritizes_in_progress_status()`) actually correct?**
+  _`make_user()` has 86 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 85 inferred relationships involving `make_group()` (e.g. with `test_calendar_groups_executions_by_local_scheduled_date()` and `test_calendar_lists_group_executions_and_prioritizes_in_progress_status()`) actually correct?**
+  _`make_group()` has 85 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script` to the rest of the system?**
-  _351 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _374 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `make_user` be split into smaller, more focused modules?**
-  _Cohesion score 0.05005221023320571 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05568655904226374 - nodes in this community are weakly interconnected._

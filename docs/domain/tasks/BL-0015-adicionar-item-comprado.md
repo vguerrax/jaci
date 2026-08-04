@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0015](../backlog/items/BL-0015-adicionar-item-comprado.md)
 - Branch: `feature/BL-0015-adicionar-item-comprado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_implementacao`
+- Estado do refinamento: `concluido`
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0016`
 
 ## Objetivo e critérios de sucesso
@@ -231,17 +231,18 @@ ticket permanecer em `xfail(strict=True)`:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Inclusão comprada online/offline | `1/2` | `1` | Em andamento |
+| Etapa 1 / Ticket 1.1 — Inclusão comprada online/offline | `2/2` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 implementada; commit a registrar.
+- Commits/PRs: fatia 1.1.1 `69cfd64`; fatia 1.1.2 no commit desta atualização.
 - Resultado das validações focadas: fatia 1.1.1 com 54 testes aprovados e 3
-  contratos offline em `xfail(strict=True)`; `git diff --check` aprovado;
-  `pylint` não está instalado no ambiente virtual.
-- Resultado da validação manual: ainda não executada.
-- Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: 3 contratos da fatia 1.1.2 em
-  `tests/test_offline_cache.py` e 1 contrato de cache PWA em
-  `tests/test_pwa.py`.
+  contratos futuros; fatia 1.1.2 com 50 testes aprovados e nenhum contrato
+  futuro; consolidação com 83 testes aprovados; sintaxe dos dois JavaScript
+  aprovada. `pylint` não está instalado no ambiente virtual.
+- Resultado da validação manual: pendente em navegador real; infraestrutura
+  Playwright continua acompanhada pela BL-0011.
+- Resultado da regressão total: migrações no head; 181 testes aprovados e 5
+  `xfail` legados fora do escopo.
+- `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice e este refinamento.
