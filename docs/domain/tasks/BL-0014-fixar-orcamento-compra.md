@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0014](../backlog/items/BL-0014-fixar-orcamento-compra.md)
 - Branch: `feature/BL-0014-fixar-orcamento-compra`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `concluido`
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0015` e `BL-0016`
 
 ## Objetivo e critérios de sucesso
@@ -188,13 +188,20 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Resumo fixo e resiliente | `0/1` | `1` | Pendente de aprovação |
+| Etapa 1 / Ticket 1.1 — Resumo fixo e resiliente | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados para implementação
-- Resultado das validações focadas: ainda não iniciadas
-- Resultado da validação manual: ainda não iniciada
-- Resultado da regressão total: ainda não iniciada
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado
-- Documentação atualizada: item, índice e este refinamento
+- Commits/PRs: commit da fatia a registrar após a consolidação das evidências
+- Resultado das validações focadas: 54 testes aprovados; `node --check`
+  aprovado para `execution-budget.js`, `execution-sync.js` e
+  `offline-cache.js`; migrações no head
+- Resultado da validação manual: pendente em navegador móvel e desktop; não há
+  infraestrutura Playwright no Jaci
+- Resultado da regressão total: 178 testes aprovados e 5 `xfail` legados fora
+  do escopo
+- `xfail(strict=True)` pendentes no escopo: nenhum
+- Documentação atualizada: item, índice, este refinamento, matriz de testes e
+  grafo do projeto
+- Observação de lint: `venv/bin/pylint` não está instalado; nenhum arquivo
+  Python de produção foi alterado

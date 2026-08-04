@@ -7,7 +7,7 @@
 | ID | `BL-0014` |
 | Título | Fixar resumo de orçamento durante a compra |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -72,22 +72,23 @@ total realizado e o orçamento previsto.
 | Dependências | Fragmento de itens, IndexedDB/fila offline, Socket.IO, Bootstrap Toast, navbar fixa e cache PWA |
 | Duplicidades | Nenhuma identificada nos backlogs ativo e legado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita do refinamento versionado antes de criar testes ou código |
+| Próximo passo | Validar o comportamento em navegador móvel/desktop e registrar a publicação |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0014](../../tasks/BL-0014-fixar-orcamento-compra.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: somente diagnóstico documental; nenhuma validação executável
-  iniciada.
+- Implementação (commits/PRs): fatia concluída; commit a registrar após a
+  consolidação das evidências.
+- Validações: 54 testes focados e regressão com 178 testes aprovados e 5
+  `xfail` legados fora do escopo; três scripts aprovados por `node --check`;
+  migrações no head; validação manual em navegador pendente.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0015` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
 
 ### Impedimentos
 
-- Implementação bloqueada pelo gate documental até aprovação explícita deste
-  refinamento versionado.
+- Nenhum.
 
 ## Histórico
 
@@ -98,3 +99,6 @@ total realizado e o orçamento previsto.
 | `2026-08-03 23:27 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Impacto, prioridade, riscos, dependências e limites definidos |
 | `2026-08-03 23:27 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Refinamento técnico criado e ligado ao item |
 | `2026-08-03 23:27 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Escopo, fatia, cenários TDD e validações completos; aguarda aprovação explícita |
+| `2026-08-03 23:30 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita recebida após o commit documental `b472c20` |
+| `2026-08-03 23:37 -03` | Codex | Fatia 1.1.1 concluída (`1/1`) | Resumo fixo, toasts e atualização offline implementados; 54 testes focados aprovados |
+| `2026-08-03 23:37 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head e regressão com 178 testes aprovados e 5 `xfail` legados |

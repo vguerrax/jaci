@@ -1,30 +1,42 @@
 <!-- Budget alerts -->
-{% if budget_alerts %}
-{% for alert in budget_alerts %}
-<div class="alert alert-{{ alert.level }} alert-jaci mb-3 d-flex align-items-center gap-2">
-    <span>{{ alert.message }}</span>
+<div data-budget-alerts aria-live="polite">
+    {% if budget_alerts %}
+    {% for alert in budget_alerts %}
+    <div class="alert alert-{{ alert.level }} alert-jaci mb-3 d-flex align-items-center gap-2">
+        <span>{{ alert.message }}</span>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
-{% endfor %}
-{% endif %}
 
 <!-- Budget progress bar -->
 {% if execution.budget and execution.budget > 0 %}
-<div class="card-jaci p-3 mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="small text-clay">Orçamento</span>
-        <span class="small fw-medium">
-            R$ {{ "%.2f"|format(totals.total_spent) }} / R$ {{ "%.2f"|format(execution.budget) }}
-        </span>
-    </div>
-    <div class="progress-jaci">
-        {% set percent = (totals.total_spent / execution.budget * 100) if execution.budget > 0 else 0 %}
-        <div class="progress-bar {% if percent >= 95 %}bg-danger-progress{% elif percent >= 80 %}bg-warning-progress{% endif %}"
-            style="width: {{ percent if percent <= 100 else 100 }}%" aria-valuenow="{{ percent }}" aria-valuemin="0"
-            aria-valuemax="100">
+{% set percent = (totals.total_spent / execution.budget * 100) if execution.budget > 0 else 0 %}
+{% set budget_alert = budget_alerts[0] if budget_alerts else none %}
+<div class="{% if execution.status == 'in_progress' %}execution-budget-sticky {% endif %}mb-4"
+    data-execution-budget-summary
+    data-budget-sticky="{{ 'true' if execution.status == 'in_progress' else 'false' }}"
+    data-budget="{{ execution.budget }}"
+    data-total-spent="{{ totals.total_spent }}"
+    data-budget-level="{{ budget_alert.level if budget_alert else 'normal' }}"
+    data-budget-message="{{ budget_alert.message if budget_alert else '' }}">
+    <div class="card-jaci p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small text-clay">Orçamento</span>
+            <span class="small fw-medium" data-budget-values>
+                R$ {{ "%.2f"|format(totals.total_spent) }} / R$ {{ "%.2f"|format(execution.budget) }}
+            </span>
         </div>
-    </div>
-    <div class="text-help small mt-1">
-        {{ "%.0f"|format(percent) }}% utilizado
+        <div class="progress-jaci">
+            <div data-budget-progress
+                class="progress-bar {% if percent >= 95 %}bg-danger-progress{% elif percent >= 80 %}bg-warning-progress{% endif %}"
+                style="width: {{ percent if percent <= 100 else 100 }}%" aria-valuenow="{{ percent }}"
+                aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+        <div class="text-help small mt-1" data-budget-percent>
+            {{ "%.0f"|format(percent) }}% utilizado
+        </div>
     </div>
 </div>
 {% endif %}

@@ -47,6 +47,12 @@ aparecem como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte a
 que o fluxo seja revisado. Os contratos legados de FL-09 não definem o estado
 atual da implementação e devem ser reconciliados no BL-0001.
 
+# Demandas do backlog ativo
+
+| Item | Estado | Cobertura principal |
+|---|---|---|
+| [BL-0014](../docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md) Resumo de orçamento fixo | Em validação | `tests/test_sticky_budget.py`, `tests/test_agenda_and_budget_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py` e `tests/test_pwa.py` |
+
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 
 | Item legado | Estado | Cobertura TDD |

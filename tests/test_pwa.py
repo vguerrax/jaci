@@ -59,7 +59,7 @@ def test_base_template_declares_global_loading_indicator():
 def test_service_worker_caches_shell_and_falls_back_offline():
     worker = (STATIC / "js/service-worker.js").read_text()
 
-    assert "const CACHE_VERSION = 'v23'" in worker
+    assert "const CACHE_VERSION = 'v24'" in worker
     assert "SHELL_CACHE" in worker
     assert "STATIC_CACHE" in worker
     assert "PAGE_CACHE" in worker
@@ -76,6 +76,7 @@ def test_service_worker_caches_shell_and_falls_back_offline():
     assert "'/manifest.webmanifest'" in worker
     assert "'/static/js/loading-indicator.js'" in worker
     assert "'/static/js/offline-cache.js'" in worker
+    assert "'/static/js/execution-budget.js'" in worker
     assert "|| caches.match(OFFLINE_PAGE)" in worker
 
 

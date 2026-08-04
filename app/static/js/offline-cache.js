@@ -398,6 +398,7 @@
         db.close();
         await markExecutionItemLocally(payload);
         await updatePendingCount();
+        await refreshLocalExecutionBudget(operation.execution_id);
     }
 
     async function markAddedExecutionItemLocally(operation) {
@@ -462,6 +463,7 @@
             db.close();
             await markRemovedExecutionItemLocally(operation);
             await updatePendingCount();
+            await refreshLocalExecutionBudget(operation.execution_id);
             return;
         }
 
@@ -477,6 +479,7 @@
         db.close();
         await markRemovedExecutionItemLocally(operation);
         await updatePendingCount();
+        await refreshLocalExecutionBudget(operation.execution_id);
     }
 
     async function markExecutionFinalizedLocally(operation) {
@@ -1291,6 +1294,38 @@
         return row?.dataset.executionId || null;
     }
 
+    function roundMoney(value) {
+        return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100;
+    }
+
+    function calculateExecutionTotal(items, executionId) {
+        const currentId = Number(executionId);
+        const total = items
+            .filter(function (item) {
+                return Number(item.execution_id) === currentId
+                    && item.is_completed
+                    && !item.is_deleted
+                    && !item.offline_removed_at;
+            })
+            .reduce(function (sum, item) {
+                return sum + roundMoney(
+                    Number(item.purchased_quantity || 0) * Number(item.unit_price || 0)
+                );
+            }, 0);
+        return roundMoney(total);
+    }
+
+    async function refreshLocalExecutionBudget(executionId, notify) {
+        if (!executionId || !window.JaciExecutionBudget) return;
+        const db = await openDatabase();
+        const items = await readStore(db, 'execution_items');
+        db.close();
+        window.JaciExecutionBudget.updateTotal(
+            calculateExecutionTotal(items, executionId),
+            { notify: notify !== false }
+        );
+    }
+
     async function refreshCurrentExecutionFragments() {
         if (!navigator.onLine) return false;
         const executionId = currentExecutionIdFromPage();
@@ -1326,6 +1361,9 @@
             outOfBand.remove();
         });
         itemsContainer.innerHTML = fragment.innerHTML;
+        if (window.JaciExecutionBudget) {
+            window.JaciExecutionBudget.refreshFromDocument({ notify: true });
+        }
 
         const sidebar = document.getElementById('sidebar-container');
         if (sidebar) {
@@ -1484,6 +1522,15 @@
                 });
             }
         });
+        const currentExecutionId = Number(currentExecutionIdFromPage());
+        const hasPendingItems = snapshot.pending_operations.some(function (operation) {
+            const operationExecutionId = operation.payload?.execution_id;
+            return Number(operationExecutionId) === currentExecutionId
+                && (operation.entity === 'execution_item' || operation.entidade === 'execution_item');
+        });
+        if (!navigator.onLine || hasPendingItems) {
+            refreshLocalExecutionBudget(currentExecutionIdFromPage(), false).catch(function () {});
+        }
     }
 
     function itemLocationTimestamp(item) {
