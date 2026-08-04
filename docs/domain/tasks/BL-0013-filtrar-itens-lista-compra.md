@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0013](../backlog/items/BL-0013-filtrar-itens-lista-compra.md)
 - Branch: `feature/BL-0013-filtrar-itens-lista-compra`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_implementacao`
 - Item relacionado: [BL-0011](../backlog/items/BL-0011-ampliar-cobertura-testes-ui.md), responsável pela futura infraestrutura Playwright
 
 ## Objetivo e critérios de sucesso
@@ -94,7 +94,7 @@ um filtro local, acessível, mobile-first e resiliente a atualizações dinâmic
   - `app/static/js/item-filter.js`
   - `app/templates/pages/templates/detail.html`
 - Validações focadas:
-  - `timeout 180 venv/bin/pytest tests/test_item_filter.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_item_filter.py`
   - validação manual da Lista em viewport móvel e desktop
 - Documentação a atualizar:
   - este refinamento e o item `BL-0013`
@@ -112,7 +112,7 @@ um filtro local, acessível, mobile-first e resiliente a atualizações dinâmic
   - `app/static/js/item-filter.js`
   - `tests/test_item_filter.py`
 - Validações focadas:
-  - `timeout 180 venv/bin/pytest tests/test_item_filter.py tests/test_offline_cache.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_item_filter.py tests/test_offline_cache.py`
   - validação manual online e offline das compras agendada e em andamento
 - Documentação a atualizar:
   - este refinamento e o item `BL-0013`
@@ -129,7 +129,7 @@ um filtro local, acessível, mobile-first e resiliente a atualizações dinâmic
   - `tests/test_item_filter.py`
   - `tests/README.md`
 - Validações focadas:
-  - `timeout 180 venv/bin/pytest tests/test_item_filter.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_item_filter.py`
   - validação manual da Compra finalizada em viewport móvel e desktop
 - Documentação a atualizar:
   - `tests/README.md`, este refinamento e o item `BL-0013`
@@ -212,12 +212,14 @@ pendentes:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Busca e padronização | `0/3` | `3` | Pendente de aprovação |
+| Etapa 1 / Ticket 1.1 — Busca e padronização | `1/3` | `2` | Em implementação |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados
-- Resultado das validações focadas: ainda não iniciadas
+- Commits/PRs: fatia 1 concluída; hash será registrado após o commit técnico
+- Resultado das validações focadas: fatia 1 — `node --check` aprovado;
+  `tests/test_item_filter.py` focado e `tests/test_template_execution_flow.py`,
+  8 testes aprovados
 - Resultado da validação manual: ainda não iniciada
 - Resultado da regressão total: ainda não iniciada
 - `xfail(strict=True)` pendentes no escopo: nenhum planejado

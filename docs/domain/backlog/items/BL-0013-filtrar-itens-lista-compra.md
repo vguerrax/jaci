@@ -7,7 +7,7 @@
 | ID | `BL-0013` |
 | Título | Buscar itens e padronizar categorias nas telas de Lista e Compra |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -79,14 +79,14 @@ produto desejado.
 | Dependências | Agrupamento Jinja2 existente, Bootstrap Collapse e atualização de `#items-container`; BL-0011 acompanha futura infraestrutura Playwright |
 | Duplicidades | Nenhuma identificada no backlog ativo ou legado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aguardar aprovação explícita do refinamento versionado antes de criar testes ou código |
+| Próximo passo | Executar as três fatias aprovadas, iniciando pelos contratos TDD do escopo completo |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0013](../../tasks/BL-0013-filtrar-itens-lista-compra.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: somente diagnóstico documental; nenhuma validação executável
-  iniciada.
+- Implementação (commits/PRs): fatia 1 concluída; hash será registrado após o
+  commit técnico.
+- Validações: fatia 1 com `node --check` aprovado e 8 testes Pytest aprovados.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`; `BL-0011`
   acompanha a infraestrutura futura de testes em navegador e os demais itens
@@ -94,8 +94,7 @@ produto desejado.
 
 ### Impedimentos
 
-- Implementação bloqueada pelo gate até aprovação explícita do refinamento
-  versionado.
+- Nenhum impedimento registrado.
 
 ## Histórico
 
@@ -106,3 +105,5 @@ produto desejado.
 | `2026-08-03 21:09 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Escopo, prioridade, riscos e dependências definidos |
 | `2026-08-03 21:09 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Documento técnico criado e ligado ao item |
 | `2026-08-03 21:09 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, três fatias, cenários TDD e validações refinados; aguarda aprovação explícita |
+| `2026-08-03 21:18 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `2d703bf` |
+| `2026-08-03 21:21 -03` | Codex | Fatia 1.1.1 concluída (`1/3`) | Contratos TDD, filtro compartilhado e detalhe da Lista validados com 8 testes aprovados |
