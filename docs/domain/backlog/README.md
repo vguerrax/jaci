@@ -155,7 +155,7 @@ não muda de caminho nem é apagado.
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `em_implementacao` | Engenharia Jaci | `2026-08-03` |
+| [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-03` |
 
 ### Itens arquivados
 

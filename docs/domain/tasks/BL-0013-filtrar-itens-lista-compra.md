@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0013](../backlog/items/BL-0013-filtrar-itens-lista-compra.md)
 - Branch: `feature/BL-0013-filtrar-itens-lista-compra`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_implementacao`
+- Estado do refinamento: `concluido`
 - Item relacionado: [BL-0011](../backlog/items/BL-0011-ampliar-cobertura-testes-ui.md), responsável pela futura infraestrutura Playwright
 
 ## Objetivo e critérios de sucesso
@@ -212,17 +212,18 @@ pendentes:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Busca e padronização | `3/3` | `0` | Aguardando regressão total |
+| Etapa 1 / Ticket 1.1 — Busca e padronização | `3/3` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 concluída e com
-  hash a registrar após o commit técnico
+- Commits/PRs: fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3 `4c897ae`
 - Resultado das validações focadas: fatia 1 — `node --check` e 8 testes
   aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados;
   fatia 3 — 6 testes aprovados e 4 templates Jinja2 compilados
-- Resultado da validação manual: ainda não iniciada
-- Resultado da regressão total: ainda não iniciada
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado
-- Documentação atualizada: item, índice e este refinamento
+- Resultado da validação manual: pendente de navegador; o Jaci ainda não possui
+  a infraestrutura Playwright acompanhada pela BL-0011
+- Resultado da regressão total: migrações no head em `.env.test`; 178 testes
+  aprovados e 5 `xfail` legados fora do escopo
+- `xfail(strict=True)` pendentes no escopo: nenhum
+- Documentação atualizada: item, índice, este refinamento e `tests/README.md`
 - Publicação: ainda não publicada

@@ -7,7 +7,7 @@
 | ID | `BL-0013` |
 | Título | Buscar itens e padronizar categorias nas telas de Lista e Compra |
 | Tipo | `melhoria` |
-| Estado | `em_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -79,16 +79,17 @@ produto desejado.
 | Dependências | Agrupamento Jinja2 existente, Bootstrap Collapse e atualização de `#items-container`; BL-0011 acompanha futura infraestrutura Playwright |
 | Duplicidades | Nenhuma identificada no backlog ativo ou legado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Executar as três fatias aprovadas, iniciando pelos contratos TDD do escopo completo |
+| Próximo passo | Validar manualmente em navegador e registrar a publicação antes do encerramento |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0013](../../tasks/BL-0013-filtrar-itens-lista-compra.md).
 - Implementação (commits/PRs): fatia 1 `518cff5`; fatia 2 `4fb305d`; fatia 3
-  concluída e com hash a registrar após o commit técnico.
+  `4c897ae`.
 - Validações: fatia 1 com 8 testes aprovados; fatia 2 com verificações
   sintáticas JavaScript e 35 testes aprovados; fatia 3 com 6 testes aprovados
-  e 4 templates compilados.
+  e 4 templates compilados; migrações no head; regressão com 178 testes
+  aprovados e 5 `xfail` legados fora do escopo.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`; `BL-0011`
   acompanha a infraestrutura futura de testes em navegador e os demais itens
@@ -111,3 +112,4 @@ produto desejado.
 | `2026-08-03 21:21 -03` | Codex | Fatia 1.1.1 concluída (`1/3`) | Contratos TDD, filtro compartilhado e detalhe da Lista validados com 8 testes aprovados |
 | `2026-08-03 21:25 -03` | Codex | Fatia 1.1.2 concluída (`2/3`) | Compras mutáveis e atualizações dinâmicas validadas com 35 testes aprovados |
 | `2026-08-03 21:27 -03` | Codex | Fatia 1.1.3 concluída (`3/3`) | Compra finalizada padronizada; 6 contratos aprovados e 4 templates compilados |
+| `2026-08-03 21:28 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 178 testes aprovados e 5 `xfail` legados fora do escopo |
