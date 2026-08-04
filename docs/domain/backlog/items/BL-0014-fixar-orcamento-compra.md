@@ -14,7 +14,7 @@
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-03` |
+| Atualizado em | `2026-08-04` |
 
 ### Comportamento observado
 
@@ -77,10 +77,12 @@ total realizado e o orçamento previsto.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0014](../../tasks/BL-0014-fixar-orcamento-compra.md).
-- Implementação (commits/PRs): `6c6bd17` e correção `440a68d`.
-- Validações: 55 testes focados e regressão com 179 testes aprovados e 5
-  `xfail` legados fora do escopo; três scripts aprovados por `node --check`;
-  migrações no head; validação manual em navegador pendente.
+- Implementação (commits/PRs): `6c6bd17`, correção `440a68d` e compatibilidade
+  pós-merge `76c55fb`.
+- Validações: 44 testes focados pós-merge e regressão com 186 testes aprovados e
+  5 `xfail` legados fora do escopo; `item-filter.js`, `execution-budget.js` e
+  `offline-cache.js` aprovados por `node --check`; migrações no head; grafo
+  AST-only reconstruído e consultável; validação manual em navegador pendente.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0013`, `BL-0015` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
@@ -105,3 +107,5 @@ total realizado e o orçamento previsto.
 | `2026-08-03 23:48 -03` | Usuário | Toast duplicado reportado durante validação | Duas mensagens simultâneas observadas ao disparar alerta de orçamento |
 | `2026-08-03 23:48 -03` | Codex | Deduplicação de toast corrigida | Contrato reproduziu duas instâncias concorrentes; chave global no DOM e cache PWA `v25` validados com 55 testes focados e regressão 179/5 |
 | `2026-08-03 23:48 -03` | Codex | Commit corretivo registrado | Correção e evidências consolidadas em `440a68d` |
+| `2026-08-04 12:16 -03` | Codex | Compatibilidade pós-merge corrigida | Expectativa do campo de busca alinhada ao commit `f306bc4`; atributos DOM da BL-0013 restaurados no fragmento combinado com a BL-0014; 44 testes focados e regressão 186/5 aprovados |
+| `2026-08-04 12:16 -03` | Codex | Commit técnico registrado | Correção dos dois testes e reconstrução do grafo consolidadas em `76c55fb` |
