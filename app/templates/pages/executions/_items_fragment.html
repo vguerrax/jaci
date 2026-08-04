@@ -9,7 +9,7 @@
 
 <!-- Budget progress bar -->
 {% if execution.budget and execution.budget > 0 %}
-<div class="card-jaci p-3 mb-4">
+<div class="card-jaci p-3 mb-4" data-item-filter-global-summary>
     <div class="d-flex justify-content-between align-items-center mb-2">
         <span class="small text-clay">Orçamento</span>
         <span class="small fw-medium">
@@ -31,15 +31,33 @@
 
 <!-- Items list -->
 {% if grouped_items %}
-<div class="mb-3 d-flex align-items-center justify-content-end">
-    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="collapseAll()">
+<div class="mb-3 d-flex flex-column flex-sm-row align-items-stretch gap-2">
+    <div class="input-group flex-grow-1">
+        <label for="executionItemFilter" class="visually-hidden">Buscar itens por nome</label>
+        <span class="input-group-text" aria-hidden="true">
+            <i class="bi bi-search"></i>
+        </span>
+        <input id="executionItemFilter" type="search" class="form-control"
+            placeholder="Buscar item" aria-label="Buscar itens por nome"
+            autocomplete="off" data-item-filter-input>
+        <button type="button" class="btn btn-outline-secondary"
+            data-item-filter-clear hidden>
+            Limpar
+        </button>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-secondary"
+        data-item-filter-collapse-all>
         <i class="bi bi-chevron-expand"></i>
         Expandir/Recolher Todos
     </button>
 </div>
+<p class="alert alert-info alert-jaci" role="status" aria-live="polite"
+    data-item-filter-empty hidden>
+    Nenhum item encontrado.
+</p>
 {% for item_group in grouped_items %}
 {% set cat_id = ('cat-' ~ item_group.category.id ~ '-items') if item_group.category else 'sem-categoria-items' %}
-<div class="card-jaci mb-3">
+<div class="card-jaci mb-3" data-item-filter-group>
     <div class="card-header collapse-header d-flex align-items-center justify-content-between gap-2 p-1">
         <div>
             {% if item_group.category %}
@@ -49,9 +67,11 @@
             <span>Sem categoria</span>
             {% endif %}
             {% if execution.status == 'in_progress' %}
-            <span class="text-help small">({{ item_group.get('items') | selectattr("is_completed") | list | length }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(item_group.get('items')| map(attribute='total_price') | select('number') | sum) }})</span>
+            <span class="text-help small" data-item-filter-count
+                data-item-filter-count-mode="execution">({{ item_group.get('items') | selectattr("is_completed") | list | length }}/{{ item_group.get('items')|length }} - R$ {{ "%.2f"|format(item_group.get('items')| map(attribute='total_price') | select('number') | sum) }})</span>
             {% else %}
-            <span class="text-help small">({{ item_group.get('items')|length }})</span>
+            <span class="text-help small" data-item-filter-count
+                data-item-filter-count-mode="plain">({{ item_group.get('items')|length }})</span>
             {% endif %}
         </div>
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#{{ cat_id }}" aria-expanded="false">
@@ -60,14 +80,19 @@
     </div>
     {% set show = expanded_ids | length == 0 or cat_id in expanded_ids %}
 
-    <div class="card-body collapse {% if show %}show{% endif %}" id="{{ cat_id }}">
+    <div class="card-body collapse {% if show %}show{% endif %}" id="{{ cat_id }}"
+        data-item-filter-collapse>
         <div class="list-group list-group-flush list-group-jaci">
             {% for item in item_group.get('items') %}
             <div class="list-group-item {% if item.is_completed %}opacity-75{% endif %}"
                 data-execution-item-row
                 data-item-id="{{ item.id }}"
                 data-execution-id="{{ execution.id }}"
-                data-item-location="{{ item.location or '' }}">
+                data-item-location="{{ item.location or '' }}"
+                data-item-filter-row
+                data-item-filter-name="{{ item.name }}"
+                data-item-filter-completed="{{ 'true' if item.is_completed else 'false' }}"
+                data-item-filter-total-price="{{ item.total_price or 0 }}">
                 <div class="d-flex align-items-center gap-2">
                     <!-- Checkbox visual -->
                     <div class="check-jaci {% if item.is_completed %}checked{% endif %} flex-shrink-0"></div>

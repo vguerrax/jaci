@@ -212,14 +212,14 @@ pendentes:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Busca e padronização | `1/3` | `2` | Em implementação |
+| Etapa 1 / Ticket 1.1 — Busca e padronização | `2/3` | `1` | Em implementação |
 
 ## Fechamento
 
-- Commits/PRs: fatia 1 concluída; hash será registrado após o commit técnico
-- Resultado das validações focadas: fatia 1 — `node --check` aprovado;
-  `tests/test_item_filter.py` focado e `tests/test_template_execution_flow.py`,
-  8 testes aprovados
+- Commits/PRs: fatia 1 `518cff5`; fatia 2 concluída e com hash a registrar após
+  o commit técnico
+- Resultado das validações focadas: fatia 1 — `node --check` e 8 testes
+  aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados
 - Resultado da validação manual: ainda não iniciada
 - Resultado da regressão total: ainda não iniciada
 - `xfail(strict=True)` pendentes no escopo: nenhum planejado

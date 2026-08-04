@@ -6,6 +6,7 @@ TEMPLATE_DETAIL_PATH = Path("app/templates/pages/templates/detail.html")
 MUTABLE_EXECUTION_PATH = Path("app/templates/pages/executions/in_progress.html")
 ITEMS_FRAGMENT_PATH = Path("app/templates/pages/executions/_items_fragment.html")
 COMPLETED_EXECUTION_PATH = Path("app/templates/pages/executions/completed.html")
+OFFLINE_CACHE_PATH = Path("app/static/js/offline-cache.js")
 
 
 def read(path: Path) -> str:
@@ -43,6 +44,7 @@ def test_shared_item_filter_controls_rows_groups_counts_and_empty_state():
 def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
     script = read(SCRIPT_PATH)
     page = read(MUTABLE_EXECUTION_PATH)
+    offline_cache = read(OFFLINE_CACHE_PATH)
 
     assert "MutationObserver" in script
     assert "childList: true" in script
@@ -54,6 +56,10 @@ def test_shared_item_filter_preserves_query_across_dynamic_fragment_updates():
     assert "data-item-filter-root" in page
     assert '/static/js/item-filter.js' in page
     assert "function collapseAll()" not in page
+    assert "data-item-filter-forced-expanded" in offline_cache
+    assert "row.dataset.itemFilterName = operation.name" in offline_cache
+    assert "row.dataset.itemFilterCompleted" in offline_cache
+    assert "row.dataset.itemFilterTotalPrice" in offline_cache
 
 
 def test_template_detail_exposes_accessible_filter_contract():
