@@ -7,7 +7,7 @@
 | ID | `BL-0016` |
 | Título | Disponibilizar botão flutuante para adicionar itens |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -73,7 +73,7 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | Dependências | Formulários e fragmentos atuais, HTMX, controlador local de modal, `.btn-fab`, indicador de sincronização, áreas seguras mobile, cache PWA e entregas integradas BL-0013 a BL-0015 |
 | Duplicidades | Nenhuma; BL-0013, BL-0014 e BL-0015 são melhorias correlatas, e a BL-0011 acompanha infraestrutura de testes UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aguardar aprovação explícita do refinamento versionado antes de criar contratos executáveis ou alterar a interface |
+| Próximo passo | Executar a fatia 1.1.1 aprovada: contratos TDD, modal completo, validações e rastreabilidade |
 
 ## Acompanhamento até produção
 
@@ -100,3 +100,4 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 16:55 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Documento técnico criado e ligado ao item |
 | `2026-08-04 16:55 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Objetivo, fatia única, contratos TDD, cenários UI e validações refinados; aguarda nova aprovação explícita |
 | `2026-08-04 17:05 -03` | Usuário/Codex | Refinamento revisado; estado mantido em `pronto_para_implementacao` | Link com rolagem rejeitado por perder o contexto; escopo substituído por modal com formulário único, preservação da posição e retorno de foco; exige aprovação do novo commit |
+| `2026-08-04 17:10 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita emitida após o commit documental `b777d55` |

@@ -5,11 +5,13 @@
 - Item de backlog: [BL-0016](../backlog/items/BL-0016-botao-flutuante-adicionar-itens.md)
 - Branch: `feature/BL-0016-botao-flutuante-adicionar-itens`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_implementacao`
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0015`
 - Revisão de produto: em `2026-08-04`, o link que rolava até o formulário
   foi rejeitado por retirar o usuário da posição atual; esta versão o substitui
-  por um modal e requer nova aprovação explícita.
+  por um modal.
+- Aprovação de implementação: emitida explicitamente em `2026-08-04`, depois
+  do commit documental `b777d55`.
 
 ## Objetivo e critérios de sucesso
 
@@ -252,7 +254,7 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Adição contextual por modal | `0/1` | `1` | Pendente |
+| Etapa 1 / Ticket 1.1 — Adição contextual por modal | `0/1` | `1` | Em implementação |
 
 ## Fechamento
 
