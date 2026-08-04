@@ -7,14 +7,14 @@
 | ID | `BL-0017` |
 | Título | Permitir informar um nome para execução avulsa |
 | Tipo | `ajuste` |
-| Estado | `recebido` |
-| Severidade | `a_triar` |
-| Prioridade | `a_definir` |
+| Estado | `pronto_para_implementacao` |
+| Severidade | `N/A` |
+| Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`da7e087`) em `2026-08-03` |
-| Responsável | `a_definir` |
-| Atualizado em | `2026-08-03` |
+| Responsável | Engenharia Jaci |
+| Atualizado em | `2026-08-04` |
 
 ### Comportamento observado
 
@@ -24,8 +24,10 @@ fluxo recebe automaticamente o nome "Compra Avulsa".
 
 ### Comportamento esperado
 
-O usuário deve poder informar um nome para a execução avulsa durante sua
-criação, facilitando a identificação da compra desde o primeiro acesso.
+O usuário deve poder informar um nome opcional para a execução avulsa sem lista
+durante sua criação e alterá-lo enquanto ela estiver agendada. Execuções
+vinculadas a um template, inclusive compras extras que não geram recorrência,
+devem preservar o próprio nome e não permitir renomeação.
 
 ### Impacto e abrangência
 
@@ -55,36 +57,38 @@ agendada, adicionando uma etapa ao fluxo.
 
 | Campo | Valor |
 | --- | --- |
-| Confirmação | `a_triar` |
-| Classificação | `a_triar` |
-| Domínio afetado | `a_triar` |
-| Regras de negócio afetadas | `a_triar` |
-| Risco de segurança | `a_avaliar` |
-| Risco de LGPD | `a_avaliar` |
-| Risco de isolamento por grupo | `a_avaliar` |
-| Risco offline/sincronização | `a_avaliar` |
-| Risco ao histórico financeiro | `a_avaliar` |
-| Risco à recorrência | `a_avaliar` |
-| Risco à separação template/execução | `a_avaliar` |
-| Dependências | `a_triar` |
-| Duplicidades | `a_triar` |
-| Responsável pela próxima etapa | `a_definir` |
-| Próximo passo | Confirmar o comportamento, avaliar riscos e delimitar o ajuste durante a triagem |
+| Confirmação | `confirmado` |
+| Classificação | Ajuste de identificação e restrição de edição de execuções |
+| Domínio afetado | Execuções — criação, edição agendada e sincronização offline |
+| Regras de negócio afetadas | Nome opcional somente para execução sem template; template e execução permanecem separados |
+| Risco de segurança | Não — autorização atual por usuário/grupo será preservada e a regra ficará no serviço |
+| Risco de LGPD | Baixo — campo textual já existente, limitado a 150 caracteres e sem novo registro em log |
+| Risco de isolamento por grupo | Não — criação usa o grupo ativo e edição mantém a consulta autorizada existente |
+| Risco offline/sincronização | Sim, baixo — edição offline deve aplicar a mesma restrição e rejeitar adulteração no servidor |
+| Risco ao histórico financeiro | Não — nenhum valor financeiro ou registro histórico será alterado |
+| Risco à recorrência | Não — `is_standalone` continua controlando recorrência, sem conceder renomeação quando há template |
+| Risco à separação template/execução | Sim, mitigado — nome do template não será alterado e execuções vinculadas não poderão ser renomeadas |
+| Dependências | Contrato atual de edição agendada e fila offline; cobertura futura de navegador na `BL-0011` |
+| Duplicidades | Nenhuma identificada |
+| Responsável pela próxima etapa | Engenharia Jaci |
+| Próximo passo | Obter aprovação explícita do refinamento versionado antes de iniciar os contratos TDD |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [Refinamento da BL-0017](../../tasks/BL-0017-nome-execucao-avulsa.md).
 - Implementação (commits/PRs): ainda não iniciada.
 - Validações: somente diagnóstico documental; testes executáveis não iniciados.
 - Publicação: ainda não publicada.
-- Itens relacionados: nenhum identificado.
+- Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
 
 ### Impedimentos
 
-- Nenhum registrado; classificação e riscos dependem da triagem.
+- Implementação aguarda aprovação explícita do refinamento versionado.
 
 ## Histórico
 
 | Data/hora | Autor | Mudança | Motivo/evidência |
 | --- | --- | --- | --- |
 | `2026-08-03 23:59 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
+| `2026-08-04 18:08 -03` | Codex | Triagem concluída; `recebido` → `pronto_para_refinamento` | Comportamento confirmado no formulário, rota, serviço e contratos de edição/offline |
+| `2026-08-04 18:08 -03` | Codex | Refinamento criado; `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Escopo, restrições, fatia TDD e validações definidos com o usuário |
