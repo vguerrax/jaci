@@ -192,17 +192,20 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
 
 ## Fechamento
 
-- Commits/PRs: `6c6bd17` e correção `440a68d`
-- Resultado das validações focadas: 55 testes aprovados, incluindo duas
-  instâncias concorrentes do controlador com apenas um toast; `node --check`
-  aprovado para `execution-budget.js`, `execution-sync.js` e
-  `offline-cache.js`; migrações no head
+- Commits/PRs: `6c6bd17`, correção `440a68d` e compatibilidade pós-merge
+  `76c55fb`
+- Resultado das validações focadas: 55 testes aprovados na entrega original,
+  incluindo duas instâncias concorrentes do controlador com apenas um toast;
+  após o merge com `develop`, 44 testes de filtro, orçamento fixo e offline
+  aprovados; `node --check` aprovado para `item-filter.js`,
+  `execution-budget.js` e `offline-cache.js`; migrações no head
 - Resultado da validação manual: pendente em navegador móvel e desktop; não há
   infraestrutura Playwright no Jaci
-- Resultado da regressão total: 179 testes aprovados e 5 `xfail` legados fora
-  do escopo
+- Resultado da regressão total: após o merge com `develop`, 186 testes
+  aprovados e 5 `xfail` legados fora do escopo
 - `xfail(strict=True)` pendentes no escopo: nenhum
 - Documentação atualizada: item, índice, este refinamento, matriz de testes e
-  grafo do projeto
+  grafo do projeto; o grafo malformado pelo merge foi reconstruído em modo
+  AST-only e voltou a aceitar consultas
 - Observação de lint: `venv/bin/pylint` não está instalado; nenhum arquivo
   Python de produção foi alterado

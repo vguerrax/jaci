@@ -83,7 +83,7 @@ def test_template_detail_exposes_accessible_filter_contract():
     assert 'type="search"' in page
     assert 'aria-label="Buscar itens por nome"' in page
     assert "data-item-filter-input" in page
-    assert "data-item-filter-clear" in page
+    assert "data-item-filter-clear" not in page
     assert "data-item-filter-empty" in page
     assert "data-item-filter-group" in page
     assert "data-item-filter-row" in page
