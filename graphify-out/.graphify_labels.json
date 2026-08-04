@@ -46,11 +46,11 @@
   "45": "Tela Inicial Operacional",
   "46": "privacy_policy",
   "47": "Backlog legado do Jaci",
-  "48": "Edição de execuções agendadas",
+  "48": "Refinamento — BL-0014 — Resumo de orçamento fixo durante a compra",
   "49": "FL-03 — Geração de Execução",
   "50": "FL-04 — Execução da Compra",
   "51": "FL-08 — Consulta da Agenda e Histórico",
-  "52": "FL-09 — Operação Offline",
+  "52": "user-flows.md",
   "53": "FL-06 — Aprendizado do Template",
   "54": "test_auth_pages.py",
   "55": "test_loading_indicator.py",
@@ -70,5 +70,10 @@
   "69": "pwa-install.js",
   "70": "publish.sh",
   "71": "execution-sync.js",
-  "72": "jaci-confirm.js"
+  "72": "jaci-confirm.js",
+  "74": "execution-budget.js",
+  "75": "ensure_schema_compatibility",
+  "80": "test_pwa.py",
+  "83": "Identificação e entrada",
+  "86": "Edição de execuções agendadas"
 }
