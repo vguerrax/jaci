@@ -168,7 +168,7 @@ Executar quando a fatia estiver concluída e não houver contrato pendente:
 
 ## Fechamento
 
-- Commits/PRs: commit técnico a registrar após consolidação.
+- Commits/PRs: `a079492`.
 - Resultado das validações focadas: o ciclo TDD inicial confirmou 2 falhas
   esperadas (camada `.modal` ausente e cache `v29`); após a correção, 61 testes
   de modal, offline, orçamento e PWA foram aprovados. `node --check` aprovou o

@@ -82,7 +82,7 @@ dados financeiros do item planejado.
 - Documento refinado: [Refinamento BL-0018](../../tasks/BL-0018-corrigir-backdrop-modal-completar-item.md).
 - Implementação (commits/PRs): camada global dos modais elevada acima do
   backdrop manual, cache PWA atualizado para `v30` e contratos de regressão
-  adicionados; commit técnico a registrar após consolidação.
+  adicionados no commit `a079492`.
 - Validações: 61 testes focados aprovados; sintaxe do service worker aprovada;
   migrações no head; regressão com 226 testes aprovados e 5 `xfail` legados
   fora do escopo; grafo AST-only atualizado. Validação manual pendente.
@@ -105,3 +105,4 @@ dados financeiros do item planejado.
 | `2026-08-05 12:02 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita recebida após o commit documental `8d666a2` |
 | `2026-08-05 12:06 -03` | Codex | Fatia 1.1.1 concluída (`1/1`) | Contratos TDD reproduziram camada e cache antigos; modal elevado e shell PWA `v30` validados |
 | `2026-08-05 12:06 -03` | Codex | `em_implementacao` -> `em_validacao` | 61 testes focados e regressão 226/5 aprovados; migrações no head e validação manual pendente |
+| `2026-08-05 12:08 -03` | Codex | Commit técnico registrado | Implementação, contratos, evidências e grafo consolidados em `a079492` |
