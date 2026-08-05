@@ -570,6 +570,7 @@ async def handle_create_execution(
     scheduled_date: str = Form(...),
     budget: float | None = Form(None),
     is_standalone: bool = Form(False),
+    name: str | None = Form(None),
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user),
     active_group: Group | None = Depends(get_active_group),
@@ -580,10 +581,10 @@ async def handle_create_execution(
     if not user or not active_group:
         return RedirectResponse(url="/auth/login", status_code=303)
 
-    # Parse date
-    try:
-        date = parse_local_date(scheduled_date)
-    except ValueError:
+    def render_form_error(message: str) -> Response:
+        selected_template = None
+        if template_id and template_id > 0:
+            selected_template = get_template_by_id(db, template_id, user)
         today_str = now_local().strftime("%Y-%m-%d")
         tomorrow_str = (now_local() + timedelta(days=1)).strftime("%Y-%m-%d")
         return templates.TemplateResponse(
@@ -593,16 +594,25 @@ async def handle_create_execution(
                 "request": request,
                 "user": user,
                 "active_group": active_group,
-                "template": None,
+                "template": selected_template,
                 "templates": get_templates_by_group(db, active_group.id),
                 "today": today_str,
                 "tomorrow": tomorrow_str,
-                "error": "Data inválida. Use o formato DD/MM/AAAA.",
+                "submitted_name": name,
+                "submitted_scheduled_date": scheduled_date,
+                "submitted_budget": budget,
+                "error": message,
             },
             status_code=400,
         )
 
-    if template_id > 0:
+    # Parse date
+    try:
+        date = parse_local_date(scheduled_date)
+    except ValueError:
+        return render_form_error("Data inválida. Use o formato DD/MM/AAAA.")
+
+    if template_id and template_id > 0:
         # Create from template
         template = get_template_by_id(db, template_id, user)
         if not template:
@@ -613,7 +623,17 @@ async def handle_create_execution(
         )
     else:
         # Create standalone (no template)
-        execution = create_execution_standalone(db, active_group, date, user, budget)
+        try:
+            execution = create_execution_standalone(
+                db,
+                active_group,
+                date,
+                user,
+                budget=budget,
+                name=name,
+            )
+        except ValueError as exc:
+            return render_form_error(str(exc))
 
     return RedirectResponse(url=f"/executions/{execution.id}", status_code=303)
 
