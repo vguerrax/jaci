@@ -156,6 +156,7 @@ não muda de caminho nem é apagado.
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-08-05` |
+| [BL-0020](items/BL-0020-bloquear-renomeacao-item-vinculado.md) | Bloquear renomeação de item vinculado ao template | `ajuste` | `N/A` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-08-05` |
 
 ### Itens arquivados
 
