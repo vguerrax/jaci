@@ -59,6 +59,43 @@ def _get_template_context(
     }
 
 
+def _is_htmx(request: Request) -> bool:
+    """Return whether the request was issued by HTMX."""
+    return request.headers.get("HX-Request", "").lower() == "true"
+
+
+def _item_add_error_response(request: Request, target: str, message: str):
+    """Render an accessible modal error without replacing the item list."""
+    from app.main import templates
+
+    return templates.TemplateResponse(
+        request,
+        "components/item_add_feedback.html",
+        {"message": message},
+        headers={
+            "HX-Retarget": target,
+            "HX-Reswap": "innerHTML",
+            "X-Jaci-Item-Add-Error": "true",
+        },
+    )
+
+
+def _get_template_items_fragment(request: Request, template, db: Session):
+    """Render only template items after an HTMX mutation."""
+    from app.main import templates
+
+    return templates.TemplateResponse(
+        request,
+        "pages/templates/_items_fragment.html",
+        {
+            "request": request,
+            "template": template,
+            "grouped_items": get_template_items_grouped(db, template.id),
+            "categories": get_categories_for_group(db, template.group_id),
+        },
+    )
+
+
 # ─── Pages ───
 
 @router.get("", include_in_schema=False)
@@ -381,6 +418,12 @@ async def handle_add_item(
         return RedirectResponse(url="/templates", status_code=303)
 
     if not name.strip():
+        if _is_htmx(request):
+            return _item_add_error_response(
+                request,
+                "#templateItemAddFeedback",
+                "O nome do item é obrigatório.",
+            )
         grouped_items = get_template_items_grouped(db, template_id)
         categories = get_categories_for_group(db, template.group_id)
 
@@ -397,7 +440,43 @@ async def handle_add_item(
             status_code=400,
         )
 
-    add_item_to_template(db, template, name, planned_quantity, category_id if category_id > 0 else None)
+    try:
+        add_item_to_template(
+            db,
+            template,
+            name,
+            planned_quantity,
+            category_id if category_id and category_id > 0 else None,
+        )
+    except ValueError as error:
+        if _is_htmx(request):
+            return _item_add_error_response(
+                request,
+                "#templateItemAddFeedback",
+                str(error),
+            )
+        grouped_items = get_template_items_grouped(db, template_id)
+        categories = get_categories_for_group(db, template.group_id)
+        return templates.TemplateResponse(
+            request,
+            "pages/templates/detail.html",
+            {
+                **_get_template_context(
+                    request,
+                    user,
+                    active_group,
+                    template=template,
+                    error=str(error),
+                ),
+                "grouped_items": grouped_items,
+                "categories": categories,
+                "execution_counts": count_active_executions(db, template_id),
+            },
+            status_code=400,
+        )
+
+    if _is_htmx(request):
+        return _get_template_items_fragment(request, template, db)
     return RedirectResponse(url=f"/templates/{template.id}", status_code=303)
 
 

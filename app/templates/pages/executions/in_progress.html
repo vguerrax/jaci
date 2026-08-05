@@ -2,182 +2,232 @@
 {% block title %}{{ execution_name }} — Jaci{% endblock %}
 
 {% block content %}
-<div data-current-execution-id="{{ execution.id }}">
-<div class="row mb-4">
-    <div class="col mb-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
-                <li class="breadcrumb-item active text-clay">
-                    <span data-execution-name-label>{{ execution_name }}</span>
-                </li>
-            </ol>
-        </nav>
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-            <h1 class="h2 mb-0" data-execution-name-label>
-                {{ execution_name }}
-            </h1>
-            <span class="badge-jaci {{ status_badge_class[execution.status] }}">
-                {{ status_labels[execution.status] }}
-            </span>
-        </div>
-        <div class="alert alert-info alert-jaci small mt-3 mb-0 d-none" data-execution-sync-feedback>
-            <i class="bi bi-cloud-arrow-up-fill"></i>
-            Alteração salva neste dispositivo. A sincronização será automática quando houver conexão.
-        </div>
-        <!-- <p class="text-clay mt-1">
+<div class="page-with-item-add-fab" data-current-execution-id="{{ execution.id }}">
+    <div class="row mb-4">
+        <div class="col mb-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/executions" class="text-night">Compras</a></li>
+                    <li class="breadcrumb-item active text-clay">
+                        <span data-execution-name-label>{{ execution_name }}</span>
+                    </li>
+                </ol>
+            </nav>
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+                <h1 class="h2 mb-0" data-execution-name-label>
+                    {{ execution_name }}
+                </h1>
+                <span class="badge-jaci {{ status_badge_class[execution.status] }}">
+                    {{ status_labels[execution.status] }}
+                </span>
+            </div>
+            <div class="alert alert-info alert-jaci small mt-3 mb-0 d-none" data-execution-sync-feedback>
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+                Alteração salva neste dispositivo. A sincronização será automática quando houver conexão.
+            </div>
+            <!-- <p class="text-clay mt-1">
             {{ execution.scheduled_date| localdate }}
             &middot; {{ totals.completed_items }}/{{ totals.total_items }} {'itens' if totals.total_items != 1 else 'item'}
         </p> -->
-    </div>
-    <div class="col-12 col-sm-auto align-self-sm-end d-flex flex-column flex-sm-row gap-2 execution-detail-actions">
-        {% if execution.status == 'scheduled' %}
-        <form method="post" action="/executions/{{ execution.id }}/start"
-            data-offline-start-execution data-execution-id="{{ execution.id }}">
-            <button type="submit" class="btn btn-primary">
-                Iniciar Compra
-                <i class="bi bi-moon-stars-fill"></i>
-            </button>
-        </form>
-        <button type="button" class="btn btn-outline-secondary"
-            data-bs-toggle="modal" data-bs-target="#editExecutionModal">
-            <i class="bi bi-pencil-square"></i>
-            Editar compra
-        </button>
-        {% endif %}
-        {% if execution.status == 'in_progress' %}
-        <a href="/executions/{{ execution.id }}/close" class="btn btn-success"
-            data-offline-finalize-link
-            data-execution-id="{{ execution.id }}">
-            Finalizar Compra
-            <i class="bi bi-moon-stars-fill"></i>
-        </a>
-        {% endif %}
-        {% if execution.status in ['scheduled', 'in_progress'] %}
-        <form method="post" action="/executions/{{ execution.id }}/cancel"
-            onsubmit="return confirm('Cancelar esta compra? Itens concluídos serão perdidos.')">
-            <button type="submit" class="btn btn-outline-danger text-danger">
-                <i class="bi bi-x-square"></i>
-                Cancelar
-            </button>
-        </form>
-        {% endif %}
-    </div>
-</div>
-
-<div class="row g-4">
-    <!-- Sidebar -->
-    <div class="col-lg-4 order-lg-2">
-        <!-- Add item (only scheduled and in progress) -->
-        {% if execution.status in ['scheduled', 'in_progress'] %}
-        <div class="card-jaci p-4">
-            <h3 class="h6 mb-3">Adicionar Item</h3>
-            <form hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container" hx-swap="innerHTML"
-                data-offline-add-item data-execution-id="{{ execution.id }}"
-                hx-on::after-request="
-                htmx.ajax('GET', '/executions/{{ execution.id }}/sidebar-fragment', {
-                    target: '#sidebar-container',
-                    swap: 'innerHTML'
-                });
-                this.reset();
-            ">
-                <div class="mb-2">
-                    <input type="text" class="form-control form-control-sm" name="name" placeholder="Nome do item"
-                        required>
-                </div>
-                <div class="mb-2">
-                    <input type="number" class="form-control form-control-sm" name="planned_quantity" step="0.001"
-                        value="1" min="0.001">
-                </div>
-                <div class="mb-2">
-                    <select class="form-select form-select-sm" name="category_id">
-                        <option value="0">Sem categoria</option>
-                        {% if active_group %}
-                        {% for cat in active_group.categories %}
-                        <option value="{{ cat.id }}">{{ cat.name }}</option>
-                        {% endfor %}
-                        {% endif %}
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control form-control-sm" name="notes" placeholder="Observações"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm w-100">
-                    <i class="bi bi-plus"></i>
-                    Adicionar
+        </div>
+        <div class="col-12 col-sm-auto align-self-sm-end d-flex flex-column flex-sm-row gap-2 execution-detail-actions">
+            {% if execution.status == 'scheduled' %}
+            <form method="post" action="/executions/{{ execution.id }}/start" data-offline-start-execution
+                data-execution-id="{{ execution.id }}">
+                <button type="submit" class="btn btn-primary">
+                    Iniciar Compra
+                    <i class="bi bi-moon-stars-fill"></i>
                 </button>
             </form>
-        </div>
-        {% endif %}
-        <div id="sidebar-container">
-            {% include "pages/executions/_sidebar_fragment.html" %}
-        </div>
-    </div>
-
-    <!-- Items list -->
-    <div class="col-lg-8 order-lg-1" hx-preserve>
-        <div id="items-container">
-            {% include "pages/executions/_items_fragment.html" %}
-        </div>
-    </div>
-
-    <!-- Modal container (for dynamic modals) -->
-    <div id="modal-container"></div>
-</div>
-
-{% if execution.status == 'scheduled' %}
-<div class="modal fade" id="editExecutionModal" tabindex="-1"
-    aria-labelledby="editExecutionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form method="post" action="/executions/{{ execution.id }}/edit"
-                data-offline-edit-execution
-                data-execution-id="{{ execution.id }}"
-                data-execution-status="{{ execution.status }}">
-                <div class="modal-header">
-                    <h3 class="modal-title h6" id="editExecutionModalLabel">Editar compra</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-info alert-jaci small mb-3">
-                        <i class="bi bi-cloud-check"></i>
-                        Alterações salvas são sincronizadas para o grupo.
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="executionName">Nome</label>
-                        <input id="executionName" type="text" class="form-control" name="name"
-                            value="{{ execution_name }}" maxlength="150" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="executionScheduledDate">Data agendada</label>
-                        <input id="executionScheduledDate" type="date" class="form-control" name="scheduled_date"
-                            value="{{ execution.scheduled_date|localdate('%Y-%m-%d') }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="executionBudget">Orçamento</label>
-                        <input id="executionBudget" type="number" class="form-control" name="budget"
-                            value="{{ execution.budget if execution.budget else '' }}" step="0.01" min="0"
-                            placeholder="0,00">
-                    </div>
-                </div>
-                <div class="modal-footer d-flex align-items-center justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
-                        <i class="bi bi-x-square"></i>
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        Salvar
-                        <i class="bi bi-check-circle"></i>
-                    </button>
-                </div>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#editExecutionModal">
+                <i class="bi bi-pencil-square"></i>
+                Editar compra
+            </button>
+            {% endif %}
+            {% if execution.status == 'in_progress' %}
+            <a href="/executions/{{ execution.id }}/close" class="btn btn-success" data-offline-finalize-link
+                data-execution-id="{{ execution.id }}">
+                Finalizar Compra
+                <i class="bi bi-moon-stars-fill"></i>
+            </a>
+            {% endif %}
+            {% if execution.status in ['scheduled', 'in_progress'] %}
+            <form method="post" action="/executions/{{ execution.id }}/cancel"
+                onsubmit="return confirm('Cancelar esta compra? Itens concluídos serão perdidos.')">
+                <button type="submit" class="btn btn-outline-danger text-danger">
+                    <i class="bi bi-x-square"></i>
+                    Cancelar
+                </button>
             </form>
+            {% endif %}
         </div>
     </div>
-</div>
-{% endif %}
+
+    <div class="row g-4">
+        <!-- Sidebar -->
+        <div class="col-lg-4 order-lg-2">
+            <div id="sidebar-container">
+                {% include "pages/executions/_sidebar_fragment.html" %}
+            </div>
+        </div>
+
+        <!-- Items list -->
+        <div class="col-lg-8 order-lg-1" hx-preserve data-item-filter-root>
+            <div id="items-container">
+                {% include "pages/executions/_items_fragment.html" %}
+            </div>
+        </div>
+
+        <!-- Modal container (for dynamic modals) -->
+        <div id="modal-container"></div>
+    </div>
+
+    {% if execution.status in ['scheduled', 'in_progress'] %}
+    <button type="button" class="btn btn-fab item-add-fab mb-3" data-item-add-trigger
+        aria-controls="executionAddItemModal" aria-haspopup="dialog" aria-label="Adicionar item"
+        title="Adicionar item">
+        <i class="bi bi-plus" aria-hidden="true"></i>
+    </button>
+
+    <div class="modal fade item-add-modal" id="executionAddItemModal" tabindex="-1"
+        aria-labelledby="executionAddItemModalLabel" data-item-add-modal>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <form class="row g-0" method="post" action="/executions/{{ execution.id }}/items/add"
+                    hx-post="/executions/{{ execution.id }}/items/add" hx-target="#items-container"
+                    hx-swap="innerHTML" data-item-add-form data-offline-add-item
+                    data-execution-id="{{ execution.id }}" data-execution-status="{{ execution.status }}"
+                    data-execution-budget="{{ execution.budget or '' }}"
+                    data-item-add-sidebar-url="/executions/{{ execution.id }}/sidebar-fragment">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5" id="executionAddItemModalLabel">Adicionar item</h2>
+                        <button type="button" class="btn-close" data-item-add-dismiss aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="executionItemAddFeedback" class="mb-3" role="status" aria-live="assertive"
+                            data-item-add-feedback></div>
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemName">Nome do item</label>
+                            <input id="executionAddItemName" type="text" class="form-control" name="name"
+                                maxlength="150" required data-item-add-initial-focus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="addItemQuantity">Quantidade planejada</label>
+                            <input id="addItemQuantity" type="number" class="form-control"
+                                name="planned_quantity" step="0.001" value="1" min="0.001" required>
+                        </div>
+                        {% if execution.status == 'in_progress' %}
+                        <div class="mb-3">
+                            <label class="form-label" for="addItemUnitPrice">Valor unitário</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input id="addItemUnitPrice" type="number" class="form-control"
+                                    name="unit_price" placeholder="0,00" step="0.01" min="0.01" required>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemCategory">Categoria</label>
+                            <select id="executionAddItemCategory" class="form-select" name="category_id">
+                                <option value="0">Sem categoria</option>
+                                {% if active_group %}
+                                {% for cat in active_group.categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="executionAddItemNotes">Observações</label>
+                            <textarea id="executionAddItemNotes" class="form-control" name="notes"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex align-items-center justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-item-add-dismiss>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus" aria-hidden="true"></i>
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <style data-item-add-noscript>
+            .item-add-fab { display: none !important; }
+            .item-add-modal { display: block !important; position: static !important; opacity: 1 !important; }
+            .item-add-modal .modal-dialog { margin: 1rem 0 !important; transform: none !important; }
+        </style>
+    </noscript>
+    {% endif %}
+
+    {% if execution.status == 'scheduled' %}
+    <div class="modal fade" id="editExecutionModal" tabindex="-1" aria-labelledby="editExecutionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" action="/executions/{{ execution.id }}/edit" data-offline-edit-execution
+                    data-execution-id="{{ execution.id }}" data-execution-status="{{ execution.status }}">
+                    <div class="modal-header">
+                        <h3 class="modal-title h6" id="editExecutionModalLabel">Editar compra</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info alert-jaci small mb-3">
+                            <i class="bi bi-cloud-check"></i>
+                            Alterações salvas são sincronizadas para o grupo.
+                        </div>
+                        {% if not execution.template_id %}
+                        <div class="mb-3">
+                            <label class="form-label" for="executionName">Nome</label>
+                            <input id="executionName" type="text" class="form-control" name="name"
+                                value="{{ execution_name }}" maxlength="150" required>
+                        </div>
+                        {% else %}
+                        <div class="mb-3" data-execution-name-readonly>
+                            <span class="form-label d-block">Nome</span>
+                            <p class="form-control-plaintext mb-0">{{ execution_name }}</p>
+                            <input type="hidden" name="name" value="{{ execution_name }}">
+                            <div class="form-text">O nome de uma compra vinculada é definido pela lista.</div>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label class="form-label" for="executionScheduledDate">Data agendada</label>
+                            <input id="executionScheduledDate" type="date" class="form-control" name="scheduled_date"
+                                value="{{ execution.scheduled_date|localdate('%Y-%m-%d') }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="executionBudget">Orçamento</label>
+                            <input id="executionBudget" type="number" class="form-control" name="budget"
+                                value="{{ execution.budget if execution.budget else '' }}" step="0.01" min="0"
+                                placeholder="0,00">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex align-items-center justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+                            <i class="bi bi-x-square"></i>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Salvar
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% block extra_js %}
 <!-- WebSocket sync -->
+<script src="/static/js/item-filter.js"></script>
+<script src="/static/js/item-add-modal.js"></script>
+<script src="/static/js/execution-budget.js"></script>
 <script src="/static/js/execution-sync.js"></script>
 
 <script>
@@ -202,49 +252,6 @@
         });
     }
     )();
-    (function () {
-        'use strict';
-
-        const CONTAINER_ID = 'items-container';
-
-        // Intercepta toda requisição HTMX que vai substituir o container
-        document.body.addEventListener('htmx:configRequest', function (event) {
-            const target = event.detail.target;
-            if (!target || target.id !== CONTAINER_ID) return;
-
-            const container = document.getElementById(CONTAINER_ID);
-            if (!container) return;
-
-            // Coleta IDs dos collapses expandidos
-            const expandedIds = [];
-            container.querySelectorAll('.collapse.show').forEach(function (el) {
-                if (el.id) expandedIds.push(el.id);
-            });
-
-            // Adiciona cabeçalho
-            event.detail.headers['X-Collapse-State'] = expandedIds.join(',');
-        });
-    })()
-
-    function collapseAll() {
-        const collapseElementList = document.querySelectorAll('.card-body.collapse');
-        const collapseElementListOpened = [];
-        const collapseElementListClosed = [];
-        collapseElementList.forEach((el) => {
-            if (el.classList.contains('show')) collapseElementListOpened.push(el);
-            else collapseElementListClosed.push(el);
-        });
-
-        const collapseList = [];
-        if (collapseElementListOpened.length == 0 || collapseElementListClosed.length == 0) {
-            [...collapseElementList].forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        } else if (collapseElementListOpened.length > collapseElementListClosed.length) {
-            collapseElementListClosed.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        } else {
-            collapseElementListOpened.forEach((collapseEl) => { collapseList.push(new bootstrap.Collapse(collapseEl)) });
-        }
-        collapseList.forEach((collapse) => { collapse.toggle() });
-    }
 </script>
 {% endblock %}
 {% endblock %}

@@ -320,6 +320,10 @@ O cache local não implementa:
 Demais operações de escrita fora da fila local continuam dependendo da API
 remota ou de evoluções futuras da fila offline.
 
+A identificação dessas operações e a reconciliação dos contratos e documentos
+legados são acompanhadas pelo
+[BL-0001 — Completar cobertura e rastreabilidade da operação offline](backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
+
 ## Validação Manual
 
 Validar em ambiente HTTPS:

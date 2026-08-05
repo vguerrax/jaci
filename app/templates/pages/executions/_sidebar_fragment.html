@@ -29,10 +29,14 @@
         </dd>
 
         <dt class="text-help">Itens concluídos</dt>
-        <dd class="mb-2">{{ totals.completed_items }} de {{ totals.total_items }}</dd>
+        <dd class="mb-2" data-offline-completed-summary
+            data-completed-items="{{ totals.completed_items }}"
+            data-total-items="{{ totals.total_items }}">{{ totals.completed_items }} de {{ totals.total_items }}</dd>
 
         <dt class="text-help">Total gasto</dt>
-        <dd class="fw-medium {% if totals.total_spent > (execution.budget or 999999) %}text-danger{% endif %}">
+        <dd class="fw-medium {% if totals.total_spent > (execution.budget or 999999) %}text-danger{% endif %}"
+            data-offline-total-spent data-total-spent="{{ totals.total_spent }}"
+            data-budget="{{ execution.budget or '' }}">
             R$ {{ "%.2f"|format(totals.total_spent) }}
         </dd>
 

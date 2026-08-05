@@ -2,6 +2,7 @@
 {% block title %}{{ template.name }} — Jaci{% endblock %}
 
 {% block content %}
+<div class="page-with-item-add-fab">
 <div class="row mb-4">
     <div class="col-sm-12">
         <nav aria-label="breadcrumb">
@@ -61,32 +62,6 @@
     <!-- Template info sidebar -->
     <div class="col-lg-4 order-lg-2">
         <div class="card-jaci p-4 mb-3">
-            <h3 class="h6 mb-3">Adicionar Item</h3>
-            <form method="post" action="/templates/{{ template.id }}/items/add">
-                <div class="mb-2">
-                    <input type="text" class="form-control form-control-sm" name="name" placeholder="Nome do item"
-                        required>
-                </div>
-                <div class="mb-2">
-                    <input type="number" class="form-control form-control-sm" name="planned_quantity" step="0.001"
-                        value="1" min="0.001" required>
-                </div>
-                <div class="mb-3">
-                    <select class="form-select form-select-sm" name="category_id">
-                        <option value="0">Sem Categoria</option>
-                        {% for cat in categories %}
-                        <option value="{{ cat.id }}">{{ cat.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm w-100">
-                    <i class="bi bi-plus"></i>
-                    Adicionar
-                </button>
-            </form>
-        </div>
-
-        <div class="card-jaci p-4 mb-3">
             <h3 class="h6 mb-3">Informações</h3>
             <dl class="mb-0 small">
                 <dt class="text-help">Recorrência</dt>
@@ -128,118 +103,77 @@
     </div>
 
     <!-- Items list -->
-    <div class="col-lg-8 order-lg-1">
-        {% if grouped_items %}
-        {% for item_group in grouped_items %}
-        <div class="card-jaci mb-3">
-            <div class="card-header d-flex align-items-center justify-content-between gap-2 p-1">
-                <div>
-                    {% if item_group.category %}
-                    <span class="rounded-circle d-inline-block me-1"
-                        style="width: 12px; height: 12px; background: {{ item_group.category.color or '#D9C4B0' }};">
-                    </span>
-                    <span>{{ item_group.category.name }}</span>
-                    {% else %}
-                    <span>Sem Categoria</span>
-                    {% endif %}
-                    <span class="text-help small">({{ item_group.get('items')|length }} {% if item_group.get('items') |
-                        length > 1 %}itens{% else %}item{% endif %})</span>
-                </div>
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse"
-                    data-bs-target="#{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}"
-                    aria-expanded="false">
-                    <i class="bi bi-chevron-expand"></i>
-                </button>
-            </div>
-            <div class="card-body collapse show"
-                id="{{'cat-' ~ item_group.category.id ~ '-items' if item_group.category else 'sem-categoria-items' }}">
-                <div class="list-group list-group-flush list-group-jaci">
-                    {% for item in item_group.get('items') %}
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center gap-3">
-                            <span>{{ item.name }}</span>
-                            <span class="badge-jaci badge-scheduled small">
-                                {{ item.planned_quantity|quantity }}x
-                            </span>
-                        </div>
-                        <div class="d-flex gap-1">
-                            <!-- Edit trigger (modal or inline) -->
-                            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editItemModal{{ item.id }}">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/remove"
-                                onsubmit="return confirm('Remover {{ item.name }}?')" class="d-inline">
-                                <button type="submit" class="btn btn-outline-secondary btn-sm text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Edit Item Modal -->
-                    <div class="modal fade" id="editItemModal{{ item.id }}" tabindex="-1"
-                        aria-labelledby="editItemLabel{{ item.id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/edit">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title h6" id="editItemLabel{{ item.id }}">
-                                            Editar Item
-                                        </h3>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nome</label>
-                                            <input type="text" class="form-control" name="name" value="{{ item.name }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Quantidade planejada</label>
-                                            <input type="number" class="form-control" name="planned_quantity"
-                                                value="{{ item.planned_quantity|quantity }}" step="0.001" min="0.001"
-                                                required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Categoria</label>
-                                            <select class="form-select" name="category_id">
-                                                <option value="0">Sem categoria</option>
-                                                {% for cat in categories %}
-                                                <option value="{{ cat.id }}" {% if item.category_id==cat.id %}selected{%
-                                                    endif %}>
-                                                    {{ cat.name }}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer d-flex align-items-center justify-content-between">
-                                        <button type="button" class="btn btn-outline-secondary btn-sm"
-                                            data-bs-dismiss="modal">
-                                            <i class="bi bi-x-square"></i>
-                                            Cancelar
-                                        </button>
-                                        <button type="submit" class="btn btn-primary btn-sm">
-                                            Salvar
-                                            <i class="bi bi-moon-stars-fill"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+    <div class="col-lg-8 order-lg-1" data-item-filter-root>
+        <div id="template-items-container">
+            {% include "pages/templates/_items_fragment.html" %}
         </div>
-        {% endfor %}
-        {% else %}
-        <div class="card-jaci p-5 text-center">
-            <p class="text-clay mb-0">Nenhum item cadastrado.</p>
-        </div>
-        {% endif %}
     </div>
 </div>
+
+<button type="button" class="btn btn-fab item-add-fab mb-3" data-item-add-trigger
+    aria-controls="templateAddItemModal" aria-haspopup="dialog" aria-label="Adicionar item"
+    title="Adicionar item">
+    <i class="bi bi-plus" aria-hidden="true"></i>
+</button>
+
+<div class="modal fade item-add-modal" id="templateAddItemModal" tabindex="-1"
+    aria-labelledby="templateAddItemModalLabel" data-item-add-modal>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form method="post" action="/templates/{{ template.id }}/items/add"
+                hx-post="/templates/{{ template.id }}/items/add" hx-target="#template-items-container"
+                hx-swap="innerHTML" data-item-add-form>
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="templateAddItemModalLabel">Adicionar item</h2>
+                    <button type="button" class="btn-close" data-item-add-dismiss aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="templateItemAddFeedback" class="mb-3" role="status" aria-live="assertive"
+                        data-item-add-feedback></div>
+                    <div class="mb-3">
+                        <label class="form-label" for="templateAddItemName">Nome do item</label>
+                        <input id="templateAddItemName" type="text" class="form-control" name="name"
+                            maxlength="150" required data-item-add-initial-focus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="templateAddItemQuantity">Quantidade planejada</label>
+                        <input id="templateAddItemQuantity" type="number" class="form-control"
+                            name="planned_quantity" step="0.001" value="1" min="0.001" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="templateAddItemCategory">Categoria</label>
+                        <select id="templateAddItemCategory" class="form-select" name="category_id">
+                            <option value="0">Sem categoria</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-item-add-dismiss>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus" aria-hidden="true"></i>
+                        Adicionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<noscript>
+    <style data-item-add-noscript>
+        .item-add-fab { display: none !important; }
+        .item-add-modal { display: block !important; position: static !important; opacity: 1 !important; }
+        .item-add-modal .modal-dialog { margin: 1rem 0 !important; transform: none !important; }
+    </style>
+</noscript>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/item-filter.js"></script>
+<script src="/static/js/item-add-modal.js"></script>
 {% endblock %}

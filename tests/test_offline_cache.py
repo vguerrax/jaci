@@ -194,6 +194,84 @@ def test_offline_update_execution_operation_applies_pending_change(
     assert execution.budget == 850
 
 
+def test_offline_template_execution_update_keeps_name_and_changes_other_fields(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Compra Mensal", RecurrenceType.monthly, 500)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        name="Compra Mensal",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_update_execution_operation(
+            UpdateExecutionOperation(
+                execution_id=execution.id,
+                name="Compra Mensal",
+                scheduled_date="2026-06-30",
+                budget=850,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    assert result["status"] == "applied"
+    assert execution.name == "Compra Mensal"
+    assert to_local(execution.scheduled_date).date().isoformat() == "2026-06-30"
+    assert execution.budget == 850
+
+
+def test_offline_template_execution_rename_returns_422_without_partial_update(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Compra Mensal", RecurrenceType.monthly, 500)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        name="Compra Mensal",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_update_execution_operation(
+                UpdateExecutionOperation(
+                    execution_id=execution.id,
+                    name="Nome adulterado",
+                    scheduled_date="2026-06-30",
+                    budget=850,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    db.refresh(execution)
+    assert error.value.status_code == 422
+    assert "Apenas compras avulsas sem lista" in error.value.detail
+    assert execution.name == "Compra Mensal"
+    assert execution.scheduled_date.date().isoformat() == "2026-06-15"
+    assert execution.budget == 500
+
+
 def test_offline_update_execution_operation_records_conflict_when_not_scheduled(
     db, make_user, make_group
 ):
@@ -518,6 +596,7 @@ def test_offline_add_item_operation_creates_real_item_from_temp_id(
                 temp_id="temp-123",
                 name="Banana",
                 planned_quantity=6,
+                unit_price=2.5,
                 category_id=category.id,
                 notes="Prata",
             ),
@@ -536,7 +615,76 @@ def test_offline_add_item_operation_creates_real_item_from_temp_id(
     assert result["temp_id"] == "temp-123"
     assert result["item"]["id"] != "temp-123"
     assert result["item"]["name"] == "Banana"
+    assert result["item"]["is_completed"] is True
+    assert result["item"]["purchased_quantity"] == 6
+    assert result["item"]["unit_price"] == 2.5
     assert item is not None
+    assert item.is_completed is True
+    assert item.purchased_quantity == 6
+    assert item.unit_price == 2.5
+
+
+def test_offline_add_item_operation_requires_price_for_in_progress_execution(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_add_execution_item_operation(
+                AddExecutionItemOperation(
+                    execution_id=execution.id,
+                    temp_id="temp-missing-price",
+                    name="Banana",
+                    planned_quantity=1,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    assert error.value.status_code == 422
+
+
+def test_offline_add_item_operation_preserves_scheduled_item_as_pending(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_add_execution_item_operation(
+            AddExecutionItemOperation(
+                execution_id=execution.id,
+                temp_id="temp-scheduled",
+                name="Banana",
+                planned_quantity=1,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    assert result["item"]["is_completed"] is False
+    assert result["item"]["purchased_quantity"] is None
+    assert result["item"]["unit_price"] is None
 
 
 def test_offline_add_item_operation_rejects_foreign_category(
@@ -988,10 +1136,42 @@ def test_add_item_form_is_offline_capable():
 
     assert "data-offline-add-item" in detail
     assert 'data-execution-id="{{ execution.id }}"' in detail
+    assert 'data-execution-status="{{ execution.status }}"' in detail
     assert 'name="name"' in detail
     assert 'name="planned_quantity"' in detail
+    assert "{% if execution.status == 'in_progress' %}" in detail
+    assert 'name="unit_price"' in detail
+    assert 'min="0.01"' in detail
     assert 'name="category_id"' in detail
     assert 'name="notes"' in detail
+
+
+def test_offline_add_item_notifies_modal_only_after_local_queue_success():
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    success_event = "new CustomEvent('jaci:item-add-success', { bubbles: true })"
+    enqueue_call = "enqueueAddExecutionItemOperation(operation)"
+    assert success_event in script
+    assert script.index(enqueue_call) < script.index(success_event)
+
+
+def test_offline_added_purchase_updates_local_state_and_reconciles_temp_id():
+    script = Path("app/static/js/offline-cache.js").read_text()
+    items = Path("app/templates/pages/executions/_items_fragment.html").read_text()
+    sidebar = Path("app/templates/pages/executions/_sidebar_fragment.html").read_text()
+
+    assert "unit_price: normalizeNumber(formData.get('unit_price'))" in script
+    assert "purchased_quantity: operation.unit_price ? operation.planned_quantity : null" in script
+    assert "is_completed: Boolean(operation.unit_price)" in script
+    assert "renderTemporaryExecutionItem" in script
+    assert "updateOfflineExecutionSummary" in script
+    assert "operation.action === 'add_execution_item'" in script
+    assert "result.temp_id" in script
+    assert "result.item?.id" in script
+    assert "data-offline-budget-summary" in items
+    assert "data-budget-alerts" in items
+    assert "data-offline-completed-summary" in sidebar
+    assert "data-offline-total-spent" in sidebar
 
 
 def test_finalize_controls_are_offline_capable():

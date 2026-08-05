@@ -213,6 +213,9 @@
         },
 
         _onBudgetAlert: function (data) {
+            if (window.JaciExecutionBudget) {
+                window.JaciExecutionBudget.handleRemoteAlerts(data.alerts || []);
+            }
             this._refreshItems();
         },
 
