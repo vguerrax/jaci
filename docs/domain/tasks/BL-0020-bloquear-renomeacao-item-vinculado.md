@@ -5,10 +5,12 @@
 - Item de backlog: [BL-0020](../backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md)
 - Branch: `feature/BL-0020-bloquear-renomeacao-item-vinculado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_validacao`
 - Itens relacionados: `BL-0003`, `BL-0005` e `BL-0011`
 - Decisões de produto: nome vinculado visível em modo somente leitura; troca de
   produto usa remoção e adição; divergências históricas são preservadas.
+- Aprovação de implementação: emitida explicitamente em `2026-08-05`, depois
+  do commit documental `0fd7aaa`.
 
 ## Objetivo e critérios de sucesso
 
@@ -203,13 +205,21 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Identidade online/offline | `0/1` | `1` | Aguardando aprovação do refinamento |
+| Etapa 1 / Ticket 1.1 — Identidade online/offline | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados para implementação.
-- Resultado das validações focadas: ainda não executadas; dependem da aprovação.
-- Resultado da validação manual: ainda não executada.
-- Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado.
-- Documentação atualizada: item, índice e este refinamento.
+- Commits/PRs: commit técnico será registrado após consolidar esta
+  rastreabilidade.
+- Resultado das validações focadas: ciclo TDD inicial com 10 falhas esperadas e
+  79 aprovações; após a implementação, 89 testes aprovados. `node --check`
+  aprovou `offline-cache.js` e `service-worker.js`; compilação Python aprovada.
+  O `pylint` não está instalado no venv.
+- Resultado da validação manual: pendente de aceite em navegador; renderização,
+  adaptadores HTMX e contratos offline possuem cobertura automatizada. A
+  infraestrutura Playwright permanece futura na `BL-0011`.
+- Resultado da regressão total: migrações no head; 235 testes aprovados e 5
+  `xfail` legados fora do escopo.
+- `xfail(strict=True)` pendentes no escopo: nenhum.
+- Documentação atualizada: item, índice, matriz de testes e este refinamento;
+  grafo AST-only reconstruído.

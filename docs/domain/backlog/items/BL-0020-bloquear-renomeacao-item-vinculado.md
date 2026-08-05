@@ -7,7 +7,7 @@
 | ID | `BL-0020` |
 | Título | Bloquear renomeação de item vinculado ao template |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
@@ -79,15 +79,16 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 | Dependências | Contrato de bloqueio otimista, fila/conflitos offline e distribuição PWA; `BL-0003`, `BL-0005` e futura cobertura UI em `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0003` e `BL-0005` consomem a identidade protegida, mas não implementam este guardrail |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita do refinamento versionado e executar a fatia TDD única |
+| Próximo passo | Realizar aceite manual e registrar a publicação antes de concluir a demanda |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
-- Implementação (commits/PRs): ainda não iniciada; aguarda aprovação explícita
-  do refinamento versionado.
-- Validações: inspeção estática dos contratos atuais concluída; testes
-  executáveis ainda não iniciados.
+- Implementação (commits/PRs): fatia 1.1.1 concluída; commit técnico será
+  registrado após consolidar a rastreabilidade.
+- Validações: ciclo TDD reproduziu 10 falhas esperadas e depois aprovou 89
+  testes focados; sintaxe JavaScript e compilação Python aprovadas; migrações no
+  head; regressão com 235 testes aprovados e 5 `xfail` legados fora do escopo.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0003](BL-0003-historico-precos.md),
   [BL-0005](BL-0005-inteligencia-compras.md) e
@@ -95,8 +96,7 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 
 ### Impedimentos
 
-- Gate de implementação: aprovação explícita do refinamento após seu commit
-  documental.
+- Nenhum.
 
 ## Histórico
 
@@ -105,3 +105,5 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 | `2026-08-05 20:09 -03` | Usuário/Codex | Item criado em `recebido` | Solicitação de proteção da identidade usada pela inteligência de compras |
 | `2026-08-05 20:09 -03` | Codex | `recebido` → `em_triagem` → `pronto_para_refinamento` | Fluxos online/offline, impacto analítico, riscos, dependências e ausência de duplicidade confirmados |
 | `2026-08-05 20:09 -03` | Codex | `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Regra, UX, conflito offline, fatia TDD e validações definidos; implementação aguarda aprovação explícita |
+| `2026-08-05 20:16 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `0fd7aaa` |
+| `2026-08-05 20:21 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Regra online/offline, UX somente leitura e cache `v31` implementados; validações automatizadas aprovadas |

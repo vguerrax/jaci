@@ -1838,7 +1838,19 @@
         form.dataset.forceOfflineSubmit = 'true';
         form.dataset.sourceButtonSelector = `[data-offline-edit-item][data-item-id="${button.dataset.itemId}"]`;
         form.querySelector('[name="version"]').value = button.dataset.version || '';
-        form.querySelector('[name="name"]').value = button.dataset.itemName || '';
+        const nameInput = form.querySelector('[name="name"]');
+        const linkedNameHelp = form.querySelector('[data-linked-item-name-help]');
+        const isTemplateLinked = Boolean(button.dataset.templateItemId);
+        nameInput.value = button.dataset.itemName || '';
+        nameInput.readOnly = isTemplateLinked;
+        if (isTemplateLinked) {
+            nameInput.setAttribute('aria-describedby', 'offlineLinkedItemNameHelp');
+        } else {
+            nameInput.removeAttribute('aria-describedby');
+        }
+        if (linkedNameHelp) {
+            linkedNameHelp.hidden = !isTemplateLinked;
+        }
         form.querySelector('[name="planned_quantity"]').value = button.dataset.plannedQuantity || '1';
         form.querySelector('[name="category_id"]').value = button.dataset.categoryId || '';
         form.querySelector('[name="notes"]').value = button.dataset.notes || '';

@@ -100,8 +100,8 @@
     "semantic_hash": "ad644a287081046ff3df22153d2d2bfa"
   },
   "app/routers/executions.py": {
-    "mtime": 1785940691.6566408,
-    "ast_hash": "a1f479ae537421d0e1c931cd38117e18",
+    "mtime": 1785971982.3316872,
+    "ast_hash": "1b309063fc9147a74e8692934d6a75bc",
     "semantic_hash": ""
   },
   "app/routers/groups.py": {
@@ -120,8 +120,8 @@
     "semantic_hash": "3271a5aeb5fdce1446f25562a6c1095e"
   },
   "app/routers/offline.py": {
-    "mtime": 1785940691.6568966,
-    "ast_hash": "5437a43ed94bff10d38597df448e66b4",
+    "mtime": 1785971982.4535813,
+    "ast_hash": "83668d6e3391e9ca56439f5fcedc47dc",
     "semantic_hash": ""
   },
   "app/routers/sync_center.py": {
@@ -150,8 +150,8 @@
     "semantic_hash": "22eafb48d385ca233afc7e0063cf6b31"
   },
   "app/services/execution_service.py": {
-    "mtime": 1785940691.6573875,
-    "ast_hash": "bf6a1fcd7c0f94ada85515444fd8f518",
+    "mtime": 1785971982.198326,
+    "ast_hash": "8bdb10997b556ca16ca21bf1161f4547",
     "semantic_hash": ""
   },
   "app/services/group_service.py": {
@@ -210,8 +210,8 @@
     "semantic_hash": "3e0b21cc5d5121249b7a143452ce957d"
   },
   "app/static/js/offline-cache.js": {
-    "mtime": 1785940691.6590555,
-    "ast_hash": "cddb9d00719c58ada41648c2d655b928",
+    "mtime": 1785971982.9350715,
+    "ast_hash": "be429d433bc72a0a1e2e8aeeea437bc5",
     "semantic_hash": ""
   },
   "app/static/js/pwa-install.js": {
@@ -220,8 +220,8 @@
     "semantic_hash": "2fb77115c7a3a790c8e9f6953992e051"
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1785942325.255297,
-    "ast_hash": "d7c3906ba95c8e939a25077e234de5fe",
+    "mtime": 1785971983.0583339,
+    "ast_hash": "dc11538ce41ffe035c9e42f1eb6ab337",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -355,14 +355,14 @@
     "semantic_hash": "f8178ced5206201e4abacb637a7e9ee1"
   },
   "tests/test_business_rules.py": {
-    "mtime": 1781542354.2981455,
-    "ast_hash": "b8e2db82c91d80287b8ab18cce034050",
-    "semantic_hash": "b8e2db82c91d80287b8ab18cce034050"
+    "mtime": 1785971932.6216955,
+    "ast_hash": "a7564e8f20d1b996f1e44eebe68fe36e",
+    "semantic_hash": ""
   },
   "tests/test_collaboration_and_isolation_flow.py": {
-    "mtime": 1781542044.9940004,
-    "ast_hash": "8bf48b57682c64530df57caacbdb6928",
-    "semantic_hash": "8bf48b57682c64530df57caacbdb6928"
+    "mtime": 1785971932.7576976,
+    "ast_hash": "714454ca00fb922f23b90e4b081d0a7a",
+    "semantic_hash": ""
   },
   "tests/test_completion_and_recurrence_flow.py": {
     "mtime": 1781542071.150351,
@@ -405,8 +405,8 @@
     "semantic_hash": "4e50357a1c2c87aabeffd171b26a2b56"
   },
   "tests/test_offline_cache.py": {
-    "mtime": 1785940691.714051,
-    "ast_hash": "e8a412929dd32bfe2639ee5e6f3ccaee",
+    "mtime": 1785971933.0147011,
+    "ast_hash": "d92820b5f7b850c69eac8620d64cd519",
     "semantic_hash": ""
   },
   "tests/test_postgresql_backup.py": {
@@ -415,8 +415,8 @@
     "semantic_hash": "ed90fc9103091a7e87f45b1033fe8371"
   },
   "tests/test_pwa.py": {
-    "mtime": 1785942307.0920446,
-    "ast_hash": "a4a9e2848821f305eff12f47b8d14b29",
+    "mtime": 1785971933.142703,
+    "ast_hash": "b1b1e4640297d7ab345d8a3afbd5a9a0",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -435,8 +435,8 @@
     "semantic_hash": "281c5313ced306d66a07d896e0924d06"
   },
   "tests/test_template_execution_flow.py": {
-    "mtime": 1785940691.7147913,
-    "ast_hash": "05c7ddb941421435ef4c77d6889243e7",
+    "mtime": 1785971983.178286,
+    "ast_hash": "8dd7c4b301d164740c7ebcd469a20ae4",
     "semantic_hash": ""
   },
   "tests/test_template_learning_tdd.py": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "app/templates/base.html": {
-    "mtime": 1784832781.1436586,
-    "ast_hash": "6306c3b3153fefe5b6ed6bf4de30da62",
+    "mtime": 1785971982.8099272,
+    "ast_hash": "e4d4f4bf1095efe46ea559c605a934c7",
     "semantic_hash": ""
   },
   "app/templates/components/confirm_modal.html": {
@@ -515,13 +515,13 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_edit_modal.html": {
-    "mtime": 1784832781.1436586,
-    "ast_hash": "61d755e59a3d48221c097a2571835b68",
+    "mtime": 1785971982.5713296,
+    "ast_hash": "b36f1f59769084e69c8cbd1064f277d9",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_items_fragment.html": {
-    "mtime": 1785940691.6595607,
-    "ast_hash": "7181f8785d5f24448efbed751b23a1b5",
+    "mtime": 1785971982.6893306,
+    "ast_hash": "bbe539cf8847a4b7a3074251ab3d4dbb",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_sidebar_fragment.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785942438.821872,
-    "ast_hash": "1e8ed3a46b1f6734437b09dea3546b7d",
+    "mtime": 1785971823.4291449,
+    "ast_hash": "89ddaacd56cebd82fdb0489dba06184d",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -680,28 +680,28 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md": {
-    "mtime": 1785940691.6612642,
-    "ast_hash": "e1fabe019801aedfec4e4898852d8dc4",
+    "mtime": 1785953432.0310762,
+    "ast_hash": "225ecabbbbe860de0bba30e790a7d61a",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0002-unidades-medida.md": {
-    "mtime": 1785940691.661378,
-    "ast_hash": "3f7e2df188a4fd68d6b8e1258a683d9c",
+    "mtime": 1785953560.201253,
+    "ast_hash": "c2437fe14b5fe1eb1ec77ed0976efe6e",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0003-historico-precos.md": {
-    "mtime": 1785940691.661492,
-    "ast_hash": "1cf3deeaed9e5124d7a28dae81015daa",
+    "mtime": 1785953993.5061793,
+    "ast_hash": "1823b7236b22c0ecc08a0ea8f22b5cef",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md": {
-    "mtime": 1785940691.661603,
-    "ast_hash": "f5be9d0b370dc2508624669b50ca2636",
+    "mtime": 1785969405.2993762,
+    "ast_hash": "53cf880fde5356bb04b85fce39fbd7e9",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0005-inteligencia-compras.md": {
-    "mtime": 1785940691.6617136,
-    "ast_hash": "6b4be1e8df10db094eeb77fc31cd05cf",
+    "mtime": 1785970902.5140467,
+    "ast_hash": "06a94988e0928ec23a37d56c973b886c",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0006-integracoes-externas.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785942439.1578765,
-    "ast_hash": "a5de8f0045f808ba232d2e061b4c177c",
+    "mtime": 1785951599.7103066,
+    "ast_hash": "07ed718fae17a60f4a6ee2efa3438418",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -865,8 +865,8 @@
     "semantic_hash": "cd46d40e22988cd8f66cd6d571328d25"
   },
   "tests/test_sticky_budget.py": {
-    "mtime": 1785942364.613843,
-    "ast_hash": "667f0fab241aa30a6cd41ccc55d55bc4",
+    "mtime": 1785971933.2647047,
+    "ast_hash": "f4d0da6469e62cd8a08322a4abbf8027",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
@@ -900,7 +900,7 @@
     "semantic_hash": ""
   },
   "tests/test_item_add_fab.py": {
-    "mtime": 1785942306.967043,
+    "mtime": 1785951599.7103066,
     "ast_hash": "013d0ec70bb2accfb1430b3b95689ac8",
     "semantic_hash": ""
   },
@@ -935,13 +935,28 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md": {
-    "mtime": 1785942485.023512,
-    "ast_hash": "350a895b2ca5a01d6dc1b3794f232eba",
+    "mtime": 1785951599.6565528,
+    "ast_hash": "947a29addb3dbd5961a5a0a14c9ca280",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md": {
-    "mtime": 1785942485.1385133,
-    "ast_hash": "9ff65acd71ca59e2887c571f61b197f3",
+    "mtime": 1785951599.6568577,
+    "ast_hash": "d89e5130c01ef4a4c3841d1d7bbc2655",
+    "semantic_hash": ""
+  },
+  "docs/domain/backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
+    "mtime": 1785960360.2085533,
+    "ast_hash": "d5d6ddf262246f61898db4134409696a",
+    "semantic_hash": ""
+  },
+  "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
+    "mtime": 1785971823.1921415,
+    "ast_hash": "3578a2fc88cb6d477650c550a2d905e1",
+    "semantic_hash": ""
+  },
+  "docs/domain/tasks/BL-0020-bloquear-renomeacao-item-vinculado.md": {
+    "mtime": 1785971823.3111434,
+    "ast_hash": "ebb821a808548091d115d9c9603765eb",
     "semantic_hash": ""
   }
 }

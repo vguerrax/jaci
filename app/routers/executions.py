@@ -1,5 +1,5 @@
 from datetime import datetime, timezone, timedelta
-from fastapi import APIRouter, Request, Depends, Form, Query
+from fastapi import APIRouter, Request, Depends, Form, HTTPException, Query, status
 from fastapi.responses import RedirectResponse, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
@@ -1037,9 +1037,20 @@ async def handle_update_item(
         )
         return await _get_items_fragment(request, execution_id, db, user, active_group)
 
-    item = update_execution_item(
-        db, item, name, planned_quantity, category_id if category_id > 0 else None, notes
-    )
+    try:
+        item = update_execution_item(
+            db,
+            item,
+            name,
+            planned_quantity,
+            category_id if category_id and category_id > 0 else None,
+            notes,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(exc),
+        ) from exc
 
     # Broadcast para outros usuários
     await manager.broadcast(

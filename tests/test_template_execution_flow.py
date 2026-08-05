@@ -4,8 +4,9 @@ from datetime import datetime, timezone
 import pytest
 from starlette.requests import Request
 
-from app.models import TemplateItem
+from app.models import Execution, TemplateItem
 from app.models.enums import ExecutionStatus, RecurrenceType
+from app.routers import executions as execution_routes
 from app.routers import templates as template_routes
 from app.services.execution_service import (
     add_item_to_execution,
@@ -30,6 +31,19 @@ def make_template_item_request(*, htmx: bool) -> Request:
             "method": "POST",
             "path": "/templates/1/items/add",
             "headers": headers,
+        }
+    )
+    request.state.unread_count = 0
+    return request
+
+
+def make_execution_item_request() -> Request:
+    request = Request(
+        {
+            "type": "http",
+            "method": "GET",
+            "path": "/executions/1/items/1/edit-form",
+            "headers": [(b"hx-request", b"true")],
         }
     )
     request.state.unread_count = 0
@@ -62,6 +76,68 @@ def test_template_add_item_htmx_returns_only_the_updated_items_fragment(
     assert "data-item-filter-row" in body
     assert "<!DOCTYPE html>" not in body
     assert "data-item-add-modal" not in body
+
+
+def test_linked_execution_item_edit_form_keeps_name_read_only(
+    db, make_user, make_group
+):
+    user = make_user("ana-linked-form@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    item = execution.items[0]
+
+    response = asyncio.run(
+        execution_routes.edit_item_form(
+            request=make_execution_item_request(),
+            execution_id=execution.id,
+            item_id=item.id,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    body = response.body.decode()
+    assert response.status_code == 200
+    assert 'name="name" value="Maçã" required readonly' in body
+    assert "Para comprar outro produto, remova este item e adicione o correto." in body
+
+
+def test_unlinked_execution_item_edit_form_keeps_name_editable(
+    db, make_user, make_group
+):
+    user = make_user("ana-unlinked-form@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = add_item_to_execution(db, execution, "Maçã")
+
+    response = asyncio.run(
+        execution_routes.edit_item_form(
+            request=make_execution_item_request(),
+            execution_id=execution.id,
+            item_id=item.id,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    body = response.body.decode()
+    name_input = body.split('name="name"', 1)[1].split(">", 1)[0]
+    assert response.status_code == 200
+    assert "readonly" not in name_input
+    assert "Para comprar outro produto" not in body
 
 
 def test_template_add_item_without_htmx_keeps_post_redirect_fallback(

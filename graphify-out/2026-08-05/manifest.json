@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785942306.8520412,
-    "ast_hash": "cd3419f6fd1f045f6ee129ccf44a76b2",
+    "mtime": 1785942438.821872,
+    "ast_hash": "1e8ed3a46b1f6734437b09dea3546b7d",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785940691.7130322,
-    "ast_hash": "06626e2cebc6b40ab20fec23efce826a",
+    "mtime": 1785942439.1578765,
+    "ast_hash": "a5de8f0045f808ba232d2e061b4c177c",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -935,13 +935,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md": {
-    "mtime": 1785942306.6310382,
-    "ast_hash": "5099c2db3e29a8eb94878674119326e8",
+    "mtime": 1785942485.023512,
+    "ast_hash": "350a895b2ca5a01d6dc1b3794f232eba",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md": {
-    "mtime": 1785942306.7410398,
-    "ast_hash": "5e60d2c88488e8418f03c457b511ea2a",
+    "mtime": 1785942485.1385133,
+    "ast_hash": "9ff65acd71ca59e2887c571f61b197f3",
     "semantic_hash": ""
   }
 }
