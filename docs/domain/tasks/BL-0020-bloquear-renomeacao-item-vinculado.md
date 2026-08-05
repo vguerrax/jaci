@@ -209,8 +209,8 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `f386127`; correção de validação a registrar; branch
-  `feature/BL-0020-bloquear-renomeacao-item-vinculado`.
+- Commits/PRs: fatia 1.1.1 `f386127`; correção de validação `063bd7a`;
+  branch `feature/BL-0020-bloquear-renomeacao-item-vinculado`.
 - Resultado das validações focadas: ciclo TDD inicial com 10 falhas esperadas e
   79 aprovações; após a implementação, 89 testes aprovados. `node --check`
   aprovou `offline-cache.js` e `service-worker.js`; compilação Python aprovada.
