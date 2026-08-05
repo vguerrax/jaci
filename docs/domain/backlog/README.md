@@ -145,7 +145,7 @@ não muda de caminho nem é apagado.
 | ID | Título | Tipo | Severidade | Prioridade | Estado | Responsável | Atualizado em |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
+| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
 | [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
