@@ -84,8 +84,7 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
-- Implementação (commits/PRs): fatia 1.1.1 concluída; commit técnico será
-  registrado após consolidar a rastreabilidade.
+- Implementação (commits/PRs): fatia 1.1.1 concluída no commit `f386127`.
 - Validações: ciclo TDD reproduziu 10 falhas esperadas e depois aprovou 89
   testes focados; sintaxe JavaScript e compilação Python aprovadas; migrações no
   head; regressão com 235 testes aprovados e 5 `xfail` legados fora do escopo.
@@ -107,3 +106,4 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 | `2026-08-05 20:09 -03` | Codex | `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Regra, UX, conflito offline, fatia TDD e validações definidos; implementação aguarda aprovação explícita |
 | `2026-08-05 20:16 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `0fd7aaa` |
 | `2026-08-05 20:21 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Regra online/offline, UX somente leitura e cache `v31` implementados; validações automatizadas aprovadas |
+| `2026-08-05 20:21 -03` | Codex | Commit técnico registrado | Implementação, testes, documentação e grafo consolidados em `f386127` |
