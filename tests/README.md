@@ -54,7 +54,7 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | [BL-0014](../docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md) Resumo de orçamento fixo | Em validação | `tests/test_sticky_budget.py`, `tests/test_agenda_and_budget_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py` e `tests/test_pwa.py` |
 | [BL-0016](../docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md) Adição contextual por modal | Em validação | `tests/test_item_add_fab.py`, `tests/test_template_execution_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py`, `tests/test_item_filter.py` e `tests/test_sticky_budget.py` |
 | [BL-0017](../docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md) Nome exclusivo para compra sem lista | Em validação | `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`; cenários Playwright futuros permanecem relacionados à BL-0011 |
-| [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Em validação | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
+| [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Concluído | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 

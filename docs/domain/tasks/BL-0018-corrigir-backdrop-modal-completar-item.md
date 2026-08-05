@@ -6,7 +6,7 @@
 - Branch: `feature/BL-0018-corrigir-backdrop-modal-completar-item`, criada a
   partir da `main` por solicitação explícita do usuário para este hotfix
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_validacao`
+- Estado do refinamento: `concluido`
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`
 
 ## Objetivo e critérios de sucesso
@@ -174,9 +174,12 @@ Executar quando a fatia estiver concluída e não houver contrato pendente:
   de modal, offline, orçamento e PWA foram aprovados. `node --check` aprovou o
   service worker. A opção `--no-cov` documentada inicialmente não existe neste
   ambiente e a seleção foi executada sem ela.
-- Resultado da validação manual: pendente em navegador móvel e desktop.
+- Resultado da validação manual: o aceite da versão `1.2.1` em produção foi
+  informado pelo usuário.
 - Resultado da regressão total: migrações no head; 226 testes aprovados e 5
   `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, este refinamento e matriz de testes;
   grafo AST-only reconstruído.
+- Publicação: produção, versão `1.2.1`, tag `v1.2.1` no commit `f9cb4dd`,
+  publicada em `2026-08-05`.

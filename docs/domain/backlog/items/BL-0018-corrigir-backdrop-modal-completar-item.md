@@ -7,7 +7,7 @@
 | ID | `BL-0018` |
 | Título | Corrigir backdrop sobre o modal de completar item |
 | Tipo | `bug` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `S1` |
 | Prioridade | `P0` |
 | Data de entrada | `2026-08-05` |
@@ -75,7 +75,7 @@ dados financeiros do item planejado.
 | Dependências | `JaciModal`, Bootstrap modal, CSS do tema, shell/cache PWA e cobertura futura da `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0014`, `BL-0015` e `BL-0016` são entregas relacionadas, mas não cobrem a regressão |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar manualmente o hotfix em navegador e publicar em produção |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.1` |
 
 ## Acompanhamento até produção
 
@@ -85,13 +85,15 @@ dados financeiros do item planejado.
   adicionados no commit `a079492`.
 - Validações: 61 testes focados aprovados; sintaxe do service worker aprovada;
   migrações no head; regressão com 226 testes aprovados e 5 `xfail` legados
-  fora do escopo; grafo AST-only atualizado. Validação manual pendente.
-- Publicação: ainda não publicada.
+  fora do escopo; grafo AST-only atualizado; aceite da versão `1.2.1` em
+  produção informado pelo usuário.
+- Publicação: produção, versão `1.2.1`, tag `v1.2.1` no commit `f9cb4dd`,
+  publicada em `2026-08-05`.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`.
 
 ### Impedimentos
 
-- Validação manual e publicação ainda pendentes.
+- Nenhum.
 
 ## Histórico
 
@@ -106,3 +108,4 @@ dados financeiros do item planejado.
 | `2026-08-05 12:06 -03` | Codex | Fatia 1.1.1 concluída (`1/1`) | Contratos TDD reproduziram camada e cache antigos; modal elevado e shell PWA `v30` validados |
 | `2026-08-05 12:06 -03` | Codex | `em_implementacao` -> `em_validacao` | 61 testes focados e regressão 226/5 aprovados; migrações no head e validação manual pendente |
 | `2026-08-05 12:08 -03` | Codex | Commit técnico registrado | Implementação, contratos, evidências e grafo consolidados em `a079492` |
+| `2026-08-05 14:15 -03` | Usuário/Codex | `em_validacao` -> `concluido` | Publicação em produção da versão `1.2.1`, tag `v1.2.1` no commit `f9cb4dd`, informada pelo usuário |
