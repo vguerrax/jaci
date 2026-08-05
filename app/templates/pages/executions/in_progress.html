@@ -181,11 +181,20 @@
                             <i class="bi bi-cloud-check"></i>
                             Alterações salvas são sincronizadas para o grupo.
                         </div>
+                        {% if not execution.template_id %}
                         <div class="mb-3">
                             <label class="form-label" for="executionName">Nome</label>
                             <input id="executionName" type="text" class="form-control" name="name"
                                 value="{{ execution_name }}" maxlength="150" required>
                         </div>
+                        {% else %}
+                        <div class="mb-3" data-execution-name-readonly>
+                            <span class="form-label d-block">Nome</span>
+                            <p class="form-control-plaintext mb-0">{{ execution_name }}</p>
+                            <input type="hidden" name="name" value="{{ execution_name }}">
+                            <div class="form-text">O nome de uma compra vinculada é definido pela lista.</div>
+                        </div>
+                        {% endif %}
                         <div class="mb-3">
                             <label class="form-label" for="executionScheduledDate">Data agendada</label>
                             <input id="executionScheduledDate" type="date" class="form-control" name="scheduled_date"

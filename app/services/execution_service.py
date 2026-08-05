@@ -195,12 +195,17 @@ def create_execution_standalone(
     scheduled_date: datetime,
     created_by: User,
     budget: Optional[float] = None,
+    name: Optional[str] = None,
 ) -> Execution:
     """Cria uma execução avulsa sem template."""
+    normalized_name = (name or "").strip() or "Compra Avulsa"
+    if len(normalized_name) > 150:
+        raise ValueError("Nome da execução deve ter no máximo 150 caracteres.")
+
     execution = Execution(
         template_id=None,
         group_id=group.id,
-        name="Compra Avulsa",
+        name=normalized_name,
         scheduled_date=scheduled_date,
         status=ExecutionStatus.scheduled,
         budget=budget if budget is not None and budget > 0 else None,
@@ -232,8 +237,14 @@ def update_scheduled_execution(
         raise ValueError("Nome da execução deve ter no máximo 150 caracteres.")
     if budget is not None and budget < 0:
         raise ValueError("Orçamento não pode ser negativo.")
+    if (
+        execution.template_id is not None
+        and normalized_name != get_execution_display_name(execution)
+    ):
+        raise ValueError("Apenas compras avulsas sem lista podem ter o nome alterado.")
 
-    execution.name = normalized_name
+    if execution.template_id is None:
+        execution.name = normalized_name
     execution.scheduled_date = scheduled_date
     execution.budget = budget if budget is not None and budget > 0 else None
     db.commit()

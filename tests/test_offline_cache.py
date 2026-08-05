@@ -194,6 +194,84 @@ def test_offline_update_execution_operation_applies_pending_change(
     assert execution.budget == 850
 
 
+def test_offline_template_execution_update_keeps_name_and_changes_other_fields(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Compra Mensal", RecurrenceType.monthly, 500)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        name="Compra Mensal",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    result = asyncio.run(
+        sync_update_execution_operation(
+            UpdateExecutionOperation(
+                execution_id=execution.id,
+                name="Compra Mensal",
+                scheduled_date="2026-06-30",
+                budget=850,
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(execution)
+    assert result["status"] == "applied"
+    assert execution.name == "Compra Mensal"
+    assert to_local(execution.scheduled_date).date().isoformat() == "2026-06-30"
+    assert execution.budget == 850
+
+
+def test_offline_template_execution_rename_returns_422_without_partial_update(
+    db, make_user, make_group
+):
+    user = make_user("ana@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Compra Mensal", RecurrenceType.monthly, 500)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        name="Compra Mensal",
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        budget=500,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.commit()
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_update_execution_operation(
+                UpdateExecutionOperation(
+                    execution_id=execution.id,
+                    name="Nome adulterado",
+                    scheduled_date="2026-06-30",
+                    budget=850,
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    db.refresh(execution)
+    assert error.value.status_code == 422
+    assert "Apenas compras avulsas sem lista" in error.value.detail
+    assert execution.name == "Compra Mensal"
+    assert execution.scheduled_date.date().isoformat() == "2026-06-15"
+    assert execution.budget == 500
+
+
 def test_offline_update_execution_operation_records_conflict_when_not_scheduled(
     db, make_user, make_group
 ):

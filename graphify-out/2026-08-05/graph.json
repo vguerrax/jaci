@@ -164,8 +164,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_database",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "database.py"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "listens_for",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "listens_for"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -241,8 +241,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_database_ensure_schema_compatibility",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 98,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "ensure_schema_compatibility()"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_database_rationale_46",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 98,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "compatibilidade temporaria para bancos sqlite anteriores ao alembic."
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_models_category_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "category"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_models_category_category_repr",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_categories",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "categories.py"
     },
     {
@@ -1507,7 +1507,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_get",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "get"
     },
     {
@@ -1518,7 +1518,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_list_categories",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "list_categories()"
     },
     {
@@ -1529,7 +1529,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_request",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "request"
     },
     {
@@ -1540,7 +1540,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_session",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "session"
     },
     {
@@ -1551,7 +1551,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_create_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create_category_page()"
     },
     {
@@ -1562,7 +1562,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_edit_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "edit_category_page()"
     },
     {
@@ -1573,7 +1573,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_delete_category_confirm_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete_category_confirm_page()"
     },
     {
@@ -1584,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_post",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "post"
     },
     {
@@ -1595,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_create_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_create_category()"
     },
     {
@@ -1606,7 +1606,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_move_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_move_category()"
     },
     {
@@ -1617,7 +1617,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_uncategorized_position",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_uncategorized_position()"
     },
     {
@@ -1628,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_edit_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_edit_category()"
     },
     {
@@ -1639,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_delete_category()"
     },
     {
@@ -1650,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_32",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "list all categories for the active group."
     },
     {
@@ -1661,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_82",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create category form."
     },
     {
@@ -1672,7 +1672,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_142",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete confirmation page."
     },
     {
@@ -1683,7 +1683,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_179",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create a new category."
     },
     {
@@ -1694,7 +1694,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_210",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "move uma categoria na ordem de exibicao."
     },
     {
@@ -1705,7 +1705,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_228",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "define a posicao do grupo sem categoria."
     },
     {
@@ -1716,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_283",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete a category after confirmation."
     },
     {
@@ -3761,8 +3761,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_category_service",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "category_service.py"
     },
     {
@@ -3772,8 +3772,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_category_service_get_categories_by_group",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "get_categories_by_group()"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_category_service_py_session",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -3795,7 +3795,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_get_category_by_id",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "get_category_by_id()"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_services_category_service_create_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "create_category()"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_services_category_service_move_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "move_category()"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "app_services_category_service_set_uncategorized_position",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "set_uncategorized_position()"
     },
     {
@@ -3838,8 +3838,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_services_category_service_update_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "update_category()"
     },
     {
@@ -3850,7 +3850,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_count_items_using_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "count_items_using_category()"
     },
     {
@@ -3861,7 +3861,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete_category()"
     },
     {
@@ -3871,8 +3871,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_16",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "retorna todas as categorias de um grupo na ordem configurada."
     },
     {
@@ -3883,7 +3883,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_31",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "retorna uma categoria se pertencer a um grupo do usuario."
     },
     {
@@ -3893,8 +3893,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_48",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "cria uma nova categoria no grupo."
     },
     {
@@ -3904,8 +3904,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_66",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "move uma categoria uma posicao para cima ou para baixo."
     },
     {
@@ -3915,8 +3915,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_91",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "define se o grupo sem categoria aparece primeiro ou por ultimo."
     },
     {
@@ -3926,8 +3926,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_104",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "atualiza nome e/ou cor da categoria."
     },
     {
@@ -3938,7 +3938,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_115",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "conta quantos itens (template e execucao) usam esta categoria. retorna dict com..."
     },
     {
@@ -3949,7 +3949,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_137",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "exclui a categoria e define category_id = null nos itens afetados. retorna dict..."
     },
     {
@@ -9137,8 +9137,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 98,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations.py"
     },
     {
@@ -9148,8 +9148,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "scripts_apply_migrations_apply_migrations",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 98,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations()"
     },
     {
@@ -9159,8 +9159,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations_rationale_1",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 98,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "aplica migracoes alembic e adota bancos sqlite legados."
     },
     {
@@ -12894,8 +12894,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "readme",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "readme.md"
     },
     {
@@ -13708,8 +13708,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0001_operacao_offline_cobertura_rastreabilidade",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "bl-0001-operacao-offline-cobertura-rastreabilidade.md"
     },
     {
@@ -15424,8 +15424,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "items/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -16359,8 +16359,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_database",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "database.md"
     },
     {
@@ -16370,8 +16370,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_database_estrat\u00e9gia_de_banco_de_dados",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "estrategia de banco de dados"
     },
     {
@@ -16381,8 +16381,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_domain_database_ambientes",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "ambientes"
     },
     {
@@ -16392,8 +16392,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "docs_domain_database_backups_de_produ\u00e7\u00e3o",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "backups de producao"
     },
     {
@@ -16403,8 +16403,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00f5es",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "migracoes"
     },
     {
@@ -16414,8 +16414,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00e3o_de_dados",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "migracao de dados"
     },
     {
@@ -16601,8 +16601,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_home_dashboard",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "home-dashboard.md"
     },
     {
@@ -16722,8 +16722,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_pwa_offline_foundation",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "pwa-offline-foundation.md"
     },
     {
@@ -16972,7 +16972,7 @@
       "label": "Notifica\u00e7\u00f5es e sincroniza\u00e7\u00e3o",
       "file_type": "document",
       "source_file": "docs/domain/scheduled-execution-editing.md",
-      "source_location": "L24",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "docs_domain_scheduled_execution_editing_notifica\u00e7\u00f5es_e_sincroniza\u00e7\u00e3o",
       "community": 76,
@@ -16983,7 +16983,7 @@
       "label": "Sincroniza\u00e7\u00e3o offline",
       "file_type": "document",
       "source_file": "docs/domain/scheduled-execution-editing.md",
-      "source_location": "L30",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "docs_domain_scheduled_execution_editing_sincroniza\u00e7\u00e3o_offline",
       "community": 76,
@@ -17316,8 +17316,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "tasks/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -18999,8 +18999,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_02_cria\u00e7\u00e3o_de_template",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 85,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "fl-02 \u2014 criacao de template"
     },
     {
@@ -19010,8 +19010,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_65",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 85,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "objetivo"
     },
     {
@@ -19021,8 +19021,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_69",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 85,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "atores"
     },
     {
@@ -19032,8 +19032,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_73",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 85,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "fluxo principal"
     },
     {
@@ -19043,8 +19043,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_97",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 85,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "resultado esperado"
     },
     {
@@ -19307,8 +19307,8 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_07_gest\u00e3o_de_grupos",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 84,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "fl-07 \u2014 gestao de grupos"
     },
     {
@@ -19318,8 +19318,8 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_277",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 84,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "objetivo"
     },
     {
@@ -19329,8 +19329,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_281",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 84,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "atores"
     },
     {
@@ -19340,8 +19340,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_285",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 84,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "fluxo principal"
     },
     {
@@ -19351,8 +19351,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_299",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 84,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "resultado esperado"
     },
     {
@@ -19549,8 +19549,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 73,
+      "community_name": "Backups do PostgreSQL",
       "norm_label": "postgresql-backups.md"
     },
     {
@@ -19678,7 +19678,7 @@
       "label": "Backlog legado \u2014 Sprint 4 \u2014 Aprendizado cont\u00ednuo dos templates",
       "file_type": "document",
       "source_file": "tests/README.md",
-      "source_location": "L58",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "tests_readme_backlog_legado_sprint_4_aprendizado_cont\u00ednuo_dos_templates",
       "community": 29,
@@ -67070,17 +67070,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/README.md",
-      "source_location": "L56",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "tests_readme",
-      "target": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
@@ -68008,7 +67997,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/scheduled-execution-editing.md",
-      "source_location": "L24",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_scheduled_execution_editing_edi\u00e7\u00e3o_de_execu\u00e7\u00f5es_agendadas",
@@ -68030,7 +68019,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/scheduled-execution-editing.md",
-      "source_location": "L30",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_scheduled_execution_editing_edi\u00e7\u00e3o_de_execu\u00e7\u00f5es_agendadas",
@@ -70571,7 +70560,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/README.md",
-      "source_location": "L58",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_readme",

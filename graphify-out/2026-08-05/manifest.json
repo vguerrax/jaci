@@ -100,8 +100,8 @@
     "semantic_hash": "ad644a287081046ff3df22153d2d2bfa"
   },
   "app/routers/executions.py": {
-    "mtime": 1785927284.710017,
-    "ast_hash": "a1f479ae537421d0e1c931cd38117e18",
+    "mtime": 1785927119.8035731,
+    "ast_hash": "af9853065183ea42f923a96895de3975",
     "semantic_hash": ""
   },
   "app/routers/groups.py": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785927270.0488946,
-    "ast_hash": "26a2fed075868fd103f712a62e506efb",
+    "mtime": 1785927057.8322418,
+    "ast_hash": "fbbe3267f67469deb6d57d872f81b8b1",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -780,8 +780,8 @@
     "semantic_hash": ""
   },
   "docs/domain/scheduled-execution-editing.md": {
-    "mtime": 1785927269.7128918,
-    "ast_hash": "ede6138c3becf34b82375492ebab7a2e",
+    "mtime": 1784832781.1492307,
+    "ast_hash": "a8a874849015e4d2d978593516616377",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0012-vgx-doc-management.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785927269.8268926,
-    "ast_hash": "06626e2cebc6b40ab20fec23efce826a",
+    "mtime": 1785877158.137933,
+    "ast_hash": "13603680da6626d0b56781db46ce276d",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -925,13 +925,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md": {
-    "mtime": 1785927269.9378936,
-    "ast_hash": "d811dd750d12a71eecadf4adb0a15880",
+    "mtime": 1785927057.7182412,
+    "ast_hash": "20e559c899f851bb36ff90d63e857125",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0017-nome-execucao-avulsa.md": {
-    "mtime": 1785927270.1578956,
-    "ast_hash": "6b10b3c8e4f968bb95322dac464a2a2c",
+    "mtime": 1785927057.9452422,
+    "ast_hash": "9d9e9f5377b62656069a0564a0d68462",
     "semantic_hash": ""
   }
 }

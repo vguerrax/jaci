@@ -7,14 +7,14 @@
 | ID | `BL-0017` |
 | Título | Permitir informar um nome para execução avulsa |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`da7e087`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-04` |
+| Atualizado em | `2026-08-05` |
 
 ### Comportamento observado
 
@@ -71,19 +71,19 @@ agendada, adicionando uma etapa ao fluxo.
 | Dependências | Contrato atual de edição agendada e fila offline; cobertura futura de navegador na `BL-0011` |
 | Duplicidades | Nenhuma identificada |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita do refinamento versionado antes de iniciar os contratos TDD |
+| Próximo passo | Validar manualmente em navegador real e registrar a publicação antes do encerramento |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0017](../../tasks/BL-0017-nome-execucao-avulsa.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: somente diagnóstico documental; testes executáveis não iniciados.
+- Implementação (commits/PRs): fatia 1.1.1 implementada; commit a registrar após o fechamento desta alteração.
+- Validações: 56 testes focados e 57 testes ampliados aprovados; regressão com 225 aprovados e 5 `xfail` legados; migrações no head; compilação Python aprovada; `pylint` indisponível.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
 
 ### Impedimentos
 
-- Implementação aguarda aprovação explícita do refinamento versionado.
+- Validação em navegador real e publicação ainda não registradas.
 
 ## Histórico
 
@@ -92,3 +92,5 @@ agendada, adicionando uma etapa ao fluxo.
 | `2026-08-03 23:59 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
 | `2026-08-04 18:08 -03` | Codex | Triagem concluída; `recebido` → `pronto_para_refinamento` | Comportamento confirmado no formulário, rota, serviço e contratos de edição/offline |
 | `2026-08-04 18:08 -03` | Codex | Refinamento criado; `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Escopo, restrições, fatia TDD e validações definidos com o usuário |
+| `2026-08-05 07:49 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita posterior ao commit documental `e76c9a1` |
+| `2026-08-05 07:49 -03` | Codex | Fatia 1.1.1 implementada; `em_implementacao` → `em_validacao` | Contratos focados, validação ampliada e regressão aprovados; publicação pendente |

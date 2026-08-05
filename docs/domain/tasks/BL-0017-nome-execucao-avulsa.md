@@ -5,10 +5,12 @@
 - Item de backlog: [BL-0017](../backlog/items/BL-0017-nome-execucao-avulsa.md)
 - Branch: `feature/BL-0017-nome-execucao-avulsa`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `concluido`
 - Item relacionado: `BL-0011`, para futura cobertura Playwright
 - Decisões de produto: nome opcional com fallback "Compra Avulsa"; somente
   execução sem template (`template_id IS NULL`) pode ser nomeada ou renomeada.
+- Aprovação de implementação: emitida explicitamente em `2026-08-05`, depois
+  do commit documental `e76c9a1`.
 
 ## Objetivo e critérios de sucesso
 
@@ -197,14 +199,20 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Nome exclusivo sem lista | `0/1` | `1` | Aguardando aprovação |
+| Etapa 1 / Ticket 1.1 — Nome exclusivo sem lista | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados.
-- Resultado das validações focadas: contratos ainda não criados; baseline de 22
-  testes relacionados aprovado durante o diagnóstico.
-- Resultado da validação manual: ainda não executada.
-- Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado.
-- Documentação atualizada: item, índice e este refinamento.
+- Commits/PRs: commit da fatia a registrar após o fechamento desta alteração;
+  branch `feature/BL-0017-nome-execucao-avulsa`.
+- Resultado das validações focadas: 56 testes aprovados em
+  `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`;
+  57 testes ampliados de agenda, dashboard, recorrência, templates e aprendizado
+  aprovados; módulos Python compilados. O `pylint` não está instalado no venv.
+- Resultado da validação manual: pendente em navegador real; renderização,
+  condicionais da interface e contratos offline possuem cobertura automatizada.
+- Resultado da regressão total: migrações no head; 225 testes aprovados e 5
+  `xfail` legados fora do escopo.
+- `xfail(strict=True)` pendentes no escopo: nenhum.
+- Documentação atualizada: regra de edição agendada, matriz de testes, item,
+  índice e este refinamento; grafo atualizado após a implementação.
