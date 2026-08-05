@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -13,6 +14,18 @@ THEME = Path("app/static/css/jaci-theme.css")
 
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def z_index_for(theme: str, selector: str) -> int:
+    block = re.search(
+        rf"{re.escape(selector)}\s*\{{(?P<body>.*?)\}}",
+        theme,
+        re.DOTALL,
+    )
+    assert block, f"Seletor CSS ausente: {selector}"
+    value = re.search(r"z-index:\s*(?P<value>\d+)", block.group("body"))
+    assert value, f"z-index ausente em: {selector}"
+    return int(value.group("value"))
 
 
 def test_template_exposes_one_accessible_fab_and_one_canonical_modal_form():
@@ -114,6 +127,18 @@ def test_fab_and_modal_styles_respect_safe_areas_and_local_fallback():
     assert ".item-add-modal" in theme
     assert "[data-jaci-modal-backdrop]" in theme
     assert "@media (max-width: 767.98px)" in theme
+
+
+def test_managed_item_modals_stay_above_backdrop_and_page_actions():
+    theme = read(THEME)
+
+    modal_z_index = z_index_for(theme, ".modal")
+    item_add_modal_z_index = z_index_for(theme, ".item-add-modal")
+    backdrop_z_index = z_index_for(theme, "[data-jaci-modal-backdrop]")
+    item_add_fab_z_index = z_index_for(theme, ".item-add-fab")
+
+    assert modal_z_index > backdrop_z_index > item_add_fab_z_index
+    assert item_add_modal_z_index > backdrop_z_index
 
 
 def test_both_modal_pages_load_the_local_cached_controller():

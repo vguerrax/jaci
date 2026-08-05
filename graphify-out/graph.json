@@ -164,8 +164,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_database",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "database.py"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "listens_for",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "listens_for"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "middleware",
-      "community": 48,
-      "community_name": "tupa_auth_service.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "middleware"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_main_add_unread_count",
-      "community": 48,
-      "community_name": "tupa_auth_service.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "add_unread_count()"
     },
     {
@@ -472,8 +472,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_main_py_request",
-      "community": 12,
-      "community_name": "test_pwa.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "request"
     },
     {
@@ -483,8 +483,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_main_py_get",
-      "community": 12,
-      "community_name": "test_pwa.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "get"
     },
     {
@@ -494,8 +494,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "app_main_home",
-      "community": 12,
-      "community_name": "test_pwa.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "home()"
     },
     {
@@ -527,8 +527,8 @@
       "source_location": "L147",
       "_origin": "ast",
       "id": "app_main_health_check",
-      "community": 12,
-      "community_name": "test_pwa.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "health_check()"
     },
     {
@@ -560,8 +560,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "app_main_rationale_52",
-      "community": 48,
-      "community_name": "tupa_auth_service.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "injeta unread_count no request.state para todas as requisicoes. le o cookie de..."
     },
     {
@@ -571,8 +571,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "app_main_rationale_112",
-      "community": 12,
-      "community_name": "test_pwa.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "painel operacional do grupo ativo."
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_models_category_category",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "category"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_models_category_category_repr",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -660,7 +660,7 @@
       "_origin": "ast",
       "id": "app_models_enums",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "enums.py"
     },
     {
@@ -671,7 +671,7 @@
       "_origin": "ast",
       "id": "app_models_enums_executionstatus",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "executionstatus"
     },
     {
@@ -682,7 +682,7 @@
       "_origin": "ast",
       "id": "str",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "str"
     },
     {
@@ -693,7 +693,7 @@
       "_origin": "ast",
       "id": "app_models_enums_recurrencetype",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "recurrencetype"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit_syncconflictaudit",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "syncconflictaudit"
     },
     {
@@ -956,8 +956,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_user",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "user.py"
     },
     {
@@ -989,7 +989,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_init",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "routers/__init__.py"
     },
@@ -1000,8 +1000,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_agenda",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "agenda.py"
     },
     {
@@ -1012,7 +1012,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_py_get",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "get"
     },
     {
@@ -1023,7 +1023,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_calendar",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "agenda_calendar()"
     },
     {
@@ -1034,7 +1034,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_py_request",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "request"
     },
     {
@@ -1045,7 +1045,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_py_session",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "session"
     },
     {
@@ -1056,7 +1056,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_list",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "agenda_list()"
     },
     {
@@ -1067,7 +1067,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_day",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "agenda_day()"
     },
     {
@@ -1078,7 +1078,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_py_post",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "post"
     },
     {
@@ -1089,7 +1089,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_handle_reschedule",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "handle_reschedule()"
     },
     {
@@ -1100,7 +1100,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_62",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "visualizacao da agenda em calendario mensal."
     },
     {
@@ -1111,7 +1111,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_137",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "visualizacao da agenda em lista cronologica."
     },
     {
@@ -1122,7 +1122,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_215",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "redireciona para a lista filtrada por uma data especifica."
     },
     {
@@ -1133,7 +1133,7 @@
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_232",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "adianta ou adia uma execucao."
     },
     {
@@ -1143,7 +1143,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_auth",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "auth.py"
     },
@@ -1154,7 +1154,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_auth_py_get",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "get"
     },
@@ -1165,7 +1165,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_routers_auth_login_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "login_page()"
     },
@@ -1176,7 +1176,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_auth_py_request",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "request"
     },
@@ -1187,7 +1187,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_routers_auth_register_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "register_page()"
     },
@@ -1198,7 +1198,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "app_routers_auth_login_sent_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "login_sent_page()"
     },
@@ -1209,7 +1209,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "app_routers_auth_login_error_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "login_error_page()"
     },
@@ -1220,7 +1220,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "app_routers_auth_setup_profile_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "setup_profile_page()"
     },
@@ -1231,7 +1231,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "app_routers_auth_profile_page",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "profile_page()"
     },
@@ -1243,7 +1243,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_py_post",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "post"
     },
     {
@@ -1254,7 +1254,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_send_link",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "send_link()"
     },
     {
@@ -1265,7 +1265,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_py_session",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "session"
     },
     {
@@ -1276,7 +1276,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_password_login",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "password_login()"
     },
     {
@@ -1287,7 +1287,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_py_response",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "response"
     },
     {
@@ -1298,7 +1298,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_register",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "register()"
     },
     {
@@ -1308,7 +1308,7 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "app_routers_auth_verify_link",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "verify_link()"
     },
@@ -1320,7 +1320,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_handle_setup_profile",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "handle_setup_profile()"
     },
     {
@@ -1331,7 +1331,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_handle_update_profile",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "handle_update_profile()"
     },
     {
@@ -1342,7 +1342,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_handle_change_password",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "handle_change_password()"
     },
     {
@@ -1352,7 +1352,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "app_routers_auth_logout",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "logout()"
     },
@@ -1363,7 +1363,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_65",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "confirmacao de envio do magic link."
     },
@@ -1374,7 +1374,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_81",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "tela de erro de autenticacao."
     },
@@ -1385,7 +1385,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_107",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "tela de configuracao de perfil (primeiro acesso)."
     },
@@ -1396,7 +1396,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_133",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "tela de edicao do perfil."
     },
@@ -1408,7 +1408,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_159",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "magic link de login foi substituido pelo tupa."
     },
     {
@@ -1419,7 +1419,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_171",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "login com e-mail e senha."
     },
     {
@@ -1430,7 +1430,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_244",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "cria uma conta no tupa e o perfil correspondente no jaci."
     },
     {
@@ -1440,7 +1440,7 @@
       "source_location": "L308",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_308",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "validate magic token and create session. uses an intermediate page to ensure..."
     },
@@ -1452,7 +1452,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_343",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "configura nome e senha do perfil."
     },
     {
@@ -1463,7 +1463,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_378",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "atualiza nome e e-mail do usuario."
     },
     {
@@ -1474,7 +1474,7 @@
       "_origin": "ast",
       "id": "app_routers_auth_rationale_434",
       "community": 91,
-      "community_name": "handle_setup_profile",
+      "community_name": "auth.py",
       "norm_label": "altera a senha do usuario."
     },
     {
@@ -1484,7 +1484,7 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "app_routers_auth_rationale_473",
-      "community": 4,
+      "community": 91,
       "community_name": "auth.py",
       "norm_label": "clear session and redirect to home."
     },
@@ -1495,8 +1495,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_categories",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "categories.py"
     },
     {
@@ -1507,7 +1507,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_get",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "get"
     },
     {
@@ -1518,7 +1518,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_list_categories",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "list_categories()"
     },
     {
@@ -1529,7 +1529,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_request",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "request"
     },
     {
@@ -1540,7 +1540,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_session",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "session"
     },
     {
@@ -1551,7 +1551,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_create_category_page",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "create_category_page()"
     },
     {
@@ -1562,7 +1562,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_edit_category_page",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "edit_category_page()"
     },
     {
@@ -1573,7 +1573,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_delete_category_confirm_page",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "delete_category_confirm_page()"
     },
     {
@@ -1584,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_post",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "post"
     },
     {
@@ -1595,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_create_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "handle_create_category()"
     },
     {
@@ -1606,7 +1606,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_move_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "handle_move_category()"
     },
     {
@@ -1617,7 +1617,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_uncategorized_position",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "handle_uncategorized_position()"
     },
     {
@@ -1628,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_edit_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "handle_edit_category()"
     },
     {
@@ -1639,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_delete_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "handle_delete_category()"
     },
     {
@@ -1650,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_32",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "list all categories for the active group."
     },
     {
@@ -1661,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_82",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "create category form."
     },
     {
@@ -1672,7 +1672,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_142",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "delete confirmation page."
     },
     {
@@ -1683,7 +1683,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_179",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "create a new category."
     },
     {
@@ -1694,7 +1694,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_210",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "move uma categoria na ordem de exibicao."
     },
     {
@@ -1705,7 +1705,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_228",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "define a posicao do grupo sem categoria."
     },
     {
@@ -1716,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_283",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "delete a category after confirmation."
     },
     {
@@ -1935,8 +1935,8 @@
       "source_location": "L675",
       "_origin": "ast",
       "id": "app_routers_executions_handle_update_execution",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "handle_update_execution()"
     },
     {
@@ -2155,8 +2155,8 @@
       "source_location": "L683",
       "_origin": "ast",
       "id": "app_routers_executions_rationale_683",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "edita dados proprios de uma execucao agendada."
     },
     {
@@ -2518,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_notifications",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "notification_service.py",
       "norm_label": "notifications.py"
     },
     {
@@ -2639,8 +2639,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_offline",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "offline.py"
     },
     {
@@ -2738,8 +2738,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "app_routers_offline_execution_state",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "_execution_state()"
     },
     {
@@ -2804,8 +2804,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "app_routers_offline_offline_conflict_history",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "offline_conflict_history()"
     },
     {
@@ -2892,8 +2892,8 @@
       "source_location": "L704",
       "_origin": "ast",
       "id": "app_routers_offline_sync_finalize_execution_operation",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "sync_finalize_execution_operation()"
     },
     {
@@ -2914,8 +2914,8 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "app_routers_offline_rationale_184",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "historico auditavel de conflitos de sincronizacao dos grupos do usuario."
     },
     {
@@ -2991,8 +2991,8 @@
       "source_location": "L709",
       "_origin": "ast",
       "id": "app_routers_offline_rationale_709",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "finaliza no servidor uma execucao encerrada offline."
     },
     {
@@ -3432,7 +3432,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "agenda_service.py"
     },
     {
@@ -3443,7 +3443,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_month",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "get_executions_for_month()"
     },
     {
@@ -3454,7 +3454,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_session",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "session"
     },
     {
@@ -3465,7 +3465,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_date",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "get_executions_for_date()"
     },
     {
@@ -3476,7 +3476,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_datetime",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "datetime"
     },
     {
@@ -3487,7 +3487,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_build_calendar_data",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "build_calendar_data()"
     },
     {
@@ -3498,7 +3498,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_date",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "date"
     },
     {
@@ -3508,8 +3508,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "app_services_agenda_service_get_list_executions",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "get_list_executions()"
     },
     {
@@ -3520,7 +3520,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_calculate_next_date",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "calculate_next_date()"
     },
     {
@@ -3531,7 +3531,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_reschedule_execution",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "reschedule_execution()"
     },
     {
@@ -3542,7 +3542,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_generate_next_execution",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "generate_next_execution()"
     },
     {
@@ -3553,7 +3553,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_38",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "retorna todas as execucoes de um mes para o grupo."
     },
     {
@@ -3564,7 +3564,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_65",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "retorna execucoes de uma data especifica."
     },
     {
@@ -3575,7 +3575,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_92",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "constroi os dados para o calendario mensal. retorna semanas com dias e..."
     },
     {
@@ -3585,8 +3585,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_186",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "retorna execucoes para visualizacao em lista cronologica. filtros: status,..."
     },
     {
@@ -3597,7 +3597,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_219",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "calcula a proxima data baseada na recorrencia. usado para geracao automatica de..."
     },
     {
@@ -3608,7 +3608,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_262",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "adianta ou adia uma execucao. nao altera o ciclo do template."
     },
     {
@@ -3619,7 +3619,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_283",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "gera a proxima execucao do ciclo, se aplicavel. condicoes: - execucao vinculada..."
     },
     {
@@ -3629,7 +3629,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_auth_service",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "auth_service.py"
     },
@@ -3640,7 +3640,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_auth_service_get_or_create_tupa_user",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "get_or_create_tupa_user()"
     },
@@ -3651,7 +3651,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_auth_service_py_session",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "session"
     },
@@ -3662,7 +3662,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_services_auth_service_authenticate_with_password",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "authenticate_with_password()"
     },
@@ -3673,7 +3673,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "app_services_auth_service_register_with_password",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "register_with_password()"
     },
@@ -3684,8 +3684,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "app_services_auth_service_setup_profile",
-      "community": 91,
-      "community_name": "handle_setup_profile",
+      "community": 4,
+      "community_name": "auth_service.py",
       "norm_label": "setup_profile()"
     },
     {
@@ -3695,8 +3695,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "app_services_auth_service_update_profile",
-      "community": 91,
-      "community_name": "handle_setup_profile",
+      "community": 4,
+      "community_name": "auth_service.py",
       "norm_label": "update_profile()"
     },
     {
@@ -3706,7 +3706,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_18",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "associa uma identidade tupa ao perfil local do jaci."
     },
@@ -3717,7 +3717,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_62",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "autentica no tupa e carrega o perfil local."
     },
@@ -3728,7 +3728,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_77",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "cria a identidade no tupa e o perfil local no jaci."
     },
@@ -3739,8 +3739,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_89",
-      "community": 91,
-      "community_name": "handle_setup_profile",
+      "community": 4,
+      "community_name": "auth_service.py",
       "norm_label": "completa os dados locais do perfil."
     },
     {
@@ -3750,8 +3750,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_99",
-      "community": 91,
-      "community_name": "handle_setup_profile",
+      "community": 4,
+      "community_name": "auth_service.py",
       "norm_label": "atualiza os dados pessoais do usuario."
     },
     {
@@ -3761,8 +3761,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_category_service",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "category_service.py"
     },
     {
@@ -3772,8 +3772,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_category_service_get_categories_by_group",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "get_categories_by_group()"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_category_service_py_session",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "session"
     },
     {
@@ -3795,7 +3795,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_get_category_by_id",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "get_category_by_id()"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_services_category_service_create_category",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "create_category()"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_services_category_service_move_category",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "move_category()"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "app_services_category_service_set_uncategorized_position",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "set_uncategorized_position()"
     },
     {
@@ -3838,8 +3838,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_services_category_service_update_category",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "update_category()"
     },
     {
@@ -3850,7 +3850,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_count_items_using_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "count_items_using_category()"
     },
     {
@@ -3861,7 +3861,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_delete_category",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "delete_category()"
     },
     {
@@ -3871,8 +3871,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_16",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "retorna todas as categorias de um grupo na ordem configurada."
     },
     {
@@ -3883,7 +3883,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_31",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "retorna uma categoria se pertencer a um grupo do usuario."
     },
     {
@@ -3893,8 +3893,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_48",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "cria uma nova categoria no grupo."
     },
     {
@@ -3904,8 +3904,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_66",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "move uma categoria uma posicao para cima ou para baixo."
     },
     {
@@ -3915,8 +3915,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_91",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "define se o grupo sem categoria aparece primeiro ou por ultimo."
     },
     {
@@ -3926,8 +3926,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_104",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "atualiza nome e/ou cor da categoria."
     },
     {
@@ -3938,7 +3938,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_115",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "conta quantos itens (template e execucao) usam esta categoria. retorna dict com..."
     },
     {
@@ -3949,7 +3949,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_137",
       "community": 7,
-      "community_name": "get_category_by_id",
+      "community_name": "categories.py",
       "norm_label": "exclui a categoria e define category_id = null nos itens afetados. retorna dict..."
     },
     {
@@ -3959,8 +3959,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_execution_service",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "execution_service.py"
     },
     {
@@ -3970,8 +3970,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_services_execution_service_ensure_execution_is_mutable",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "ensure_execution_is_mutable()"
     },
     {
@@ -3981,8 +3981,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_services_execution_service_get_execution_display_name",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_execution_display_name()"
     },
     {
@@ -3992,8 +3992,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_services_execution_service_get_executions_for_group",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "get_executions_for_group()"
     },
     {
@@ -4003,8 +4003,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_execution_service_py_session",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "session"
     },
     {
@@ -4014,8 +4014,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_execution_service_py_datetime",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "datetime"
     },
     {
@@ -4069,8 +4069,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "app_services_execution_service_create_execution_standalone",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "create_execution_standalone()"
     },
     {
@@ -4080,8 +4080,8 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "app_services_execution_service_update_scheduled_execution",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "update_scheduled_execution()"
     },
     {
@@ -4091,8 +4091,8 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "app_services_execution_service_start_execution",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "start_execution()"
     },
     {
@@ -4102,8 +4102,8 @@
       "source_location": "L269",
       "_origin": "ast",
       "id": "app_services_execution_service_complete_item",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "complete_item()"
     },
     {
@@ -4113,8 +4113,8 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "app_services_execution_service_incomplete_item",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "incomplete_item()"
     },
     {
@@ -4135,8 +4135,8 @@
       "source_location": "L366",
       "_origin": "ast",
       "id": "app_services_execution_service_remove_item_from_execution",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "remove_item_from_execution()"
     },
     {
@@ -4146,8 +4146,8 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "app_services_execution_service_update_execution_item",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "update_execution_item()"
     },
     {
@@ -4157,8 +4157,8 @@
       "source_location": "L402",
       "_origin": "ast",
       "id": "app_services_execution_service_get_pending_items",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_pending_items()"
     },
     {
@@ -4190,8 +4190,8 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "app_services_execution_service_create_execution_from_pending",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "create_execution_from_pending()"
     },
     {
@@ -4212,8 +4212,8 @@
       "source_location": "L548",
       "_origin": "ast",
       "id": "app_services_execution_service_generate_next_execution",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "generate_next_execution()"
     },
     {
@@ -4223,8 +4223,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_18",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "impede qualquer alteracao em uma execucao ja finalizada."
     },
     {
@@ -4234,8 +4234,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_24",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna o nome proprio da execucao, preservando fallback legado."
     },
     {
@@ -4245,8 +4245,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_38",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "retorna execucoes do grupo, com filtros opcionais."
     },
     {
@@ -4300,8 +4300,8 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_200",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "cria uma execucao avulsa sem template."
     },
     {
@@ -4311,8 +4311,8 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_229",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "edita somente dados proprios de uma execucao agendada."
     },
     {
@@ -4322,8 +4322,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_260",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "inicia a execucao (status -> in_progress)."
     },
     {
@@ -4333,8 +4333,8 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_277",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "marca item como comprado com quantidade e valor."
     },
     {
@@ -4344,8 +4344,8 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_301",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "marca item como nao comprado"
     },
     {
@@ -4366,8 +4366,8 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_367",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "remove item nao concluido da execucao."
     },
     {
@@ -4377,8 +4377,8 @@
       "source_location": "L403",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_403",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna itens nao concluidos da execucao."
     },
     {
@@ -4399,8 +4399,8 @@
       "source_location": "L464",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_464",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "cria nova execucao avulsa com os itens pendentes. os itens sao removidos da..."
     },
     {
@@ -4531,8 +4531,8 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "app_services_group_service_add_member_to_group",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "add_member_to_group()"
     },
     {
@@ -4652,8 +4652,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_192",
-      "community": 4,
-      "community_name": "auth.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "adiciona usuario a um grupo. retorna true se adicionado, false se ja membro."
     },
     {
@@ -4685,8 +4685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_home_service",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "home_service.py"
     },
     {
@@ -4696,8 +4696,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_home_service_as_utc",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "_as_utc()"
     },
     {
@@ -4707,8 +4707,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_home_service_py_datetime",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "datetime"
     },
     {
@@ -4718,8 +4718,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_home_service_local_day_start_utc",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "_local_day_start_utc()"
     },
     {
@@ -4729,8 +4729,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_home_service_get_priority_execution",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_priority_execution()"
     },
     {
@@ -4740,8 +4740,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_home_service_py_session",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "session"
     },
     {
@@ -4751,8 +4751,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_services_home_service_get_home_metrics",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_home_metrics()"
     },
     {
@@ -4762,8 +4762,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "app_services_home_service_get_recent_history",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_recent_history()"
     },
     {
@@ -4773,8 +4773,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_services_home_service_get_home_alerts",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "get_home_alerts()"
     },
     {
@@ -4784,8 +4784,8 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "app_services_home_service_build_home_dashboard",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "build_home_dashboard()"
     },
     {
@@ -4795,8 +4795,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_29",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna a compra mais relevante: em andamento, depois agendada."
     },
     {
@@ -4806,8 +4806,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_59",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "calcula indicadores rapidos do grupo ativo."
     },
     {
@@ -4817,8 +4817,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_123",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna as compras concluidas mais recentes do grupo."
     },
     {
@@ -4828,8 +4828,8 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_149",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "retorna alertas contextuais ordenados por criticidade."
     },
     {
@@ -4839,8 +4839,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "app_services_home_service_rationale_211",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "monta os dados operacionais da home para um unico grupo."
     },
     {
@@ -4927,8 +4927,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "app_services_notification_service_get_unread_count",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "notification_service.py",
       "norm_label": "get_unread_count()"
     },
     {
@@ -5026,8 +5026,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_130",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "notification_service.py",
       "norm_label": "retorna contagem de notificacoes nao lidas."
     },
     {
@@ -5103,8 +5103,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_enum_value",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "_enum_value()"
     },
     {
@@ -5114,8 +5114,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_any",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "any"
     },
     {
@@ -5125,8 +5125,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_build_offline_snapshot",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "build_offline_snapshot()"
     },
     {
@@ -5136,8 +5136,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_session",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "session"
     },
     {
@@ -5147,8 +5147,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_rationale_27",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "monta dados essenciais somente leitura para consulta offline."
     },
     {
@@ -5158,8 +5158,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "sync_conflict_audit_service.py"
     },
     {
@@ -5169,8 +5169,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_jsonable",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "_jsonable()"
     },
     {
@@ -5180,8 +5180,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_any",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "any"
     },
     {
@@ -5191,8 +5191,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_create_conflict_audit",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "create_conflict_audit()"
     },
     {
@@ -5202,8 +5202,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_session",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "session"
     },
     {
@@ -5213,8 +5213,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_basemodel",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "basemodel"
     },
     {
@@ -5224,8 +5224,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_list_conflict_audits",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "list_conflict_audits()"
     },
     {
@@ -5235,8 +5235,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_resolve_conflict_audit",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "resolve_conflict_audit()"
     },
     {
@@ -5246,8 +5246,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_serialize_conflict_audit",
-      "community": 94,
-      "community_name": "sync_conflict_audit_service.py",
+      "community": 3,
+      "community_name": "Execution",
       "norm_label": "serialize_conflict_audit()"
     },
     {
@@ -5257,8 +5257,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_template_learning_service",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "template_learning_service.py"
     },
     {
@@ -5268,8 +5268,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_template_learning_service_suggestionlist",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "suggestionlist"
     },
     {
@@ -5279,8 +5279,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "list",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "list"
     },
     {
@@ -5290,8 +5290,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_services_template_learning_service_suggestionlist_by_execution_item",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": ".by_execution_item()"
     },
     {
@@ -5301,8 +5301,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "templatehistorysuggestions"
     },
     {
@@ -5312,8 +5312,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions_init",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": ".__init__()"
     },
     {
@@ -5323,8 +5323,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "app_services_template_learning_service_templatehistorysuggestions_is_empty",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": ".is_empty()"
     },
     {
@@ -5334,8 +5334,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_services_template_learning_service_normalize_name",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_normalize_name()"
     },
     {
@@ -5345,8 +5345,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_services_template_learning_service_normalize_notes",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_normalize_notes()"
     },
     {
@@ -5356,8 +5356,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_services_template_learning_service_template_item_names",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_template_item_names()"
     },
     {
@@ -5367,8 +5367,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_template_learning_service_py_session",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "session"
     },
     {
@@ -5378,8 +5378,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_services_template_learning_service_suggestion_id",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_suggestion_id()"
     },
     {
@@ -5389,8 +5389,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_template_learning_service_py_any",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "any"
     },
     {
@@ -5400,8 +5400,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "app_services_template_learning_service_money",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_money()"
     },
     {
@@ -5411,8 +5411,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_services_template_learning_service_dismissed_keys",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_dismissed_keys()"
     },
     {
@@ -5422,8 +5422,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "app_services_template_learning_service_dismissal_value_for_suggestion",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_dismissal_value_for_suggestion()"
     },
     {
@@ -5433,8 +5433,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_services_template_learning_service_dismissal_key_for_suggestion",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_dismissal_key_for_suggestion()"
     },
     {
@@ -5444,8 +5444,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "app_services_template_learning_service_is_learning_enabled_for_execution",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_is_learning_enabled_for_execution()"
     },
     {
@@ -5455,8 +5455,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_services_template_learning_service_is_learning_enabled_for_template",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_is_learning_enabled_for_template()"
     },
     {
@@ -5466,8 +5466,8 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "app_services_template_learning_service_get_template_suggestions",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "get_template_suggestions()"
     },
     {
@@ -5477,8 +5477,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "app_services_template_learning_service_analyze_template_history",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "analyze_template_history()"
     },
     {
@@ -5488,8 +5488,8 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "app_services_template_learning_service_parse_suggestion_id",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "_parse_suggestion_id()"
     },
     {
@@ -5499,8 +5499,8 @@
       "source_location": "L306",
       "_origin": "ast",
       "id": "app_services_template_learning_service_apply_template_suggestions",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "apply_template_suggestions()"
     },
     {
@@ -5510,8 +5510,8 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "app_services_template_learning_service_dismiss_template_suggestions",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "dismiss_template_suggestions()"
     },
     {
@@ -5521,8 +5521,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "app_services_template_learning_service_rationale_128",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "detecta sugestoes imediatas geradas por uma execucao finalizada."
     },
     {
@@ -5532,8 +5532,8 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "app_services_template_learning_service_rationale_170",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "analisa historico concluido de um template e monta sugestoes recorrentes."
     },
     {
@@ -5543,8 +5543,8 @@
       "source_location": "L312",
       "_origin": "ast",
       "id": "app_services_template_learning_service_rationale_312",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "aplica somente sugestoes confirmadas pelo usuario ao template."
     },
     {
@@ -5554,8 +5554,8 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "app_services_template_learning_service_rationale_377",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "registra sugestoes ignoradas para nao reapresenta-las na mesma execucao."
     },
     {
@@ -5708,8 +5708,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "app_services_template_service_update_template_item",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "update_template_item()"
     },
     {
@@ -5862,8 +5862,8 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "app_services_template_service_rationale_268",
-      "community": 2,
-      "community_name": "template_service.py",
+      "community": 5,
+      "community_name": "template_learning_service.py",
       "norm_label": "atualiza um item do template."
     },
     {
@@ -8217,7 +8217,7 @@
       "_origin": "ast",
       "id": "app_templating",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "templating.py"
     },
     {
@@ -8228,7 +8228,7 @@
       "_origin": "ast",
       "id": "app_templating_localdatetime_filter",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "localdatetime_filter()"
     },
     {
@@ -8239,7 +8239,7 @@
       "_origin": "ast",
       "id": "app_templating_localdate_filter",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "localdate_filter()"
     },
     {
@@ -8250,7 +8250,7 @@
       "_origin": "ast",
       "id": "app_templating_quantity_filter",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "quantity_filter()"
     },
     {
@@ -8260,8 +8260,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_init",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "utils/__init__.py"
     },
     {
@@ -8283,7 +8283,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_format_local_datetime",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "format_local_datetime()"
     },
     {
@@ -8293,8 +8293,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_datetime_py_datetime",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "datetime"
     },
     {
@@ -8305,7 +8305,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_format_local_date",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "format_local_date()"
     },
     {
@@ -8316,7 +8316,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_py_date",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "date"
     },
     {
@@ -8337,8 +8337,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "app_utils_datetime_to_utc",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "to_utc()"
     },
     {
@@ -8348,8 +8348,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_utils_datetime_to_local",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "to_local()"
     },
     {
@@ -8359,8 +8359,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "app_utils_datetime_parse_local_date",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "parse_local_date()"
     },
     {
@@ -8371,7 +8371,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_20",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "convert utc datetime to local timezone for display"
     },
     {
@@ -8382,7 +8382,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_34",
       "community": 74,
-      "community_name": "home_service.py",
+      "community_name": "agenda_list",
       "norm_label": "convert utc datetime to local date only"
     },
     {
@@ -8403,8 +8403,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_54",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "convert local datetime to utc for storage"
     },
     {
@@ -8414,8 +8414,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_61",
-      "community": 74,
-      "community_name": "home_service.py",
+      "community": 6,
+      "community_name": "executions.py",
       "norm_label": "convert utc datetime to local"
     },
     {
@@ -8425,8 +8425,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_73",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "parse a date string from form and convert to utc for storage."
     },
     {
@@ -8535,8 +8535,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_security",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "security.py"
     },
     {
@@ -8546,8 +8546,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_utils_security_create_magic_token",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "create_magic_token()"
     },
     {
@@ -8557,8 +8557,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_utils_security_decode_magic_token",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "decode_magic_token()"
     },
     {
@@ -8568,8 +8568,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_utils_security_set_auth_cookies",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "set_auth_cookies()"
     },
     {
@@ -8579,8 +8579,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_security_py_response",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "response"
     },
     {
@@ -8590,8 +8590,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "app_utils_security_clear_auth_cookies",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "clear_auth_cookies()"
     },
     {
@@ -8601,8 +8601,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_utils_security_rationale_12",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "cria token para magic link (15 minutos)."
     },
     {
@@ -8612,8 +8612,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_utils_security_rationale_23",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "decodifica magic token. retorna o e-mail se valido, none caso contrario."
     },
     {
@@ -8623,8 +8623,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "app_utils_security_rationale_47",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "define os cookies httponly emitidos pelo tupa."
     },
     {
@@ -8634,8 +8634,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "app_utils_security_rationale_69",
-      "community": 5,
-      "community_name": "utils/__init__.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "remove os cookies de autenticacao."
     },
     {
@@ -8645,8 +8645,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_websocket_init",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 16,
+      "community_name": "ConnectionManager",
       "norm_label": "websocket/__init__.py"
     },
     {
@@ -8700,8 +8700,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_websocket_manager",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 16,
+      "community_name": "ConnectionManager",
       "norm_label": "manager.py"
     },
     {
@@ -9462,8 +9462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_conftest",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "conftest.py"
     },
     {
@@ -9473,8 +9473,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_conftest_py_fixture",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "fixture"
     },
     {
@@ -9484,8 +9484,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "tests_conftest_db",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "db()"
     },
     {
@@ -9495,8 +9495,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_conftest_py_session",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "session"
     },
     {
@@ -9517,8 +9517,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "tests_conftest_make_group",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "make_group()"
     },
     {
@@ -9528,8 +9528,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "tests_conftest_make_category",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "make_category()"
     },
     {
@@ -9540,7 +9540,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_agenda_and_budget_flow.py"
     },
     {
@@ -9550,8 +9550,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_lists_group_executions_and_prioritizes_in_progress_status",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "test_calendar_lists_group_executions_and_prioritizes_in_progress_status()"
     },
     {
@@ -9561,8 +9561,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_groups_executions_by_local_scheduled_date",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "test_calendar_groups_executions_by_local_scheduled_date()"
     },
     {
@@ -9594,8 +9594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_auth_pages",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_auth_pages.py"
     },
     {
@@ -9605,8 +9605,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_test_auth_pages_make_request",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "make_request()"
     },
     {
@@ -9616,8 +9616,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_auth_pages_py_request",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "request"
     },
     {
@@ -9627,8 +9627,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_login_page_only_contains_login_form_and_registration_link",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_login_page_only_contains_login_form_and_registration_link()"
     },
     {
@@ -9638,8 +9638,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_register_page_contains_registration_form_and_login_link",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_register_page_contains_registration_form_and_login_link()"
     },
     {
@@ -9649,8 +9649,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_invalid_registration_renders_register_page_and_preserves_identity_fields",
-      "community": 8,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_invalid_registration_renders_register_page_and_preserves_identity_fields()"
     },
     {
@@ -9660,8 +9660,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_business_rules",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_business_rules.py"
     },
     {
@@ -9682,8 +9682,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_business_rules_py_parametrize",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "parametrize"
     },
     {
@@ -9693,8 +9693,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn02_completed_execution_is_immutable",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_rn02_completed_execution_is_immutable()"
     },
     {
@@ -9704,8 +9704,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn03_recurrence_is_only_generated_after_completion",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_rn03_recurrence_is_only_generated_after_completion()"
     },
     {
@@ -9748,8 +9748,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_collaboration_and_isolation_flow",
-      "community": 79,
-      "community_name": "make_user",
+      "community": 65,
+      "community_name": "execution_service.py",
       "norm_label": "test_collaboration_and_isolation_flow.py"
     },
     {
@@ -9793,7 +9793,7 @@
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_completion_and_recurrence_flow.py"
     },
     {
@@ -9804,7 +9804,7 @@
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_py_parametrize",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "parametrize"
     },
     {
@@ -9815,7 +9815,7 @@
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_supported_recurrences_calculate_the_next_cycle",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_supported_recurrences_calculate_the_next_cycle()"
     },
     {
@@ -9825,8 +9825,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_pending_items_can_be_carried_to_a_new_standalone_execution",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_pending_items_can_be_carried_to_a_new_standalone_execution()"
     },
     {
@@ -9836,8 +9836,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_discarded_pending_items_remain_as_soft_deleted_history",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_discarded_pending_items_remain_as_soft_deleted_history()"
     },
     {
@@ -9847,8 +9847,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_next_cycle_uses_completion_date_and_not_rescheduled_date",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_next_cycle_uses_completion_date_and_not_rescheduled_date()"
     },
     {
@@ -9858,8 +9858,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_standalone_execution_never_generates_recurrence",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_standalone_execution_never_generates_recurrence()"
     },
     {
@@ -9869,8 +9869,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_in_progress_execution_cannot_be_rescheduled",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_in_progress_execution_cannot_be_rescheduled()"
     },
     {
@@ -10034,8 +10034,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_execution_totals_regression.py"
     },
     {
@@ -10045,8 +10045,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_make_request",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "make_request()"
     },
     {
@@ -10056,8 +10056,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_py_request",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "request"
     },
     {
@@ -10067,8 +10067,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_item_mutation_fragment_refreshes_sidebar_with_current_total",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_item_mutation_fragment_refreshes_sidebar_with_current_total()"
     },
     {
@@ -10089,8 +10089,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_add_item_route_persists_purchase_before_totals_and_broadcast",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_add_item_route_persists_purchase_before_totals_and_broadcast()"
     },
     {
@@ -10100,8 +10100,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_execution_add_item_htmx_error_stays_in_modal_without_mutation",
-      "community": 67,
-      "community_name": "offline.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_execution_add_item_htmx_error_stays_in_modal_without_mutation()"
     },
     {
@@ -10111,7 +10111,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_first_access_flow",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "test_first_access_flow.py"
     },
@@ -10122,7 +10122,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_first_access_creates_default_home_and_categories",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "test_first_access_creates_default_home_and_categories()"
     },
@@ -10133,7 +10133,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_repeated_login_does_not_duplicate_default_home",
-      "community": 97,
+      "community": 4,
       "community_name": "auth_service.py",
       "norm_label": "test_repeated_login_does_not_duplicate_default_home()"
     },
@@ -10144,8 +10144,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_member_can_be_invited_to_the_group",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_member_can_be_invited_to_the_group()"
     },
     {
@@ -10155,8 +10155,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_future_user_flows",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_future_user_flows.py"
     },
     {
@@ -10188,8 +10188,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "future_flow",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "future_flow"
     },
     {
@@ -10210,8 +10210,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl08_spending_analysis_uses_completed_executions_only",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_fl08_spending_analysis_uses_completed_executions_only()"
     },
     {
@@ -10221,8 +10221,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_offline_operation_is_queued_before_remote_sync",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_fl09_offline_operation_is_queued_before_remote_sync()"
     },
     {
@@ -10232,8 +10232,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_reconnection_synchronizes_queued_operations_without_data_loss",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_fl09_reconnection_synchronizes_queued_operations_without_data_loss()"
     },
     {
@@ -10243,8 +10243,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions()"
     },
     {
@@ -10254,8 +10254,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_rationale_1",
-      "community": 99,
-      "community_name": "test_future_user_flows.py",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "contratos dos fluxos documentados e dos fluxos futuros ainda pendentes."
     },
     {
@@ -10265,8 +10265,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_home_dashboard",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_dashboard.py"
     },
     {
@@ -10276,8 +10276,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_make_request",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "make_request()"
     },
     {
@@ -10287,8 +10287,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_py_request",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "request"
     },
     {
@@ -10298,8 +10298,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_prioritizes_in_progress_purchase_over_scheduled_purchase",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_prioritizes_in_progress_purchase_over_scheduled_purchase()"
     },
     {
@@ -10309,8 +10309,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_uses_next_scheduled_purchase_when_none_is_in_progress",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_uses_next_scheduled_purchase_when_none_is_in_progress()"
     },
     {
@@ -10320,8 +10320,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_keeps_today_scheduled_purchase_as_next_purchase",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_keeps_today_scheduled_purchase_as_next_purchase()"
     },
     {
@@ -10331,8 +10331,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_metrics_and_history_are_scoped_to_active_group",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_metrics_and_history_are_scoped_to_active_group()"
     },
     {
@@ -10342,8 +10342,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_alerts_are_limited_and_ordered_by_criticality",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_alerts_are_limited_and_ordered_by_criticality()"
     },
     {
@@ -10353,8 +10353,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_recent_history_is_limited_to_three_completed_executions",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_recent_history_is_limited_to_three_completed_executions()"
     },
     {
@@ -10364,8 +10364,8 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_home_renders_one_touch_purchase_actions_and_global_sync_indicator",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_home_renders_one_touch_purchase_actions_and_global_sync_indicator()"
     },
     {
@@ -10375,8 +10375,8 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_switching_group_from_home_returns_to_home",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_switching_group_from_home_returns_to_home()"
     },
     {
@@ -10386,8 +10386,8 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "tests_test_home_dashboard_test_switching_group_rejects_external_return_url",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_switching_group_rejects_external_return_url()"
     },
     {
@@ -10398,18 +10398,18 @@
       "_origin": "ast",
       "id": "tests_test_item_add_fab",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_item_add_fab.py"
     },
     {
       "label": "read()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_read",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "read()"
     },
     {
@@ -10420,95 +10420,117 @@
       "_origin": "ast",
       "id": "tests_test_item_add_fab_py_path",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "path"
+    },
+    {
+      "label": "z_index_for()",
+      "file_type": "code",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "tests_test_item_add_fab_z_index_for",
+      "community": 96,
+      "community_name": "test_item_add_fab.py",
+      "norm_label": "z_index_for()"
     },
     {
       "label": "test_template_exposes_one_accessible_fab_and_one_canonical_modal_form()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L18",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_template_exposes_one_accessible_fab_and_one_canonical_modal_form",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_template_exposes_one_accessible_fab_and_one_canonical_modal_form()"
     },
     {
       "label": "test_template_addition_targets_a_reusable_items_fragment_with_fallback_post()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L34",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_template_addition_targets_a_reusable_items_fragment_with_fallback_post",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_template_addition_targets_a_reusable_items_fragment_with_fallback_post()"
     },
     {
       "label": "test_mutable_execution_exposes_one_modal_form_and_preserves_offline_contract()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L46",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_mutable_execution_exposes_one_modal_form_and_preserves_offline_contract",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_mutable_execution_exposes_one_modal_form_and_preserves_offline_contract()"
     },
     {
       "label": "test_modal_pages_keep_the_single_form_available_without_javascript()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L64",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_modal_pages_keep_the_single_form_available_without_javascript",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_modal_pages_keep_the_single_form_available_without_javascript()"
     },
     {
       "label": "test_local_modal_controller_preserves_scroll_focus_and_keyboard_behavior()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L73",
+      "source_location": "L86",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_local_modal_controller_preserves_scroll_focus_and_keyboard_behavior",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_local_modal_controller_preserves_scroll_focus_and_keyboard_behavior()"
     },
     {
       "label": "test_modal_controller_closes_only_after_online_or_offline_success()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L89",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_modal_controller_closes_only_after_online_or_offline_success",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_modal_controller_closes_only_after_online_or_offline_success()"
     },
     {
       "label": "test_fab_and_modal_styles_respect_safe_areas_and_local_fallback()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L106",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_fab_and_modal_styles_respect_safe_areas_and_local_fallback",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_fab_and_modal_styles_respect_safe_areas_and_local_fallback()"
+    },
+    {
+      "label": "test_managed_item_modals_stay_above_backdrop_and_page_actions()",
+      "file_type": "code",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L132",
+      "_origin": "ast",
+      "id": "tests_test_item_add_fab_test_managed_item_modals_stay_above_backdrop_and_page_actions",
+      "community": 96,
+      "community_name": "test_item_add_fab.py",
+      "norm_label": "test_managed_item_modals_stay_above_backdrop_and_page_actions()"
     },
     {
       "label": "test_both_modal_pages_load_the_local_cached_controller()",
       "file_type": "code",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L119",
+      "source_location": "L144",
       "_origin": "ast",
       "id": "tests_test_item_add_fab_test_both_modal_pages_load_the_local_cached_controller",
       "community": 96,
-      "community_name": "read",
+      "community_name": "test_item_add_fab.py",
       "norm_label": "test_both_modal_pages_load_the_local_cached_controller()"
     },
     {
@@ -10727,8 +10749,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_offline_cache_test_offline_snapshot_contains_essential_read_only_data",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_offline_snapshot_contains_essential_read_only_data()"
     },
     {
@@ -10738,8 +10760,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "tests_test_offline_cache_test_offline_snapshot_is_scoped_to_user_groups",
-      "community": 11,
-      "community_name": "build_offline_snapshot",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_offline_snapshot_is_scoped_to_user_groups()"
     },
     {
@@ -11486,8 +11508,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_scheduled_execution_editing.py"
     },
     {
@@ -11497,8 +11519,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_make_request",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "make_request()"
     },
     {
@@ -11508,8 +11530,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_py_request",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "request"
     },
     {
@@ -11519,8 +11541,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_standalone_execution_can_be_created_with_normalized_name",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_standalone_execution_can_be_created_with_normalized_name()"
     },
     {
@@ -11530,8 +11552,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_py_parametrize",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "parametrize"
     },
     {
@@ -11541,8 +11563,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_standalone_execution_name_uses_legacy_fallback",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_standalone_execution_name_uses_legacy_fallback()"
     },
     {
@@ -11552,8 +11574,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_standalone_execution_name_over_limit_fails_without_persistence",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_standalone_execution_name_over_limit_fails_without_persistence()"
     },
     {
@@ -11563,8 +11585,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_standalone_scheduled_execution_can_edit_name_date_and_budget",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_standalone_scheduled_execution_can_edit_name_date_and_budget()"
     },
     {
@@ -11585,8 +11607,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_template_execution_cannot_be_renamed_without_partial_update",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_template_execution_cannot_be_renamed_without_partial_update()"
     },
     {
@@ -11607,8 +11629,8 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_non_scheduled_execution_cannot_be_edited",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_non_scheduled_execution_cannot_be_edited()"
     },
     {
@@ -11618,8 +11640,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_update_execution_route_notifies_members_and_broadcasts_change",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_update_execution_route_notifies_members_and_broadcasts_change()"
     },
     {
@@ -11629,8 +11651,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_update_execution_route_rejects_template_rename_without_partial_update",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_update_execution_route_rejects_template_rename_without_partial_update()"
     },
     {
@@ -11640,8 +11662,8 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_create_execution_route_preserves_local_form_date",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_create_execution_route_preserves_local_form_date()"
     },
     {
@@ -11651,8 +11673,8 @@
       "source_location": "L375",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_create_standalone_route_persists_custom_name",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_create_standalone_route_persists_custom_name()"
     },
     {
@@ -11662,8 +11684,8 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_create_standalone_route_preserves_values_on_invalid_name",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_create_standalone_route_preserves_values_on_invalid_name()"
     },
     {
@@ -11673,8 +11695,8 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_offline_snapshot_contains_edited_standalone_execution_name",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_offline_snapshot_contains_edited_standalone_execution_name()"
     },
     {
@@ -11684,8 +11706,8 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "tests_test_scheduled_execution_editing_test_scheduled_execution_edit_interface_is_available_only_for_scheduled",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_scheduled_execution_edit_interface_is_available_only_for_scheduled()"
     },
     {
@@ -11696,7 +11718,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_sticky_budget.py"
     },
     {
@@ -11707,7 +11729,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_make_request",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "make_request()"
     },
     {
@@ -11718,7 +11740,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_py_request",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "request"
     },
     {
@@ -11728,8 +11750,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_sticky_budget_render_items_fragment",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "render_items_fragment()"
     },
     {
@@ -11762,7 +11784,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_classifies_thresholds_and_only_notifies_on_rise",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_budget_controller_classifies_thresholds_and_only_notifies_on_rise()"
     },
     {
@@ -11773,7 +11795,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_toast_is_deduplicated_across_controller_instances",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_budget_toast_is_deduplicated_across_controller_instances()"
     },
     {
@@ -11784,7 +11806,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_handles_dynamic_fragments_navbar_and_toasts",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_budget_controller_handles_dynamic_fragments_navbar_and_toasts()"
     },
     {
@@ -11795,7 +11817,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_offline_item_mutations_recalculate_budget_from_local_snapshot",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_offline_item_mutations_recalculate_budget_from_local_snapshot()"
     },
     {
@@ -11806,7 +11828,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_is_cached_for_offline_execution",
       "community": 65,
-      "community_name": "ExecutionStatus",
+      "community_name": "execution_service.py",
       "norm_label": "test_budget_controller_is_cached_for_offline_execution()"
     },
     {
@@ -11860,8 +11882,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "tests_test_sync_center_test_sync_center_renders_local_queue_management_shell",
-      "community": 0,
-      "community_name": "make_group",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_sync_center_renders_local_queue_management_shell()"
     },
     {
@@ -12366,8 +12388,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_user_flows",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_user_flows.py"
     },
     {
@@ -12388,8 +12410,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl03_manual_and_automatic_executions_are_available_in_agenda",
-      "community": 65,
-      "community_name": "ExecutionStatus",
+      "community": 79,
+      "community_name": "make_user",
       "norm_label": "test_fl03_manual_and_automatic_executions_are_available_in_agenda()"
     },
     {
@@ -13301,8 +13323,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "0002-backup-postgresql.md"
     },
     {
@@ -13540,7 +13562,7 @@
       "label": "Itens arquivados",
       "file_type": "document",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L159",
+      "source_location": "L160",
       "_origin": "ast",
       "id": "docs_domain_backlog_readme_itens_arquivados",
       "community": 50,
@@ -13551,7 +13573,7 @@
       "label": "Checklist de passagem ponta a ponta",
       "file_type": "document",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L170",
+      "source_location": "L171",
       "_origin": "ast",
       "id": "docs_domain_backlog_readme_checklist_de_passagem_ponta_a_ponta",
       "community": 50,
@@ -13994,8 +14016,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0003_historico_precos",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "bl-0003-historico-precos.md"
     },
     {
@@ -14137,8 +14159,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0004_analise_gastos_dashboard_financeiro",
-      "community": 45,
-      "community_name": "backlog/README.md",
+      "community": 88,
+      "community_name": "user-flows.md",
       "norm_label": "bl-0004-analise-gastos-dashboard-financeiro.md"
     },
     {
@@ -15424,8 +15446,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "items/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -16133,6 +16155,149 @@
       "norm_label": "historico"
     },
     {
+      "label": "items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item",
+      "community": 29,
+      "community_name": "tests/README.md",
+      "norm_label": "items/bl-0018-corrigir-backdrop-modal-completar-item.md"
+    },
+    {
+      "label": "BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "bl-0018 \u2014 corrigir backdrop sobre o modal de completar item"
+    },
+    {
+      "label": "Identifica\u00e7\u00e3o e entrada",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "identificacao e entrada"
+    },
+    {
+      "label": "Comportamento observado",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_comportamento_observado",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "comportamento observado"
+    },
+    {
+      "label": "Comportamento esperado",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_comportamento_esperado",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "comportamento esperado"
+    },
+    {
+      "label": "Impacto e abrang\u00eancia",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_impacto_e_abrang\u00eancia",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "impacto e abrangencia"
+    },
+    {
+      "label": "Passos de reprodu\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_passos_de_reprodu\u00e7\u00e3o",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "passos de reproducao"
+    },
+    {
+      "label": "Evid\u00eancias sanitizadas",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_evid\u00eancias_sanitizadas",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "evidencias sanitizadas"
+    },
+    {
+      "label": "Workaround",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_workaround",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "workaround"
+    },
+    {
+      "label": "Triagem",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_triagem",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "triagem"
+    },
+    {
+      "label": "Acompanhamento at\u00e9 produ\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "acompanhamento ate producao"
+    },
+    {
+      "label": "Impedimentos",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_impedimentos",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "impedimentos"
+    },
+    {
+      "label": "Hist\u00f3rico",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_hist\u00f3rico",
+      "community": 8,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "historico"
+    },
+    {
       "label": "business-rules.md",
       "file_type": "document",
       "source_file": "docs/domain/business-rules.md",
@@ -16359,8 +16524,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_database",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "database.md"
     },
     {
@@ -16370,8 +16535,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_database_estrat\u00e9gia_de_banco_de_dados",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "estrategia de banco de dados"
     },
     {
@@ -16381,8 +16546,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_domain_database_ambientes",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "ambientes"
     },
     {
@@ -16392,8 +16557,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "docs_domain_database_backups_de_produ\u00e7\u00e3o",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "backups de producao"
     },
     {
@@ -16403,8 +16568,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00f5es",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "migracoes"
     },
     {
@@ -16414,8 +16579,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00e3o_de_dados",
-      "community": 84,
-      "community_name": "Estrat\u00e9gia de Banco de Dados",
+      "community": 66,
+      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "migracao de dados"
     },
     {
@@ -17316,8 +17481,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0013_filtrar_itens_lista_compra",
-      "community": 62,
-      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "community": 29,
+      "community_name": "tests/README.md",
       "norm_label": "tasks/bl-0013-filtrar-itens-lista-compra.md"
     },
     {
@@ -17580,8 +17745,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0014_fixar_orcamento_compra",
-      "community": 29,
-      "community_name": "tests/README.md",
+      "community": 33,
+      "community_name": "Refinamento \u2014 BL-0014 \u2014 Resumo de or\u00e7amento fixo durante a compra",
       "norm_label": "tasks/bl-0014-fixar-orcamento-compra.md"
     },
     {
@@ -18075,8 +18240,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0016_botao_flutuante_adicionar_itens",
-      "community": 29,
-      "community_name": "tests/README.md",
+      "community": 81,
+      "community_name": "Refinamento \u2014 BL-0016 \u2014 Bot\u00e3o flutuante para adicionar itens",
       "norm_label": "tasks/bl-0016-botao-flutuante-adicionar-itens.md"
     },
     {
@@ -18317,8 +18482,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0017_nome_execucao_avulsa",
-      "community": 29,
-      "community_name": "tests/README.md",
+      "community": 90,
+      "community_name": "Refinamento \u2014 BL-0017 \u2014 Nome da execu\u00e7\u00e3o avulsa",
       "norm_label": "tasks/bl-0017-nome-execucao-avulsa.md"
     },
     {
@@ -18550,6 +18715,248 @@
       "id": "docs_domain_tasks_bl_0017_nome_execucao_avulsa_fechamento",
       "community": 90,
       "community_name": "Refinamento \u2014 BL-0017 \u2014 Nome da execu\u00e7\u00e3o avulsa",
+      "norm_label": "fechamento"
+    },
+    {
+      "label": "tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "tasks/bl-0018-corrigir-backdrop-modal-completar-item.md"
+    },
+    {
+      "label": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "refinamento \u2014 bl-0018 \u2014 corrigir backdrop sobre o modal de completar item"
+    },
+    {
+      "label": "Rastreabilidade",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_rastreabilidade",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "rastreabilidade"
+    },
+    {
+      "label": "Objetivo e crit\u00e9rios de sucesso",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo_e_crit\u00e9rios_de_sucesso",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "objetivo e criterios de sucesso"
+    },
+    {
+      "label": "Objetivo",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "objetivo"
+    },
+    {
+      "label": "Crit\u00e9rios de sucesso",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_crit\u00e9rios_de_sucesso",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "criterios de sucesso"
+    },
+    {
+      "label": "Escopo",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_escopo",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "escopo"
+    },
+    {
+      "label": "Inclu\u00eddo",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_inclu\u00eddo",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "incluido"
+    },
+    {
+      "label": "Exclu\u00eddo",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_exclu\u00eddo",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "excluido"
+    },
+    {
+      "label": "Riscos e regras preservadas",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_riscos_e_regras_preservadas",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "riscos e regras preservadas"
+    },
+    {
+      "label": "Plano de implementa\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_plano_de_implementa\u00e7\u00e3o",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "plano de implementacao"
+    },
+    {
+      "label": "Etapa 1 \u2014 Restaurar o empilhamento dos modais de item",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_etapa_1_restaurar_o_empilhamento_dos_modais_de_item",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "etapa 1 \u2014 restaurar o empilhamento dos modais de item"
+    },
+    {
+      "label": "Ticket 1.1 \u2014 Corrigir e distribuir o contrato visual compartilhado",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_ticket_1_1_corrigir_e_distribuir_o_contrato_visual_compartilhado",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "ticket 1.1 \u2014 corrigir e distribuir o contrato visual compartilhado"
+    },
+    {
+      "label": "Fatia 1.1.1 \u2014 Proteger a ordem de camadas e o cache PWA",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_fatia_1_1_1_proteger_a_ordem_de_camadas_e_o_cache_pwa",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "fatia 1.1.1 \u2014 proteger a ordem de camadas e o cache pwa"
+    },
+    {
+      "label": "Cen\u00e1rios TDD",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_cen\u00e1rios_tdd",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "cenarios tdd"
+    },
+    {
+      "label": "Contratos de etapas futuras",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_contratos_de_etapas_futuras",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "contratos de etapas futuras"
+    },
+    {
+      "label": "Estrat\u00e9gia de valida\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_estrat\u00e9gia_de_valida\u00e7\u00e3o",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "estrategia de validacao"
+    },
+    {
+      "label": "Por fatia",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L131",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_por_fatia",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "por fatia"
+    },
+    {
+      "label": "Valida\u00e7\u00e3o manual",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L140",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_valida\u00e7\u00e3o_manual",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "validacao manual"
+    },
+    {
+      "label": "Regress\u00e3o total",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L154",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_regress\u00e3o_total",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "regressao total"
+    },
+    {
+      "label": "Progresso",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L163",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_progresso",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
+      "norm_label": "progresso"
+    },
+    {
+      "label": "Fechamento",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L169",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_fechamento",
+      "community": 0,
+      "community_name": "Refinamento \u2014 BL-0018 \u2014 Corrigir backdrop sobre o modal de completar item",
       "norm_label": "fechamento"
     },
     {
@@ -19186,8 +19593,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_05_compra_colaborativa",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 11,
+      "community_name": "FL-05 \u2014 Compra Colaborativa",
       "norm_label": "fl-05 \u2014 compra colaborativa"
     },
     {
@@ -19197,8 +19604,8 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_200",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 11,
+      "community_name": "FL-05 \u2014 Compra Colaborativa",
       "norm_label": "objetivo"
     },
     {
@@ -19208,8 +19615,8 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_204",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 11,
+      "community_name": "FL-05 \u2014 Compra Colaborativa",
       "norm_label": "atores"
     },
     {
@@ -19219,8 +19626,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_209",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 11,
+      "community_name": "FL-05 \u2014 Compra Colaborativa",
       "norm_label": "fluxo principal"
     },
     {
@@ -19230,8 +19637,8 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_227",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 11,
+      "community_name": "FL-05 \u2014 Compra Colaborativa",
       "norm_label": "resultado esperado"
     },
     {
@@ -19307,8 +19714,8 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_07_gest\u00e3o_de_grupos",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 67,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "fl-07 \u2014 gestao de grupos"
     },
     {
@@ -19318,8 +19725,8 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_277",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 67,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "objetivo"
     },
     {
@@ -19329,8 +19736,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_281",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 67,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "atores"
     },
     {
@@ -19340,8 +19747,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_285",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 67,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "fluxo principal"
     },
     {
@@ -19351,8 +19758,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_299",
-      "community": 88,
-      "community_name": "user-flows.md",
+      "community": 67,
+      "community_name": "FL-07 \u2014 Gest\u00e3o de Grupos",
       "norm_label": "resultado esperado"
     },
     {
@@ -19678,7 +20085,7 @@
       "label": "Backlog legado \u2014 Sprint 4 \u2014 Aprendizado cont\u00ednuo dos templates",
       "file_type": "document",
       "source_file": "tests/README.md",
-      "source_location": "L58",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "tests_readme_backlog_legado_sprint_4_aprendizado_cont\u00ednuo_dos_templates",
       "community": 29,
@@ -60050,7 +60457,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60061,7 +60468,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L119",
+      "source_location": "L144",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60072,7 +60479,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L106",
+      "source_location": "L119",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60083,7 +60490,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L73",
+      "source_location": "L86",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60094,7 +60501,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L89",
+      "source_location": "L132",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_add_fab",
+      "target": "tests_test_item_add_fab_test_managed_item_modals_stay_above_backdrop_and_page_actions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L102",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60105,7 +60523,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L64",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60116,7 +60534,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L46",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60127,7 +60545,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L34",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60138,7 +60556,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L18",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab",
@@ -60146,11 +60564,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_add_fab",
+      "target": "tests_test_item_add_fab_z_index_for",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_read",
@@ -60162,7 +60591,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L121",
+      "source_location": "L146",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_both_modal_pages_load_the_local_cached_controller",
@@ -60174,7 +60603,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L107",
+      "source_location": "L120",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_fab_and_modal_styles_respect_safe_areas_and_local_fallback",
@@ -60186,7 +60615,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L74",
+      "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_local_modal_controller_preserves_scroll_focus_and_keyboard_behavior",
@@ -60198,7 +60627,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L90",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_add_fab_test_managed_item_modals_stay_above_backdrop_and_page_actions",
+      "target": "tests_test_item_add_fab_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_modal_controller_closes_only_after_online_or_offline_success",
@@ -60210,7 +60651,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L66",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_modal_pages_keep_the_single_form_available_without_javascript",
@@ -60222,7 +60663,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L47",
+      "source_location": "L60",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_mutable_execution_exposes_one_modal_form_and_preserves_offline_contract",
@@ -60234,7 +60675,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L35",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_template_addition_targets_a_reusable_items_fragment_with_fallback_post",
@@ -60246,11 +60687,23 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tests/test_item_add_fab.py",
-      "source_location": "L19",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_test_item_add_fab_test_template_exposes_one_accessible_fab_and_one_canonical_modal_form",
       "target": "tests_test_item_add_fab_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_item_add_fab.py",
+      "source_location": "L135",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_test_item_add_fab_test_managed_item_modals_stay_above_backdrop_and_page_actions",
+      "target": "tests_test_item_add_fab_z_index_for",
       "confidence_score": 1.0
     },
     {
@@ -64191,7 +64644,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L163",
+      "source_location": "L164",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64202,7 +64655,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L164",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64213,7 +64666,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L165",
+      "source_location": "L166",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64224,7 +64677,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L166",
+      "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64235,7 +64688,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L167",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64246,11 +64699,22 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L168",
+      "source_location": "L169",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
       "target": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/README.md",
+      "source_location": "L158",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_readme",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item",
       "confidence_score": 1.0
     },
     {
@@ -64301,7 +64765,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L170",
+      "source_location": "L171",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme_backlog_de_produ\u00e7\u00e3o",
@@ -64422,7 +64886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L159",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme_manuten\u00e7\u00e3o_das_vis\u00f5es",
@@ -67204,6 +67668,160 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/README.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "tests_readme",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_hist\u00f3rico",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_triagem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_comportamento_esperado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_comportamento_observado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_evid\u00eancias_sanitizadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_impacto_e_abrang\u00eancia",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_passos_de_reprodu\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_identifica\u00e7\u00e3o_e_entrada",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_workaround",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
+      "target": "docs_domain_backlog_items_bl_0018_corrigir_backdrop_modal_completar_item_impedimentos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/domain/business-rules.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -69536,6 +70154,237 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_cen\u00e1rios_tdd",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L129",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_estrat\u00e9gia_de_valida\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L169",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_fechamento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo_e_crit\u00e9rios_de_sucesso",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_plano_de_implementa\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L163",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_progresso",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_rastreabilidade",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_refinamento_bl_0018_corrigir_backdrop_sobre_o_modal_de_completar_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_riscos_e_regras_preservadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo_e_crit\u00e9rios_de_sucesso",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_crit\u00e9rios_de_sucesso",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo_e_crit\u00e9rios_de_sucesso",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_objetivo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_escopo",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_exclu\u00eddo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_escopo",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_inclu\u00eddo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_plano_de_implementa\u00e7\u00e3o",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_etapa_1_restaurar_o_empilhamento_dos_modais_de_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_etapa_1_restaurar_o_empilhamento_dos_modais_de_item",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_ticket_1_1_corrigir_e_distribuir_o_contrato_visual_compartilhado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_ticket_1_1_corrigir_e_distribuir_o_contrato_visual_compartilhado",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_fatia_1_1_1_proteger_a_ordem_de_camadas_e_o_cache_pwa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L121",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_cen\u00e1rios_tdd",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_contratos_de_etapas_futuras",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L131",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_estrat\u00e9gia_de_valida\u00e7\u00e3o",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_por_fatia",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L154",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_estrat\u00e9gia_de_valida\u00e7\u00e3o",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_regress\u00e3o_total",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0018-corrigir-backdrop-modal-completar-item.md",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_estrat\u00e9gia_de_valida\u00e7\u00e3o",
+      "target": "docs_domain_tasks_bl_0018_corrigir_backdrop_modal_completar_item_valida\u00e7\u00e3o_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/domain/tasks/TEMPLATE.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -70571,7 +71420,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/README.md",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "tests_readme",
@@ -70613,5 +71462,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4707d3033a6a483b03c6d0c60f62e9d1a01ee9ab"
+  "built_at_commit": "a0794920231653f35c78ae658e775e08ecf2a93b"
 }
