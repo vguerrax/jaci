@@ -155,6 +155,7 @@ não muda de caminho nem é apagado.
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
+| [BL-0018](items/BL-0018-corrigir-backdrop-modal-completar-item.md) | Corrigir backdrop sobre o modal de completar item | `bug` | `S1` | `P0` | `pronto_para_implementacao` | Engenharia Jaci | `2026-08-05` |
 
 ### Itens arquivados
 
