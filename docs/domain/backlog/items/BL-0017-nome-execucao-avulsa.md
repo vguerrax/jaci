@@ -76,7 +76,7 @@ agendada, adicionando uma etapa ao fluxo.
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0017](../../tasks/BL-0017-nome-execucao-avulsa.md).
-- Implementação (commits/PRs): fatia 1.1.1 implementada; commit a registrar após o fechamento desta alteração.
+- Implementação (commits/PRs): fatia 1.1.1 implementada no commit `4f91170`.
 - Validações: 56 testes focados e 57 testes ampliados aprovados; regressão com 225 aprovados e 5 `xfail` legados; migrações no head; compilação Python aprovada; `pylint` indisponível.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
@@ -94,3 +94,4 @@ agendada, adicionando uma etapa ao fluxo.
 | `2026-08-04 18:08 -03` | Codex | Refinamento criado; `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Escopo, restrições, fatia TDD e validações definidos com o usuário |
 | `2026-08-05 07:49 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita posterior ao commit documental `e76c9a1` |
 | `2026-08-05 07:49 -03` | Codex | Fatia 1.1.1 implementada; `em_implementacao` → `em_validacao` | Contratos focados, validação ampliada e regressão aprovados; publicação pendente |
+| `2026-08-05 07:49 -03` | Codex | Commit da fatia registrado | Implementação e validações versionadas em `4f91170` |

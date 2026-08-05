@@ -203,8 +203,8 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: commit da fatia a registrar após o fechamento desta alteração;
-  branch `feature/BL-0017-nome-execucao-avulsa`.
+- Commits/PRs: fatia 1.1.1 `4f91170`; branch
+  `feature/BL-0017-nome-execucao-avulsa`.
 - Resultado das validações focadas: 56 testes aprovados em
   `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`;
   57 testes ampliados de agenda, dashboard, recorrência, templates e aprendizado
