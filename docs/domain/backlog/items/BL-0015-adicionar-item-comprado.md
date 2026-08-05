@@ -7,14 +7,14 @@
 | ID | `BL-0015` |
 | Título | Adicionar item como comprado durante execução |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-04` |
+| Atualizado em | `2026-08-05` |
 
 ### Comportamento observado
 
@@ -75,7 +75,7 @@ quantidade e valor unitário.
 | Dependências | Serviço e rota de itens, fragmentos HTMX, totais e alertas, IndexedDB/fila offline, reconciliação e cache PWA |
 | Duplicidades | Nenhuma identificada; BL-0013, BL-0014 e BL-0016 são melhorias correlatas de interface, não substitutas |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar manualmente os fluxos mobile online/offline e registrar a publicação |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.0` |
 
 ## Acompanhamento até produção
 
@@ -87,7 +87,8 @@ quantidade e valor unitário.
   `execution-budget.js` e `offline-cache.js` aprovada; migrações no head;
   regressão com 195 testes aprovados e 5 `xfail` legados fora do escopo;
   grafo atualizado e consultável; `pylint` indisponível no ambiente virtual.
-- Publicação: ainda não publicada.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.
 - Itens relacionados: `BL-0013`, `BL-0014` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
 
@@ -109,3 +110,4 @@ quantidade e valor unitário.
 | `2026-08-04 00:42 -03` | Codex | Fatia 1.1.2 concluída (`2/2`) | Estado local, totais, alertas, sincronização, reconciliação e cache PWA validados com 50 testes aprovados |
 | `2026-08-04 00:42 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 181 testes aprovados e 5 `xfail` legados fora do escopo; aguarda validação manual e publicação |
 | `2026-08-04 16:01 -03` | Codex | `develop` integrado à branch | Conflitos com BL-0013 e BL-0014 combinados; cache PWA elevado para `v26`; 95 testes focados e regressão 195/5 aprovados; merge `49618ef` |
+| `2026-08-05 11:42 -03` | Usuário/Codex | `em_validacao` -> `concluido` | Publicação em produção da versão `1.2.0`, tag `v1.2.0` no commit `7364294`, informada pelo usuário |

@@ -243,10 +243,13 @@ ticket permanecer em `xfail(strict=True)`:
   filtro, orçamento e PWA aprovados; sintaxe de `service-worker.js`,
   `item-filter.js`, `execution-budget.js` e `offline-cache.js` aprovada.
   `pylint` não está instalado no ambiente virtual.
-- Resultado da validação manual: pendente em navegador real; infraestrutura
-  Playwright continua acompanhada pela BL-0011.
+- Resultado da validação manual: o aceite da versão `1.2.0` em produção foi
+  informado pelo usuário; a infraestrutura Playwright futura permanece
+  acompanhada pela BL-0011.
 - Resultado da regressão total: migrações no head; após o merge, 195 testes
   aprovados e 5 `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice e este refinamento; grafo atualizado e
   consultável após a resolução dos conflitos.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.

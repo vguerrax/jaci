@@ -7,14 +7,14 @@
 | ID | `BL-0016` |
 | Título | Disponibilizar botão flutuante para adicionar itens |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-04` |
+| Atualizado em | `2026-08-05` |
 
 ### Comportamento observado
 
@@ -73,7 +73,7 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | Dependências | Formulários e fragmentos atuais, HTMX, controlador local de modal, `.btn-fab`, indicador de sincronização, áreas seguras mobile, cache PWA e entregas integradas BL-0013 a BL-0015 |
 | Duplicidades | Nenhuma; BL-0013, BL-0014 e BL-0015 são melhorias correlatas, e a BL-0011 acompanha infraestrutura de testes UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar manualmente os fluxos mobile/desktop online/offline e registrar a publicação |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.0` |
 
 ## Acompanhamento até produção
 
@@ -85,9 +85,10 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
   aprovados e 5 `xfail` legados fora do escopo; smoke tests Chrome headless
   confirmaram a busca após recriação da visualização e a precedência visual
   correta sobre `d-flex` (`none|flex|(1 item)`);
-  `pylint` indisponível no ambiente virtual. Validação manual completa em
-  navegador real permanece pendente.
-- Publicação: ainda não publicada.
+  `pylint` indisponível no ambiente virtual; aceite da versão `1.2.0` em
+  produção informado pelo usuário.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.
 - Itens relacionados: `BL-0011`, `BL-0013`, `BL-0014` e `BL-0015`; a BL-0011
   acompanha a infraestrutura Playwright e as demais são melhorias correlatas
   da experiência de Lista e Compra.
@@ -112,3 +113,4 @@ Rolar manualmente até o formulário de adição antes de incluir cada novo item
 | `2026-08-04 17:41 -03` | Codex | Defeito de validação corrigido; estado mantido em `em_validacao` | Eventos delegados e reinicialização após `htmx:afterSwap` no commit `3ec1bd1`; cache PWA `v28`; 98 testes focados, Chrome headless e regressão 210/5 aprovados |
 | `2026-08-04 17:49 -03` | Usuário | Filtragem parcial reportada durante validação | Categorias sem correspondência eram ocultadas, mas a classe Bootstrap `d-flex` mantinha visíveis as linhas marcadas com `hidden` |
 | `2026-08-04 17:49 -03` | Codex | Precedência visual das linhas corrigida; estado mantido em `em_validacao` | Regra específica `[data-item-filter-row][hidden]` no commit `4a2ced3`; cache PWA `v29`, Chrome headless `none|flex|(1 item)`, 99 testes focados e regressão 211/5 aprovados |
+| `2026-08-05 11:42 -03` | Usuário/Codex | `em_validacao` -> `concluido` | Publicação em produção da versão `1.2.0`, tag `v1.2.0` no commit `7364294`, informada pelo usuário |

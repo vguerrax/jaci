@@ -271,10 +271,12 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
   normalizada após recriação completa do nó do filtro, com resultado
   `true|false|(1 item)`, e o estilo calculado confirmou que a linha divergente
   fica `none` apesar de `d-flex`, com resultado `none|flex|(1 item)`; fluxo
-  completo permanece pendente em navegador real e a infraestrutura Playwright
-  continua acompanhada pela BL-0011.
+  aceito na versão `1.2.0` em produção conforme informado pelo usuário; a
+  infraestrutura Playwright futura permanece acompanhada pela BL-0011.
 - Resultado da regressão total: migrações no head; 211 testes aprovados e 5
   `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, rastreabilidade de testes e este
   refinamento; grafo atualizado após a implementação.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.

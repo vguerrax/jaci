@@ -155,17 +155,17 @@ não muda de caminho nem é apagado.
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-03` |
-| [BL-0014](items/BL-0014-fixar-orcamento-compra.md) | Fixar resumo de orçamento durante a compra | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-03` |
-| [BL-0015](items/BL-0015-adicionar-item-comprado.md) | Adicionar item como comprado durante execução | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-04` |
-| [BL-0016](items/BL-0016-botao-flutuante-adicionar-itens.md) | Disponibilizar botão flutuante para adicionar itens | `melhoria` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-04` |
-| [BL-0017](items/BL-0017-nome-execucao-avulsa.md) | Permitir informar um nome para execução avulsa | `ajuste` | `N/A` | `P2` | `em_validacao` | Engenharia Jaci | `2026-08-05` |
 
 ### Itens arquivados
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado terminal | Encerrado em |
 | --- | --- | --- | --- | --- | --- | --- |
 | [BL-0012](items/BL-0012-vgx-doc-management.md) | Gestão documental compartilhada dos projetos VGX | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-01` |
+| [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0014](items/BL-0014-fixar-orcamento-compra.md) | Fixar resumo de orçamento durante a compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0015](items/BL-0015-adicionar-item-comprado.md) | Adicionar item como comprado durante execução | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0016](items/BL-0016-botao-flutuante-adicionar-itens.md) | Disponibilizar botão flutuante para adicionar itens | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0017](items/BL-0017-nome-execucao-avulsa.md) | Permitir informar um nome para execução avulsa | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-05` |
 
 ## Checklist de passagem ponta a ponta
 

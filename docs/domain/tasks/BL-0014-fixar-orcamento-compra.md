@@ -157,7 +157,7 @@ aprovação explícita deste refinamento.
 - Validar Jinja2 por renderização das variantes em andamento, agendada, sem
   orçamento e nas três faixas de alerta.
 - Atualizar a versão do cache PWA e confirmar o inventário do shell.
-- Executar `graphify update .` após as mudanças de código.
+- Executar `venv/bin/graphify update .` após as mudanças de código.
 - Atualizar item, refinamento e contagem de progresso antes do commit.
 
 ### Validação manual
@@ -199,8 +199,9 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
   após o merge com `develop`, 44 testes de filtro, orçamento fixo e offline
   aprovados; `node --check` aprovado para `item-filter.js`,
   `execution-budget.js` e `offline-cache.js`; migrações no head
-- Resultado da validação manual: pendente em navegador móvel e desktop; não há
-  infraestrutura Playwright no Jaci
+- Resultado da validação manual: o aceite da versão `1.2.0` em produção foi
+  informado pelo usuário; a infraestrutura Playwright futura permanece
+  acompanhada pela BL-0011
 - Resultado da regressão total: após o merge com `develop`, 186 testes
   aprovados e 5 `xfail` legados fora do escopo
 - `xfail(strict=True)` pendentes no escopo: nenhum
@@ -209,3 +210,5 @@ Executar quando a fatia estiver concluída e não houver contratos pendentes:
   AST-only e voltou a aceitar consultas
 - Observação de lint: `venv/bin/pylint` não está instalado; nenhum arquivo
   Python de produção foi alterado
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`

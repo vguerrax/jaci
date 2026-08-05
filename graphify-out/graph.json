@@ -164,8 +164,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_database",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "database.py"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "listens_for",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "listens_for"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -241,8 +241,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_database_ensure_schema_compatibility",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 85,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "ensure_schema_compatibility()"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_database_rationale_46",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 85,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "compatibilidade temporaria para bancos sqlite anteriores ao alembic."
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_models_category_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "category"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_models_category_category_repr",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_categories",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "categories.py"
     },
     {
@@ -1507,7 +1507,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_get",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "get"
     },
     {
@@ -1518,7 +1518,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_list_categories",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "list_categories()"
     },
     {
@@ -1529,7 +1529,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_request",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "request"
     },
     {
@@ -1540,7 +1540,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_session",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "session"
     },
     {
@@ -1551,7 +1551,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_create_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create_category_page()"
     },
     {
@@ -1562,7 +1562,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_edit_category_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "edit_category_page()"
     },
     {
@@ -1573,7 +1573,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_delete_category_confirm_page",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete_category_confirm_page()"
     },
     {
@@ -1584,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_py_post",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "post"
     },
     {
@@ -1595,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_create_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_create_category()"
     },
     {
@@ -1606,7 +1606,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_move_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_move_category()"
     },
     {
@@ -1617,7 +1617,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_uncategorized_position",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_uncategorized_position()"
     },
     {
@@ -1628,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_edit_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_edit_category()"
     },
     {
@@ -1639,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_handle_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "handle_delete_category()"
     },
     {
@@ -1650,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_32",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "list all categories for the active group."
     },
     {
@@ -1661,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_82",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create category form."
     },
     {
@@ -1672,7 +1672,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_142",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete confirmation page."
     },
     {
@@ -1683,7 +1683,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_179",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "create a new category."
     },
     {
@@ -1694,7 +1694,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_210",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "move uma categoria na ordem de exibicao."
     },
     {
@@ -1705,7 +1705,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_228",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "define a posicao do grupo sem categoria."
     },
     {
@@ -1716,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_routers_categories_rationale_283",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete a category after confirmation."
     },
     {
@@ -3761,8 +3761,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_category_service",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "category_service.py"
     },
     {
@@ -3772,8 +3772,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_services_category_service_get_categories_by_group",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "get_categories_by_group()"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_category_service_py_session",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -3795,7 +3795,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_get_category_by_id",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "get_category_by_id()"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_services_category_service_create_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "create_category()"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_services_category_service_move_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "move_category()"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "app_services_category_service_set_uncategorized_position",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "set_uncategorized_position()"
     },
     {
@@ -3838,8 +3838,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_services_category_service_update_category",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "update_category()"
     },
     {
@@ -3850,7 +3850,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_count_items_using_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "count_items_using_category()"
     },
     {
@@ -3861,7 +3861,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_delete_category",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "delete_category()"
     },
     {
@@ -3871,8 +3871,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_16",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "retorna todas as categorias de um grupo na ordem configurada."
     },
     {
@@ -3883,7 +3883,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_31",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "retorna uma categoria se pertencer a um grupo do usuario."
     },
     {
@@ -3893,8 +3893,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_48",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "cria uma nova categoria no grupo."
     },
     {
@@ -3904,8 +3904,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_66",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "move uma categoria uma posicao para cima ou para baixo."
     },
     {
@@ -3915,8 +3915,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_91",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "define se o grupo sem categoria aparece primeiro ou por ultimo."
     },
     {
@@ -3926,8 +3926,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_category_service_rationale_104",
-      "community": 7,
-      "community_name": "categories.py",
+      "community": 100,
+      "community_name": "datetime.py",
       "norm_label": "atualiza nome e/ou cor da categoria."
     },
     {
@@ -3938,7 +3938,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_115",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "conta quantos itens (template e execucao) usam esta categoria. retorna dict com..."
     },
     {
@@ -3949,7 +3949,7 @@
       "_origin": "ast",
       "id": "app_services_category_service_rationale_137",
       "community": 7,
-      "community_name": "categories.py",
+      "community_name": "get_category_by_id",
       "norm_label": "exclui a categoria e define category_id = null nos itens afetados. retorna dict..."
     },
     {
@@ -9137,8 +9137,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 85,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations.py"
     },
     {
@@ -9148,8 +9148,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "scripts_apply_migrations_apply_migrations",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 85,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations()"
     },
     {
@@ -9159,8 +9159,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_apply_migrations_rationale_1",
-      "community": 100,
-      "community_name": "datetime.py",
+      "community": 85,
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "aplica migracoes alembic e adota bancos sqlite legados."
     },
     {
@@ -13540,7 +13540,7 @@
       "label": "Itens arquivados",
       "file_type": "document",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L164",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "docs_domain_backlog_readme_itens_arquivados",
       "community": 50,
@@ -15542,7 +15542,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md",
-      "source_location": "L100",
+      "source_location": "L101",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra_impedimentos",
       "community": 62,
@@ -15553,7 +15553,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md",
-      "source_location": "L104",
+      "source_location": "L105",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra_hist\u00f3rico",
       "community": 62,
@@ -15685,7 +15685,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L90",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_impedimentos",
       "community": 63,
@@ -15696,7 +15696,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L94",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_hist\u00f3rico",
       "community": 63,
@@ -15828,7 +15828,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0015-adicionar-item-comprado.md",
-      "source_location": "L94",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0015_adicionar_item_comprado_impedimentos",
       "community": 18,
@@ -15839,7 +15839,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0015-adicionar-item-comprado.md",
-      "source_location": "L98",
+      "source_location": "L99",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0015_adicionar_item_comprado_hist\u00f3rico",
       "community": 18,
@@ -15971,7 +15971,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L95",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_impedimentos",
       "community": 93,
@@ -15982,7 +15982,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L99",
+      "source_location": "L100",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_hist\u00f3rico",
       "community": 93,
@@ -16114,7 +16114,7 @@
       "label": "Impedimentos",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
-      "source_location": "L84",
+      "source_location": "L85",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa_impedimentos",
       "community": 95,
@@ -16125,7 +16125,7 @@
       "label": "Hist\u00f3rico",
       "file_type": "document",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
-      "source_location": "L88",
+      "source_location": "L89",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa_hist\u00f3rico",
       "community": 95,
@@ -64191,7 +64191,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L168",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64202,7 +64202,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L158",
+      "source_location": "L164",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64213,7 +64213,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L159",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64224,7 +64224,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L160",
+      "source_location": "L166",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64235,7 +64235,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L161",
+      "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64246,7 +64246,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L162",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme",
@@ -64422,7 +64422,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/README.md",
-      "source_location": "L164",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_readme_manuten\u00e7\u00e3o_das_vis\u00f5es",
@@ -66171,7 +66171,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa",
@@ -66490,7 +66490,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md",
-      "source_location": "L104",
+      "source_location": "L105",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra_bl_0013_buscar_itens_e_padronizar_categorias_nas_telas_de_lista_e_compra",
@@ -66589,7 +66589,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0013-filtrar-itens-lista-compra.md",
-      "source_location": "L100",
+      "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0013_filtrar_itens_lista_compra_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -66644,7 +66644,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L94",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_bl_0014_fixar_resumo_de_or\u00e7amento_durante_a_compra",
@@ -66743,7 +66743,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md",
-      "source_location": "L90",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0014_fixar_orcamento_compra_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -66787,7 +66787,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0015-adicionar-item-comprado.md",
-      "source_location": "L98",
+      "source_location": "L99",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0015_adicionar_item_comprado_bl_0015_adicionar_item_como_comprado_durante_execu\u00e7\u00e3o",
@@ -66886,7 +66886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0015-adicionar-item-comprado.md",
-      "source_location": "L94",
+      "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0015_adicionar_item_comprado_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -66941,7 +66941,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L99",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_bl_0016_disponibilizar_bot\u00e3o_flutuante_para_adicionar_itens",
@@ -67040,7 +67040,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md",
-      "source_location": "L95",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0016_botao_flutuante_adicionar_itens_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -67095,7 +67095,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa_bl_0017_permitir_informar_um_nome_para_execu\u00e7\u00e3o_avulsa",
@@ -67194,7 +67194,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md",
-      "source_location": "L84",
+      "source_location": "L85",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa_acompanhamento_at\u00e9_produ\u00e7\u00e3o",
@@ -70613,5 +70613,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e76c9a15fd186bdbbc7b93144b40842e01cda810"
+  "built_at_commit": "4707d3033a6a483b03c6d0c60f62e9d1a01ee9ab"
 }

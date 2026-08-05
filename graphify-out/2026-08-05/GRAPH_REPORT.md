@@ -1,11 +1,11 @@
 # Graph Report - jaci  (2026-08-05)
 
 ## Corpus Check
-- 137 files · ~141,487 words
+- 137 files · ~141,727 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1786 nodes · 4383 edges · 101 communities (97 shown, 4 thin omitted)
+- 1786 nodes · 4384 edges · 99 communities (95 shown, 4 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 280 edges (avg confidence: 0.74)
 - Token cost: 0 input · 0 output
 
@@ -22,7 +22,7 @@
 - auth.py
 - utils/__init__.py
 - executions.py
-- get_category_by_id
+- categories.py
 - test_auth_pages.py
 - main.py
 - Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX
@@ -88,8 +88,7 @@
 - Refinamento — BL-0016 — Botão flutuante para adicionar itens
 - FL-01 — Primeiro Acesso e Onboarding
 - notification_service.py
-- FL-07 — Gestão de Grupos
-- FL-02 — Criação de Template
+- Estratégia de Banco de Dados
 - overview.md
 - FL-06 — Aprendizado do Template
 - user-flows.md
@@ -102,7 +101,6 @@
 - Identificação e entrada
 - read
 - auth_service.py
-- ensure_schema_compatibility
 - test_future_user_flows.py
 - datetime.py
 
@@ -133,7 +131,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (101 total, 4 thin omitted)
+## Communities (99 total, 4 thin omitted)
 
 ### Community 0 - "make_group"
 Cohesion: 0.11
@@ -163,9 +161,9 @@ Nodes (9): clear_auth_cookies(), create_magic_token(), decode_magic_token(), Res
 Cohesion: 0.10
 Nodes (58): Group, close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment() (+50 more)
 
-### Community 7 - "get_category_by_id"
-Cohesion: 0.14
-Nodes (26): create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category(), handle_uncategorized_position() (+18 more)
+### Community 7 - "categories.py"
+Cohesion: 0.12
+Nodes (38): Category, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category() (+30 more)
 
 ### Community 8 - "test_auth_pages.py"
 Cohesion: 0.53
@@ -173,7 +171,7 @@ Nodes (5): make_request(), Request, test_invalid_registration_renders_register_p
 
 ### Community 9 - "main.py"
 Cohesion: 0.13
-Nodes (24): get_db(), set_sqlite_pragma(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session (+16 more)
+Nodes (22): get_db(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session, Dependências reutilizáveis para injeção em rotas. (+14 more)
 
 ### Community 10 - "Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX"
 Cohesion: 0.05
@@ -248,7 +246,7 @@ Cohesion: 0.09
 Nodes (23): Cenários TDD, Contratos de etapas futuras, Critérios de sucesso, Escopo, Estratégia de validação, Etapa 1 — Busca local e navegação padronizada, Excluído, Fatia 1.1.1 — Criar contratos TDD e integrar a Lista (+15 more)
 
 ### Community 29 - "tests/README.md"
-Cohesion: 0.14
+Cohesion: 0.18
 Nodes (4): Backlog legado — Sprint 4 — Aprendizado contínuo dos templates, Demandas do backlog ativo, Rastreabilidade das regras de negócio, Rastreabilidade dos fluxos do usuário
 
 ### Community 30 - "run.py"
@@ -328,7 +326,7 @@ Cohesion: 0.17
 Nodes (12): Acompanhamento até produção, BL-0011 — Ampliar cobertura automatizada e testes de UI, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 62 - "Identificação e entrada"
-Cohesion: 0.17
+Cohesion: 0.14
 Nodes (12): Acompanhamento até produção, BL-0013 — Buscar itens e padronizar categorias nas telas de Lista e Compra, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 63 - "Identificação e entrada"
@@ -372,8 +370,8 @@ Cohesion: 0.33
 Nodes (6): Atores, Estado e rastreabilidade, FL-08 — Consulta da Agenda e Histórico, Fluxo Principal, Objetivo, Resultado Esperado
 
 ### Community 73 - "Backups do PostgreSQL"
-Cohesion: 0.14
-Nodes (12): Ambientes, Backups de produção, Estratégia de Banco de Dados, Migração de Dados, Migrações, Agenda e logs, Backups do PostgreSQL, Configuração (+4 more)
+Cohesion: 0.29
+Nodes (7): Agenda e logs, Backups do PostgreSQL, Configuração, Execução manual, Restauração manual em banco isolado, Retenção, Visão geral
 
 ### Community 74 - "home_service.py"
 Cohesion: 0.09
@@ -415,21 +413,17 @@ Nodes (5): Atores, FL-01 — Primeiro Acesso e Onboarding, Fluxo Principal, Obje
 Cohesion: 0.11
 Nodes (28): Notification, handle_mark_all_read(), handle_mark_read(), list_notifications(), get, post, Request, Session (+20 more)
 
-### Community 84 - "FL-07 — Gestão de Grupos"
-Cohesion: 0.40
-Nodes (5): Atores, FL-07 — Gestão de Grupos, Fluxo Principal, Objetivo, Resultado Esperado
-
-### Community 85 - "FL-02 — Criação de Template"
-Cohesion: 0.40
-Nodes (5): Atores, FL-02 — Criação de Template, Fluxo Principal, Objetivo, Resultado Esperado
+### Community 84 - "Estratégia de Banco de Dados"
+Cohesion: 0.33
+Nodes (5): Ambientes, Backups de produção, Estratégia de Banco de Dados, Migração de Dados, Migrações
 
 ### Community 87 - "FL-06 — Aprendizado do Template"
 Cohesion: 0.33
 Nodes (6): FL-06 — Aprendizado do Template, Fluxo Principal, Objetivo, Pré-condições, Resultado Esperado, Tipos de Sugestão
 
 ### Community 88 - "user-flows.md"
-Cohesion: 0.13
-Nodes (13): Atores, FL-05 — Compra Colaborativa, FL-10 — Home Operacional, Fluxo Crítico do Produto, Fluxo Principal, Fluxo Principal, Fluxos Principais do Usuário — Jaci, Objetivo (+5 more)
+Cohesion: 0.08
+Nodes (23): Atores, Atores, Atores, FL-02 — Criação de Template, FL-05 — Compra Colaborativa, FL-07 — Gestão de Grupos, FL-10 — Home Operacional, Fluxo Crítico do Produto (+15 more)
 
 ### Community 89 - "item-add-modal.js"
 Cohesion: 0.27
@@ -467,17 +461,13 @@ Nodes (10): Path, read(), test_both_modal_pages_load_the_local_cached_controller
 Cohesion: 0.31
 Nodes (9): authenticate_with_password(), get_or_create_tupa_user(), Session, Associa uma identidade Tupã ao perfil local do Jaci., Autentica no Tupã e carrega o perfil local., Cria a identidade no Tupã e o perfil local no Jaci., register_with_password(), test_first_access_creates_default_home_and_categories() (+1 more)
 
-### Community 98 - "ensure_schema_compatibility"
-Cohesion: 0.50
-Nodes (4): ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., apply_migrations(), Aplica migrações Alembic e adota bancos SQLite legados.
-
 ### Community 99 - "test_future_user_flows.py"
 Cohesion: 0.43
 Nodes (6): future_flow, Contratos dos fluxos documentados e dos fluxos futuros ainda pendentes., test_fl08_spending_analysis_uses_completed_executions_only(), test_fl09_offline_operation_is_queued_before_remote_sync(), test_fl09_reconnection_synchronizes_queued_operations_without_data_loss(), test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions()
 
 ### Community 100 - "datetime.py"
-Cohesion: 0.14
-Nodes (18): Base, Category, TemplateLearningDismissal, TemplateItem, create_category(), get_categories_by_group(), move_category(), Session (+10 more)
+Cohesion: 0.18
+Nodes (12): Base, ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., set_sqlite_pragma(), TemplateLearningDismissal, TemplateItem, _iso(), datetime (+4 more)
 
 ## Knowledge Gaps
 - **465 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+460 more)
@@ -487,7 +477,7 @@ Nodes (18): Base, Category, TemplateLearningDismissal, TemplateItem, create_cate
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `make_group`, `template_service.py`, `Execution`, `auth.py`, `executions.py`, `get_category_by_id`, `main.py`, `build_offline_snapshot`, `test_pwa.py`, `sync_center`, `tupa_auth_service.py`, `ExecutionStatus`, `offline.py`, `home_service.py`, `make_user`, `notification_service.py`, `handle_setup_profile`, `sync_conflict_audit_service.py`, `auth_service.py`, `datetime.py`?**
+- **Why does `User` connect `User` to `make_group`, `template_service.py`, `Execution`, `auth.py`, `executions.py`, `categories.py`, `main.py`, `build_offline_snapshot`, `test_pwa.py`, `sync_center`, `tupa_auth_service.py`, `ExecutionStatus`, `offline.py`, `home_service.py`, `make_user`, `notification_service.py`, `handle_setup_profile`, `sync_conflict_audit_service.py`, `auth_service.py`, `datetime.py`?**
   _High betweenness centrality (0.084) - this node is a cross-community bridge._
 - **Why does `Execution` connect `Execution` to `make_group`, `ExecutionStatus`, `template_service.py`, `offline.py`, `datetime.py`, `executions.py`, `home_service.py`, `build_offline_snapshot`, `make_user`, `notification_service.py`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._

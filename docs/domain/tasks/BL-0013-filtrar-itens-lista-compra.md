@@ -222,11 +222,13 @@ pendentes:
   aprovados; fatia 2 — `node --check` nos dois scripts e 35 testes aprovados;
   fatia 3 — 6 testes aprovados e 4 templates Jinja2 compilados
 - Resultado da validação manual: smoke test Chrome headless confirmou o grupo
-  global de `collapse show` para `collapse` (`closed`); fluxo completo em
-  navegador permanece pendente da infraestrutura Playwright da BL-0011
+  global de `collapse show` para `collapse` (`closed`); o aceite da versão
+  `1.2.0` em produção foi informado pelo usuário, e a infraestrutura Playwright
+  futura permanece acompanhada pela BL-0011
 - Resultado da regressão total: migrações no head em `.env.test`; 178 testes
   aprovados e 5 `xfail` legados fora do escopo; após a correção do collapse,
   179 testes aprovados e os mesmos 5 `xfail` legados
 - `xfail(strict=True)` pendentes no escopo: nenhum
 - Documentação atualizada: item, índice, este refinamento e `tests/README.md`
-- Publicação: ainda não publicada
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`

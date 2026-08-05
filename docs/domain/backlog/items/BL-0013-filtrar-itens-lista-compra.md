@@ -7,14 +7,14 @@
 | ID | `BL-0013` |
 | Título | Buscar itens e padronizar categorias nas telas de Lista e Compra |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-03` |
+| Atualizado em | `2026-08-05` |
 
 ### Comportamento observado
 
@@ -79,7 +79,7 @@ produto desejado.
 | Dependências | Agrupamento Jinja2 existente, Bootstrap Collapse e atualização de `#items-container`; BL-0011 acompanha futura infraestrutura Playwright |
 | Duplicidades | Nenhuma identificada no backlog ativo ou legado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar manualmente em navegador e registrar a publicação antes do encerramento |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.0` |
 
 ## Acompanhamento até produção
 
@@ -92,7 +92,8 @@ produto desejado.
   aprovados e 5 `xfail` legados fora do escopo. Após a correção do collapse:
   16 testes focados aprovados, smoke test Chrome com resultado `closed` e nova
   regressão com 179 testes aprovados e 5 `xfail` legados.
-- Publicação: ainda não publicada.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`; `BL-0011`
   acompanha a infraestrutura futura de testes em navegador e os demais itens
   cobrem melhorias correlatas da experiência de Lista e Compra.
@@ -117,3 +118,4 @@ produto desejado.
 | `2026-08-03 21:28 -03` | Codex | `em_implementacao` -> `em_validacao` | Migrações no head; regressão com 178 testes aprovados e 5 `xfail` legados fora do escopo |
 | `2026-08-03 21:45 -03` | Usuário | Falha no botão global reportada durante validação | Remoção do botão Limpar em `64b38d1` deixou a referência JavaScript `clear` sem declaração |
 | `2026-08-03 21:48 -03` | Codex | Defeito de validação corrigido | Listener restaurado com segurança, cache PWA `v24`, 16 testes focados, Chrome headless `closed` e regressão 179/5 |
+| `2026-08-05 11:42 -03` | Usuário/Codex | `em_validacao` -> `concluido` | Publicação em produção da versão `1.2.0`, tag `v1.2.0` no commit `7364294`, informada pelo usuário |

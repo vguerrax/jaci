@@ -7,14 +7,14 @@
 | ID | `BL-0014` |
 | Título | Fixar resumo de orçamento durante a compra |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e07bcfe`) em `2026-08-03` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-04` |
+| Atualizado em | `2026-08-05` |
 
 ### Comportamento observado
 
@@ -72,7 +72,7 @@ total realizado e o orçamento previsto.
 | Dependências | Fragmento de itens, IndexedDB/fila offline, Socket.IO, Bootstrap Toast, navbar fixa e cache PWA |
 | Duplicidades | Nenhuma identificada nos backlogs ativo e legado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar o comportamento em navegador móvel/desktop e registrar a publicação |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.0` |
 
 ## Acompanhamento até produção
 
@@ -82,8 +82,10 @@ total realizado e o orçamento previsto.
 - Validações: 44 testes focados pós-merge e regressão com 186 testes aprovados e
   5 `xfail` legados fora do escopo; `item-filter.js`, `execution-budget.js` e
   `offline-cache.js` aprovados por `node --check`; migrações no head; grafo
-  AST-only reconstruído e consultável; validação manual em navegador pendente.
-- Publicação: ainda não publicada.
+  AST-only reconstruído e consultável; aceite da versão `1.2.0` em produção
+  informado pelo usuário.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.
 - Itens relacionados: `BL-0013`, `BL-0015` e `BL-0016`, registrados como
   melhorias correlatas da experiência de Lista e Compra.
 
@@ -109,3 +111,4 @@ total realizado e o orçamento previsto.
 | `2026-08-03 23:48 -03` | Codex | Commit corretivo registrado | Correção e evidências consolidadas em `440a68d` |
 | `2026-08-04 12:16 -03` | Codex | Compatibilidade pós-merge corrigida | Expectativa do campo de busca alinhada ao commit `f306bc4`; atributos DOM da BL-0013 restaurados no fragmento combinado com a BL-0014; 44 testes focados e regressão 186/5 aprovados |
 | `2026-08-04 12:16 -03` | Codex | Commit técnico registrado | Correção dos dois testes e reconstrução do grafo consolidadas em `76c55fb` |
+| `2026-08-05 11:42 -03` | Usuário/Codex | `em_validacao` -> `concluido` | Publicação em produção da versão `1.2.0`, tag `v1.2.0` no commit `7364294`, informada pelo usuário |

@@ -209,10 +209,13 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
   `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`;
   57 testes ampliados de agenda, dashboard, recorrência, templates e aprendizado
   aprovados; módulos Python compilados. O `pylint` não está instalado no venv.
-- Resultado da validação manual: pendente em navegador real; renderização,
-  condicionais da interface e contratos offline possuem cobertura automatizada.
+- Resultado da validação manual: o aceite da versão `1.2.0` em produção foi
+  informado pelo usuário; renderização, condicionais da interface e contratos
+  offline possuem cobertura automatizada.
 - Resultado da regressão total: migrações no head; 225 testes aprovados e 5
   `xfail` legados fora do escopo.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: regra de edição agendada, matriz de testes, item,
   índice e este refinamento; grafo atualizado após a implementação.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.

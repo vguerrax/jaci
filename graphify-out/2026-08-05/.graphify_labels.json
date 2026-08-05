@@ -6,7 +6,7 @@
   "4": "auth.py",
   "5": "utils/__init__.py",
   "6": "executions.py",
-  "7": "get_category_by_id",
+  "7": "categories.py",
   "8": "test_auth_pages.py",
   "9": "main.py",
   "10": "Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX",
@@ -83,8 +83,7 @@
   "81": "Refinamento — BL-0016 — Botão flutuante para adicionar itens",
   "82": "FL-01 — Primeiro Acesso e Onboarding",
   "83": "notification_service.py",
-  "84": "FL-07 — Gestão de Grupos",
-  "85": "FL-02 — Criação de Template",
+  "84": "Estratégia de Banco de Dados",
   "86": "overview.md",
   "87": "FL-06 — Aprendizado do Template",
   "88": "user-flows.md",
@@ -97,7 +96,6 @@
   "95": "Identificação e entrada",
   "96": "read",
   "97": "auth_service.py",
-  "98": "ensure_schema_compatibility",
   "99": "test_future_user_flows.py",
   "100": "datetime.py"
 }

@@ -7,7 +7,7 @@
 | ID | `BL-0017` |
 | Título | Permitir informar um nome para execução avulsa |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P2` |
 | Data de entrada | `2026-08-03` |
@@ -71,19 +71,20 @@ agendada, adicionando uma etapa ao fluxo.
 | Dependências | Contrato atual de edição agendada e fila offline; cobertura futura de navegador na `BL-0011` |
 | Duplicidades | Nenhuma identificada |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar manualmente em navegador real e registrar a publicação antes do encerramento |
+| Próximo passo | Nenhum — demanda concluída na versão `1.2.0` |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0017](../../tasks/BL-0017-nome-execucao-avulsa.md).
 - Implementação (commits/PRs): fatia 1.1.1 implementada no commit `4f91170`.
 - Validações: 56 testes focados e 57 testes ampliados aprovados; regressão com 225 aprovados e 5 `xfail` legados; migrações no head; compilação Python aprovada; `pylint` indisponível.
-- Publicação: ainda não publicada.
+- Publicação: produção, versão `1.2.0`, tag `v1.2.0` no commit `7364294`,
+  publicada em `2026-08-05`.
 - Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
 
 ### Impedimentos
 
-- Validação em navegador real e publicação ainda não registradas.
+- Nenhum.
 
 ## Histórico
 
@@ -95,3 +96,4 @@ agendada, adicionando uma etapa ao fluxo.
 | `2026-08-05 07:49 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita posterior ao commit documental `e76c9a1` |
 | `2026-08-05 07:49 -03` | Codex | Fatia 1.1.1 implementada; `em_implementacao` → `em_validacao` | Contratos focados, validação ampliada e regressão aprovados; publicação pendente |
 | `2026-08-05 07:49 -03` | Codex | Commit da fatia registrado | Implementação e validações versionadas em `4f91170` |
+| `2026-08-05 11:42 -03` | Usuário/Codex | `em_validacao` → `concluido` | Publicação em produção da versão `1.2.0`, tag `v1.2.0` no commit `7364294`, informada pelo usuário |
