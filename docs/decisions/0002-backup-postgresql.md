@@ -67,4 +67,5 @@ modelo de dados, migrações, APIs ou regras do domínio.
 
 O volume local do host passa a ser a única cópia criada por esta entrega.
 Replicação para armazenamento externo deve ser adicionada futuramente para
-proteção contra perda do próprio servidor.
+proteção contra perda do próprio servidor. Essa evolução é acompanhada no
+[BL-0007](../domain/backlog/items/BL-0007-replicacao-externa-backups.md).

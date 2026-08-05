@@ -397,16 +397,72 @@ Ao implementar novas funcionalidades:
 
 ---
 
+## Gestão Obrigatória de Demandas
+
+Para registrar, triar, refinar, acompanhar, reabrir, arquivar ou concluir
+demandas, usar obrigatoriamente a skill global `vgx-doc-management`. Depois da
+aprovação explícita do refinamento, usar `vgx-development` para testes
+executáveis, implementação e validações.
+
+### Perfil documental do Jaci
+
+- Fonte de verdade: [`docs/domain/backlog/`](docs/domain/backlog/README.md).
+- Entrada: [`docs/domain/backlog/TEMPLATE.md`](docs/domain/backlog/TEMPLATE.md).
+- Refinamento:
+  [`docs/domain/tasks/TEMPLATE.md`](docs/domain/tasks/TEMPLATE.md).
+- Identificador: próximo `BL-NNNN` global, sem reutilização.
+- Estado inicial: `recebido`, severidade `a_triar` e prioridade `a_definir`.
+- Branch: `feature/BL-NNNN-slug` criada a partir de `develop`; registrar a
+  branch no refinamento e não integrar ou remover sem solicitação explícita.
+- Riscos obrigatórios: segurança, LGPD, isolamento por grupo,
+  offline/sincronização, histórico financeiro, recorrência e separação entre
+  template e execução.
+- Itens anteriores ao processo permanecem no
+  [`backlog legado`](docs/domain/decisions/backlog.md) e não consomem a
+  numeração atual.
+
+O fluxo principal é:
+
+```text
+recebido -> em_triagem -> pronto_para_refinamento -> em_refinamento
+         -> pronto_para_implementacao -> em_implementacao -> em_validacao
+         -> concluido
+```
+
+### Refinamento e gate de aprovação
+
+Aplicar o gate definido por `vgx-doc-management`: pedidos documentais autorizam
+somente backlog, refinamento e documentação de domínio. Testes, código,
+migrações, templates e ativos só começam quando o item estiver
+`pronto_para_implementacao` e o usuário aprovar explicitamente o refinamento já
+versionado. Um item só chega a `concluido` depois das validações obrigatórias e
+do registro da publicação.
+
+---
+
 ## Ordem de Prioridade do Roadmap
 
-1. PWA e funcionamento offline.
-2. Sincronização e resolução de conflitos.
-3. Unidades de medida.
-4. Histórico de preços.
-5. Aprendizado dos templates.
-6. Inteligência de compras.
-7. Dashboards financeiros.
-8. Integrações externas.
+O backlog ativo mantém o estado operacional das demandas. Esta ordem preserva a
+sequência estratégica do produto:
+
+1. PWA e funcionamento offline — fundação legada concluída; cobertura
+   remanescente em
+   [`BL-0001`](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
+2. Sincronização e resolução de conflitos — entregas legadas concluídas.
+3. Unidades de medida —
+   [`BL-0002`](docs/domain/backlog/items/BL-0002-unidades-medida.md).
+4. Histórico de preços —
+   [`BL-0003`](docs/domain/backlog/items/BL-0003-historico-precos.md).
+5. Aprendizado dos templates — entregas legadas concluídas.
+6. Inteligência de compras —
+   [`BL-0005`](docs/domain/backlog/items/BL-0005-inteligencia-compras.md).
+7. Dashboards financeiros —
+   [`BL-0004`](docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md).
+8. Integrações externas —
+   [`BL-0006`](docs/domain/backlog/items/BL-0006-integracoes-externas.md).
+
+O inventário completo de itens ativos e legados está em
+[`docs/domain/backlog/`](docs/domain/backlog/README.md).
 
 ---
 
@@ -437,3 +493,15 @@ Ao propor alterações, responda internamente às perguntas:
 
 Se qualquer resposta for negativa, reavalie a implementação.
 
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).

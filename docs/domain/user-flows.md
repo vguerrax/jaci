@@ -334,6 +334,13 @@ Analisar gastos
 * Histórico acessível
 * Planejamento financeiro facilitado
 
+## Estado e rastreabilidade
+
+A consulta básica da agenda e das execuções finalizadas está implementada.
+Histórico de preços e análise consolidada de gastos permanecem no
+[BL-0003](backlog/items/BL-0003-historico-precos.md) e no
+[BL-0004](backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md).
+
 ---
 
 # FL-09 — Operação Offline
@@ -369,6 +376,13 @@ Resolver conflitos (se necessário)
 
 * Nenhuma alteração é perdida
 * Experiência de compra ininterrupta
+
+## Estado e rastreabilidade
+
+A operação offline de execuções possui fila local, sincronização, retentativa e
+resolução explícita de conflitos. Cobertura remanescente e contratos legados
+estão no
+[BL-0001](backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ---
 

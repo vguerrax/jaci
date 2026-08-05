@@ -151,7 +151,8 @@ Consulte o procedimento completo, incluindo retenção e restauração segura em
 banco isolado, em
 [docs/operations/postgresql-backups.md](docs/operations/postgresql-backups.md).
 O volume local é a única cópia automática atual; recomenda-se replicação futura
-para armazenamento externo.
+para armazenamento externo. Essa evolução é acompanhada no
+[BL-0007](docs/domain/backlog/items/BL-0007-replicacao-externa-backups.md).
 
 ## Banco de dados e migrações
 
@@ -225,14 +226,16 @@ Os fluxos implementados e os contratos futuros são guiados por
 [docs/domain/user-flows.md](docs/domain/user-flows.md):
 
 - Implementados: onboarding, templates, geração e execução de compras, colaboração,
-  grupos, Home operacional e consulta básica da agenda/histórico.
-- Em evolução: aprendizado de templates e histórico de preços/análise de gastos.
-- Planejado: operação offline com fila local, sincronização e resolução explícita
-  de conflitos.
+  grupos, Home operacional, consulta básica da agenda/histórico, aprendizado de
+  templates e operação offline de execuções com fila local, sincronização e
+  resolução explícita de conflitos.
+- Em evolução: cobertura e rastreabilidade offline remanescente, histórico de
+  preços e análise de gastos.
 
-Os fluxos ainda não implementados já possuem contratos TDD marcados com
-`xfail(strict=True)`. Isso mantém a expectativa executável sem esconder a ausência
-da funcionalidade.
+O [backlog ativo](docs/domain/backlog/README.md) é a fonte de verdade para o
+estado das demandas. Contratos futuros usam `xfail(strict=True)` até a
+implementação aprovada; contratos legados divergentes são rastreados no item
+correspondente do backlog.
 
 ### Home operacional
 
@@ -258,13 +261,17 @@ No PWA instalado, um indicador global de carregamento aparece em navegações,
 formulários e requisições HTMX para evitar múltiplos toques durante o delay de
 carregamento.
 
-Também há cache local em IndexedDB para consulta offline de grupos, categorias,
-listas/templates e execuções recentes. Esse cache é atualizado automaticamente
-quando o usuário está online e autenticado, mas continua somente leitura.
+Também há cache local em IndexedDB para grupos, categorias, listas/templates,
+execuções recentes e itens. Durante uma execução, alterações suportadas são
+aplicadas primeiro ao estado local e registradas numa fila persistente. Ao
+reconectar, a fila sincroniza em ordem, preserva operações com falha e exige
+resolução explícita quando há conflito.
 
-A fundação atual não inclui alterações offline, fila persistente de mutações nem
-resolução de conflitos. Detalhes e roteiro de validação manual estão em
+O escopo implementado, as limitações atuais e o roteiro de validação manual
+estão em
 [docs/domain/pwa-offline-foundation.md](docs/domain/pwa-offline-foundation.md).
+A cobertura e a rastreabilidade remanescentes estão no
+[BL-0001](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ## Testes
 
@@ -277,8 +284,8 @@ venv/bin/pytest
 
 A rastreabilidade entre regras, fluxos e testes está em
 [tests/README.md](tests/README.md). Uma execução saudável pode conter casos `XFAIL`
-para contratos futuros documentados; um `XPASS` é tratado como falha até que o
-fluxo seja revisado e declarado implementado.
+para contratos futuros documentados ou contratos legados explicitamente
+rastreados; um `XPASS` é tratado como falha até que o contrato seja revisado.
 
 ## 🔐 Segurança
 
