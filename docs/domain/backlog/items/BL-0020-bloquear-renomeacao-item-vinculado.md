@@ -85,9 +85,10 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
 - Implementação (commits/PRs): fatia 1.1.1 concluída no commit `f386127`.
-- Validações: ciclo TDD reproduziu 10 falhas esperadas e depois aprovou 89
-  testes focados; sintaxe JavaScript e compilação Python aprovadas; migrações no
-  head; regressão com 235 testes aprovados e 5 `xfail` legados fora do escopo.
+- Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
+  visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
+  focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
+  regressão atual com 237 testes aprovados e 5 `xfail` legados fora do escopo.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0003](BL-0003-historico-precos.md),
   [BL-0005](BL-0005-inteligencia-compras.md) e
@@ -107,3 +108,5 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 | `2026-08-05 20:16 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `0fd7aaa` |
 | `2026-08-05 20:21 -03` | Codex | Fatia 1.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Regra online/offline, UX somente leitura e cache `v31` implementados; validações automatizadas aprovadas |
 | `2026-08-05 20:21 -03` | Codex | Commit técnico registrado | Implementação, testes, documentação e grafo consolidados em `f386127` |
+| `2026-08-05 20:31 -03` | Usuário/Codex | Falha encontrada na validação manual | Item comprado abria o modal de conclusão, que mostrava o nome somente no título e omitia o campo `readonly` e a orientação previstos |
+| `2026-08-05 20:31 -03` | Codex | Correção de validação aplicada | Campo e orientação adicionados aos modais de comprar/editar compra online e offline; cache elevado para `v32` e regressão aprovada |

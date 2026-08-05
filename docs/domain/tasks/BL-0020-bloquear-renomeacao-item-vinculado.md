@@ -209,17 +209,20 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 
 ## Fechamento
 
-- Commits/PRs: fatia 1.1.1 `f386127`; branch
+- Commits/PRs: fatia 1.1.1 `f386127`; correção de validação a registrar; branch
   `feature/BL-0020-bloquear-renomeacao-item-vinculado`.
 - Resultado das validações focadas: ciclo TDD inicial com 10 falhas esperadas e
   79 aprovações; após a implementação, 89 testes aprovados. `node --check`
   aprovou `offline-cache.js` e `service-worker.js`; compilação Python aprovada.
-  O `pylint` não está instalado no venv.
-- Resultado da validação manual: pendente de aceite em navegador; renderização,
-  adaptadores HTMX e contratos offline possuem cobertura automatizada. A
-  infraestrutura Playwright permanece futura na `BL-0011`.
-- Resultado da regressão total: migrações no head; 235 testes aprovados e 5
-  `xfail` legados fora do escopo.
+  A falha manual do modal de item comprado reproduziu 5 falhas esperadas e,
+  depois da correção online/offline, 73 testes focados foram aprovados. O
+  `pylint` não está instalado no venv.
+- Resultado da validação manual: primeira rodada reprovada porque o modal de
+  item comprado omitia o campo de nome e a orientação. Correção implementada;
+  nova rodada de aceite em navegador pendente. A infraestrutura Playwright
+  permanece futura na `BL-0011`.
+- Resultado da regressão total: migrações no head; 237 testes aprovados e 5
+  `xfail` legados fora do escopo após a correção.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, matriz de testes e este refinamento;
   grafo AST-only reconstruído.

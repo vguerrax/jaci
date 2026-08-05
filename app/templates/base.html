@@ -212,6 +212,16 @@
                                 aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="mb-3" data-linked-complete-item-name-group hidden>
+                                <label class="form-label" for="offlineCompleteItemName">Nome do item</label>
+                                <input id="offlineCompleteItemName" type="text" class="form-control"
+                                    data-linked-complete-item-name readonly
+                                    aria-describedby="offlineCompleteLinkedItemNameHelp">
+                                <div class="form-text" id="offlineCompleteLinkedItemNameHelp"
+                                    data-linked-complete-item-name-help>
+                                    Para comprar outro produto, remova este item e adicione o correto.
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label" for="offlineCompletePurchasedQuantity">Quantidade
                                     comprada</label>

@@ -1807,6 +1807,16 @@
         form.querySelector('[name="location"]').value = lastLocation || '';
         form.querySelector('[name="notes"]').value = button.dataset.notes || '';
 
+        const linkedCompleteNameGroup = form.querySelector('[data-linked-complete-item-name-group]');
+        const linkedCompleteNameInput = form.querySelector('[data-linked-complete-item-name]');
+        const isTemplateLinked = Boolean(button.dataset.templateItemId);
+        if (linkedCompleteNameGroup) {
+            linkedCompleteNameGroup.hidden = !isTemplateLinked;
+        }
+        if (linkedCompleteNameInput) {
+            linkedCompleteNameInput.value = button.dataset.itemName || '';
+        }
+
         const title = modalEl.querySelector('#offlineCompleteItemModalLabel');
         if (title) {
             title.textContent = `${button.dataset.purchasedQuantity ? 'Editar compra' : 'Comprar'}: ${button.dataset.itemName || 'item'}`;

@@ -107,6 +107,38 @@ def test_linked_execution_item_edit_form_keeps_name_read_only(
     assert "Para comprar outro produto, remova este item e adicione o correto." in body
 
 
+def test_linked_purchased_item_modal_keeps_name_field_visible_and_read_only(
+    db, make_user, make_group
+):
+    user = make_user("ana-linked-purchased-form@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    execution.status = ExecutionStatus.in_progress
+    db.commit()
+    item = execution.items[0]
+    complete_item(db, item, 1, 5.5)
+
+    response = asyncio.run(
+        execution_routes.complete_item_form(
+            request=make_execution_item_request(),
+            execution_id=execution.id,
+            item_id=item.id,
+            db=db,
+            user=user,
+        )
+    )
+
+    body = response.body.decode()
+    assert response.status_code == 200
+    assert 'id="completeItemName' in body
+    assert 'value="Maçã" readonly' in body
+    assert "Para comprar outro produto, remova este item e adicione o correto." in body
+
+
 def test_unlinked_execution_item_edit_form_keeps_name_editable(
     db, make_user, make_group
 ):

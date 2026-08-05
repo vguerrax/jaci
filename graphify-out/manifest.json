@@ -210,8 +210,8 @@
     "semantic_hash": "3e0b21cc5d5121249b7a143452ce957d"
   },
   "app/static/js/offline-cache.js": {
-    "mtime": 1785971982.9350715,
-    "ast_hash": "be429d433bc72a0a1e2e8aeeea437bc5",
+    "mtime": 1785972615.1527402,
+    "ast_hash": "451c2a7e6e08d2092437103df2491627",
     "semantic_hash": ""
   },
   "app/static/js/pwa-install.js": {
@@ -220,8 +220,8 @@
     "semantic_hash": "2fb77115c7a3a790c8e9f6953992e051"
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1785971983.0583339,
-    "ast_hash": "dc11538ce41ffe035c9e42f1eb6ab337",
+    "mtime": 1785972615.2723231,
+    "ast_hash": "d36234459f7ebfc8c781ede7e91c1586",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -405,8 +405,8 @@
     "semantic_hash": "4e50357a1c2c87aabeffd171b26a2b56"
   },
   "tests/test_offline_cache.py": {
-    "mtime": 1785971933.0147011,
-    "ast_hash": "d92820b5f7b850c69eac8620d64cd519",
+    "mtime": 1785972588.9282339,
+    "ast_hash": "71c8a62b975746a3f03a65111b5517b3",
     "semantic_hash": ""
   },
   "tests/test_postgresql_backup.py": {
@@ -415,8 +415,8 @@
     "semantic_hash": "ed90fc9103091a7e87f45b1033fe8371"
   },
   "tests/test_pwa.py": {
-    "mtime": 1785971933.142703,
-    "ast_hash": "b1b1e4640297d7ab345d8a3afbd5a9a0",
+    "mtime": 1785972589.0559816,
+    "ast_hash": "4a1e08750a1294ff97377e464d7d1592",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -435,8 +435,8 @@
     "semantic_hash": "281c5313ced306d66a07d896e0924d06"
   },
   "tests/test_template_execution_flow.py": {
-    "mtime": 1785971983.178286,
-    "ast_hash": "8dd7c4b301d164740c7ebcd469a20ae4",
+    "mtime": 1785972588.8029785,
+    "ast_hash": "d9cf5d15c2c0d1e6f8a7bb1633f91417",
     "semantic_hash": ""
   },
   "tests/test_template_learning_tdd.py": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "app/templates/base.html": {
-    "mtime": 1785971982.8099272,
-    "ast_hash": "e4d4f4bf1095efe46ea559c605a934c7",
+    "mtime": 1785972615.0273001,
+    "ast_hash": "30be30df6da396b494df1d8b565eb366",
     "semantic_hash": ""
   },
   "app/templates/components/confirm_modal.html": {
@@ -510,8 +510,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_complete_modal.html": {
-    "mtime": 1784832781.1436586,
-    "ast_hash": "3b51ef3208498f715ba1258bff2e1bd9",
+    "mtime": 1785972614.787297,
+    "ast_hash": "b21d5f8e174f715c471781f0337a90ae",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_edit_modal.html": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_items_fragment.html": {
-    "mtime": 1785971982.6893306,
-    "ast_hash": "bbe539cf8847a4b7a3074251ab3d4dbb",
+    "mtime": 1785972614.9062986,
+    "ast_hash": "eb4c076187422b9df95237669335d90a",
     "semantic_hash": ""
   },
   "app/templates/pages/executions/_sidebar_fragment.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785971823.4291449,
-    "ast_hash": "89ddaacd56cebd82fdb0489dba06184d",
+    "mtime": 1785972087.1613271,
+    "ast_hash": "ac5944c8d6801a88c867ef50d0febd15",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785951599.7103066,
-    "ast_hash": "07ed718fae17a60f4a6ee2efa3438418",
+    "mtime": 1785972087.540331,
+    "ast_hash": "e88268de25d45b9d6d8fcbad32a96bb9",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -865,8 +865,8 @@
     "semantic_hash": "cd46d40e22988cd8f66cd6d571328d25"
   },
   "tests/test_sticky_budget.py": {
-    "mtime": 1785971933.2647047,
-    "ast_hash": "f4d0da6469e62cd8a08322a4abbf8027",
+    "mtime": 1785972589.1939833,
+    "ast_hash": "e3714f449f86d29179aeefa64667ca9b",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
@@ -950,13 +950,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785971823.1921415,
-    "ast_hash": "3578a2fc88cb6d477650c550a2d905e1",
+    "mtime": 1785972127.1827304,
+    "ast_hash": "388cbe5d13c2ba554073cc765cfc3f21",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785971823.3111434,
-    "ast_hash": "ebb821a808548091d115d9c9603765eb",
+    "mtime": 1785972127.3027318,
+    "ast_hash": "7ef9eedcc0603521a07949fb86ef9996",
     "semantic_hash": ""
   }
 }

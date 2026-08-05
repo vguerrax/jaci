@@ -21,6 +21,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
+                    {% if item.template_item_id %}
+                    <div class="mb-3">
+                        <label class="form-label" for="completeItemName{{ item.id }}">Nome do item</label>
+                        <input id="completeItemName{{ item.id }}" type="text" class="form-control"
+                            value="{{ item.name or '' }}" readonly
+                            aria-describedby="completeLinkedItemNameHelp{{ item.id }}">
+                        <div class="form-text" id="completeLinkedItemNameHelp{{ item.id }}">
+                            Para comprar outro produto, remova este item e adicione o correto.
+                        </div>
+                    </div>
+                    {% endif %}
                     <div class="mb-3">
                         <label class="form-label">Quantidade comprada</label>
                         <input type="number" class="form-control" name="purchased_quantity"

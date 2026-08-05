@@ -1307,6 +1307,7 @@ def test_execution_item_controls_are_offline_capable():
     assert "data-offline-complete-item" in items
     assert "data-offline-edit-item" in items
     assert 'data-template-item-id="{{ item.template_item_id or \'\' }}"' in items
+    assert items.count('data-template-item-id="{{ item.template_item_id or \'\' }}"') == 3
     assert "data-offline-incomplete-item" in items
     assert "data-offline-remove-item" in items
     assert 'data-bs-toggle="modal"' not in items
@@ -1344,6 +1345,17 @@ def test_offline_edit_modal_locks_only_linked_item_names_without_leaking_state()
     assert "nameInput.readOnly = isTemplateLinked;" in script
     assert "linkedNameHelp.hidden = !isTemplateLinked;" in script
     assert "button.dataset.templateItemId" in script
+
+
+def test_offline_purchase_modal_shows_linked_item_name_and_guidance():
+    base = Path("app/templates/base.html").read_text()
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "data-linked-complete-item-name-group" in base
+    assert "data-linked-complete-item-name" in base
+    assert "data-linked-complete-item-name-help" in base
+    assert "linkedCompleteNameGroup.hidden = !isTemplateLinked;" in script
+    assert "linkedCompleteNameInput.value = button.dataset.itemName || '';" in script
 
 
 def test_offline_item_state_is_visible_and_mobile_panel_does_not_overlay_content():
