@@ -1,16 +1,16 @@
 # Graph Report - jaci  (2026-08-05)
 
 ## Corpus Check
-- 137 files · ~141,727 words
+- 137 files · ~141,964 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1786 nodes · 4384 edges · 99 communities (95 shown, 4 thin omitted)
+- 1786 nodes · 4384 edges · 100 communities (96 shown, 4 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 280 edges (avg confidence: 0.74)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e76c9a15`
+- Built from commit: `4707d303`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - auth.py
 - utils/__init__.py
 - executions.py
-- categories.py
+- get_category_by_id
 - test_auth_pages.py
 - main.py
 - Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX
@@ -89,6 +89,7 @@
 - FL-01 — Primeiro Acesso e Onboarding
 - notification_service.py
 - Estratégia de Banco de Dados
+- ensure_schema_compatibility
 - overview.md
 - FL-06 — Aprendizado do Template
 - user-flows.md
@@ -131,7 +132,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (99 total, 4 thin omitted)
+## Communities (100 total, 4 thin omitted)
 
 ### Community 0 - "make_group"
 Cohesion: 0.11
@@ -161,9 +162,9 @@ Nodes (9): clear_auth_cookies(), create_magic_token(), decode_magic_token(), Res
 Cohesion: 0.10
 Nodes (58): Group, close_execution_page(), complete_item_form(), _completed_page(), create_execution_page(), edit_item_form(), execution_detail(), execution_items_fragment() (+50 more)
 
-### Community 7 - "categories.py"
-Cohesion: 0.12
-Nodes (38): Category, create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category() (+30 more)
+### Community 7 - "get_category_by_id"
+Cohesion: 0.14
+Nodes (26): create_category_page(), delete_category_confirm_page(), edit_category_page(), handle_create_category(), handle_delete_category(), handle_edit_category(), handle_move_category(), handle_uncategorized_position() (+18 more)
 
 ### Community 8 - "test_auth_pages.py"
 Cohesion: 0.53
@@ -171,7 +172,7 @@ Nodes (5): make_request(), Request, test_invalid_registration_renders_register_p
 
 ### Community 9 - "main.py"
 Cohesion: 0.13
-Nodes (22): get_db(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session, Dependências reutilizáveis para injeção em rotas. (+14 more)
+Nodes (24): get_db(), set_sqlite_pragma(), get_active_group(), get_current_user(), get_current_user_ws(), get_unread_notification_count(), Request, Session (+16 more)
 
 ### Community 10 - "Refinamento — BL-0012 — Gestão documental compartilhada dos projetos VGX"
 Cohesion: 0.05
@@ -417,6 +418,10 @@ Nodes (28): Notification, handle_mark_all_read(), handle_mark_read(), list_notif
 Cohesion: 0.33
 Nodes (5): Ambientes, Backups de produção, Estratégia de Banco de Dados, Migração de Dados, Migrações
 
+### Community 85 - "ensure_schema_compatibility"
+Cohesion: 0.50
+Nodes (4): ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., apply_migrations(), Aplica migrações Alembic e adota bancos SQLite legados.
+
 ### Community 87 - "FL-06 — Aprendizado do Template"
 Cohesion: 0.33
 Nodes (6): FL-06 — Aprendizado do Template, Fluxo Principal, Objetivo, Pré-condições, Resultado Esperado, Tipos de Sugestão
@@ -466,8 +471,8 @@ Cohesion: 0.43
 Nodes (6): future_flow, Contratos dos fluxos documentados e dos fluxos futuros ainda pendentes., test_fl08_spending_analysis_uses_completed_executions_only(), test_fl09_offline_operation_is_queued_before_remote_sync(), test_fl09_reconnection_synchronizes_queued_operations_without_data_loss(), test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions()
 
 ### Community 100 - "datetime.py"
-Cohesion: 0.18
-Nodes (12): Base, ensure_schema_compatibility(), Compatibilidade temporária para bancos SQLite anteriores ao Alembic., set_sqlite_pragma(), TemplateLearningDismissal, TemplateItem, _iso(), datetime (+4 more)
+Cohesion: 0.14
+Nodes (18): Base, Category, TemplateLearningDismissal, TemplateItem, create_category(), get_categories_by_group(), move_category(), Session (+10 more)
 
 ## Knowledge Gaps
 - **465 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+460 more)
@@ -477,7 +482,7 @@ Nodes (12): Base, ensure_schema_compatibility(), Compatibilidade temporária par
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `make_group`, `template_service.py`, `Execution`, `auth.py`, `executions.py`, `categories.py`, `main.py`, `build_offline_snapshot`, `test_pwa.py`, `sync_center`, `tupa_auth_service.py`, `ExecutionStatus`, `offline.py`, `home_service.py`, `make_user`, `notification_service.py`, `handle_setup_profile`, `sync_conflict_audit_service.py`, `auth_service.py`, `datetime.py`?**
+- **Why does `User` connect `User` to `make_group`, `template_service.py`, `Execution`, `auth.py`, `executions.py`, `get_category_by_id`, `main.py`, `build_offline_snapshot`, `test_pwa.py`, `sync_center`, `tupa_auth_service.py`, `ExecutionStatus`, `offline.py`, `home_service.py`, `make_user`, `notification_service.py`, `handle_setup_profile`, `sync_conflict_audit_service.py`, `auth_service.py`, `datetime.py`?**
   _High betweenness centrality (0.084) - this node is a cross-community bridge._
 - **Why does `Execution` connect `Execution` to `make_group`, `ExecutionStatus`, `template_service.py`, `offline.py`, `datetime.py`, `executions.py`, `home_service.py`, `build_offline_snapshot`, `make_user`, `notification_service.py`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._

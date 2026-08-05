@@ -747,6 +747,10 @@ TABLES
 DROPDOWN / MODAL
 ============================================================ */
 
+.modal {
+    z-index: 1070;
+}
+
 .dropdown-menu {
     border-radius: var(--bs-border-radius);
     border: 1px solid var(--jaci-sand);

@@ -7,7 +7,7 @@
 | ID | `BL-0018` |
 | Título | Corrigir backdrop sobre o modal de completar item |
 | Tipo | `bug` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `S1` |
 | Prioridade | `P0` |
 | Data de entrada | `2026-08-05` |
@@ -75,19 +75,23 @@ dados financeiros do item planejado.
 | Dependências | `JaciModal`, Bootstrap modal, CSS do tema, shell/cache PWA e cobertura futura da `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0014`, `BL-0015` e `BL-0016` são entregas relacionadas, mas não cobrem a regressão |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita do refinamento e implementar o hotfix pela `vgx-development` |
+| Próximo passo | Validar manualmente o hotfix em navegador e publicar em produção |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0018](../../tasks/BL-0018-corrigir-backdrop-modal-completar-item.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: ainda não iniciadas.
+- Implementação (commits/PRs): camada global dos modais elevada acima do
+  backdrop manual, cache PWA atualizado para `v30` e contratos de regressão
+  adicionados; commit técnico a registrar após consolidação.
+- Validações: 61 testes focados aprovados; sintaxe do service worker aprovada;
+  migrações no head; regressão com 226 testes aprovados e 5 `xfail` legados
+  fora do escopo; grafo AST-only atualizado. Validação manual pendente.
 - Publicação: ainda não publicada.
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`.
 
 ### Impedimentos
 
-- Implementação bloqueada pelo gate até a aprovação explícita do refinamento.
+- Validação manual e publicação ainda pendentes.
 
 ## Histórico
 
@@ -98,3 +102,6 @@ dados financeiros do item planejado.
 | `2026-08-05 11:59 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Impacto bloqueante, causa aparente, riscos, prioridade e ausência de duplicidade definidos |
 | `2026-08-05 11:59 -03` | Codex | `pronto_para_refinamento` -> `em_refinamento` | Refinamento técnico criado e ligado ao item |
 | `2026-08-05 11:59 -03` | Codex | `em_refinamento` -> `pronto_para_implementacao` | Escopo, fatia, cenários TDD e validações completos; aguarda aprovação explícita |
+| `2026-08-05 12:02 -03` | Usuário/Codex | Refinamento aprovado; `pronto_para_implementacao` -> `em_implementacao` | Aprovação explícita recebida após o commit documental `8d666a2` |
+| `2026-08-05 12:06 -03` | Codex | Fatia 1.1.1 concluída (`1/1`) | Contratos TDD reproduziram camada e cache antigos; modal elevado e shell PWA `v30` validados |
+| `2026-08-05 12:06 -03` | Codex | `em_implementacao` -> `em_validacao` | 61 testes focados e regressão 226/5 aprovados; migrações no head e validação manual pendente |

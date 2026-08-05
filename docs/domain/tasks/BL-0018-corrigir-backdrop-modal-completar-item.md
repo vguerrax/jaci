@@ -6,7 +6,7 @@
 - Branch: `feature/BL-0018-corrigir-backdrop-modal-completar-item`, criada a
   partir da `main` por solicitação explícita do usuário para este hotfix
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_validacao`
 - Itens relacionados: `BL-0011`, `BL-0014`, `BL-0015` e `BL-0016`
 
 ## Objetivo e critérios de sucesso
@@ -91,7 +91,7 @@ reduzir a proteção visual do backdrop nem comprometer o fluxo offline.
   - `app/static/js/service-worker.js`
 - Validações focadas:
   - `node --check app/static/js/service-worker.js`
-  - `timeout 180 venv/bin/pytest tests/test_offline_cache.py tests/test_item_add_fab.py tests/test_pwa.py --no-cov`
+  - `timeout 180 venv/bin/pytest tests/test_offline_cache.py tests/test_item_add_fab.py tests/test_pwa.py`
   - inspeção manual online/offline em viewport móvel e desktop
 - Documentação a atualizar:
   - item e refinamento `BL-0018`
@@ -164,13 +164,19 @@ Executar quando a fatia estiver concluída e não houver contrato pendente:
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| Etapa 1 / Ticket 1.1 — Empilhamento e cache | `0/1` | `1` | Pendente |
+| Etapa 1 / Ticket 1.1 — Empilhamento e cache | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
-- Commits/PRs: ainda não iniciados.
-- Resultado das validações focadas: ainda não executadas.
-- Resultado da validação manual: ainda não executada.
-- Resultado da regressão total: ainda não executada.
-- `xfail(strict=True)` pendentes no escopo: nenhum planejado.
-- Documentação atualizada: item, índice e este refinamento.
+- Commits/PRs: commit técnico a registrar após consolidação.
+- Resultado das validações focadas: o ciclo TDD inicial confirmou 2 falhas
+  esperadas (camada `.modal` ausente e cache `v29`); após a correção, 61 testes
+  de modal, offline, orçamento e PWA foram aprovados. `node --check` aprovou o
+  service worker. A opção `--no-cov` documentada inicialmente não existe neste
+  ambiente e a seleção foi executada sem ela.
+- Resultado da validação manual: pendente em navegador móvel e desktop.
+- Resultado da regressão total: migrações no head; 226 testes aprovados e 5
+  `xfail` legados fora do escopo.
+- `xfail(strict=True)` pendentes no escopo: nenhum.
+- Documentação atualizada: item, índice, este refinamento e matriz de testes;
+  grafo AST-only reconstruído.
