@@ -107,7 +107,7 @@ simultaneamente a identidade histórica e permita trocar o produto.
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
 - Implementação (commits/PRs): etapa 1 concluída no commit `f386127`;
   correção da validação manual no commit `063bd7a`; etapa 2 concluída no commit
-  `b82414a`.
+  `b82414a`; fallback HTML corrigido no commit `3b17680`.
 - Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
   visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
@@ -145,3 +145,4 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:40 -03` | Codex | Commit técnico da etapa 2 registrado | Implementação, contratos TDD, documentação e grafo consolidados em `b82414a` |
 | `2026-08-05 21:51 -03` | Usuário/Codex | Falha encontrada na validação manual da etapa 2 | POST de renomeação rejeitado abria uma tela branca com JSON em vez de manter o usuário na lista com orientação |
 | `2026-08-05 21:51 -03` | Codex | Correção de validação aplicada | Resposta `422` passou a renderizar a página da lista em HTML, com alerta, nome `readonly` e ajuda contextual; novo aceite manual pendente |
+| `2026-08-05 21:53 -03` | Codex | Commit corretivo registrado | Fallback HTML, contrato de renderização, documentação e grafo consolidados em `3b17680` |
