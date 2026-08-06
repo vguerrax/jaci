@@ -1,16 +1,16 @@
 # Graph Report - jaci  (2026-08-05)
 
 ## Corpus Check
-- 142 files · ~153,305 words
+- 142 files · ~153,953 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1906 nodes · 4711 edges · 114 communities (109 shown, 5 thin omitted)
+- 1906 nodes · 4714 edges · 116 communities (111 shown, 5 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 345 edges (avg confidence: 0.74)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cc4cdf87`
+- Built from commit: `98592254`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -39,7 +39,7 @@
 - read
 - loading-indicator.js
 - sync-status.js
-- User
+- groups.py
 - 🌙 Jaci
 - privacy_policy
 - Refinamento — BL-0013 — Busca e padronização das telas de itens
@@ -72,19 +72,19 @@
 - Identificação e entrada
 - agenda_service.py
 - 0002 - Backup automático do PostgreSQL
-- make_user
+- test_business_rules.py
 - Pricipais Entidades
 - 0001 - Tratamento de datas e timezone
 - Aprendizado contínuo dos templates
 - Tela Inicial Operacional
 - template_service.py
-- BL-0007-replicacao-externa-backups.md
+- Backups do PostgreSQL
 - FL-09 — Operação Offline
 - Backlog legado do Jaci
 - Edição de execuções agendadas
 - FL-03 — Geração de Execução
 - FL-04 — Execução da Compra
-- make_group
+- make_user
 - Identificação e entrada
 - Refinamento — BL-0016 — Botão flutuante para adicionar itens
 - FL-01 — Primeiro Acesso e Onboarding
@@ -110,7 +110,7 @@
 - migrate_sqlite_to_postgres.py
 - build_offline_snapshot
 - enums.py
-- complete_item
+- User
 - test_auth_pages.py
 - .normalize_database_url
 - FL-07 — Gestão de Grupos
@@ -119,6 +119,8 @@
 - Execution
 - format_local_date
 - sync_remove_execution_item_operation
+- create_group
+- test_sticky_budget.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `User` - 145 edges
@@ -141,13 +143,13 @@
   tests/test_database_operations.py → app/config.py
 - `test_release_environment_name_disables_debug()` --calls--> `Settings`  [EXTRACTED]
   tests/test_database_operations.py → app/config.py
-- `test_database_engine_uses_sqlite_specific_connection_options()` --calls--> `create_database_engine()`  [EXTRACTED]
-  tests/test_database_operations.py → app/database.py
+- `test_backup_settings_are_loaded_from_dotenv()` --calls--> `Settings`  [EXTRACTED]
+  tests/test_postgresql_backup.py → app/config.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (114 total, 5 thin omitted)
+## Communities (116 total, 5 thin omitted)
 
 ### Community 0 - "Refinamento — BL-0018 — Corrigir backdrop sobre o modal de completar item"
 Cohesion: 0.09
@@ -202,8 +204,8 @@ Cohesion: 0.17
 Nodes (31): add_item_to_execution(), create_execution_from_template(), finalize_execution(), Cria uma execução a partir de um template, copiando seus itens., Adiciona item à execução sem alterar o template associado., Finaliza a execução. Se discard_pending=True, remove itens não concluídos. Se…, test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them(), test_fl06_only_selected_suggestions_are_applied_to_template() (+23 more)
 
 ### Community 13 - "test_postgresql_backup.py"
-Cohesion: 0.26
-Nodes (17): CompletedProcess, _backup_environment(), fake_postgres_tools(), fixture, parametrize, Path, _run_backup(), test_backup_disabled_exits_without_calling_postgres_tools() (+9 more)
+Cohesion: 0.24
+Nodes (18): CompletedProcess, _backup_environment(), fake_postgres_tools(), fixture, parametrize, Path, _run_backup(), test_backup_disabled_exits_without_calling_postgres_tools() (+10 more)
 
 ### Community 14 - "AGENTS.md"
 Cohesion: 0.05
@@ -226,8 +228,8 @@ Cohesion: 0.06
 Nodes (34): Acompanhamento até produção, BL-0015 — Adicionar item como comprado durante execução, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+26 more)
 
 ### Community 19 - "sync_center"
-Cohesion: 0.23
-Nodes (9): get, Request, Session, Central local para visualização e resolução da fila de sincronização., sync_center(), make_request(), Request, test_sync_center_renders_local_queue_management_shell() (+1 more)
+Cohesion: 0.22
+Nodes (8): get, Request, Session, Central local para visualização e resolução da fila de sincronização., sync_center(), make_request(), Request, test_sync_center_requires_authentication()
 
 ### Community 20 - "service-worker.js"
 Cohesion: 0.22
@@ -245,9 +247,9 @@ Nodes (7): beginRequest(), endRequest(), isPlainLeftClick(), requestCount(), sch
 Cohesion: 0.42
 Nodes (8): failSync(), finishSync(), formatDateTime(), render(), renderDetails(), setState(), startSync(), waitForRetry()
 
-### Community 24 - "User"
-Cohesion: 0.13
-Nodes (38): Dependência que exige usuário autenticado. Levanta exceção se não autenticado., require_user(), User, create_group_page(), group_detail(), handle_create_group(), handle_edit_group(), handle_invite() (+30 more)
+### Community 24 - "groups.py"
+Cohesion: 0.17
+Nodes (26): create_group_page(), group_detail(), handle_create_group(), handle_edit_group(), handle_invite(), handle_remove_member(), handle_switch_group(), list_groups() (+18 more)
 
 ### Community 25 - "🌙 Jaci"
 Cohesion: 0.07
@@ -262,8 +264,8 @@ Cohesion: 0.09
 Nodes (23): Cenários TDD, Contratos de etapas futuras, Critérios de sucesso, Escopo, Estratégia de validação, Etapa 1 — Busca local e navegação padronizada, Excluído, Fatia 1.1.1 — Criar contratos TDD e integrar a Lista (+15 more)
 
 ### Community 29 - "create_template"
-Cohesion: 0.14
-Nodes (33): add_item_to_template(), create_template(), Cria um novo template no grupo., Adiciona um item ao template., Atualiza um item do template., update_template_item(), test_category_ids_from_another_group_are_rejected(), test_linked_item_tampered_post_returns_422_without_mutation_or_broadcast() (+25 more)
+Cohesion: 0.13
+Nodes (42): complete_item(), Inicia a execução (status -> in_progress)., Marca item como comprado com quantidade e valor., start_execution(), add_item_to_template(), create_template(), Cria um novo template no grupo., Adiciona um item ao template. (+34 more)
 
 ### Community 30 - "run.py"
 Cohesion: 0.50
@@ -327,7 +329,7 @@ Nodes (12): Acompanhamento até produção, BL-0005 — Evoluir inteligência de
 
 ### Community 57 - "Identificação e entrada"
 Cohesion: 0.17
-Nodes (12): Acompanhamento até produção, BL-0006 — Implementar integrações externas, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
+Nodes (12): Acompanhamento até produção, BL-0006 — Exportar compras para calendário e compartilhar listas, compras e convites, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 58 - "Identificação e entrada"
 Cohesion: 0.17
@@ -362,19 +364,19 @@ Cohesion: 0.07
 Nodes (56): agenda_calendar(), agenda_day(), agenda_list(), handle_reschedule(), get, post, Request, Session (+48 more)
 
 ### Community 66 - "0002 - Backup automático do PostgreSQL"
-Cohesion: 0.22
-Nodes (8): 0002 - Backup automático do PostgreSQL, Consequências, Contexto, Decisão, Plano refinado, Progresso, Status, Validação
+Cohesion: 0.12
+Nodes (13): 0002 - Backup automático do PostgreSQL, Consequências, Contexto, Decisão, Plano refinado, Progresso, Status, Validação (+5 more)
 
-### Community 67 - "make_user"
-Cohesion: 0.17
-Nodes (22): update_execution_item(), db(), make_category(), make_user(), fixture, Session, make_completed_execution(), parametrize (+14 more)
+### Community 67 - "test_business_rules.py"
+Cohesion: 0.23
+Nodes (13): update_execution_item(), make_category(), make_completed_execution(), parametrize, test_linked_execution_item_rejects_rename_without_partial_update(), test_linked_execution_item_updates_other_fields_with_current_name(), test_rn02_completed_execution_is_immutable(), test_rn03_recurrence_is_only_generated_after_completion() (+5 more)
 
 ### Community 68 - "Pricipais Entidades"
 Cohesion: 0.22
 Nodes (8): Categoria, Execução, Grupo, Item de Execução, Item de Template, Pricipais Entidades, Template, Usuário
 
 ### Community 69 - "0001 - Tratamento de datas e timezone"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): 0001 - Tratamento de datas e timezone, Antipadrões, Consequências, Contexto, Decisão, Exemplos, Status
 
 ### Community 70 - "Aprendizado contínuo dos templates"
@@ -389,9 +391,9 @@ Nodes (7): Alertas, Histórico Recente, Indicadores, Objetivo, Offline e Sincron
 Cohesion: 0.14
 Nodes (22): Template, TemplateItem, _incorporate_execution_item(), can_delete_template(), delete_template(), get_template_item_by_id(), get_templates_by_group(), Session (+14 more)
 
-### Community 73 - "BL-0007-replicacao-externa-backups.md"
-Cohesion: 0.13
-Nodes (12): Ambientes, Backups de produção, Estratégia de Banco de Dados, Migração de Dados, Migrações, Agenda e logs, Backups do PostgreSQL, Configuração (+4 more)
+### Community 73 - "Backups do PostgreSQL"
+Cohesion: 0.29
+Nodes (7): Agenda e logs, Backups do PostgreSQL, Configuração, Execução manual, Restauração manual em banco isolado, Retenção, Visão geral
 
 ### Community 74 - "FL-09 — Operação Offline"
 Cohesion: 0.33
@@ -413,9 +415,9 @@ Nodes (6): Atores, FL-03 — Geração de Execução, Fluxo Automático, Fluxo M
 Cohesion: 0.33
 Nodes (6): Atores, Cenários Alternativos, FL-04 — Execução da Compra, Fluxo Principal, Objetivo, Resultado Esperado
 
-### Community 79 - "make_group"
-Cohesion: 0.13
-Nodes (33): create_execution_standalone(), Cria uma execução avulsa sem template., Edita somente dados próprios de uma execução agendada., update_scheduled_execution(), make_group(), make_request(), Request, test_home_alerts_are_limited_and_ordered_by_criticality() (+25 more)
+### Community 79 - "make_user"
+Cohesion: 0.11
+Nodes (46): create_execution_standalone(), Cria uma execução avulsa sem template., Edita somente dados próprios de uma execução agendada., update_scheduled_execution(), db(), make_group(), make_user(), fixture (+38 more)
 
 ### Community 80 - "Identificação e entrada"
 Cohesion: 0.17
@@ -458,8 +460,8 @@ Cohesion: 0.09
 Nodes (21): Cenários TDD, Contratos de etapas futuras, Critérios de sucesso, Escopo, Estratégia de validação, Etapa 1 — Nome exclusivo para compra sem lista, Excluído, Fatia 1.1.1 — Contratos TDD e implementação completa (+13 more)
 
 ### Community 91 - "auth.py"
-Cohesion: 0.09
-Nodes (44): handle_change_password(), handle_setup_profile(), handle_update_profile(), login_error_page(), login_page(), login_sent_page(), logout(), password_login() (+36 more)
+Cohesion: 0.12
+Nodes (31): handle_change_password(), handle_setup_profile(), handle_update_profile(), login_error_page(), login_page(), login_sent_page(), logout(), password_login() (+23 more)
 
 ### Community 92 - "config.py"
 Cohesion: 0.18
@@ -470,8 +472,8 @@ Cohesion: 0.17
 Nodes (12): Acompanhamento até produção, BL-0016 — Disponibilizar botão flutuante para adicionar itens, Comportamento esperado, Comportamento observado, Evidências sanitizadas, Histórico, Identificação e entrada, Impacto e abrangência (+4 more)
 
 ### Community 94 - "test_database_operations.py"
-Cohesion: 0.15
-Nodes (14): Settings, create_database_engine(), Cria engine com ajustes específicos para SQLite ou PostgreSQL., BaseSettings, Engine, create_database_if_missing(), test_cloud_postgres_urls_are_normalized_to_psycopg_driver(), test_create_database_is_idempotent_for_sqlite() (+6 more)
+Cohesion: 0.16
+Nodes (13): Settings, create_database_engine(), Cria engine com ajustes específicos para SQLite ou PostgreSQL., BaseSettings, Engine, create_database_if_missing(), test_cloud_postgres_urls_are_normalized_to_psycopg_driver(), test_create_database_is_idempotent_for_sqlite() (+5 more)
 
 ### Community 95 - "Identificação e entrada"
 Cohesion: 0.17
@@ -482,8 +484,8 @@ Cohesion: 0.28
 Nodes (12): Path, read(), test_both_modal_pages_load_the_local_cached_controller(), test_fab_and_modal_styles_respect_safe_areas_and_local_fallback(), test_local_modal_controller_preserves_scroll_focus_and_keyboard_behavior(), test_managed_item_modals_stay_above_backdrop_and_page_actions(), test_modal_controller_closes_only_after_online_or_offline_success(), test_modal_pages_keep_the_single_form_available_without_javascript() (+4 more)
 
 ### Community 97 - "execution_service.py"
-Cohesion: 0.15
-Nodes (22): cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_executions_for_group(), get_pending_items(), incomplete_item(), datetime (+14 more)
+Cohesion: 0.19
+Nodes (18): cancel_execution(), create_execution_from_pending(), ensure_execution_is_mutable(), generate_next_execution(), get_executions_for_group(), get_pending_items(), incomplete_item(), datetime (+10 more)
 
 ### Community 98 - "FL-02 — Criação de Template"
 Cohesion: 0.40
@@ -494,8 +496,8 @@ Cohesion: 0.40
 Nodes (5): Atores, FL-05 — Compra Colaborativa, Fluxo Principal, Objetivo, Resultado Esperado
 
 ### Community 100 - "group_service.py"
-Cohesion: 0.15
-Nodes (17): add_member_to_group(), invite_member(), Convida um novo membro para o grupo via magic link. Retorna dict com success,…, Adiciona usuário a um grupo. Retorna True se adicionado, False se já membro., Troca o grupo ativo na sessão., switch_active_group(), Envia e-mail com magic link. Se SMTP não configurado, faz log do link (modo…, send_magic_link() (+9 more)
+Cohesion: 0.17
+Nodes (15): invite_member(), Convida um novo membro para o grupo via magic link. Retorna dict com success,…, Troca o grupo ativo na sessão., switch_active_group(), Envia e-mail com magic link. Se SMTP não configurado, faz log do link (modo…, send_magic_link(), clear_auth_cookies(), create_magic_token() (+7 more)
 
 ### Community 101 - "ConnectionManager"
 Cohesion: 0.22
@@ -511,11 +513,11 @@ Nodes (16): offline_conflict_history(), offline_snapshot(), get, post, Session, 
 
 ### Community 104 - "enums.py"
 Cohesion: 0.14
-Nodes (13): RecurrenceType, future_flow, Contratos dos fluxos documentados e dos fluxos futuros ainda pendentes., test_fl08_price_history_is_scoped_by_group_and_item(), test_fl08_spending_analysis_uses_completed_executions_only(), test_fl09_offline_operation_is_queued_before_remote_sync(), test_fl09_reconnection_synchronizes_queued_operations_without_data_loss(), test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions() (+5 more)
+Nodes (16): RecurrenceType, future_flow, test_category_ids_from_another_group_are_rejected(), test_group_data_is_only_visible_to_members(), test_linked_item_tampered_post_returns_422_without_mutation_or_broadcast(), test_stale_item_version_fails_explicitly_without_overwriting(), make_request(), Request (+8 more)
 
-### Community 105 - "complete_item"
+### Community 105 - "User"
 Cohesion: 0.19
-Nodes (15): complete_item(), Inicia a execução (status -> in_progress)., Marca item como comprado com quantidade e valor., start_execution(), make_request(), Request, test_add_item_route_persists_purchase_before_totals_and_broadcast(), test_execution_add_item_htmx_error_stays_in_modal_without_mutation() (+7 more)
+Nodes (16): Dependência que exige usuário autenticado. Levanta exceção se não autenticado., require_user(), User, authenticate_with_password(), get_or_create_tupa_user(), Session, Associa uma identidade Tupã ao perfil local do Jaci., Autentica no Tupã e carrega o perfil local. (+8 more)
 
 ### Community 106 - "test_auth_pages.py"
 Cohesion: 0.53
@@ -545,6 +547,14 @@ Nodes (7): localdate_filter(), localdatetime_filter(), format_local_date(), form
 Cohesion: 0.60
 Nodes (5): Remove no servidor um item não concluído removido offline., RemoveExecutionItemOperation, sync_remove_execution_item_operation(), test_offline_remove_item_operation_rejects_completed_item(), test_offline_remove_item_operation_removes_incomplete_item()
 
+### Community 114 - "create_group"
+Cohesion: 0.20
+Nodes (11): add_member_to_group(), create_group(), get_user_groups(), Session, Atualiza configurações do grupo quando solicitado pelo criador., Atualiza o nome do grupo quando solicitado pelo criador., Cria um novo grupo e adiciona o owner como membro., Adiciona usuário a um grupo. Retorna True se adicionado, False se já membro. (+3 more)
+
+### Community 115 - "test_sticky_budget.py"
+Cohesion: 0.24
+Nodes (4): make_request(), Request, render_items_fragment(), test_scheduled_budget_is_not_sticky_and_missing_budget_has_no_summary()
+
 ## Knowledge Gaps
 - **520 isolated node(s):** `ACTIVE_CACHES`, `publish.sh script`, `backup_database.sh script`, `Projeto: Jaci`, `Princípios do Produto` (+515 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -553,7 +563,7 @@ Nodes (5): Remove no servidor um item não concluído removido offline., RemoveE
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `User` connect `User` to `templates.py`, `test_offline_cache.py`, `datetime.py`, `executions.py`, `categories.py`, `main.py`, `create_execution_from_template`, `sync_conflict_audit_service.py`, `sync_center`, `tupa_auth_service.py`, `agenda_service.py`, `make_user`, `template_service.py`, `make_group`, `notification_service.py`, `offline.py`, `auth.py`, `execution_service.py`, `group_service.py`, `build_offline_snapshot`, `ExecutionItem`, `Execution`, `sync_remove_execution_item_operation`?**
+- **Why does `User` connect `User` to `templates.py`, `test_offline_cache.py`, `datetime.py`, `executions.py`, `categories.py`, `main.py`, `create_execution_from_template`, `sync_conflict_audit_service.py`, `sync_center`, `groups.py`, `tupa_auth_service.py`, `agenda_service.py`, `template_service.py`, `make_user`, `notification_service.py`, `offline.py`, `auth.py`, `execution_service.py`, `group_service.py`, `build_offline_snapshot`, `ExecutionItem`, `Execution`, `sync_remove_execution_item_operation`, `create_group`?**
   _High betweenness centrality (0.082) - this node is a cross-community bridge._
 - **Why does `Refinamento — BL-0013 — Busca e padronização das telas de itens` connect `Refinamento — BL-0013 — Busca e padronização das telas de itens` to `Identificação e entrada`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
