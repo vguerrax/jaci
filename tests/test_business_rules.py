@@ -89,12 +89,100 @@ def test_rn08_execution_edits_never_modify_template_items(
     )
 
     update_execution_item(
-        db, execution.items[0], "Arroz integral", 2, None, "Comprar promoção"
+        db, execution.items[0], "Arroz", 2, None, "Comprar promoção"
     )
     db.refresh(template_item)
 
     assert template_item.name == "Arroz"
     assert template_item.planned_quantity == 1
+
+
+def test_linked_execution_item_rejects_rename_without_partial_update(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana-linked@example.com")
+    group = make_group(owner=user)
+    original_category = make_category(group, "Frutas")
+    other_category = make_category(group, "Hortifruti")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Maçã", 1, original_category.id)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    item = execution.items[0]
+    original_version = item.version
+
+    with pytest.raises(ValueError, match="vinculado à lista"):
+        update_execution_item(
+            db,
+            item,
+            "Manga",
+            3,
+            other_category.id,
+            "Produto diferente",
+        )
+
+    db.refresh(item)
+    assert item.name == "Maçã"
+    assert item.planned_quantity == 1
+    assert item.category_id == original_category.id
+    assert item.notes is None
+    assert item.version == original_version
+
+
+def test_linked_execution_item_updates_other_fields_with_current_name(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana-linked-fields@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Hortifruti")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    item = execution.items[0]
+    original_version = item.version
+
+    updated = update_execution_item(
+        db,
+        item,
+        "Maçã",
+        2,
+        category.id,
+        "Escolher maduras",
+    )
+
+    assert updated.name == "Maçã"
+    assert updated.planned_quantity == 2
+    assert updated.category_id == category.id
+    assert updated.notes == "Escolher maduras"
+    assert updated.version == original_version + 1
+
+
+def test_unlinked_execution_item_remains_renameable(db, make_user, make_group):
+    user = make_user("ana-unlinked@example.com")
+    group = make_group(owner=user)
+    execution = Execution(
+        group_id=group.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.scheduled,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        name="Maçã",
+        planned_quantity=1,
+    )
+    db.add(item)
+    db.commit()
+
+    updated = update_execution_item(db, item, "Manga", 1, None)
+
+    assert updated.template_item_id is None
+    assert updated.name == "Manga"
 
 
 def test_rn09_foreign_category_is_rejected_when_items_are_edited(
@@ -158,4 +246,3 @@ def test_rn12_websocket_failure_does_not_undo_persisted_api_mutation(
     assert stored.is_completed is True
     assert stored.purchased_quantity == 2
     assert stored.unit_price == 10
-

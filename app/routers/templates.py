@@ -508,7 +508,32 @@ async def handle_edit_item(
             status_code=303,
         )
 
-    update_template_item(db, item, name, planned_quantity, category_id if category_id > 0 else None)
+    try:
+        update_template_item(
+            db,
+            item,
+            name,
+            planned_quantity,
+            category_id if category_id and category_id > 0 else None,
+        )
+    except ValueError as exc:
+        return templates.TemplateResponse(
+            request,
+            "pages/templates/detail.html",
+            {
+                **_get_template_context(
+                    request,
+                    user,
+                    active_group,
+                    template=item.template,
+                    error=str(exc),
+                ),
+                "grouped_items": get_template_items_grouped(db, template_id),
+                "categories": get_categories_for_group(db, item.template.group_id),
+                "execution_counts": count_active_executions(db, template_id),
+            },
+            status_code=422,
+        )
     return RedirectResponse(url=f"/templates/{template_id}", status_code=303)
 
 

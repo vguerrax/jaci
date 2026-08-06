@@ -8,7 +8,7 @@ from app.models.user import User
 from app.models.group import Group, group_members
 from app.models.category import Category
 from app.models.template import Template, TemplateItem
-from app.models.execution import Execution, ExecutionStatus
+from app.models.execution import Execution, ExecutionItem, ExecutionStatus
 from app.models.enums import RecurrenceType
 
 logger = logging.getLogger("jaci.templates")
@@ -54,6 +54,20 @@ def get_template_items_grouped(db: Session, template_id: int) -> list[dict]:
         .scalars()
         .all()
     )
+    purchased_item_ids = set()
+    if items:
+        purchased_item_ids = {
+            item_id
+            for item_id in db.scalars(
+                select(ExecutionItem.template_item_id).where(
+                    ExecutionItem.template_item_id.in_(item.id for item in items),
+                    ExecutionItem.is_completed.is_(True),
+                )
+            )
+            if item_id is not None
+        }
+    for item in items:
+        item.has_purchase_history = item.id in purchased_item_ids
 
     group = db.scalar(
         select(Group)
@@ -203,7 +217,7 @@ def delete_template(db: Session, template: Template) -> None:
     logger.info(f"Template '{name}' excluído")
 
 
-def add_item_to_template(
+def stage_item_for_template(
     db: Session,
     template: Template,
     name: str,
@@ -211,7 +225,7 @@ def add_item_to_template(
     category_id: Optional[int] = None,
     notes: Optional[str] = None,
 ) -> TemplateItem:
-    """Adiciona um item ao template."""
+    """Prepara um novo item do template na transação atual, sem commit."""
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -235,10 +249,43 @@ def add_item_to_template(
         sort_order=(max_order or 0) + 1,
     )
     db.add(item)
+    db.flush()
+    return item
+
+
+def add_item_to_template(
+    db: Session,
+    template: Template,
+    name: str,
+    planned_quantity: float,
+    category_id: Optional[int] = None,
+    notes: Optional[str] = None,
+) -> TemplateItem:
+    """Adiciona um item ao template."""
+    item = stage_item_for_template(
+        db,
+        template,
+        name,
+        planned_quantity,
+        category_id,
+        notes,
+    )
     db.commit()
     db.refresh(item)
     logger.info(f"Item '{item.name}' adicionado ao template '{template.name}'")
     return item
+
+
+def template_item_has_purchase_history(db: Session, item_id: int) -> bool:
+    """Informa se o item já foi marcado como comprado em alguma execução."""
+    return db.scalar(
+        select(ExecutionItem.id)
+        .where(
+            ExecutionItem.template_item_id == item_id,
+            ExecutionItem.is_completed.is_(True),
+        )
+        .limit(1)
+    ) is not None
 
 
 def get_template_item_by_id(
@@ -266,6 +313,16 @@ def update_template_item(
     notes: Optional[str] = None,
 ) -> TemplateItem:
     """Atualiza um item do template."""
+    normalized_name = name.strip()
+    if (
+        normalized_name != item.name
+        and template_item_has_purchase_history(db, item.id)
+    ):
+        raise ValueError(
+            "O nome deste item não pode ser alterado porque ele já possui "
+            "compras registradas. Cadastre um novo item para outro produto."
+        )
+
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -273,7 +330,7 @@ def update_template_item(
         if category_group_id != item.template.group_id:
             raise ValueError("Categoria não pertence ao grupo do template.")
 
-    item.name = name.strip()
+    item.name = normalized_name
     item.planned_quantity = planned_quantity
     item.category_id = category_id
     item.notes = notes

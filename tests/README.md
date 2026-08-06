@@ -55,13 +55,14 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | [BL-0016](../docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md) Adição contextual por modal | Em validação | `tests/test_item_add_fab.py`, `tests/test_template_execution_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py`, `tests/test_item_filter.py` e `tests/test_sticky_budget.py` |
 | [BL-0017](../docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md) Nome exclusivo para compra sem lista | Em validação | `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`; cenários Playwright futuros permanecem relacionados à BL-0011 |
 | [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Concluído | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
+| [BL-0020](../docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md) Identidade imutável para item vinculado | Em validação | `tests/test_template_learning_tdd.py`, `tests/test_template_execution_flow.py`, `tests/test_business_rules.py`, `tests/test_collaboration_and_isolation_flow.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 
 | Item legado | Estado | Cobertura TDD |
 |---|---|---|
 | BL-029 Detectar itens adicionados durante a execução | Implementado | `test_bl029_detects_runtime_items_only_for_template_executions` |
-| BL-030 Sugerir incorporação de itens ao template | Implementado | `test_bl030_applies_only_selected_new_item_suggestions_to_future_executions` |
+| BL-030 Sugerir incorporação de itens ao template | Implementado | `test_bl030_applies_only_selected_new_item_suggestions_to_future_executions`, `test_bl030_incorporation_preserves_the_closed_execution_financial_snapshot`, `test_bl030_rejects_new_item_from_another_execution_and_group`, `test_bl030_rejects_already_linked_item_as_new_suggestion`, `test_bl030_rolls_back_template_item_when_link_commit_fails`, `test_bl030_close_rejects_forged_new_item_without_finalizing` |
 | BL-031 Detectar divergências recorrentes de quantidade | Implementado | `test_bl031_quantity_suggestions_require_recurrent_divergence`, `test_bl031_quantity_suggestions_are_not_generated_from_single_occurrence` |
 | BL-032 Sugerir atualização de quantidades padrão | Implementado | `test_bl032_applies_quantity_suggestion_only_to_template_future_runs` |
 | BL-033 Detectar alterações recorrentes em observações | Implementado | `test_bl033_detects_recurrent_notes_only_for_template_items` |
