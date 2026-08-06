@@ -164,8 +164,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_database",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "database.py"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "listens_for",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "listens_for"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -219,8 +219,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_database_base",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "base"
     },
     {
@@ -230,8 +230,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "declarativebase",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "declarativebase"
     },
     {
@@ -242,7 +242,7 @@
       "_origin": "ast",
       "id": "app_database_ensure_schema_compatibility",
       "community": 4,
-      "community_name": "datetime.py",
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "ensure_schema_compatibility()"
     },
     {
@@ -275,7 +275,7 @@
       "_origin": "ast",
       "id": "app_database_rationale_46",
       "community": 4,
-      "community_name": "datetime.py",
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "compatibilidade temporaria para bancos sqlite anteriores ao alembic."
     },
     {
@@ -615,8 +615,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_init",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "models/__init__.py"
     },
     {
@@ -626,8 +626,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_category",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "category.py"
     },
     {
@@ -659,8 +659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_enums",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "enums.py"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_models_enums_recurrencetype",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "recurrencetype"
     },
     {
@@ -703,8 +703,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_execution",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "execution.py"
     },
     {
@@ -791,8 +791,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_group",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 9,
+      "community_name": "main.py",
       "norm_label": "group.py"
     },
     {
@@ -824,8 +824,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_notification",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 83,
+      "community_name": "notification_service.py",
       "norm_label": "notification.py"
     },
     {
@@ -857,7 +857,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit",
-      "community": 4,
+      "community": 16,
       "community_name": "datetime.py",
       "norm_label": "sync_conflict_audit.py"
     },
@@ -869,7 +869,7 @@
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit_syncconflictaudit",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "syncconflictaudit"
     },
     {
@@ -879,8 +879,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_template",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "template.py"
     },
     {
@@ -934,8 +934,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_template_learning",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "template_learning.py"
     },
     {
@@ -945,8 +945,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_models_template_learning_templatelearningdismissal",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "templatelearningdismissal"
     },
     {
@@ -4113,8 +4113,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "app_services_execution_service_start_execution",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "start_execution()"
     },
     {
@@ -4124,8 +4124,8 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "app_services_execution_service_complete_item",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "complete_item()"
     },
     {
@@ -4355,8 +4355,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_264",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "inicia a execucao (status -> in_progress)."
     },
     {
@@ -4366,8 +4366,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_281",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "marca item como comprado com quantidade e valor."
     },
     {
@@ -5103,8 +5103,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_offline_cache_service",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "offline_cache_service.py"
     },
     {
@@ -5114,8 +5114,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_iso",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "_iso()"
     },
     {
@@ -5125,8 +5125,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_datetime",
-      "community": 4,
-      "community_name": "datetime.py",
+      "community": 72,
+      "community_name": "template_service.py",
       "norm_label": "datetime"
     },
     {
@@ -5192,7 +5192,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "sync_conflict_audit_service.py"
     },
     {
@@ -5203,7 +5203,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_jsonable",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "_jsonable()"
     },
     {
@@ -5214,7 +5214,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_any",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "any"
     },
     {
@@ -5225,7 +5225,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_create_conflict_audit",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "create_conflict_audit()"
     },
     {
@@ -5236,7 +5236,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_session",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -5247,7 +5247,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_py_basemodel",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "basemodel"
     },
     {
@@ -5258,7 +5258,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_list_conflict_audits",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "list_conflict_audits()"
     },
     {
@@ -5269,7 +5269,7 @@
       "_origin": "ast",
       "id": "app_services_sync_conflict_audit_service_resolve_conflict_audit",
       "community": 16,
-      "community_name": "sync_conflict_audit_service.py",
+      "community_name": "datetime.py",
       "norm_label": "resolve_conflict_audit()"
     },
     {
@@ -5540,7 +5540,7 @@
       "label": "_incorporate_execution_item()",
       "file_type": "code",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "_origin": "ast",
       "id": "app_services_template_learning_service_incorporate_execution_item",
       "community": 5,
@@ -5551,7 +5551,7 @@
       "label": "apply_template_suggestions()",
       "file_type": "code",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "_origin": "ast",
       "id": "app_services_template_learning_service_apply_template_suggestions",
       "community": 5,
@@ -5562,7 +5562,7 @@
       "label": "dismiss_template_suggestions()",
       "file_type": "code",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L424",
+      "source_location": "L426",
       "_origin": "ast",
       "id": "app_services_template_learning_service_dismiss_template_suggestions",
       "community": 5,
@@ -5595,9 +5595,9 @@
       "label": "Aplica somente sugest\u00f5es confirmadas pelo usu\u00e1rio ao template.",
       "file_type": "rationale",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L363",
+      "source_location": "L365",
       "_origin": "ast",
-      "id": "app_services_template_learning_service_rationale_363",
+      "id": "app_services_template_learning_service_rationale_365",
       "community": 5,
       "community_name": "template_learning_service.py",
       "norm_label": "aplica somente sugestoes confirmadas pelo usuario ao template."
@@ -5606,9 +5606,9 @@
       "label": "Registra sugest\u00f5es ignoradas para n\u00e3o reapresent\u00e1-las na mesma execu\u00e7\u00e3o.",
       "file_type": "rationale",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L429",
+      "source_location": "L431",
       "_origin": "ast",
-      "id": "app_services_template_learning_service_rationale_429",
+      "id": "app_services_template_learning_service_rationale_431",
       "community": 5,
       "community_name": "template_learning_service.py",
       "norm_label": "registra sugestoes ignoradas para nao reapresenta-las na mesma execucao."
@@ -8370,7 +8370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_datetime",
-      "community": 4,
+      "community": 16,
       "community_name": "datetime.py",
       "norm_label": "datetime.py"
     },
@@ -8425,8 +8425,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_utils_datetime_now_local",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 16,
+      "community_name": "datetime.py",
       "norm_label": "now_local()"
     },
     {
@@ -8491,8 +8491,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_49",
-      "community": 9,
-      "community_name": "main.py",
+      "community": 16,
+      "community_name": "datetime.py",
       "norm_label": "get current datetime in local timezone"
     },
     {
@@ -9237,7 +9237,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations",
       "community": 4,
-      "community_name": "datetime.py",
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations.py"
     },
     {
@@ -9248,7 +9248,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations_apply_migrations",
       "community": 4,
-      "community_name": "datetime.py",
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "apply_migrations()"
     },
     {
@@ -9259,7 +9259,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations_rationale_1",
       "community": 4,
-      "community_name": "datetime.py",
+      "community_name": "ensure_schema_compatibility",
       "norm_label": "aplica migracoes alembic e adota bancos sqlite legados."
     },
     {
@@ -10177,8 +10177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_execution_totals_regression.py"
     },
     {
@@ -10188,8 +10188,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_make_request",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "make_request()"
     },
     {
@@ -10199,8 +10199,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_py_request",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "request"
     },
     {
@@ -10210,8 +10210,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_item_mutation_fragment_refreshes_sidebar_with_current_total",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_item_mutation_fragment_refreshes_sidebar_with_current_total()"
     },
     {
@@ -10221,8 +10221,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_total_spent_matches_sum_of_visible_item_totals",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_total_spent_matches_sum_of_visible_item_totals()"
     },
     {
@@ -10232,8 +10232,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_add_item_route_persists_purchase_before_totals_and_broadcast",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_add_item_route_persists_purchase_before_totals_and_broadcast()"
     },
     {
@@ -10243,8 +10243,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_execution_add_item_htmx_error_stays_in_modal_without_mutation",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_execution_add_item_htmx_error_stays_in_modal_without_mutation()"
     },
     {
@@ -10298,8 +10298,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_future_user_flows",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_future_user_flows.py"
     },
     {
@@ -10331,8 +10331,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "future_flow",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "future_flow"
     },
     {
@@ -10342,8 +10342,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl08_price_history_is_scoped_by_group_and_item",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_fl08_price_history_is_scoped_by_group_and_item()"
     },
     {
@@ -10353,8 +10353,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl08_spending_analysis_uses_completed_executions_only",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_fl08_spending_analysis_uses_completed_executions_only()"
     },
     {
@@ -10364,8 +10364,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_offline_operation_is_queued_before_remote_sync",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_fl09_offline_operation_is_queued_before_remote_sync()"
     },
     {
@@ -10375,8 +10375,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_reconnection_synchronizes_queued_operations_without_data_loss",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_fl09_reconnection_synchronizes_queued_operations_without_data_loss()"
     },
     {
@@ -10386,8 +10386,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions()"
     },
     {
@@ -10397,8 +10397,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_rationale_1",
-      "community": 105,
-      "community_name": "test_future_user_flows.py",
+      "community": 104,
+      "community_name": "enums.py",
       "norm_label": "contratos dos fluxos documentados e dos fluxos futuros ainda pendentes."
     },
     {
@@ -11905,7 +11905,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_sticky_budget.py"
     },
     {
@@ -11916,7 +11916,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_make_request",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "make_request()"
     },
     {
@@ -11927,7 +11927,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_py_request",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "request"
     },
     {
@@ -11938,7 +11938,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_render_items_fragment",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "render_items_fragment()"
     },
     {
@@ -11949,7 +11949,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_in_progress_budget_fragment_exposes_sticky_summary_contract",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_in_progress_budget_fragment_exposes_sticky_summary_contract()"
     },
     {
@@ -11960,7 +11960,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_scheduled_budget_is_not_sticky_and_missing_budget_has_no_summary",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_scheduled_budget_is_not_sticky_and_missing_budget_has_no_summary()"
     },
     {
@@ -11971,7 +11971,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_classifies_thresholds_and_only_notifies_on_rise",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_classifies_thresholds_and_only_notifies_on_rise()"
     },
     {
@@ -11982,7 +11982,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_toast_is_deduplicated_across_controller_instances",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_toast_is_deduplicated_across_controller_instances()"
     },
     {
@@ -11993,7 +11993,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_handles_dynamic_fragments_navbar_and_toasts",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_handles_dynamic_fragments_navbar_and_toasts()"
     },
     {
@@ -12004,7 +12004,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_offline_item_mutations_recalculate_budget_from_local_snapshot",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_offline_item_mutations_recalculate_budget_from_local_snapshot()"
     },
     {
@@ -12015,7 +12015,7 @@
       "_origin": "ast",
       "id": "tests_test_sticky_budget_test_budget_controller_is_cached_for_offline_execution",
       "community": 104,
-      "community_name": "test_sticky_budget.py",
+      "community_name": "enums.py",
       "norm_label": "test_budget_controller_is_cached_for_offline_execution()"
     },
     {
@@ -12366,8 +12366,8 @@
       "source_location": "L474",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_purchase_flow_tracks_values_and_does_not_add_runtime_items_to_template()"
     },
     {
@@ -12421,8 +12421,8 @@
       "source_location": "L568",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_completed_item_cannot_be_removed",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 29,
+      "community_name": "create_template",
       "norm_label": "test_completed_item_cannot_be_removed()"
     },
     {
@@ -12729,8 +12729,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_user_flows",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_user_flows.py"
     },
     {
@@ -12762,8 +12762,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl04_critical_purchase_flow_preserves_history",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_fl04_critical_purchase_flow_preserves_history()"
     },
     {
@@ -12773,8 +12773,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl05_collaborative_purchase_notifies_members_and_has_single_history",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_fl05_collaborative_purchase_notifies_members_and_has_single_history()"
     },
     {
@@ -12784,8 +12784,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl07_accepted_member_can_access_shared_templates_and_executions",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_fl07_accepted_member_can_access_shared_templates_and_executions()"
     },
     {
@@ -12795,8 +12795,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl08_completed_execution_remains_available_in_agenda_history",
-      "community": 97,
-      "community_name": "execution_service.py",
+      "community": 105,
+      "community_name": "complete_item",
       "norm_label": "test_fl08_completed_execution_remains_available_in_agenda_history()"
     },
     {
@@ -25928,7 +25928,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -25940,7 +25940,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L424",
+      "source_location": "L426",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -26708,7 +26708,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_incorporate_execution_item",
@@ -28003,7 +28003,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -28015,7 +28015,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_incorporate_execution_item",
@@ -28263,7 +28263,7 @@
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -28275,7 +28275,7 @@
       "context": "return_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_incorporate_execution_item",
@@ -28452,7 +28452,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L445",
+      "source_location": "L447",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -48101,7 +48101,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service",
@@ -48112,7 +48112,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L424",
+      "source_location": "L426",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service",
@@ -48167,7 +48167,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service",
@@ -48476,7 +48476,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L355",
+      "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48488,7 +48488,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L424",
+      "source_location": "L426",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -48524,7 +48524,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L329",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_incorporate_execution_item",
@@ -48596,7 +48596,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L416",
+      "source_location": "L418",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48632,7 +48632,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L430",
+      "source_location": "L432",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -48656,7 +48656,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L435",
+      "source_location": "L437",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -48750,7 +48750,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L370",
+      "source_location": "L372",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48762,7 +48762,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L437",
+      "source_location": "L439",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_dismiss_template_suggestions",
@@ -48774,7 +48774,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L378",
+      "source_location": "L380",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48786,7 +48786,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L384",
+      "source_location": "L386",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48798,7 +48798,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L336",
+      "source_location": "L338",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_incorporate_execution_item",
@@ -48810,7 +48810,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L394",
+      "source_location": "L396",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_services_template_learning_service_apply_template_suggestions",
@@ -48821,10 +48821,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L363",
+      "source_location": "L365",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_services_template_learning_service_rationale_363",
+      "source": "app_services_template_learning_service_rationale_365",
       "target": "app_services_template_learning_service_apply_template_suggestions",
       "confidence_score": 1.0
     },
@@ -48832,10 +48832,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "app/services/template_learning_service.py",
-      "source_location": "L429",
+      "source_location": "L431",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "app_services_template_learning_service_rationale_429",
+      "source": "app_services_template_learning_service_rationale_431",
       "target": "app_services_template_learning_service_dismiss_template_suggestions",
       "confidence_score": 1.0
     },

@@ -113,7 +113,8 @@ simultaneamente a identidade histórica e permita trocar o produto.
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
   etapa 2 com 10 falhas TDD esperadas, 44 testes focados e 100 testes ampliados
   aprovados; compilação Python e migrações no head; regressão atual com 247
-  testes aprovados e 5 `xfail` legados fora do escopo. `pylint` indisponível.
+  testes aprovados e 5 `xfail` legados fora do escopo. A correção do fallback
+  HTML aprovou novamente os 44 testes focados. `pylint` indisponível.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0003](BL-0003-historico-precos.md),
   [BL-0005](BL-0005-inteligencia-compras.md) e
@@ -142,3 +143,5 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:32 -03` | Usuário/Codex | Revisão aprovada; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `4d34c08`; fatia 2.1.1 liberada para TDD e implementação |
 | `2026-08-05 21:38 -03` | Codex | Fatia 2.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Vínculo atômico, validação de pertencimento e nome da lista somente leitura após compra implementados; 247 testes aprovados e 5 `xfail` legados |
 | `2026-08-05 21:40 -03` | Codex | Commit técnico da etapa 2 registrado | Implementação, contratos TDD, documentação e grafo consolidados em `b82414a` |
+| `2026-08-05 21:51 -03` | Usuário/Codex | Falha encontrada na validação manual da etapa 2 | POST de renomeação rejeitado abria uma tela branca com JSON em vez de manter o usuário na lista com orientação |
+| `2026-08-05 21:51 -03` | Codex | Correção de validação aplicada | Resposta `422` passou a renderizar a página da lista em HTML, com alerta, nome `readonly` e ajuda contextual; novo aceite manual pendente |

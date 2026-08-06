@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends, Form, HTTPException, Query, status
+from fastapi import APIRouter, Request, Depends, Form, Query
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
@@ -517,10 +517,23 @@ async def handle_edit_item(
             category_id if category_id and category_id > 0 else None,
         )
     except ValueError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=str(exc),
-        ) from exc
+        return templates.TemplateResponse(
+            request,
+            "pages/templates/detail.html",
+            {
+                **_get_template_context(
+                    request,
+                    user,
+                    active_group,
+                    template=item.template,
+                    error=str(exc),
+                ),
+                "grouped_items": get_template_items_grouped(db, template_id),
+                "categories": get_categories_for_group(db, item.template.group_id),
+                "execution_counts": count_active_executions(db, template_id),
+            },
+            status_code=422,
+        )
     return RedirectResponse(url=f"/templates/{template_id}", status_code=303)
 
 

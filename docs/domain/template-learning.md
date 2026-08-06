@@ -37,7 +37,10 @@ não foram comprados permanecem renomeáveis.
 
 Na interface da lista, o nome protegido continua visível em modo somente leitura.
 Essa regra fica centralizada no serviço para que um POST adulterado não consiga
-renomear o produto nem persistir parcialmente os outros campos.
+renomear o produto nem persistir parcialmente os outros campos. Se uma página
+antiga ainda tentar enviar outro nome, a rota responde `422` renderizando a lista
+em HTML, com alerta explicativo e o campo novamente bloqueado; o usuário não é
+direcionado para uma resposta JSON.
 
 ## BL-031 e BL-032 — Quantidades recorrentes
 

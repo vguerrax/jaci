@@ -321,12 +321,15 @@ ao concluí-la e sem `xfail(strict=True)` desta demanda:
   depois da correção online/offline, 73 testes focados foram aprovados. O
   `pylint` não está instalado no venv. Na etapa 2, 10 contratos falharam antes
   da implementação; depois dela, 44 testes focados e 100 testes ampliados
-  passaram, e os módulos Python alterados compilaram sem erro.
+  passaram, e os módulos Python alterados compilaram sem erro. A correção de
+  validação do fallback HTML aprovou novamente os 44 testes focados.
 - Resultado da validação manual: primeira rodada reprovada porque o modal de
   item comprado omitia o campo de nome e a orientação. Correção implementada;
   a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 aguarda
-  aceite manual do vínculo no fechamento e do nome somente leitura na lista. A
-  infraestrutura Playwright permanece futura na `BL-0011`.
+  novo aceite: a primeira rodada dessa etapa encontrou uma resposta JSON após
+  tentativa de renomeação; o fallback foi corrigido para renderizar a lista com
+  alerta, nome `readonly` e ajuda contextual. A infraestrutura Playwright
+  permanece futura na `BL-0011`.
 - Resultado da regressão total: migrações no head; 247 testes aprovados e 5
   `xfail` legados fora do escopo após a etapa 2.
 - `xfail(strict=True)` pendentes no escopo: nenhum.

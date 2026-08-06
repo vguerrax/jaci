@@ -2,7 +2,6 @@ import asyncio
 from datetime import datetime, timezone
 
 import pytest
-from fastapi import HTTPException
 from starlette.requests import Request
 
 from app.models import Execution, TemplateItem
@@ -282,10 +281,10 @@ def test_purchased_template_item_name_is_read_only_in_the_list_modal(
     assert response.status_code == 200
     assert 'name="name" value="Maçã"' in purchased_modal
     assert "readonly" in purchased_modal
-    assert "Este item já possui compras registradas." in purchased_modal
+    assert "Este item já possui compras registradas e o nome não pode ser alterado." in purchased_modal
     assert 'name="name" value="Banana"' in editable_modal
     assert "readonly" not in editable_modal
-    assert "Este item já possui compras registradas." not in editable_modal
+    assert "Este item já possui compras registradas e o nome não pode ser alterado." not in editable_modal
 
 
 def test_purchased_template_item_rejects_rename_without_partial_update(
@@ -371,7 +370,7 @@ def test_template_item_without_purchase_history_remains_renamable(
     assert updated.planned_quantity == 2
 
 
-def test_template_item_edit_route_rejects_forged_purchased_name(
+def test_template_item_edit_route_rerenders_read_only_name_with_explanation(
     db, make_user, make_group, make_category
 ):
     user = make_user("purchased-template-route@example.com")
@@ -384,23 +383,31 @@ def test_template_item_edit_route_rejects_forged_purchased_name(
     )
     complete_item(db, execution.items[0], 1, 5.5)
 
-    with pytest.raises(HTTPException) as error:
-        asyncio.run(
-            template_routes.handle_edit_item(
-                request=make_template_item_request(htmx=False),
-                template_id=template.id,
-                item_id=template_item.id,
-                name="Manga",
-                planned_quantity=3,
-                category_id=category.id,
-                db=db,
-                user=user,
-                active_group=group,
-            )
+    response = asyncio.run(
+        template_routes.handle_edit_item(
+            request=make_template_item_request(htmx=False),
+            template_id=template.id,
+            item_id=template_item.id,
+            name="Manga",
+            planned_quantity=3,
+            category_id=category.id,
+            db=db,
+            user=user,
+            active_group=group,
         )
+    )
 
     db.refresh(template_item)
-    assert error.value.status_code == 422
+    body = response.body.decode()
+    modal = body.split(f'id="editItemModal{template_item.id}"', 1)[1].split(
+        '</form>', 1
+    )[0]
+    assert response.status_code == 422
+    assert response.media_type == "text/html"
+    assert "O nome deste item não pode ser alterado" in body
+    assert "Este item já possui compras registradas e o nome não pode ser alterado." in modal
+    assert "readonly" in modal
+    assert '"detail"' not in body
     assert template_item.name == "Maçã"
     assert template_item.planned_quantity == 1
     assert template_item.category_id is None

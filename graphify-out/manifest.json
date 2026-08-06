@@ -130,8 +130,8 @@
     "semantic_hash": "a3100f73efe929227c6c9a62a9d941db"
   },
   "app/routers/templates.py": {
-    "mtime": 1785976602.8324487,
-    "ast_hash": "397cd478c6977b95f04b0659fa98d9cb",
+    "mtime": 1785977464.154721,
+    "ast_hash": "e3b762964c56f90c9882f5290191fa30",
     "semantic_hash": ""
   },
   "app/services/agenda_service.py": {
@@ -435,8 +435,8 @@
     "semantic_hash": "281c5313ced306d66a07d896e0924d06"
   },
   "tests/test_template_execution_flow.py": {
-    "mtime": 1785976541.189616,
-    "ast_hash": "cc5d0def5f16a427b84a6100a2055c48",
+    "mtime": 1785977554.0334494,
+    "ast_hash": "fdead7db2f4065ff168aa811a695075c",
     "semantic_hash": ""
   },
   "tests/test_template_learning_tdd.py": {
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "docs/domain/template-learning.md": {
-    "mtime": 1785976756.304522,
-    "ast_hash": "fb7af383f5cbc06267465a5a25b0a002",
+    "mtime": 1785977508.300682,
+    "ast_hash": "14be98e328644accb07dd1056f897403",
     "semantic_hash": ""
   },
   "docs/domain/user-flows.md": {
@@ -910,8 +910,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/templates/_items_fragment.html": {
-    "mtime": 1785976602.9514503,
-    "ast_hash": "bfa84380a34d15e8fb41f2b34734f159",
+    "mtime": 1785977553.9162984,
+    "ast_hash": "7d2ec7c97d6c5b4793af7604d5c5c403",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md": {
@@ -950,13 +950,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785976756.6595268,
-    "ast_hash": "10af065991d0f7fbf48aa672e664d699",
+    "mtime": 1785977508.4258225,
+    "ast_hash": "b079920986f7a289b0fc57a9c2982939",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785976756.7774563,
-    "ast_hash": "d427fac300cfdcbade44ca1c72e3d6af",
+    "mtime": 1785977508.5578911,
+    "ast_hash": "738ffdb4c99dd2e57b8bb38df7b17383",
     "semantic_hash": ""
   }
 }
