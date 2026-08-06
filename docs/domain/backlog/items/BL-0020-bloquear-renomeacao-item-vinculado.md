@@ -106,8 +106,8 @@ simultaneamente a identidade histórica e permita trocar o produto.
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
 - Implementação (commits/PRs): etapa 1 concluída no commit `f386127`;
-  correção da validação manual no commit `063bd7a`; etapa 2 concluída na branch,
-  aguardando registro do commit técnico.
+  correção da validação manual no commit `063bd7a`; etapa 2 concluída no commit
+  `b82414a`.
 - Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
   visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
@@ -141,3 +141,4 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:19 -03` | Codex | Refinamento revisado; `em_refinamento` → `pronto_para_implementacao` | Etapa 2, contratos TDD, isolamento, atomicidade e validações definidos; código aguarda nova aprovação explícita |
 | `2026-08-05 21:32 -03` | Usuário/Codex | Revisão aprovada; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `4d34c08`; fatia 2.1.1 liberada para TDD e implementação |
 | `2026-08-05 21:38 -03` | Codex | Fatia 2.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Vínculo atômico, validação de pertencimento e nome da lista somente leitura após compra implementados; 247 testes aprovados e 5 `xfail` legados |
+| `2026-08-05 21:40 -03` | Codex | Commit técnico da etapa 2 registrado | Implementação, contratos TDD, documentação e grafo consolidados em `b82414a` |

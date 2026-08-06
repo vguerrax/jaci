@@ -312,7 +312,7 @@ ao concluí-la e sem `xfail(strict=True)` desta demanda:
 ## Fechamento
 
 - Commits/PRs: fatia 1.1.1 `f386127`; correção de validação `063bd7a`;
-  fatia 2.1.1 concluída na branch e aguardando registro do commit técnico;
+  fatia 2.1.1 `b82414a`;
   branch `feature/BL-0020-bloquear-renomeacao-item-vinculado`.
 - Resultado das validações focadas: ciclo TDD inicial com 10 falhas esperadas e
   79 aprovações; após a implementação, 89 testes aprovados. `node --check`
