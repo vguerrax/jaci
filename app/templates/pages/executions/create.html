@@ -29,7 +29,7 @@
             </p>
 
             {% if error %}
-            <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
+            <div class="alert alert-danger alert-jaci mb-3" role="alert">{{ error }}</div>
             {% endif %}
 
             <form method="post" action="/executions/new">
@@ -50,12 +50,25 @@
                     </div>
                 </div>
 
+                {% if not template %}
+                <div class="mb-3">
+                    <label for="execution_name" class="form-label">Nome da compra (opcional)</label>
+                    <input type="text" class="form-control form-control-lg"
+                           id="execution_name" name="name"
+                           value="{{ submitted_name if submitted_name is defined and submitted_name else '' }}"
+                           maxlength="150" placeholder="Compra Avulsa">
+                    <div class="form-text">
+                        Use um nome curto para identificar esta compra. Se ficar vazio, usaremos “Compra Avulsa”.
+                    </div>
+                </div>
+                {% endif %}
+
                 <!-- Scheduled date -->
                 <div class="mb-3">
                     <label for="scheduled_date" class="form-label">Data da compra</label>
                     <input type="date" class="form-control form-control-lg"
                            id="scheduled_date" name="scheduled_date"
-                           value="{{ today }}" required>
+                           value="{{ submitted_scheduled_date if submitted_scheduled_date is defined else today }}" required>
                 </div>
 
                 <!-- Budget -->
@@ -64,7 +77,7 @@
                     <div class="input-group input-group-lg">
                         <span class="input-group-text bg-lunar border-sand">R$</span>
                         <input type="number" class="form-control" id="budget" name="budget"
-                               value="{{ template.budget if template and template.budget else 0 }}"
+                               value="{% if submitted_budget is defined %}{{ submitted_budget if submitted_budget is not none else '' }}{% else %}{{ template.budget if template and template.budget else 0 }}{% endif %}"
                                placeholder="0,00" step="0.01" min="0">
                     </div>
                     <div class="form-text">

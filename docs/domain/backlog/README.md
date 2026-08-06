@@ -4,6 +4,9 @@ Este diretório é a fonte de verdade para novas demandas de produção do Jaci.
 Ele acompanha bugs, ajustes e melhorias desde a entrada até a publicação, sem
 substituir o refinamento técnico obrigatório em `docs/domain/tasks/`.
 
+Para automações Codex, usar a skill global `vgx-doc-management`; este documento,
+os templates e o índice abaixo definem o perfil local autoritativo do Jaci.
+
 O [backlog legado](../decisions/backlog.md) registra entregas anteriores à
 adoção deste processo. Seus identificadores não participam da numeração
 `BL-NNNN` e nunca devem ser reutilizados no backlog atual.
@@ -141,20 +144,31 @@ não muda de caminho nem é apagado.
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado | Responsável | Atualizado em |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0006](items/BL-0006-integracoes-externas.md) | Implementar integrações externas | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
+| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
+| [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
+| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-08-05` |
+| [BL-0020](items/BL-0020-bloquear-renomeacao-item-vinculado.md) | Bloquear renomeação de item vinculado ao template | `ajuste` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-08-05` |
 
 ### Itens arquivados
 
-Nenhum item do processo atual foi arquivado.
+| ID | Título | Tipo | Severidade | Prioridade | Estado terminal | Encerrado em |
+| --- | --- | --- | --- | --- | --- | --- |
+| [BL-0012](items/BL-0012-vgx-doc-management.md) | Gestão documental compartilhada dos projetos VGX | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-01` |
+| [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0014](items/BL-0014-fixar-orcamento-compra.md) | Fixar resumo de orçamento durante a compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0015](items/BL-0015-adicionar-item-comprado.md) | Adicionar item como comprado durante execução | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0016](items/BL-0016-botao-flutuante-adicionar-itens.md) | Disponibilizar botão flutuante para adicionar itens | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0017](items/BL-0017-nome-execucao-avulsa.md) | Permitir informar um nome para execução avulsa | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-05` |
+| [BL-0018](items/BL-0018-corrigir-backdrop-modal-completar-item.md) | Corrigir backdrop sobre o modal de completar item | `bug` | `S1` | `P0` | `concluido` | `2026-08-05` |
 
 ## Checklist de passagem ponta a ponta
 

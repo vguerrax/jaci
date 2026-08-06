@@ -14,6 +14,10 @@ from app.models.enums import ExecutionStatus
 logger = logging.getLogger("jaci.executions")
 
 
+class LinkedItemNameImmutableError(ValueError):
+    """Indica tentativa de renomear item de execução vinculado ao template."""
+
+
 def ensure_execution_is_mutable(execution: Execution) -> None:
     """Impede qualquer alteração em uma execução já finalizada."""
     if execution.status == ExecutionStatus.completed:
@@ -195,12 +199,17 @@ def create_execution_standalone(
     scheduled_date: datetime,
     created_by: User,
     budget: Optional[float] = None,
+    name: Optional[str] = None,
 ) -> Execution:
     """Cria uma execução avulsa sem template."""
+    normalized_name = (name or "").strip() or "Compra Avulsa"
+    if len(normalized_name) > 150:
+        raise ValueError("Nome da execução deve ter no máximo 150 caracteres.")
+
     execution = Execution(
         template_id=None,
         group_id=group.id,
-        name="Compra Avulsa",
+        name=normalized_name,
         scheduled_date=scheduled_date,
         status=ExecutionStatus.scheduled,
         budget=budget if budget is not None and budget > 0 else None,
@@ -232,8 +241,14 @@ def update_scheduled_execution(
         raise ValueError("Nome da execução deve ter no máximo 150 caracteres.")
     if budget is not None and budget < 0:
         raise ValueError("Orçamento não pode ser negativo.")
+    if (
+        execution.template_id is not None
+        and normalized_name != get_execution_display_name(execution)
+    ):
+        raise ValueError("Apenas compras avulsas sem lista podem ter o nome alterado.")
 
-    execution.name = normalized_name
+    if execution.template_id is None:
+        execution.name = normalized_name
     execution.scheduled_date = scheduled_date
     execution.budget = budget if budget is not None and budget > 0 else None
     db.commit()
@@ -306,10 +321,18 @@ def add_item_to_execution(
     name: str,
     planned_quantity: float = 1,
     category_id: Optional[int] = None,
-    notes: Optional[str] = None
+    notes: Optional[str] = None,
+    unit_price: Optional[float] = None,
 ) -> ExecutionItem:
-    """Adiciona item durante a execução (não afeta o template)."""
+    """Adiciona item à execução sem alterar o template associado."""
     ensure_execution_is_mutable(execution)
+    if execution.status == ExecutionStatus.cancelled:
+        raise ValueError("Não é possível alterar execução cancelada.")
+
+    is_purchased = execution.status == ExecutionStatus.in_progress
+    if is_purchased and (unit_price is None or unit_price <= 0):
+        raise ValueError("Valor unitário deve ser maior que zero.")
+
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -326,6 +349,9 @@ def add_item_to_execution(
         execution_id=execution.id,
         name=name.strip(),
         planned_quantity=planned_quantity,
+        purchased_quantity=planned_quantity if is_purchased else None,
+        unit_price=unit_price if is_purchased else None,
+        is_completed=is_purchased,
         category_id=category_id,
         notes=notes,
         sort_order=(max_order or 0) + 1,
@@ -333,7 +359,11 @@ def add_item_to_execution(
     db.add(item)
     db.commit()
     db.refresh(item)
-    logger.info(f"Item '{item.name}' adicionado durante execução")
+    logger.info(
+        "Item '%s' adicionado à execução como %s",
+        item.name,
+        "comprado" if item.is_completed else "pendente",
+    )
     return item
 
 
@@ -348,8 +378,19 @@ def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     logger.info(f"Item '{item_name}' removido da execução")
     
     
-def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None, notes: Optional[str] = None) -> ExecutionItem:
+def update_execution_item(
+    db: Session,
+    item: ExecutionItem,
+    name: str,
+    planned_quantity: float,
+    category_id: int | None,
+    notes: Optional[str] = None,
+) -> ExecutionItem:
     ensure_execution_is_mutable(item.execution)
+    if item.template_item_id is not None and item.name != name:
+        raise LinkedItemNameImmutableError(
+            "O nome de um item vinculado à lista não pode ser alterado durante a compra."
+        )
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -364,7 +405,7 @@ def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_q
     if item.category_id != category_id:
         item.category_id = category_id
     if item.notes != notes:
-        item.notes =  notes
+        item.notes = notes
     item.version += 1
     db.commit()
     db.refresh(item)

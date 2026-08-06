@@ -68,6 +68,7 @@ def test_fl06_only_selected_suggestions_are_applied_to_template(
                 "planned_quantity": 3,
             }
         ],
+        execution=execution,
     )
 
     assert [(item.name, item.planned_quantity) for item in template.items] == [("Feijão", 3)]
