@@ -7,7 +7,7 @@
 | ID | `BL-0020` |
 | Título | Bloquear renomeação de item vinculado ao template |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
@@ -23,6 +23,15 @@ mesmo quando ele conserva `template_item_id`. Assim, o usuário pode transformar
 por exemplo, "Maçã" em "Manga" sem remover e adicionar um item avulso. O novo
 produto permanece associado à identidade do item original do template.
 
+Durante a validação também foram identificadas duas formas complementares de
+perder essa identidade:
+
+- ao incorporar no template um item adicionado durante a execução, o novo
+  `TemplateItem` é criado, mas o `ExecutionItem` original permanece com
+  `template_item_id = NULL`;
+- o nome de um `TemplateItem` continua editável mesmo depois de esse item ter
+  sido marcado como comprado em uma execução vinculada.
+
 ### Comportamento esperado
 
 Um item de execução que possui `template_item_id` deve conservar seu nome. O
@@ -30,12 +39,19 @@ usuário continua podendo alterar quantidade planejada, categoria e observaçõe
 mas deve remover o item e adicionar outro quando desejar comprar um produto
 diferente. Itens avulsos sem `template_item_id` permanecem renomeáveis.
 
+Quando um item avulso for incorporado ao template no fechamento, o item da
+execução encerrada deve receber o ID do `TemplateItem` criado. Depois que um
+item de template possuir ao menos um item de execução marcado como comprado,
+seu nome deve ficar somente para leitura; quantidade planejada, categoria e
+observações continuam editáveis. Itens de template nunca comprados permanecem
+renomeáveis.
+
 ### Impacto e abrangência
 
 - Impacto: trocas de produto sob a mesma identidade tornam análises futuras de
   preço, frequência e quantidade imprecisas.
-- Abrangência: execuções agendadas ou em andamento, online e offline, com itens
-  originados de templates.
+- Abrangência: execuções agendadas, em andamento ou finalizadas, online e
+  offline, aprendizado no fechamento e edição de itens das listas.
 - Frequência: sempre que um item vinculado é editado; a troca de nome é
   atualmente aceita pelo serviço e pelas interfaces online/offline.
 
@@ -55,37 +71,42 @@ diferente. Itens avulsos sem `template_item_id` permanecem renomeáveis.
   alteração de nome ao mesmo serviço.
 - [Aprendizado de templates](../../../../app/services/template_learning_service.py)
   usa `template_item_id` para correlacionar itens históricos.
+- A incorporação atual cria o item da lista, mas não atualiza o
+  `template_item_id` do item de execução que originou a sugestão.
+- [`update_template_item`](../../../../app/services/template_service.py)
+  persiste qualquer nome recebido sem verificar compras vinculadas.
 
 ### Workaround
 
-Remover o item ainda não concluído e adicionar o produto correto como item
-avulso. A interface atual não orienta o usuário a usar esse fluxo.
+Na execução, remover o item ainda não concluído e adicionar o produto correto
+como item avulso. Para item da lista já comprado, não há workaround que preserve
+simultaneamente a identidade histórica e permita trocar o produto.
 
 ## Triagem
 
 | Campo | Valor |
 | --- | --- |
 | Confirmação | `confirmado` por inspeção do serviço, rota HTML, formulário e fila offline |
-| Classificação | Ajuste de integridade da identidade de itens usados por histórico e inteligência de compras |
-| Domínio afetado | Execuções, itens de execução, edição online/offline, histórico de compras e aprendizado |
-| Regras de negócio afetadas | Item vinculado conserva a identidade e o nome copiado; outro produto exige remoção e adição; alterações não propagam para o template |
+| Classificação | Ajuste de integridade bidirecional da identidade entre itens de execução e itens de template |
+| Domínio afetado | Execuções, itens de execução, templates, edição online/offline, histórico de compras e aprendizado |
+| Regras de negócio afetadas | Item vinculado conserva a identidade e o nome copiado; incorporação confirmada estabelece o vínculo histórico; item de template já comprado conserva o nome; alterações não propagam snapshots |
 | Risco de segurança | Baixo — a validação deve ficar no serviço para impedir adulteração por POST ou API offline |
 | Risco de LGPD | Baixo — nenhum dado novo é coletado; payloads e auditorias existentes não devem expor outro grupo |
-| Risco de isolamento por grupo | Baixo — consultas autorizadas existentes serão preservadas e nenhum novo ID do cliente será confiado |
+| Risco de isolamento por grupo | Médio, mitigado — o ID da sugestão vem do cliente e deve ser validado contra a execução, o template e o grupo antes de criar ou vincular registros |
 | Risco offline/sincronização | Médio — clientes ou operações antigas podem tentar renomear e precisam receber conflito explícito sem perder a fila |
-| Risco ao histórico financeiro | Médio, mitigado — o bloqueio evita novas associações incorretas; registros históricos existentes não serão reescritos |
+| Risco ao histórico financeiro | Médio, mitigado — o vínculo será acrescentado ao item que originou a incorporação sem alterar nome, quantidade comprada, preço ou total; a imutabilidade evita novas associações incorretas |
 | Risco à recorrência | Baixo — datas, status, geração do próximo ciclo e template permanecem inalterados |
-| Risco à separação template/execução | Médio, mitigado — o nome do snapshot é preservado sem consultar ou atualizar retroativamente o nome atual do template |
+| Risco à separação template/execução | Médio, mitigado — o vínculo de proveniência será preenchido somente após confirmação explícita; snapshots e dados financeiros não serão propagados ou reescritos |
 | Dependências | Contrato de bloqueio otimista, fila/conflitos offline e distribuição PWA; `BL-0003`, `BL-0005` e futura cobertura UI em `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0003` e `BL-0005` consomem a identidade protegida, mas não implementam este guardrail |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Realizar aceite manual e registrar a publicação antes de concluir a demanda |
+| Próximo passo | Obter aprovação explícita da revisão do refinamento para implementar a segunda etapa |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
-- Implementação (commits/PRs): fatia 1.1.1 concluída no commit `f386127`;
-  correção da validação manual no commit `063bd7a`.
+- Implementação (commits/PRs): etapa 1 concluída no commit `f386127`;
+  correção da validação manual no commit `063bd7a`; etapa 2 ainda não iniciada.
 - Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
   visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
@@ -112,3 +133,6 @@ avulso. A interface atual não orienta o usuário a usar esse fluxo.
 | `2026-08-05 20:31 -03` | Usuário/Codex | Falha encontrada na validação manual | Item comprado abria o modal de conclusão, que mostrava o nome somente no título e omitia o campo `readonly` e a orientação previstos |
 | `2026-08-05 20:31 -03` | Codex | Correção de validação aplicada | Campo e orientação adicionados aos modais de comprar/editar compra online e offline; cache elevado para `v32` e regressão aprovada |
 | `2026-08-05 20:31 -03` | Codex | Commit corretivo registrado | Correção visual, contratos, documentação e grafo consolidados em `063bd7a` |
+| `2026-08-05 21:19 -03` | Usuário/Codex | Aceite manual da etapa 1 registrado | Campo de nome vinculado e orientação validados com sucesso na execução local |
+| `2026-08-05 21:19 -03` | Usuário/Codex | Lacunas complementares identificadas; `em_validacao` → `em_refinamento` | Item incorporado não recebe o novo vínculo histórico e item da lista já comprado ainda pode ser renomeado |
+| `2026-08-05 21:19 -03` | Codex | Refinamento revisado; `em_refinamento` → `pronto_para_implementacao` | Etapa 2, contratos TDD, isolamento, atomicidade e validações definidos; código aguarda nova aprovação explícita |

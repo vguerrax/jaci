@@ -5,12 +5,14 @@
 - Item de backlog: [BL-0020](../backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md)
 - Branch: `feature/BL-0020-bloquear-renomeacao-item-vinculado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_validacao`
+- Estado do refinamento: `pronto_para_implementacao`
 - Itens relacionados: `BL-0003`, `BL-0005` e `BL-0011`
-- Decisões de produto: nome vinculado visível em modo somente leitura; troca de
-  produto usa remoção e adição; divergências históricas são preservadas.
-- Aprovação de implementação: emitida explicitamente em `2026-08-05`, depois
-  do commit documental `0fd7aaa`.
+- Decisões de produto: nome vinculado visível em modo somente leitura; item
+  incorporado recebe vínculo de proveniência; item da lista torna o nome
+  imutável após a primeira compra; divergências históricas são preservadas.
+- Aprovação da etapa 1: emitida explicitamente em `2026-08-05`, depois do
+  commit documental `0fd7aaa`.
+- Aprovação da etapa 2: pendente após esta revisão versionada do refinamento.
 
 ## Objetivo e critérios de sucesso
 
@@ -19,7 +21,7 @@
 Preservar a identidade de itens originados de templates para que um produto
 diferente não seja registrado sob o mesmo `template_item_id`, protegendo
 análises de preço, frequência e quantidade sem reduzir a edição dos demais
-atributos da execução.
+atributos da execução ou do planejamento.
 
 ### Critérios de sucesso
 
@@ -36,6 +38,17 @@ atributos da execução.
    preserva a fila e expõe o estado remoto para resolução explícita.
 7. Nenhum nome histórico é reescrito e nenhuma mudança de modelo ou migração é
    introduzida.
+8. Ao confirmar a incorporação de um item adicionado durante a execução, o
+   `ExecutionItem` que originou a sugestão recebe o ID do novo `TemplateItem`
+   na mesma unidade transacional, sem alterar seu snapshot financeiro.
+9. IDs de sugestão adulterados, pertencentes a outra execução, template ou
+   grupo, são rejeitados sem criar item nem vínculo parcial.
+10. Um `TemplateItem` referenciado por ao menos um `ExecutionItem` com
+    `is_completed = true` conserva exatamente seu nome; quantidade planejada,
+    categoria e observações continuam editáveis.
+11. Item de template sem compra vinculada continua renomeável.
+12. A edição da lista apresenta o nome protegido como somente leitura e explica
+    que um produto diferente deve ser cadastrado como novo item.
 
 ## Escopo
 
@@ -53,6 +66,12 @@ atributos da execução.
 - Atualização da versão do cache PWA e dos contratos de documentação/testes.
 - Cenário Playwright futuro registrado para `BL-0011`, sem criar a
   infraestrutura nesta demanda.
+- Vínculo do item incorporado na execução que originou a sugestão, com
+  validação de pertencimento à mesma execução, template e grupo.
+- Imutabilidade do nome do item da lista depois da primeira compra vinculada,
+  centralizada no serviço e refletida no modal server-rendered.
+- Edição normal dos demais atributos do item da lista e renomeação de itens
+  ainda sem compra vinculada.
 
 ### Excluído
 
@@ -64,6 +83,12 @@ atributos da execução.
 - Alterar preço, quantidade comprada, recorrência, status ou cálculos
   financeiros.
 - Criar triggers, constraints de banco, migrações ou infraestrutura Playwright.
+- Reescrever vínculos de itens incorporados antes desta correção.
+- Alterar automaticamente nomes de snapshots ou propagar o nome atual do
+  template para execuções existentes.
+- Alterar nesta etapa a remoção de `TemplateItem` e o comportamento atual da FK
+  `ON DELETE SET NULL`; essa política exige uma decisão separada de ciclo de
+  vida para itens históricos.
 
 ## Riscos e regras preservadas
 
@@ -86,6 +111,17 @@ atributos da execução.
 - Recorrência: `template_id`, datas, finalização e geração futura não mudam.
 - Separação entre template e execução: o nome protegido é o snapshot atual da
   execução, não o nome vigente do template; edições continuam sem propagação.
+- Segurança e permissões da incorporação: o `execution_item_id` recebido no
+  formulário não será confiado isoladamente; a operação deve confirmar que o
+  item pertence à execução em fechamento, vinculada ao mesmo template e grupo.
+- Atomicidade da incorporação: criação do item do template e preenchimento do
+  vínculo histórico serão confirmados juntos ou revertidos juntos.
+- Identidade no planejamento: a existência de qualquer item de execução
+  marcado como comprado bloqueia apenas a mudança de nome do `TemplateItem`;
+  itens copiados, mas nunca comprados, não ativam o bloqueio.
+- Exclusão: a FK atual usa `ON DELETE SET NULL`; como a demanda não altera a
+  remoção de itens da lista, a perda de vínculo por exclusão permanece um risco
+  conhecido e explicitamente fora desta etapa.
 
 ## Plano de implementação
 
@@ -123,6 +159,36 @@ atributos da execução.
   - `tests/README.md`
   - item e refinamento `BL-0020`
 
+### Etapa 2 — Fechar o ciclo de identidade entre execução e planejamento
+
+#### Ticket 2.1 — Preservar proveniência e nome após a primeira compra
+
+##### Fatia 2.1.1 — Contratos TDD e implementação completa
+
+- Ordem: `2`
+- Objetivo da fatia: escrever os contratos executáveis da etapa 2 e entregar,
+  numa unidade coerente, o vínculo atômico do item incorporado, a validação de
+  pertencimento e o bloqueio server-side/UI da renomeação no template após a
+  primeira compra.
+- Dependências: aprovação explícita desta revisão versionada do refinamento.
+- Arquivos esperados:
+  - `tests/test_template_learning_tdd.py`
+  - `tests/test_template_execution_flow.py`
+  - `app/services/template_learning_service.py`
+  - `app/services/template_service.py`
+  - `app/routers/templates.py`
+  - `app/templates/pages/templates/_items_fragment.html`
+  - `docs/domain/template-learning.md`
+  - `tests/README.md`
+- Validações focadas:
+  - `timeout 180 venv/bin/pytest tests/test_template_learning_tdd.py tests/test_template_execution_flow.py`
+  - `timeout 180 env PYTHONPATH=. venv/bin/pylint app/services/template_learning_service.py app/services/template_service.py app/routers/templates.py --errors-only`
+  - validação manual do fechamento e da edição da lista em viewport móvel
+- Documentação a atualizar:
+  - `docs/domain/template-learning.md`
+  - `tests/README.md`
+  - item e refinamento `BL-0020`
+
 ## Cenários TDD
 
 Estes cenários devem ser escritos como testes antes da implementação, depois da
@@ -152,14 +218,40 @@ aprovação explícita deste refinamento.
     apresenta para resolução explícita pelo fluxo de conflitos existente.
 11. Dada a nova versão do shell PWA, clientes deixam de reutilizar o JavaScript
     antigo que permitia editar o nome vinculado.
+12. Dado item adicionado durante uma execução vinculada, ao confirmar sua
+    incorporação no fechamento, um novo item é criado no template e o item da
+    execução recebe seu `template_item_id`; nome, quantidade comprada, preço,
+    local, observações e versão do snapshot permanecem inalterados.
+13. Dado item incorporado, a próxima execução copia o mesmo
+    `template_item_id`, permitindo correlacionar a compra de origem e as compras
+    futuras pela mesma identidade.
+14. Dada sugestão ignorada, item inexistente, já vinculado, pertencente a outra
+    execução, outro template ou outro grupo, nenhuma criação ou vinculação é
+    persistida.
+15. Dada falha entre criação e vínculo, a operação não deixa `TemplateItem`
+    órfão nem `ExecutionItem` parcialmente atualizado.
+16. Dado item de template com ao menos um item de execução comprado
+    (`is_completed = true`), tentativa de alterar o nome no serviço falha sem
+    modificar nome, quantidade planejada, categoria ou observações.
+17. Dado o mesmo item comprado e o mesmo nome exato, editar quantidade
+    planejada, categoria e observações continua funcionando.
+18. Dado item de template sem item comprado vinculado, renomeá-lo continua
+    funcionando e afeta somente execuções futuras.
+19. Dado POST adulterado para renomear item da lista já comprado, a rota
+    responde `422` sem persistência parcial.
+20. Dado o modal de item da lista já comprado, o nome aparece como `readonly`,
+    é enviado com o formulário e possui orientação para cadastrar outro
+    produto; item nunca comprado mantém o nome editável.
 
 ### Contratos de etapas futuras
 
-- Não haverá `xfail(strict=True)` no escopo executável da fatia única.
+- Não haverá `xfail(strict=True)` no escopo executável das duas etapas.
 - A `BL-0011` deve cobrir futuramente em Playwright, com dados do grupo
   autenticado: abrir compra vinculada online e offline, confirmar nome somente
   leitura e ajuda visível, editar quantidade/observações, reconectar e validar
-  persistência; abrir item avulso e confirmar que o nome permanece editável.
+  persistência; abrir item avulso e confirmar que o nome permanece editável;
+  incorporar item no fechamento e validar o nome somente leitura na lista após
+  a compra.
 
 ## Estratégia de validação
 
@@ -190,11 +282,19 @@ aprovação explícita deste refinamento.
    que `readonly` e a ajuda não vazam entre itens.
 6. Simular payload online e offline com nome diferente e confirmar rejeição
    explícita sem mutação parcial nem broadcast.
+7. Adicionar e comprar um item durante uma execução vinculada, selecioná-lo
+   para incorporação no fechamento e confirmar que ele aparece nas execuções
+   futuras associado à mesma identidade.
+8. Abrir a lista após a incorporação, confirmar nome somente leitura e ajuda;
+   alterar quantidade e categoria e confirmar que o nome permanece intacto.
+9. Em item de lista nunca comprado, confirmar que o nome ainda é editável.
+10. Adulterar o POST de edição do item já comprado e confirmar `422` sem
+    alteração parcial.
 
 ### Regressão total
 
-Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
-`xfail(strict=True)` deste escopo:
+Como cada etapa possui uma fatia e a etapa 2 fecha o escopo revisado, executar
+ao concluí-la e sem `xfail(strict=True)` desta demanda:
 
 - `venv/bin/alembic upgrade head`
 - `timeout 240 venv/bin/pytest`
@@ -206,6 +306,7 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
 | Etapa 1 / Ticket 1.1 — Identidade online/offline | `1/1` | `0` | Concluído |
+| Etapa 2 / Ticket 2.1 — Proveniência e nome no planejamento | `0/1` | `1` | Pendente de aprovação |
 
 ## Fechamento
 
@@ -219,8 +320,9 @@ Como a fatia única fecha todo o ticket, executar ao concluí-la e sem
   `pylint` não está instalado no venv.
 - Resultado da validação manual: primeira rodada reprovada porque o modal de
   item comprado omitia o campo de nome e a orientação. Correção implementada;
-  nova rodada de aceite em navegador pendente. A infraestrutura Playwright
-  permanece futura na `BL-0011`.
+  a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 ainda
+  aguarda aprovação e implementação. A infraestrutura Playwright permanece
+  futura na `BL-0011`.
 - Resultado da regressão total: migrações no head; 237 testes aprovados e 5
   `xfail` legados fora do escopo após a correção.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
