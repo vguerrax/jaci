@@ -5,14 +5,15 @@
 - Item de backlog: [BL-0020](../backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md)
 - Branch: `feature/BL-0020-bloquear-renomeacao-item-vinculado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `pronto_para_implementacao`
+- Estado do refinamento: `em_validacao`
 - Itens relacionados: `BL-0003`, `BL-0005` e `BL-0011`
 - Decisões de produto: nome vinculado visível em modo somente leitura; item
   incorporado recebe vínculo de proveniência; item da lista torna o nome
   imutável após a primeira compra; divergências históricas são preservadas.
 - Aprovação da etapa 1: emitida explicitamente em `2026-08-05`, depois do
   commit documental `0fd7aaa`.
-- Aprovação da etapa 2: pendente após esta revisão versionada do refinamento.
+- Aprovação da etapa 2: emitida explicitamente em `2026-08-05`, depois do
+  commit documental `4d34c08`.
 
 ## Objetivo e critérios de sucesso
 
@@ -306,25 +307,28 @@ ao concluí-la e sem `xfail(strict=True)` desta demanda:
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
 | Etapa 1 / Ticket 1.1 — Identidade online/offline | `1/1` | `0` | Concluído |
-| Etapa 2 / Ticket 2.1 — Proveniência e nome no planejamento | `0/1` | `1` | Pendente de aprovação |
+| Etapa 2 / Ticket 2.1 — Proveniência e nome no planejamento | `1/1` | `0` | Concluído |
 
 ## Fechamento
 
 - Commits/PRs: fatia 1.1.1 `f386127`; correção de validação `063bd7a`;
+  fatia 2.1.1 concluída na branch e aguardando registro do commit técnico;
   branch `feature/BL-0020-bloquear-renomeacao-item-vinculado`.
 - Resultado das validações focadas: ciclo TDD inicial com 10 falhas esperadas e
   79 aprovações; após a implementação, 89 testes aprovados. `node --check`
   aprovou `offline-cache.js` e `service-worker.js`; compilação Python aprovada.
   A falha manual do modal de item comprado reproduziu 5 falhas esperadas e,
   depois da correção online/offline, 73 testes focados foram aprovados. O
-  `pylint` não está instalado no venv.
+  `pylint` não está instalado no venv. Na etapa 2, 10 contratos falharam antes
+  da implementação; depois dela, 44 testes focados e 100 testes ampliados
+  passaram, e os módulos Python alterados compilaram sem erro.
 - Resultado da validação manual: primeira rodada reprovada porque o modal de
   item comprado omitia o campo de nome e a orientação. Correção implementada;
-  a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 ainda
-  aguarda aprovação e implementação. A infraestrutura Playwright permanece
-  futura na `BL-0011`.
-- Resultado da regressão total: migrações no head; 237 testes aprovados e 5
-  `xfail` legados fora do escopo após a correção.
+  a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 aguarda
+  aceite manual do vínculo no fechamento e do nome somente leitura na lista. A
+  infraestrutura Playwright permanece futura na `BL-0011`.
+- Resultado da regressão total: migrações no head; 247 testes aprovados e 5
+  `xfail` legados fora do escopo após a etapa 2.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, matriz de testes e este refinamento;
   grafo AST-only reconstruído.

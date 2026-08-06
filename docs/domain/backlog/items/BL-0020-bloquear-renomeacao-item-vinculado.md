@@ -7,7 +7,7 @@
 | ID | `BL-0020` |
 | Título | Bloquear renomeação de item vinculado ao template |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
@@ -100,17 +100,20 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | Dependências | Contrato de bloqueio otimista, fila/conflitos offline e distribuição PWA; `BL-0003`, `BL-0005` e futura cobertura UI em `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0003` e `BL-0005` consomem a identidade protegida, mas não implementam este guardrail |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aprovação explícita da revisão do refinamento para implementar a segunda etapa |
+| Próximo passo | Realizar aceite manual da etapa 2 e registrar a publicação antes de concluir a demanda |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
 - Implementação (commits/PRs): etapa 1 concluída no commit `f386127`;
-  correção da validação manual no commit `063bd7a`; etapa 2 ainda não iniciada.
+  correção da validação manual no commit `063bd7a`; etapa 2 concluída na branch,
+  aguardando registro do commit técnico.
 - Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
   visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
-  regressão atual com 237 testes aprovados e 5 `xfail` legados fora do escopo.
+  etapa 2 com 10 falhas TDD esperadas, 44 testes focados e 100 testes ampliados
+  aprovados; compilação Python e migrações no head; regressão atual com 247
+  testes aprovados e 5 `xfail` legados fora do escopo. `pylint` indisponível.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0003](BL-0003-historico-precos.md),
   [BL-0005](BL-0005-inteligencia-compras.md) e
@@ -136,3 +139,5 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:19 -03` | Usuário/Codex | Aceite manual da etapa 1 registrado | Campo de nome vinculado e orientação validados com sucesso na execução local |
 | `2026-08-05 21:19 -03` | Usuário/Codex | Lacunas complementares identificadas; `em_validacao` → `em_refinamento` | Item incorporado não recebe o novo vínculo histórico e item da lista já comprado ainda pode ser renomeado |
 | `2026-08-05 21:19 -03` | Codex | Refinamento revisado; `em_refinamento` → `pronto_para_implementacao` | Etapa 2, contratos TDD, isolamento, atomicidade e validações definidos; código aguarda nova aprovação explícita |
+| `2026-08-05 21:32 -03` | Usuário/Codex | Revisão aprovada; `pronto_para_implementacao` → `em_implementacao` | Aprovação explícita recebida após o commit documental `4d34c08`; fatia 2.1.1 liberada para TDD e implementação |
+| `2026-08-05 21:38 -03` | Codex | Fatia 2.1.1 concluída (`1/1`); `em_implementacao` → `em_validacao` | Vínculo atômico, validação de pertencimento e nome da lista somente leitura após compra implementados; 247 testes aprovados e 5 `xfail` legados |

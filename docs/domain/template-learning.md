@@ -22,6 +22,23 @@ No fechamento da execução, itens criados durante a compra são exibidos como
 sugestões de inclusão no template. O usuário escolhe cada item individualmente e
 pode ajustar categoria e quantidade planejada antes de aplicar.
 
+Quando a inclusão é confirmada, a criação do `TemplateItem` e o preenchimento de
+`ExecutionItem.template_item_id` no item que originou a sugestão são persistidos na
+mesma transação. O snapshot financeiro da execução não é alterado. O serviço
+valida que item, execução, template e grupo pertencem ao mesmo fluxo antes de
+estabelecer o vínculo.
+
+## Identidade do item após a primeira compra
+
+O nome de um `TemplateItem` torna-se imutável quando existe ao menos um
+`ExecutionItem` vinculado com `is_completed = true`. Quantidade planejada,
+categoria e observações do planejamento continuam editáveis, e itens que ainda
+não foram comprados permanecem renomeáveis.
+
+Na interface da lista, o nome protegido continua visível em modo somente leitura.
+Essa regra fica centralizada no serviço para que um POST adulterado não consiga
+renomear o produto nem persistir parcialmente os outros campos.
+
 ## BL-031 e BL-032 — Quantidades recorrentes
 
 O histórico de execuções finalizadas do template é analisado por item vinculado ao

@@ -1092,7 +1092,18 @@ async def handle_close_execution(
     form = await request.form()
     template_suggestions = _read_template_learning_choices(form)
     if execution.template and template_suggestions["apply"]:
-        apply_template_suggestions(db, execution.template, template_suggestions["apply"])
+        try:
+            apply_template_suggestions(
+                db,
+                execution.template,
+                template_suggestions["apply"],
+                execution=execution,
+            )
+        except ValueError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=str(exc),
+            ) from exc
     if template_suggestions["dismiss"]:
         dismiss_template_suggestions(db, execution, template_suggestions["dismiss"])
     

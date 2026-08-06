@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime, timezone
 
 import pytest
+from fastapi import HTTPException
 from starlette.requests import Request
 
 from app.models import Execution, TemplateItem
@@ -246,6 +247,163 @@ def test_template_detail_renders_modal_and_fragment_as_a_complete_page(
     assert body.count("data-item-add-form") == 1
     assert 'id="template-items-container"' in body
     assert "Banana" in body
+
+
+def test_purchased_template_item_name_is_read_only_in_the_list_modal(
+    db, make_user, make_group
+):
+    user = make_user("purchased-template-modal@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    purchased = add_item_to_template(db, template, "Maçã", 1)
+    editable = add_item_to_template(db, template, "Banana", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    complete_item(db, execution.items[0], 1, 5.5)
+
+    response = asyncio.run(
+        template_routes.template_detail(
+            request=make_template_item_request(htmx=False),
+            template_id=template.id,
+            db=db,
+            user=user,
+            active_group=group,
+        )
+    )
+
+    body = response.body.decode()
+    purchased_modal = body.split(f'id="editItemModal{purchased.id}"', 1)[1].split(
+        '</form>', 1
+    )[0]
+    editable_modal = body.split(f'id="editItemModal{editable.id}"', 1)[1].split(
+        '</form>', 1
+    )[0]
+    assert response.status_code == 200
+    assert 'name="name" value="Maçã"' in purchased_modal
+    assert "readonly" in purchased_modal
+    assert "Este item já possui compras registradas." in purchased_modal
+    assert 'name="name" value="Banana"' in editable_modal
+    assert "readonly" not in editable_modal
+    assert "Este item já possui compras registradas." not in editable_modal
+
+
+def test_purchased_template_item_rejects_rename_without_partial_update(
+    db, make_user, make_group, make_category
+):
+    user = make_user("purchased-template-service@example.com")
+    group = make_group(owner=user)
+    original_category = make_category(group, "Hortifruti")
+    other_category = make_category(group, "Mantimentos")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(
+        db,
+        template,
+        "Maçã",
+        1,
+        original_category.id,
+        notes="Vermelha",
+    )
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    complete_item(db, execution.items[0], 1, 5.5)
+
+    with pytest.raises(ValueError, match="já possui compras registradas"):
+        update_template_item(
+            db,
+            template_item,
+            "Manga",
+            3,
+            other_category.id,
+            "Maduro",
+        )
+
+    db.refresh(template_item)
+    assert template_item.name == "Maçã"
+    assert template_item.planned_quantity == 1
+    assert template_item.category_id == original_category.id
+    assert template_item.notes == "Vermelha"
+
+
+def test_purchased_template_item_keeps_other_fields_editable(
+    db, make_user, make_group, make_category
+):
+    user = make_user("purchased-template-fields@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Hortifruti")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    complete_item(db, execution.items[0], 1, 5.5)
+
+    updated = update_template_item(
+        db,
+        template_item,
+        "Maçã",
+        3,
+        category.id,
+        "Comprar madura",
+    )
+
+    assert updated.name == "Maçã"
+    assert updated.planned_quantity == 3
+    assert updated.category_id == category.id
+    assert updated.notes == "Comprar madura"
+
+
+def test_template_item_without_purchase_history_remains_renamable(
+    db, make_user, make_group
+):
+    user = make_user("unpurchased-template@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(db, template, "Banana", 1)
+    create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+
+    updated = update_template_item(db, template_item, "Banana prata", 2)
+
+    assert updated.name == "Banana prata"
+    assert updated.planned_quantity == 2
+
+
+def test_template_item_edit_route_rejects_forged_purchased_name(
+    db, make_user, make_group, make_category
+):
+    user = make_user("purchased-template-route@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Hortifruti")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    complete_item(db, execution.items[0], 1, 5.5)
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            template_routes.handle_edit_item(
+                request=make_template_item_request(htmx=False),
+                template_id=template.id,
+                item_id=template_item.id,
+                name="Manga",
+                planned_quantity=3,
+                category_id=category.id,
+                db=db,
+                user=user,
+                active_group=group,
+            )
+        )
+
+    db.refresh(template_item)
+    assert error.value.status_code == 422
+    assert template_item.name == "Maçã"
+    assert template_item.planned_quantity == 1
+    assert template_item.category_id is None
 
 
 def test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs(

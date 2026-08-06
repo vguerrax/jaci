@@ -100,8 +100,8 @@
     "semantic_hash": "ad644a287081046ff3df22153d2d2bfa"
   },
   "app/routers/executions.py": {
-    "mtime": 1785971982.3316872,
-    "ast_hash": "1b309063fc9147a74e8692934d6a75bc",
+    "mtime": 1785976592.5564804,
+    "ast_hash": "4157eacb45a84e9e3effe86d6d784af6",
     "semantic_hash": ""
   },
   "app/routers/groups.py": {
@@ -130,8 +130,8 @@
     "semantic_hash": "a3100f73efe929227c6c9a62a9d941db"
   },
   "app/routers/templates.py": {
-    "mtime": 1785940691.6571016,
-    "ast_hash": "f0f051eac893096c0ceae685a2a0e9f4",
+    "mtime": 1785976602.8324487,
+    "ast_hash": "397cd478c6977b95f04b0659fa98d9cb",
     "semantic_hash": ""
   },
   "app/services/agenda_service.py": {
@@ -180,14 +180,14 @@
     "semantic_hash": "c3bfdad9c1ad94f693f389fc80220773"
   },
   "app/services/template_learning_service.py": {
-    "mtime": 1784832781.138386,
-    "ast_hash": "c7e64d333d8bc2bf1749c95df4d58884",
-    "semantic_hash": "c7e64d333d8bc2bf1749c95df4d58884"
+    "mtime": 1785976789.706253,
+    "ast_hash": "6cb98dfb29f384e8519cb41d1ea8a345",
+    "semantic_hash": ""
   },
   "app/services/template_service.py": {
-    "mtime": 1781542417.1169875,
-    "ast_hash": "ee0a6b40035e77b28a58b3bcc1f67598",
-    "semantic_hash": "ee0a6b40035e77b28a58b3bcc1f67598"
+    "mtime": 1785976570.7850156,
+    "ast_hash": "e7f86ed3b5f51ce3f1142dc9b6e238e0",
+    "semantic_hash": ""
   },
   "app/services/tupa_auth_service.py": {
     "mtime": 1781556843.167007,
@@ -385,9 +385,9 @@
     "semantic_hash": "1a16c45b760c70b510fe2fec7772a861"
   },
   "tests/test_future_user_flows.py": {
-    "mtime": 1784832781.1513424,
-    "ast_hash": "136fbd99a72baf95d9dff4b3d287a085",
-    "semantic_hash": "136fbd99a72baf95d9dff4b3d287a085"
+    "mtime": 1785976506.4351463,
+    "ast_hash": "2769461433754dec187b8c5ff9b09132",
+    "semantic_hash": ""
   },
   "tests/test_home_dashboard.py": {
     "mtime": 1784832781.151512,
@@ -435,14 +435,14 @@
     "semantic_hash": "281c5313ced306d66a07d896e0924d06"
   },
   "tests/test_template_execution_flow.py": {
-    "mtime": 1785972588.8029785,
-    "ast_hash": "d9cf5d15c2c0d1e6f8a7bb1633f91417",
+    "mtime": 1785976541.189616,
+    "ast_hash": "cc5d0def5f16a427b84a6100a2055c48",
     "semantic_hash": ""
   },
   "tests/test_template_learning_tdd.py": {
-    "mtime": 1784832781.1532228,
-    "ast_hash": "104475c5495a8229d3f4ef18835111e0",
-    "semantic_hash": "104475c5495a8229d3f4ef18835111e0"
+    "mtime": 1785976641.657973,
+    "ast_hash": "835f92a747d723d50265f2c7ab27d367",
+    "semantic_hash": ""
   },
   "tests/test_user_flows.py": {
     "mtime": 1785940691.7149632,
@@ -670,7 +670,7 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1785972087.1613271,
+    "mtime": 1785976756.5405252,
     "ast_hash": "ac5944c8d6801a88c867ef50d0febd15",
     "semantic_hash": ""
   },
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "docs/domain/template-learning.md": {
-    "mtime": 1784832781.1493595,
-    "ast_hash": "ca6742ea90eb74eadace7e1094afdbfd",
+    "mtime": 1785976756.304522,
+    "ast_hash": "fb7af383f5cbc06267465a5a25b0a002",
     "semantic_hash": ""
   },
   "docs/domain/user-flows.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1785972087.540331,
-    "ast_hash": "e88268de25d45b9d6d8fcbad32a96bb9",
+    "mtime": 1785976756.4215236,
+    "ast_hash": "14467777a06d5e6ab599127e077e6edd",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -910,8 +910,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/templates/_items_fragment.html": {
-    "mtime": 1785940691.6604416,
-    "ast_hash": "3cb7283170459a64b5ec6e192c465533",
+    "mtime": 1785976602.9514503,
+    "ast_hash": "bfa84380a34d15e8fb41f2b34734f159",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md": {
@@ -950,13 +950,13 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785972127.1827304,
-    "ast_hash": "388cbe5d13c2ba554073cc765cfc3f21",
+    "mtime": 1785976756.6595268,
+    "ast_hash": "10af065991d0f7fbf48aa672e664d699",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1785972127.3027318,
-    "ast_hash": "7ef9eedcc0603521a07949fb86ef9996",
+    "mtime": 1785976756.7774563,
+    "ast_hash": "d427fac300cfdcbade44ca1c72e3d6af",
     "semantic_hash": ""
   }
 }
