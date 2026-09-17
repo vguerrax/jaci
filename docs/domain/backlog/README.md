@@ -159,6 +159,7 @@ não muda de caminho nem é apagado.
 | [BL-0020](items/BL-0020-bloquear-renomeacao-item-vinculado.md) | Bloquear renomeação de item vinculado ao template | `ajuste` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-08-05` |
 | [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-09-16` |
 | [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
+| [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
 
 ### Itens arquivados
 
