@@ -442,27 +442,22 @@ do registro da publicação.
 
 ## Ordem de Prioridade do Roadmap
 
-O backlog ativo mantém o estado operacional das demandas. Esta ordem preserva a
-sequência estratégica do produto:
+O backlog ativo mantém o estado operacional das demandas. A sequência estratégica
+após a 1.3.0 está na [visão de releases](docs/domain/backlog/releases.md):
 
-1. PWA e funcionamento offline — fundação legada concluída; cobertura
-   remanescente em
-   [`BL-0001`](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
-2. Sincronização e resolução de conflitos — entregas legadas concluídas.
-3. Unidades de medida —
-   [`BL-0002`](docs/domain/backlog/items/BL-0002-unidades-medida.md).
-4. Histórico de preços —
-   [`BL-0003`](docs/domain/backlog/items/BL-0003-historico-precos.md).
-5. Aprendizado dos templates — entregas legadas concluídas.
-6. Inteligência de compras —
-   [`BL-0005`](docs/domain/backlog/items/BL-0005-inteligencia-compras.md).
-7. Dashboards financeiros —
-   [`BL-0004`](docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md).
-8. Integrações externas —
-   [`BL-0006`](docs/domain/backlog/items/BL-0006-integracoes-externas.md).
+1. 1.4.0 — ferramentas, AUTH_MOCK de teste, scripts, cobertura/CI e rastreabilidade offline.
+2. 1.5.0 — backups externos e proteção em repouso.
+3. 1.6.0 — acesso à conta e continuidade da sessão.
+4. 1.7.0 — exclusão e anonimização de conta.
+5. 1.8.0 — ordenação de compras, categorias e autocomplete.
+6. 1.9.0 — unidades de medida; 1.10.0 — histórico de preços.
+7. 1.11.0 — inteligência de compras; 1.12.0 — dashboard financeiro.
+8. 1.13.0 — API externa; 1.14.0 — calendário e compartilhamento.
 
-O inventário completo de itens ativos e legados está em
-[`docs/domain/backlog/`](docs/domain/backlog/README.md).
+São versões-alvo sem datas fixadas. Preservar dependências técnicas e o gate de
+cada refinamento; não iniciar código por associação ao roadmap. A reorganização
+da 1.4.0 é de estrutura de trabalho e ferramentas, sem migração arquitetural.
+O inventário completo permanece em [docs/domain/backlog/](docs/domain/backlog/README.md).
 
 ---
 

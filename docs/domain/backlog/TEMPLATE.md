@@ -10,6 +10,7 @@
 | --- | --- |
 | ID | `BL-NNNN` |
 | Título | `<título curto>` |
+| Versão-alvo | `a_definir` |
 | Tipo | `<bug | ajuste | melhoria>` |
 | Estado | `recebido` |
 | Severidade | `a_triar` |

@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0001` |
 | Título | Completar cobertura e rastreabilidade da operação offline |
+| Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Limitações e contratos futuros registrados no README, na documentação PWA e nos testes de fluxos futuros |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -105,3 +106,4 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | `2026-07-24 00:48 -03` | Codex | Item criado em `recebido` | Migração das limitações e contratos futuros espalhados pela documentação |
 | `2026-08-05 14:54 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Escopo da triagem aprovado e evidências da arquitetura offline atual confrontadas |
 | `2026-08-05 14:54 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Confirmação, prioridade, recorte, riscos, dependências, duplicidades e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.4.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

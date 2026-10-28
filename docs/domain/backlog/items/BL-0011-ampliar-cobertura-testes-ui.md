@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0011` |
 | Título | Ampliar cobertura automatizada e testes de UI |
+| Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
 | Estado | `recebido` |
 | Severidade | `a_triar` |
@@ -14,7 +15,7 @@
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` (`e062249`) em `2026-07-24` |
 | Responsável | `a_definir` |
-| Atualizado em | `2026-07-24` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -96,3 +97,4 @@ no navegador antes de cada publicação.
 | Data/hora | Autor | Mudança | Motivo/evidência |
 | --- | --- | --- | --- |
 | `2026-07-24 01:11 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.4.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

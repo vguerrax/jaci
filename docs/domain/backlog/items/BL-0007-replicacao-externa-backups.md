@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0007` |
 | Título | Replicar backups em armazenamento externo |
+| Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Limitação futura registrada no README e na decisão de backup PostgreSQL |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -96,3 +97,4 @@ acesso adequados.
 | `2026-07-24 00:48 -03` | Codex | Item criado em `recebido` | Migração da limitação operacional documentada |
 | `2026-08-05 22:15 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e direção agnóstica de provedor confirmadas; evidências da rotina local e do domínio único de falha confrontadas |
 | `2026-08-05 22:15 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

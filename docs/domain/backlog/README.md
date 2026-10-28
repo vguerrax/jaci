@@ -11,6 +11,12 @@ O [backlog legado](../decisions/backlog.md) registra entregas anteriores à
 adoção deste processo. Seus identificadores não participam da numeração
 `BL-NNNN` e nunca devem ser reutilizados no backlog atual.
 
+## Planejamento por versão
+
+A [visão de releases](releases.md) associa os itens ativos a versões-alvo, sem
+substituir seus estados. Versão-alvo não é versão publicada nem aprovação.
+Dependências ficam na triagem; tarefas, progresso e comandos/evidências no refinamento.
+
 ## Entrada rápida
 
 1. Localize o maior identificador `BL-NNNN` em
@@ -144,22 +150,23 @@ não muda de caminho nem é apagado.
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado | Responsável | Atualizado em |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
-| [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
-| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-08-05` |
-| [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-09-16` |
-| [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
-| [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
-| [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
+| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-10-28` |
+| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-10-28` |
+| [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-28` |
+| [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0026](items/BL-0026-ferramentas-ambiente-testes.md) | Ferramentas, ambiente de testes e rastreabilidade das releases | `melhoria` | `N/A` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-28` |
 
 ### Itens arquivados
 
