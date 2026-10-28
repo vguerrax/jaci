@@ -6,10 +6,11 @@
 - Branch: `feature/BL-0025-release-1-3-0`, criada da develop em `9ca2ad9`.
 - Responsável pelo refinamento: Engenharia Jaci.
 - Estado do refinamento: `pronto_para_implementacao`.
-- A branch é documental nesta etapa; será preservada após integração documental.
-  Antes das alterações executáveis, atualizá-la com a develop vigente.
-- Aprovação: pendente após versionamento deste documento. A solicitação de
-  executar o plano anterior não dispensa o gate do AGENTS.md.
+- A branch contém a preparação executável já aprovada; preservar a branch e
+  não integrar automaticamente as revisões documentais posteriores.
+- Aprovação: usuário aprovou explicitamente em 2026-10-28 após o commit
+  documental `3f4f9cd` e merge `113b397`. Branch atualizada até `4d6143e`,
+  incluindo versão no menu e simplificação da resposta `/health`, preservados.
 
 ## Objetivo e critérios de sucesso
 
@@ -27,12 +28,15 @@ mudanças de estrutura ou fluxos de trabalho.
    imagem construída e migrações verificadas em PostgreSQL descartável.
 4. Aceite manual da BL-0020 concluído e evidenciado, incluindo fallback HTML.
 5. Publicação da tag exata, verificações em produção e encerramento rastreados.
+6. Publicação exige versão explícita e grava APP_VERSION no arquivo de ambiente
+   selecionado antes de qualquer comando Docker.
 
 ## Escopo
 
 ### Incluído
 
 - Metadados 1.3.0, consolidação da develop, validação e publicação existentes.
+- Versão obrigatória na CLI de publish.sh e persistência de APP_VERSION no ambiente.
 - Conferência da correção Alembic para caracteres `%` na URL.
 - Correção dos estados documentais desatualizados na matriz de testes.
 - Notas externas da release, com descrição fiel das funcionalidades entregues.
@@ -76,13 +80,47 @@ mudanças de estrutura ou fluxos de trabalho.
 - Preparar texto externo das notas: BL-0020, correção Alembic e metadados;
   documentação de demandas futuras não deve ser anunciada como produto entregue.
 
+##### Fatia 1.1.2 — Exigir e persistir a versão na publicação
+
+- Ordem: 2; dependência: fatia 1.1.1 e aprovação explícita desta revisão versionada.
+- Origem: solicitação do usuário em 2026-10-28 após preparar o candidato e5451d4.
+- CLI: `./publish.sh <versao> [arquivo-env]`; arquivo padrão `.env.production`.
+  Exemplo padrão: `./publish.sh 1.3.0`; personalizado:
+  `./publish.sh 1.3.0 /caminho/ambiente.env`.
+- Aceitar `MAJOR.MINOR.PATCH`, também com prefixo `v` opcional; persistir sem `v`.
+  Rejeitar ausência, vazio, formato inválido ou argumentos excedentes com uso e
+  saída diferente de zero antes de modificar arquivo ou chamar Docker.
+- Exigir arquivo existente e gravável; não criar um ambiente de produção incompleto.
+- Substituir a atribuição ativa de APP_VERSION ou acrescentá-la se ausente;
+  consolidar atribuições ativas duplicadas em uma só, aceitando espaços e `export`.
+  Preservar comentários, demais configurações, permissões e dados sensíveis.
+- Atualizar via arquivo temporário no mesmo diretório e substituição atômica,
+  com limpeza em caso de erro; não executar/sourcear nem imprimir o conteúdo do env.
+- Exportar APP_VERSION com o valor informado para impedir que um valor antigo no
+  shell prevaleça sobre o arquivo na execução do Docker Compose.
+- Só após persistência bem-sucedida executar os quatro comandos Compose atuais,
+  sempre com o arquivo selecionado. Falha na atualização aborta antes do Docker.
+  Falha posterior de build/migração/publicação mantém a versão informada no arquivo,
+  retorna erro e interrompe a sequência; não afirmar publicação bem-sucedida.
+- Arquivos esperados: `publish.sh`, `README.md` e
+  `tests/test_publish.py`, além do acompanhamento BL-0025.
+- Testes TDD com Docker substituído por stub e env temporário: versão ausente,
+  inválida e argumentos extras não alteram arquivo nem chamam Docker; substituição,
+  inclusão, duplicatas, prefixo v, caminho personalizado com espaços, preservação
+  de dados/permissões e propagação do valor a todas as chamadas; arquivo ausente,
+  falha de escrita e falha do Docker abortam a sequência. Não usar .env.production real.
+- Validar com `bash -n publish.sh`, testes focados e regressão Python; atualizar
+  o grafo após código. Renovar o hash do candidato e a evidência de regressão.
+- Atualizar README e o comando desta release; teste não deve fazer deploy real.
+- Estado: revisão `28cfd90` aprovada pelo usuário em 2026-10-28; fatia concluída.
+
 ### Etapa 2 — Validar e obter aceite
 
 #### Ticket 2.1 — Fechar o candidato
 
 ##### Fatia 2.1.1 — Regressão e validação manual
 
-- Ordem: 2; dependência: fatia 1.1.1.
+- Ordem: 3; dependências: fatias 1.1.1 e 1.1.2.
 - Registrar o hash exato do candidato e mover item/índice para em_validacao.
 - Arquivos esperados: evidências em item/refinamento BL-0025 e atualização do
   aceite em item/refinamento BL-0020; sem novos testes salvo defeito que os justifique.
@@ -99,13 +137,13 @@ mudanças de estrutura ou fluxos de trabalho.
 
 ##### Fatia 3.1.1 — Integração, publicação e rastreabilidade
 
-- Ordem: 3; dependência: regressão aprovada e aceite manual registrado.
+- Ordem: 4; dependência: regressão aprovada e aceite manual registrado.
 - Arquivos esperados: índice, itens e refinamentos BL-0020/BL-0025; notas externas.
 - Integrar a preparação na develop com autorização; congelar o candidato sem
   funcionalidades posteriores. Se houver novos commits, revisar o delta e revalidar.
 - Integrar o candidato na main e criar tag anotada `v1.3.0` no resultado mediante
   autorização de publicação; conferir que a tag não existe antes de criá-la.
-- Publicar a tag exata com `./publish.sh /caminho/ambiente.env`, conforme README;
+- Publicar a tag exata com `./publish.sh 1.3.0 /caminho/ambiente.env`, conforme README;
   conferir APP_VERSION sem expor o arquivo de ambiente e preservar volume de backups.
 - Verificar os cenários de produção abaixo e publicar as notas externas da release.
 - Só então registrar ambiente, versão, tag, commit, data e evidências; concluir
@@ -179,17 +217,78 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| 1 / 1.1 — Preparação | 0/1 | 1 | Pendente aprovação |
-| 2 / 2.1 — Validação | 0/1 | 1 | Pendente |
+| 1 / 1.1 — Preparação | 2/2 | 0 | Concluída |
+| 2 / 2.1 — Validação | 0/1 | 1 | Regressão aprovada; aceite manual pendente |
 | 3 / 3.1 — Publicação | 0/1 | 1 | Pendente |
+
+## Evidências da preparação — 2026-10-28
+
+- Base atualizada: `4d6143e`, preservando menu com versão e resposta `/health`
+  simplificada. O usuário autorizou ajustar os requests sintéticos dos testes
+  após reproduzir seis falhas com `KeyError: app` introduzidas por esse delta.
+- Metadados `app.__version__`, Settings, OpenAPI e health: 1.3.0; override por
+  APP_VERSION conferido com valor sintético, sem carregar ambiente de produção.
+- Renderização: 55 testes focados aprovados após fornecer app nos requests de
+  quatro módulos; comportamento de produção não alterado para acomodar testes.
+- Regressão completa após ajuste: **247 passed, 5 xfailed em 12,01s**. Os dois
+  contratos FL-08 pertencem a BL-0003/BL-0004; os três FL-09 legados pertencem
+  a BL-0001. Nenhum xfail novo, falha ou XPASS. O usuário também forneceu uma
+  execução anterior com 247 passes/5 xfail em 12,58s; não foi usada como
+  substituta da nova execução do candidato.
+- `node --check` dos dois JavaScripts e `git diff --check`: aprovados.
+- `pylint`: indisponível no ambiente; não instalado para esta preparação mínima.
+- Grafo atualizado com `venv/bin/graphify update .` (AST, sem chamadas LLM).
+- Build isolada: imagem `jaci-bl0025-validation-jaci`, ID
+  `sha256:e6a49f9df6356454a2ec05e455f9c180c18d3260d3a005008fe071cbac02aeca`.
+  Metadados e OpenAPI verificados dentro da imagem com dados sintéticos.
+  Os ajustes posteriores atingem testes/documentação/grafo, sem alteração
+  adicional do código de produção. A publicação deverá reconstruir a tag exata.
+- PostgreSQL 17 em container exclusivo, sem volumes: senha sintética com `%`
+  codificada na URL; upgrade, current e check aprovados, head `20260617_0005`,
+  nenhuma operação nova. Revisões de esquema idênticas às de v1.2.1.
+  Container de teste removido ao terminar, sem tocar nos serviços existentes.
+- Notas externas preparadas em `/tmp/jaci-v1.3.0-release-notes.md`; rascunho
+  pendente de aceite/publicação, sem criar changelog no repositório.
 
 ## Fechamento
 
-- Commits/PRs: etapa documental em preparação; código não iniciado.
-- Validações focadas: links locais, estado, ausência de placeholders, continuidade
-  da tabela e `git diff --check` aprovados; somente documentação nesta etapa.
-- Validação manual: pendente, incluindo aceite final da BL-0020.
-- Regressão total: pendente; não reutilizar os 247 passes/5 xfail históricos.
-- xfail pendentes no escopo: nenhum planejado; confirmar na execução atual.
-- Documentação atualizada: item/refinamento BL-0025 e índice do backlog.
-- Publicação: pendente; tag e deploy não realizados.
+- Commits/PRs: candidato inicial `e5451d4`, candidato atual `a0b57bd` na branch
+  `feature/BL-0025-release-1-3-0`; este acompanhamento posterior é documental.
+- Validações focadas: aprovadas conforme evidências acima; lint indisponível.
+- Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
+  PWA v32 com preservação de fila. Testes de renderização não equivalem a aceite
+  em navegador; nenhuma evidência manual ou de produção foi presumida.
+- Regressão total atual após 1.1.2: 262 passes, 5 xfail existentes fora do escopo.
+- xfail pendentes no escopo: nenhum.
+- Documentação atualizada: item/refinamento BL-0025, índice e matriz de testes;
+  nova regressão também registrada na BL-0020 sem alterar seu aceite pendente.
+- Publicação: pendente; sem integração de código em develop/main, push, tag ou deploy.
+
+## Revisão do escopo de publicação — 2026-10-28
+
+Solicitação de versão obrigatória e atualização do .env.production refinada na
+fatia 1.1.2. A aprovação anterior permanece válida para a fatia 1.1.1 já entregue;
+a nova fatia foi aprovada explicitamente depois do commit `28cfd90`. A etapa
+documental precedeu qualquer edição do script ou novo teste executável.
+O candidato e5451d4 permanece como evidência da preparação anterior; será renovado
+após a nova fatia. Os aceites de navegador/produção continuam pendentes.
+
+### Evidências da fatia 1.1.2 — 2026-10-28
+
+- CLI implementada: `./publish.sh 1.3.0 [arquivo-env]`, com prefixo v opcional;
+  versão obrigatória e env padrão `.env.production`.
+- Python 3 padrão no host faz atualização atômica de APP_VERSION, sem executar
+  conteúdo do env, preservando comentários, demais linhas e permissões.
+  Ausência de Python 3 aborta antes do Docker; requisito explicitado no README.
+- Contratos TDD reproduziram falhas antes da implementação; após ajuste do script,
+  **15 testes focados aprovados** com arquivos temporários e Docker substituído
+  por stub. Validados argumentos, duplicatas, inclusão/substituição, comentários,
+  permissões, caminho com espaços, prioridade sobre APP_VERSION do shell,
+  falha de escrita e interrupção da sequência quando Docker falha.
+- `bash -n publish.sh` e `git diff --check` aprovados; grafo atualizado por AST.
+- Regressão completa atual: **262 passed, 5 xfailed em 12,87s**, sem falhas/XPASS.
+  Os cinco xfail mantêm as justificativas já registradas na preparação anterior.
+- Nenhum env real foi alterado e nenhum comando de publicação real foi executado.
+- Etapa 1 concluída (2/2); etapa 2 segue aguardando aceite manual; etapa 3 pendente.
+  O candidato técnico atual é `a0b57bd`; a publicação deve
+  reconstruir a tag exata e não reutilizar a imagem anterior como release final.

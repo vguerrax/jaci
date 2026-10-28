@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 import pytest
 from starlette.requests import Request
 
+from app.main import app
+
 from app.models import Execution, TemplateItem
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers import executions as execution_routes
@@ -27,6 +29,7 @@ def make_template_item_request(*, htmx: bool) -> Request:
     headers = [(b"hx-request", b"true")] if htmx else []
     request = Request(
         {
+            "app": app,
             "type": "http",
             "method": "POST",
             "path": "/templates/1/items/add",
@@ -40,6 +43,7 @@ def make_template_item_request(*, htmx: bool) -> Request:
 def make_execution_item_request() -> Request:
     request = Request(
         {
+            "app": app,
             "type": "http",
             "method": "GET",
             "path": "/executions/1/items/1/edit-form",

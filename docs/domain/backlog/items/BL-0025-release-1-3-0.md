@@ -7,7 +7,7 @@
 | ID | `BL-0025` |
 | Título | Preparar e publicar versão 1.3.0 |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -26,7 +26,9 @@ publicação; os dois metadados internos de versão ainda declaram 1.0.0.
 
 Consolidar esse conteúdo na v1.3.0, com metadados coerentes, regressão atual,
 aceite manual e publicação rastreável. A reestruturação do projeto e dos fluxos
-de trabalho começará depois, em demanda independente.
+de trabalho começará depois, em demanda independente. A publicação deve exigir
+versão explícita e atualizar APP_VERSION no .env.production (ou env selecionado)
+antes dos comandos Docker.
 
 ### Impacto e abrangência
 
@@ -69,14 +71,26 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | Dependências | Aprovação do refinamento versionado, aceite BL-0020 e acesso ao ambiente de publicação |
 | Duplicidades | BL-0020 entrega o comportamento; BL-0025 coordena a release, sem duplicar implementação |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Apresentar refinamento versionado e obter aprovação explícita antes das alterações executáveis |
+| Próximo passo | Obter aceite manual da BL-0020 e autorizar integração/publicação da nova candidata |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0025](../../tasks/BL-0025-release-1-3-0.md).
-- Implementação (commits/PRs): não iniciada; branch `feature/BL-0025-release-1-3-0`.
-- Validações: links locais, estado, ausência de placeholders, continuidade da tabela
-  e `git diff --check` aprovados; resultados executáveis pendentes de aprovação.
+- Implementação (commits/PRs): preparação concluída na branch
+  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato inicial `e5451d4`; candidato atual `a0b57bd` após fatia 1.1.2.
+- Validações: 55 testes focados aprovados; regressão atual com 247 passes e 5
+  xfail em 12,01s, sem falhas/XPASS; metadados, OpenAPI, health, override de
+  APP_VERSION, sintaxe JavaScript e diff aprovados. Build Docker isolada e
+  verificação da versão na imagem aprovadas. PostgreSQL 17 descartável com
+  credencial sintética contendo `%`: upgrade até 20260617_0005, current e check
+  aprovados, sem operações novas. Container descartável removido; pylint ausente.
+- Notas externas: rascunho local em `/tmp/jaci-v1.3.0-release-notes.md`.
+- Fatia 1.1.2: script exige versão, atualiza APP_VERSION atomicamente no env
+  selecionado e preserva permissões/configurações; README atualizado. Requer Python 3
+  no host. Contratos falharam antes da implementação; 15 testes focados aprovados
+  depois dela. Nova regressão: **262 passes e 5 xfail em 12,87s**, sem falhas/XPASS.
+  `bash -n publish.sh`, diff e atualização AST do grafo aprovados. Todos os testes
+  do script usam env temporário e Docker simulado; ambiente real não alterado.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0020](BL-0020-bloquear-renomeacao-item-vinculado.md),
   [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md) e
@@ -84,7 +98,8 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 
 ### Impedimentos
 
-- Nenhum técnico identificado; aprovação documental e aceite de release pendentes.
+- Aceite manual móvel/online/offline da BL-0020 e atualização PWA pendentes.
+- Publicação depende desse aceite e da autorização de integração/publicação.
 
 ## Histórico
 
@@ -93,3 +108,11 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:01 -03` | Usuário/Codex | Registro em recebido, severidade a_triar e prioridade a_definir | Solicitação de executar o plano da versão 1.3.0 |
 | `2026-10-28 18:01 -03` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A e P1 | Conteúdo Git, dependências e riscos conferidos |
 | `2026-10-28 18:01 -03` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Plano convertido em refinamento local; aguarda aprovação posterior ao versionamento |
+| `2026-10-28 18:17 -03` | Usuário/Codex | Refinamento aprovado; pronto_para_implementacao → em_implementacao | Aprovação explícita após commit 3f4f9cd e merge 113b397; branch atualizada até 4d6143e |
+| `2026-10-28 18:19 -03` | Usuário/Codex | Ajuste dos testes autorizado e concluído | Commit adicional 4d6143e usa request.app no menu; 6 falhas reproduzidas e corrigidas fornecendo app nos requests sintéticos |
+| `2026-10-28 18:19 -03` | Codex | em_implementacao → em_validacao; etapa 1 concluída | 55 testes focados e 247 passes/5 xfail na regressão; imagem e PostgreSQL descartável aprovados; aceite manual e publicação pendentes |
+| `2026-10-28 18:19 -03` | Codex | Candidato técnico registrado em e5451d4 | Preparação e regressão aprovadas; branch preservada sem merge, tag ou publicação |
+| `2026-10-28 18:26 -03` | Usuário/Codex | em_validacao → em_refinamento → pronto_para_implementacao | Versão obrigatória e persistência no env refinadas na fatia 1.1.2; aguarda aprovação da revisão versionada, sem mudar o script ou ambiente real |
+| `2026-10-28 18:28 -03` | Usuário/Codex | Revisão 28cfd90 aprovada; pronto_para_implementacao → em_implementacao | Versão obrigatória e atualização do env autorizadas; validações isoladas sem deploy real |
+| `2026-10-28 18:29 -03` | Codex | Fatia 1.1.2 concluída; em_implementacao → em_validacao | 15 contratos de publicação aprovados; regressão com 262 passes/5 xfail; sem deploy real |
+| `2026-10-28 18:29 -03` | Codex | Candidato atualizado para a0b57bd | Fatia 1.1.2, README, 15 testes e regressão atual aprovados; sem integração ou publicação |

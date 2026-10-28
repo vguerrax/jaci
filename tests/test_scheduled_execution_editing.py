@@ -5,6 +5,8 @@ import pytest
 from sqlalchemy import select
 from starlette.requests import Request
 
+from app.main import app
+
 from app.models import Notification
 from app.models.execution import Execution
 from app.models.enums import ExecutionStatus, RecurrenceType
@@ -21,7 +23,7 @@ from app.utils.datetime import to_local
 
 
 def make_request() -> Request:
-    request = Request({"type": "http", "method": "POST", "path": "/"})
+    request = Request({"app": app, "type": "http", "method": "POST", "path": "/"})
     request.state.unread_count = 0
     return request
 
