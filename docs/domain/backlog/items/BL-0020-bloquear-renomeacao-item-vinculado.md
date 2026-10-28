@@ -7,14 +7,14 @@
 | ID | `BL-0020` |
 | Título | Bloquear renomeação de item vinculado ao template |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
 | Origem | Solicitação do usuário para proteger as análises de inteligência de compras |
 | Ambiente/versão | Estado de `develop` (`f4c0399`) em `2026-08-05` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -100,14 +100,15 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | Dependências | Contrato de bloqueio otimista, fila/conflitos offline e distribuição PWA; `BL-0003`, `BL-0005` e futura cobertura UI em `BL-0011` |
 | Duplicidades | Nenhuma identificada; `BL-0003` e `BL-0005` consomem a identidade protegida, mas não implementam este guardrail |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Realizar aceite manual da etapa 2 e registrar a publicação antes de concluir a demanda |
+| Próximo passo | Nenhum — publicada e aceita na versão 1.3.0 |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento da BL-0020](../../tasks/BL-0020-bloquear-renomeacao-item-vinculado.md).
 - Implementação (commits/PRs): etapa 1 concluída no commit `f386127`;
   correção da validação manual no commit `063bd7a`; etapa 2 concluída no commit
-  `b82414a`; fallback HTML corrigido no commit `3b17680`.
+  `b82414a`; fallback HTML corrigido no commit `3b17680`;
+  entrega consolidada na release pelo PR #41 (`3876c71`) e PR #42 (`ff16202`).
 - Validações: ciclo TDD inicial aprovou 89 testes focados; a falha manual de
   visibilidade reproduziu 5 contratos vermelhos e a correção aprovou 73 testes
   focados; sintaxe JavaScript e compilação Python aprovadas; migrações no head;
@@ -115,7 +116,7 @@ simultaneamente a identidade histórica e permita trocar o produto.
   aprovados; compilação Python e migrações no head; regressão atual com 247
   testes aprovados e 5 `xfail` legados fora do escopo. A correção do fallback
   HTML aprovou novamente os 44 testes focados. `pylint` indisponível.
-- Publicação: ainda não publicada.
+- Publicação: Produção, versão `1.3.0`, tag `v1.3.0`, commit `ff16202`, em `2026-10-28`, informada pelo usuário; aceite manual confirmado pelo usuário.
 - Itens relacionados: [BL-0003](BL-0003-historico-precos.md),
   [BL-0005](BL-0005-inteligencia-compras.md) e
   [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
@@ -147,3 +148,4 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:51 -03` | Codex | Correção de validação aplicada | Resposta `422` passou a renderizar a página da lista em HTML, com alerta, nome `readonly` e ajuda contextual; novo aceite manual pendente |
 | `2026-08-05 21:53 -03` | Codex | Commit corretivo registrado | Fallback HTML, contrato de renderização, documentação e grafo consolidados em `3b17680` |
 | `2026-10-28 18:19 -03` | Codex | Regressão automatizada da candidata 1.3.0 registrada | BL-0025 aprovou 247 testes e 5 xfail existentes; aceite manual final e publicação continuam pendentes |
+| `2026-10-28 20:26 -03` | Usuário/Codex | em_validacao → concluido | Publicação 1.3.0 informada e aceite manual da BL-0020 confirmado, incluindo offline e PWA; tag v1.3.0 em ff16202 |

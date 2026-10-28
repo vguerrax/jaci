@@ -156,12 +156,10 @@ não muda de caminho nem é apagado.
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-08-05` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-07-24` |
 | [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-08-05` |
-| [BL-0020](items/BL-0020-bloquear-renomeacao-item-vinculado.md) | Bloquear renomeação de item vinculado ao template | `ajuste` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-08-05` |
 | [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-09-16` |
 | [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
 | [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
 | [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-09-17` |
-| [BL-0025](items/BL-0025-release-1-3-0.md) | Preparar e publicar versão 1.3.0 | `ajuste` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-28` |
 
 ### Itens arquivados
 
@@ -174,6 +172,8 @@ não muda de caminho nem é apagado.
 | [BL-0016](items/BL-0016-botao-flutuante-adicionar-itens.md) | Disponibilizar botão flutuante para adicionar itens | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
 | [BL-0017](items/BL-0017-nome-execucao-avulsa.md) | Permitir informar um nome para execução avulsa | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-05` |
 | [BL-0018](items/BL-0018-corrigir-backdrop-modal-completar-item.md) | Corrigir backdrop sobre o modal de completar item | `bug` | `S1` | `P0` | `concluido` | `2026-08-05` |
+| [BL-0020](items/BL-0020-bloquear-renomeacao-item-vinculado.md) | Bloquear renomeação de item vinculado ao template | `ajuste` | `N/A` | `P1` | `concluido` | `2026-10-28` |
+| [BL-0025](items/BL-0025-release-1-3-0.md) | Preparar e publicar versão 1.3.0 | `ajuste` | `N/A` | `P1` | `concluido` | `2026-10-28` |
 
 ## Checklist de passagem ponta a ponta
 

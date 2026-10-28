@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0025](../backlog/items/BL-0025-release-1-3-0.md).
 - Branch: `feature/BL-0025-release-1-3-0`, criada da develop em `9ca2ad9`.
 - Responsável pelo refinamento: Engenharia Jaci.
-- Estado do refinamento: `pronto_para_implementacao`.
+- Estado do refinamento: `concluido`.
 - A branch contém a preparação executável já aprovada; preservar a branch e
   não integrar automaticamente as revisões documentais posteriores.
 - Aprovação: usuário aprovou explicitamente em 2026-10-28 após o commit
@@ -218,8 +218,8 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
 | 1 / 1.1 — Preparação | 2/2 | 0 | Concluída |
-| 2 / 2.1 — Validação | 0/1 | 1 | Regressão aprovada; aceite manual pendente |
-| 3 / 3.1 — Publicação | 0/1 | 1 | Pendente |
+| 2 / 2.1 — Validação | 1/1 | 0 | Concluída; aceite confirmado pelo usuário |
+| 3 / 3.1 — Publicação | 1/1 | 0 | Concluída; versão 1.3.0 publicada |
 
 ## Evidências da preparação — 2026-10-28
 
@@ -255,14 +255,18 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 - Commits/PRs: candidato inicial `e5451d4`, candidato atual `a0b57bd` na branch
   `feature/BL-0025-release-1-3-0`; este acompanhamento posterior é documental.
 - Validações focadas: aprovadas conforme evidências acima; lint indisponível.
-- Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
-  PWA v32 com preservação de fila. Testes de renderização não equivalem a aceite
-  em navegador; nenhuma evidência manual ou de produção foi presumida.
+- Validação manual: usuário confirmou em `2026-10-28` o aceite final da BL-0020,
+  incluindo edição protegida, sincronização offline e atualização do PWA.
+  Evidência declarada pelo usuário; não foi executada inspeção adicional de produção pelo agente.
 - Regressão total atual após 1.1.2: 262 passes, 5 xfail existentes fora do escopo.
 - xfail pendentes no escopo: nenhum.
 - Documentação atualizada: item/refinamento BL-0025, índice e matriz de testes;
   nova regressão também registrada na BL-0020 sem alterar seu aceite pendente.
-- Publicação: pendente; sem integração de código em develop/main, push, tag ou deploy.
+- Publicação: Produção, versão `1.3.0`, tag `v1.3.0`, commit `ff16202`, em `2026-10-28`, informada pelo usuário; aceite manual confirmado pelo usuário.
+- Integração: PR #41 na develop (`3876c71`) e PR #42 na main (`ff16202`);
+  tag local confirmada, contendo `a0b57bd`. Árvores de develop e da tag idênticas
+  antes deste fechamento documental. Branch documental:
+  `feature/BL-0025-publicacao-1-3-0`, criada da develop após a publicação.
 
 ## Revisão do escopo de publicação — 2026-10-28
 
@@ -292,3 +296,15 @@ após a nova fatia. Os aceites de navegador/produção continuam pendentes.
 - Etapa 1 concluída (2/2); etapa 2 segue aguardando aceite manual; etapa 3 pendente.
   O candidato técnico atual é `a0b57bd`; a publicação deve
   reconstruir a tag exata e não reutilizar a imagem anterior como release final.
+
+## Encerramento da release — 2026-10-28
+
+Publicação em produção informada pelo usuário, seguida de confirmação explícita
+sobre o aceite manual da BL-0020 (edição protegida, sincronização offline e PWA).
+Tag v1.3.0 em ff16202 conferida localmente; nenhuma tag ou implantação foi
+executada pelo agente nesta etapa. Regressão final registrada: 262 passes e 5 xfail
+fora do escopo, sem nova execução por se tratar apenas do fechamento documental.
+Etapas concluídas: preparação 2/2, validação 1/1 e publicação 1/1.
+BL-0020 e BL-0025 concluídas e movidas para a visão arquivada, sem mover arquivos.
+Os registros de pendência nas seções anteriores são evidências históricas das
+rodadas anteriores à publicação e ficam superados por este encerramento.
