@@ -7,7 +7,7 @@
 | ID | `BL-0025` |
 | Título | Preparar e publicar versão 1.3.0 |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -71,7 +71,7 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | Dependências | Aprovação do refinamento versionado, aceite BL-0020 e acesso ao ambiente de publicação |
 | Duplicidades | BL-0020 entrega o comportamento; BL-0025 coordena a release, sem duplicar implementação |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar revisão versionada da fatia 1.1.2 (versão obrigatória no publish.sh) |
+| Próximo passo | Obter aceite manual da BL-0020 e autorizar integração/publicação da nova candidata |
 
 ## Acompanhamento até produção
 
@@ -85,6 +85,12 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
   credencial sintética contendo `%`: upgrade até 20260617_0005, current e check
   aprovados, sem operações novas. Container descartável removido; pylint ausente.
 - Notas externas: rascunho local em `/tmp/jaci-v1.3.0-release-notes.md`.
+- Fatia 1.1.2: script exige versão, atualiza APP_VERSION atomicamente no env
+  selecionado e preserva permissões/configurações; README atualizado. Requer Python 3
+  no host. Contratos falharam antes da implementação; 15 testes focados aprovados
+  depois dela. Nova regressão: **262 passes e 5 xfail em 12,87s**, sem falhas/XPASS.
+  `bash -n publish.sh`, diff e atualização AST do grafo aprovados. Todos os testes
+  do script usam env temporário e Docker simulado; ambiente real não alterado.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0020](BL-0020-bloquear-renomeacao-item-vinculado.md),
   [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md) e
@@ -107,3 +113,5 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:19 -03` | Codex | em_implementacao → em_validacao; etapa 1 concluída | 55 testes focados e 247 passes/5 xfail na regressão; imagem e PostgreSQL descartável aprovados; aceite manual e publicação pendentes |
 | `2026-10-28 18:19 -03` | Codex | Candidato técnico registrado em e5451d4 | Preparação e regressão aprovadas; branch preservada sem merge, tag ou publicação |
 | `2026-10-28 18:26 -03` | Usuário/Codex | em_validacao → em_refinamento → pronto_para_implementacao | Versão obrigatória e persistência no env refinadas na fatia 1.1.2; aguarda aprovação da revisão versionada, sem mudar o script ou ambiente real |
+| `2026-10-28 18:28 -03` | Usuário/Codex | Revisão 28cfd90 aprovada; pronto_para_implementacao → em_implementacao | Versão obrigatória e atualização do env autorizadas; validações isoladas sem deploy real |
+| `2026-10-28 18:29 -03` | Codex | Fatia 1.1.2 concluída; em_implementacao → em_validacao | 15 contratos de publicação aprovados; regressão com 262 passes/5 xfail; sem deploy real |

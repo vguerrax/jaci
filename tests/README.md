@@ -56,6 +56,7 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | [BL-0017](../docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md) Nome exclusivo para compra sem lista | Concluído | `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`; cenários Playwright futuros permanecem relacionados à BL-0011 |
 | [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Concluído | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
 | [BL-0020](../docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md) Identidade imutável para item vinculado | Em validação | `tests/test_template_learning_tdd.py`, `tests/test_template_execution_flow.py`, `tests/test_business_rules.py`, `tests/test_collaboration_and_isolation_flow.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
+| [BL-0025](../docs/domain/backlog/items/BL-0025-release-1-3-0.md) Preparação da release e versão obrigatória na publicação | Em validação | `tests/test_publish.py`; env temporário e Docker simulado, sem publicar |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 

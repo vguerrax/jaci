@@ -112,7 +112,7 @@ mudanças de estrutura ou fluxos de trabalho.
 - Validar com `bash -n publish.sh`, testes focados e regressão Python; atualizar
   o grafo após código. Renovar o hash do candidato e a evidência de regressão.
 - Atualizar README e o comando desta release; teste não deve fazer deploy real.
-- Estado: refinamento pronto, aguardando aprovação posterior ao versionamento.
+- Estado: revisão `28cfd90` aprovada pelo usuário em 2026-10-28; fatia concluída.
 
 ### Etapa 2 — Validar e obter aceite
 
@@ -217,8 +217,8 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| 1 / 1.1 — Preparação | 1/2 | 1 | Revisão da fatia 1.1.2 aguarda aprovação |
-| 2 / 2.1 — Validação | 0/1 | 1 | Revalidar após 1.1.2; aceite manual pendente |
+| 1 / 1.1 — Preparação | 2/2 | 0 | Concluída |
+| 2 / 2.1 — Validação | 0/1 | 1 | Regressão aprovada; aceite manual pendente |
 | 3 / 3.1 — Publicação | 0/1 | 1 | Pendente |
 
 ## Evidências da preparação — 2026-10-28
@@ -258,7 +258,7 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 - Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
   PWA v32 com preservação de fila. Testes de renderização não equivalem a aceite
   em navegador; nenhuma evidência manual ou de produção foi presumida.
-- Regressão total: 247 passes, 5 xfail existentes fora do escopo.
+- Regressão total atual após 1.1.2: 262 passes, 5 xfail existentes fora do escopo.
 - xfail pendentes no escopo: nenhum.
 - Documentação atualizada: item/refinamento BL-0025, índice e matriz de testes;
   nova regressão também registrada na BL-0020 sem alterar seu aceite pendente.
@@ -268,7 +268,27 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 Solicitação de versão obrigatória e atualização do .env.production refinada na
 fatia 1.1.2. A aprovação anterior permanece válida para a fatia 1.1.1 já entregue;
-a nova fatia aguarda aprovação após versionamento. Não houve edição do script,
-teste executável novo, alteração do ambiente real ou publicação nesta revisão.
+a nova fatia foi aprovada explicitamente depois do commit `28cfd90`. A etapa
+documental precedeu qualquer edição do script ou novo teste executável.
 O candidato e5451d4 permanece como evidência da preparação anterior; será renovado
 após a nova fatia. Os aceites de navegador/produção continuam pendentes.
+
+### Evidências da fatia 1.1.2 — 2026-10-28
+
+- CLI implementada: `./publish.sh 1.3.0 [arquivo-env]`, com prefixo v opcional;
+  versão obrigatória e env padrão `.env.production`.
+- Python 3 padrão no host faz atualização atômica de APP_VERSION, sem executar
+  conteúdo do env, preservando comentários, demais linhas e permissões.
+  Ausência de Python 3 aborta antes do Docker; requisito explicitado no README.
+- Contratos TDD reproduziram falhas antes da implementação; após ajuste do script,
+  **15 testes focados aprovados** com arquivos temporários e Docker substituído
+  por stub. Validados argumentos, duplicatas, inclusão/substituição, comentários,
+  permissões, caminho com espaços, prioridade sobre APP_VERSION do shell,
+  falha de escrita e interrupção da sequência quando Docker falha.
+- `bash -n publish.sh` e `git diff --check` aprovados; grafo atualizado por AST.
+- Regressão completa atual: **262 passed, 5 xfailed em 12,87s**, sem falhas/XPASS.
+  Os cinco xfail mantêm as justificativas já registradas na preparação anterior.
+- Nenhum env real foi alterado e nenhum comando de publicação real foi executado.
+- Etapa 1 concluída (2/2); etapa 2 segue aguardando aceite manual; etapa 3 pendente.
+  O candidato técnico será registrado no commit desta entrega; a publicação deve
+  reconstruir a tag exata e não reutilizar a imagem anterior como release final.
