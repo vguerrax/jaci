@@ -8,8 +8,9 @@
 - Estado do refinamento: `pronto_para_implementacao`.
 - A branch é documental nesta etapa; será preservada após integração documental.
   Antes das alterações executáveis, atualizá-la com a develop vigente.
-- Aprovação: pendente após versionamento deste documento. A solicitação de
-  executar o plano anterior não dispensa o gate do AGENTS.md.
+- Aprovação: usuário aprovou explicitamente em 2026-10-28 após o commit
+  documental `3f4f9cd` e merge `113b397`. Branch atualizada até `4d6143e`,
+  incluindo versão no menu e simplificação da resposta `/health`, preservados.
 
 ## Objetivo e critérios de sucesso
 
@@ -179,17 +180,48 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| 1 / 1.1 — Preparação | 0/1 | 1 | Pendente aprovação |
-| 2 / 2.1 — Validação | 0/1 | 1 | Pendente |
+| 1 / 1.1 — Preparação | 1/1 | 0 | Concluída |
+| 2 / 2.1 — Validação | 0/1 | 1 | Automatizada aprovada; aceite manual pendente |
 | 3 / 3.1 — Publicação | 0/1 | 1 | Pendente |
+
+## Evidências da preparação — 2026-10-28
+
+- Base atualizada: `4d6143e`, preservando menu com versão e resposta `/health`
+  simplificada. O usuário autorizou ajustar os requests sintéticos dos testes
+  após reproduzir seis falhas com `KeyError: app` introduzidas por esse delta.
+- Metadados `app.__version__`, Settings, OpenAPI e health: 1.3.0; override por
+  APP_VERSION conferido com valor sintético, sem carregar ambiente de produção.
+- Renderização: 55 testes focados aprovados após fornecer app nos requests de
+  quatro módulos; comportamento de produção não alterado para acomodar testes.
+- Regressão completa após ajuste: **247 passed, 5 xfailed em 12,01s**. Os dois
+  contratos FL-08 pertencem a BL-0003/BL-0004; os três FL-09 legados pertencem
+  a BL-0001. Nenhum xfail novo, falha ou XPASS. O usuário também forneceu uma
+  execução anterior com 247 passes/5 xfail em 12,58s; não foi usada como
+  substituta da nova execução do candidato.
+- `node --check` dos dois JavaScripts e `git diff --check`: aprovados.
+- `pylint`: indisponível no ambiente; não instalado para esta preparação mínima.
+- Grafo atualizado com `venv/bin/graphify update .` (AST, sem chamadas LLM).
+- Build isolada: imagem `jaci-bl0025-validation-jaci`, ID
+  `sha256:e6a49f9df6356454a2ec05e455f9c180c18d3260d3a005008fe071cbac02aeca`.
+  Metadados e OpenAPI verificados dentro da imagem com dados sintéticos.
+  Os ajustes posteriores atingem testes/documentação/grafo, sem alteração
+  adicional do código de produção. A publicação deverá reconstruir a tag exata.
+- PostgreSQL 17 em container exclusivo, sem volumes: senha sintética com `%`
+  codificada na URL; upgrade, current e check aprovados, head `20260617_0005`,
+  nenhuma operação nova. Revisões de esquema idênticas às de v1.2.1.
+  Container de teste removido ao terminar, sem tocar nos serviços existentes.
+- Notas externas preparadas em `/tmp/jaci-v1.3.0-release-notes.md`; rascunho
+  pendente de aceite/publicação, sem criar changelog no repositório.
 
 ## Fechamento
 
-- Commits/PRs: etapa documental em preparação; código não iniciado.
-- Validações focadas: links locais, estado, ausência de placeholders, continuidade
-  da tabela e `git diff --check` aprovados; somente documentação nesta etapa.
-- Validação manual: pendente, incluindo aceite final da BL-0020.
-- Regressão total: pendente; não reutilizar os 247 passes/5 xfail históricos.
-- xfail pendentes no escopo: nenhum planejado; confirmar na execução atual.
-- Documentação atualizada: item/refinamento BL-0025 e índice do backlog.
-- Publicação: pendente; tag e deploy não realizados.
+- Commits/PRs: preparação concluída; commit técnico a registrar na branch da demanda.
+- Validações focadas: aprovadas conforme evidências acima; lint indisponível.
+- Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
+  PWA v32 com preservação de fila. Testes de renderização não equivalem a aceite
+  em navegador; nenhuma evidência manual ou de produção foi presumida.
+- Regressão total: 247 passes, 5 xfail existentes fora do escopo.
+- xfail pendentes no escopo: nenhum.
+- Documentação atualizada: item/refinamento BL-0025, índice e matriz de testes;
+  nova regressão também registrada na BL-0020 sem alterar seu aceite pendente.
+- Publicação: pendente; sem integração de código em develop/main, push, tag ou deploy.

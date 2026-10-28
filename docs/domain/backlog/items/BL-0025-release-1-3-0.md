@@ -7,7 +7,7 @@
 | ID | `BL-0025` |
 | Título | Preparar e publicar versão 1.3.0 |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -69,14 +69,20 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | Dependências | Aprovação do refinamento versionado, aceite BL-0020 e acesso ao ambiente de publicação |
 | Duplicidades | BL-0020 entrega o comportamento; BL-0025 coordena a release, sem duplicar implementação |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Apresentar refinamento versionado e obter aprovação explícita antes das alterações executáveis |
+| Próximo passo | Obter aceite manual final da BL-0020; depois autorizar integração e publicação |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0025](../../tasks/BL-0025-release-1-3-0.md).
-- Implementação (commits/PRs): não iniciada; branch `feature/BL-0025-release-1-3-0`.
-- Validações: links locais, estado, ausência de placeholders, continuidade da tabela
-  e `git diff --check` aprovados; resultados executáveis pendentes de aprovação.
+- Implementação (commits/PRs): preparação concluída na branch
+  `feature/BL-0025-release-1-3-0`, base `4d6143e`; commit técnico a registrar.
+- Validações: 55 testes focados aprovados; regressão atual com 247 passes e 5
+  xfail em 12,01s, sem falhas/XPASS; metadados, OpenAPI, health, override de
+  APP_VERSION, sintaxe JavaScript e diff aprovados. Build Docker isolada e
+  verificação da versão na imagem aprovadas. PostgreSQL 17 descartável com
+  credencial sintética contendo `%`: upgrade até 20260617_0005, current e check
+  aprovados, sem operações novas. Container descartável removido; pylint ausente.
+- Notas externas: rascunho local em `/tmp/jaci-v1.3.0-release-notes.md`.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0020](BL-0020-bloquear-renomeacao-item-vinculado.md),
   [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md) e
@@ -84,7 +90,8 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 
 ### Impedimentos
 
-- Nenhum técnico identificado; aprovação documental e aceite de release pendentes.
+- Aceite manual móvel/online/offline da BL-0020 e atualização PWA pendentes.
+- Publicação depende desse aceite e da autorização de integração/publicação.
 
 ## Histórico
 
@@ -93,3 +100,6 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:01 -03` | Usuário/Codex | Registro em recebido, severidade a_triar e prioridade a_definir | Solicitação de executar o plano da versão 1.3.0 |
 | `2026-10-28 18:01 -03` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A e P1 | Conteúdo Git, dependências e riscos conferidos |
 | `2026-10-28 18:01 -03` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Plano convertido em refinamento local; aguarda aprovação posterior ao versionamento |
+| `2026-10-28 18:17 -03` | Usuário/Codex | Refinamento aprovado; pronto_para_implementacao → em_implementacao | Aprovação explícita após commit 3f4f9cd e merge 113b397; branch atualizada até 4d6143e |
+| `2026-10-28 18:19 -03` | Usuário/Codex | Ajuste dos testes autorizado e concluído | Commit adicional 4d6143e usa request.app no menu; 6 falhas reproduzidas e corrigidas fornecendo app nos requests sintéticos |
+| `2026-10-28 18:19 -03` | Codex | em_implementacao → em_validacao; etapa 1 concluída | 55 testes focados e 247 passes/5 xfail na regressão; imagem e PostgreSQL descartável aprovados; aceite manual e publicação pendentes |

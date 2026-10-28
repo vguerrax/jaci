@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 
 from starlette.requests import Request
 
-from app.main import home
+from app.main import app, home
 from app.models import ExecutionItem
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.routers.groups import handle_switch_group
@@ -21,7 +21,7 @@ NOW = datetime(2026, 6, 15, 12, tzinfo=timezone.utc)
 
 
 def make_request() -> Request:
-    request = Request({"type": "http", "method": "GET", "path": "/", "headers": []})
+    request = Request({"app": app, "type": "http", "method": "GET", "path": "/", "headers": []})
     request.state.unread_count = 0
     return request
 

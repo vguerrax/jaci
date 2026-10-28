@@ -146,3 +146,4 @@ simultaneamente a identidade histórica e permita trocar o produto.
 | `2026-08-05 21:51 -03` | Usuário/Codex | Falha encontrada na validação manual da etapa 2 | POST de renomeação rejeitado abria uma tela branca com JSON em vez de manter o usuário na lista com orientação |
 | `2026-08-05 21:51 -03` | Codex | Correção de validação aplicada | Resposta `422` passou a renderizar a página da lista em HTML, com alerta, nome `readonly` e ajuda contextual; novo aceite manual pendente |
 | `2026-08-05 21:53 -03` | Codex | Commit corretivo registrado | Fallback HTML, contrato de renderização, documentação e grafo consolidados em `3b17680` |
+| `2026-10-28 18:19 -03` | Codex | Regressão automatizada da candidata 1.3.0 registrada | BL-0025 aprovou 247 testes e 5 xfail existentes; aceite manual final e publicação continuam pendentes |
