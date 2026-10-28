@@ -7,7 +7,7 @@
 | ID | `BL-0025` |
 | Título | Preparar e publicar versão 1.3.0 |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -71,13 +71,14 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | Dependências | Aprovação do refinamento versionado, aceite BL-0020 e acesso ao ambiente de publicação |
 | Duplicidades | BL-0020 entrega o comportamento; BL-0025 coordena a release, sem duplicar implementação |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aceite manual da BL-0020 e autorizar integração/publicação da nova candidata |
+| Próximo passo | Nenhum — versão 1.3.0 publicada e aceita |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [Refinamento BL-0025](../../tasks/BL-0025-release-1-3-0.md).
 - Implementação (commits/PRs): preparação concluída na branch
-  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato inicial `e5451d4`; candidato atual `a0b57bd` após fatia 1.1.2.
+  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato inicial `e5451d4`; candidato final `a0b57bd` após fatia 1.1.2;
+  PR #41 integrado na develop (`3876c71`), PR #42 integrado na main (`ff16202`).
 - Validações: 55 testes focados aprovados; regressão atual com 247 passes e 5
   xfail em 12,01s, sem falhas/XPASS; metadados, OpenAPI, health, override de
   APP_VERSION, sintaxe JavaScript e diff aprovados. Build Docker isolada e
@@ -91,15 +92,14 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
   depois dela. Nova regressão: **262 passes e 5 xfail em 12,87s**, sem falhas/XPASS.
   `bash -n publish.sh`, diff e atualização AST do grafo aprovados. Todos os testes
   do script usam env temporário e Docker simulado; ambiente real não alterado.
-- Publicação: ainda não publicada.
+- Publicação: Produção, versão `1.3.0`, tag `v1.3.0`, commit `ff16202`, em `2026-10-28`, informada pelo usuário; aceite manual confirmado pelo usuário.
 - Itens relacionados: [BL-0020](BL-0020-bloquear-renomeacao-item-vinculado.md),
   [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md) e
   [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md).
 
 ### Impedimentos
 
-- Aceite manual móvel/online/offline da BL-0020 e atualização PWA pendentes.
-- Publicação depende desse aceite e da autorização de integração/publicação.
+- Nenhum — publicação informada e aceite manual confirmado pelo usuário.
 
 ## Histórico
 
@@ -116,3 +116,4 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:28 -03` | Usuário/Codex | Revisão 28cfd90 aprovada; pronto_para_implementacao → em_implementacao | Versão obrigatória e atualização do env autorizadas; validações isoladas sem deploy real |
 | `2026-10-28 18:29 -03` | Codex | Fatia 1.1.2 concluída; em_implementacao → em_validacao | 15 contratos de publicação aprovados; regressão com 262 passes/5 xfail; sem deploy real |
 | `2026-10-28 18:29 -03` | Codex | Candidato atualizado para a0b57bd | Fatia 1.1.2, README, 15 testes e regressão atual aprovados; sem integração ou publicação |
+| `2026-10-28 20:26 -03` | Usuário/Codex | em_validacao → concluido | Publicação 1.3.0 informada; tag v1.3.0 em ff16202 e PRs #41/#42 conferidos; aceite manual confirmado pelo usuário |
