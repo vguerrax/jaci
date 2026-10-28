@@ -252,7 +252,7 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 ## Fechamento
 
-- Commits/PRs: candidato técnico `e5451d4` na branch
+- Commits/PRs: candidato inicial `e5451d4`, candidato atual `a0b57bd` na branch
   `feature/BL-0025-release-1-3-0`; este acompanhamento posterior é documental.
 - Validações focadas: aprovadas conforme evidências acima; lint indisponível.
 - Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
@@ -290,5 +290,5 @@ após a nova fatia. Os aceites de navegador/produção continuam pendentes.
   Os cinco xfail mantêm as justificativas já registradas na preparação anterior.
 - Nenhum env real foi alterado e nenhum comando de publicação real foi executado.
 - Etapa 1 concluída (2/2); etapa 2 segue aguardando aceite manual; etapa 3 pendente.
-  O candidato técnico será registrado no commit desta entrega; a publicação deve
+  O candidato técnico atual é `a0b57bd`; a publicação deve
   reconstruir a tag exata e não reutilizar a imagem anterior como release final.

@@ -77,7 +77,7 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 
 - Documento refinado: [Refinamento BL-0025](../../tasks/BL-0025-release-1-3-0.md).
 - Implementação (commits/PRs): preparação concluída na branch
-  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato técnico `e5451d4`.
+  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato inicial `e5451d4`; candidato atual `a0b57bd` após fatia 1.1.2.
 - Validações: 55 testes focados aprovados; regressão atual com 247 passes e 5
   xfail em 12,01s, sem falhas/XPASS; metadados, OpenAPI, health, override de
   APP_VERSION, sintaxe JavaScript e diff aprovados. Build Docker isolada e
@@ -115,3 +115,4 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:26 -03` | Usuário/Codex | em_validacao → em_refinamento → pronto_para_implementacao | Versão obrigatória e persistência no env refinadas na fatia 1.1.2; aguarda aprovação da revisão versionada, sem mudar o script ou ambiente real |
 | `2026-10-28 18:28 -03` | Usuário/Codex | Revisão 28cfd90 aprovada; pronto_para_implementacao → em_implementacao | Versão obrigatória e atualização do env autorizadas; validações isoladas sem deploy real |
 | `2026-10-28 18:29 -03` | Codex | Fatia 1.1.2 concluída; em_implementacao → em_validacao | 15 contratos de publicação aprovados; regressão com 262 passes/5 xfail; sem deploy real |
+| `2026-10-28 18:29 -03` | Codex | Candidato atualizado para a0b57bd | Fatia 1.1.2, README, 15 testes e regressão atual aprovados; sem integração ou publicação |
