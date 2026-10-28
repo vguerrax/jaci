@@ -215,7 +215,8 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 ## Fechamento
 
-- Commits/PRs: preparação concluída; commit técnico a registrar na branch da demanda.
+- Commits/PRs: candidato técnico `e5451d4` na branch
+  `feature/BL-0025-release-1-3-0`; este acompanhamento posterior é documental.
 - Validações focadas: aprovadas conforme evidências acima; lint indisponível.
 - Validação manual: pendente, incluindo aceite final da BL-0020 e atualização
   PWA v32 com preservação de fila. Testes de renderização não equivalem a aceite

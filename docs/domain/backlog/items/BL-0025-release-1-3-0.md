@@ -75,7 +75,7 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 
 - Documento refinado: [Refinamento BL-0025](../../tasks/BL-0025-release-1-3-0.md).
 - Implementação (commits/PRs): preparação concluída na branch
-  `feature/BL-0025-release-1-3-0`, base `4d6143e`; commit técnico a registrar.
+  `feature/BL-0025-release-1-3-0`, base `4d6143e`; candidato técnico `e5451d4`.
 - Validações: 55 testes focados aprovados; regressão atual com 247 passes e 5
   xfail em 12,01s, sem falhas/XPASS; metadados, OpenAPI, health, override de
   APP_VERSION, sintaxe JavaScript e diff aprovados. Build Docker isolada e
@@ -103,3 +103,4 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:17 -03` | Usuário/Codex | Refinamento aprovado; pronto_para_implementacao → em_implementacao | Aprovação explícita após commit 3f4f9cd e merge 113b397; branch atualizada até 4d6143e |
 | `2026-10-28 18:19 -03` | Usuário/Codex | Ajuste dos testes autorizado e concluído | Commit adicional 4d6143e usa request.app no menu; 6 falhas reproduzidas e corrigidas fornecendo app nos requests sintéticos |
 | `2026-10-28 18:19 -03` | Codex | em_implementacao → em_validacao; etapa 1 concluída | 55 testes focados e 247 passes/5 xfail na regressão; imagem e PostgreSQL descartável aprovados; aceite manual e publicação pendentes |
+| `2026-10-28 18:19 -03` | Codex | Candidato técnico registrado em e5451d4 | Preparação e regressão aprovadas; branch preservada sem merge, tag ou publicação |
