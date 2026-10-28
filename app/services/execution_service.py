@@ -14,6 +14,10 @@ from app.models.enums import ExecutionStatus
 logger = logging.getLogger("jaci.executions")
 
 
+class LinkedItemNameImmutableError(ValueError):
+    """Indica tentativa de renomear item de execução vinculado ao template."""
+
+
 def ensure_execution_is_mutable(execution: Execution) -> None:
     """Impede qualquer alteração em uma execução já finalizada."""
     if execution.status == ExecutionStatus.completed:
@@ -374,8 +378,19 @@ def remove_item_from_execution(db: Session, item: ExecutionItem) -> None:
     logger.info(f"Item '{item_name}' removido da execução")
     
     
-def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_quantity: float, category_id: int | None, notes: Optional[str] = None) -> ExecutionItem:
+def update_execution_item(
+    db: Session,
+    item: ExecutionItem,
+    name: str,
+    planned_quantity: float,
+    category_id: int | None,
+    notes: Optional[str] = None,
+) -> ExecutionItem:
     ensure_execution_is_mutable(item.execution)
+    if item.template_item_id is not None and item.name != name:
+        raise LinkedItemNameImmutableError(
+            "O nome de um item vinculado à lista não pode ser alterado durante a compra."
+        )
     if category_id is not None:
         category_group_id = db.scalar(
             select(Category.group_id).where(Category.id == category_id)
@@ -390,7 +405,7 @@ def update_execution_item(db: Session, item: ExecutionItem, name: str, planned_q
     if item.category_id != category_id:
         item.category_id = category_id
     if item.notes != notes:
-        item.notes =  notes
+        item.notes = notes
     item.version += 1
     db.commit()
     db.refresh(item)

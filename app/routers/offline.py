@@ -12,6 +12,7 @@ from app.models.enums import ExecutionStatus
 from app.models.execution import ExecutionItem
 from app.models.user import User
 from app.services.execution_service import (
+    LinkedItemNameImmutableError,
     add_item_to_execution,
     check_budget_alerts,
     complete_item as complete_item_service,
@@ -108,6 +109,7 @@ def _item_state(item: ExecutionItem) -> dict:
     return {
         "id": item.id,
         "execution_id": item.execution_id,
+        "template_item_id": item.template_item_id,
         "name": item.name,
         "category_id": item.category_id,
         "planned_quantity": item.planned_quantity,
@@ -454,6 +456,19 @@ async def sync_execution_item_operation(
                 operation.planned_quantity,
                 operation.category_id if operation.category_id and operation.category_id > 0 else None,
                 operation.notes,
+            )
+        except LinkedItemNameImmutableError as exc:
+            _raise_sync_conflict(
+                db,
+                user=user,
+                group_id=execution.group_id,
+                execution_id=execution.id,
+                operation=operation,
+                entity="execution_item",
+                entity_id=item.id,
+                reason="linked_template_item_name_immutable",
+                message=str(exc),
+                remote_state=_item_state(item),
             )
         except ValueError as exc:
             raise HTTPException(

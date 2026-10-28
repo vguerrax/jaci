@@ -113,14 +113,20 @@ BACKUP_DIR=/var/backups/jaci
 BACKUP_RETENTION_DAYS=30
 ```
 
-O script de publicação recebe um arquivo de ambiente opcional, cria o banco
-quando ele não existir, aplica as migrações e publica o container:
+O script de publicação exige a versão (`MAJOR.MINOR.PATCH`, com prefixo `v`
+opcional) e recebe um arquivo de ambiente opcional, por padrão `.env.production`.
+Ele atualiza `APP_VERSION` nesse arquivo antes de criar o banco quando necessário,
+aplicar migrações e publicar o container. Requer Python 3 e Docker Compose no host.
 
 ```bash
-./publish.sh
-./publish.sh .env.production
-./publish.sh /caminho/ambiente.env
+./publish.sh 1.3.0
+./publish.sh v1.3.0 .env.production
+./publish.sh 1.3.0 /caminho/ambiente.env
 ```
+
+O arquivo de ambiente deve existir e permitir escrita. As demais configurações
+e permissões são preservadas. Se uma etapa do Docker falhar, o script interrompe
+a publicação e mantém a versão informada no arquivo.
 
 Comandos úteis
 ```bash

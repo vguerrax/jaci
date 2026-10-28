@@ -5,9 +5,13 @@ from datetime import datetime, timezone
 from importlib import import_module
 from urllib.parse import urlencode
 
+import pytest
+from fastapi import HTTPException
+from sqlalchemy import func, select
 from starlette.requests import Request
 
 from app.routers import executions as execution_routes
+from app.models import TemplateItem
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.services.execution_service import (
     add_item_to_execution,
@@ -103,6 +107,7 @@ def test_bl030_applies_only_selected_new_item_suggestions_to_future_executions(
                 "planned_quantity": 3,
             }
         ],
+        execution=execution,
     )
     next_execution = create_execution_from_template(
         db, template, datetime(2026, 7, 15, tzinfo=timezone.utc), user
@@ -112,6 +117,9 @@ def test_bl030_applies_only_selected_new_item_suggestions_to_future_executions(
         ("Feijão", 3, category.id)
     ]
     assert [item.name for item in next_execution.items] == ["Feijão"]
+    assert selected.template_item_id == template.items[0].id
+    assert next_execution.items[0].template_item_id == selected.template_item_id
+    assert ignored.template_item_id is None
     assert ignored.name not in [item.name for item in template.items]
 
 
@@ -154,10 +162,202 @@ def test_bl030_close_flow_applies_selected_new_item_suggestion(
     )
 
     db.refresh(template)
+    db.refresh(runtime_item)
+    db.refresh(execution)
     assert response.status_code == 303
+    assert execution.status == ExecutionStatus.completed
     assert [(item.name, item.planned_quantity, item.category_id) for item in template.items] == [
         ("Feijão", 3, category.id)
     ]
+    assert runtime_item.template_item_id == template.items[0].id
+
+
+def test_bl030_incorporation_preserves_the_closed_execution_financial_snapshot(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("traceability@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    runtime_item = add_item_to_execution(db, execution, "Feijão", 2)
+    complete_item(
+        db,
+        runtime_item,
+        purchased_quantity=3,
+        unit_price=7.5,
+        location="Mercado",
+        notes="Promoção",
+    )
+    finalize_execution(db, execution)
+    snapshot = {
+        "name": runtime_item.name,
+        "planned_quantity": runtime_item.planned_quantity,
+        "purchased_quantity": runtime_item.purchased_quantity,
+        "unit_price": runtime_item.unit_price,
+        "location": runtime_item.location,
+        "notes": runtime_item.notes,
+        "version": runtime_item.version,
+    }
+
+    applied = learning.apply_template_suggestions(
+        db,
+        template,
+        [{"suggestion_id": f"new_item:{runtime_item.id}"}],
+        execution=execution,
+    )
+
+    db.refresh(runtime_item)
+    assert len(applied) == 1
+    assert runtime_item.template_item_id == applied[0].id
+    assert {
+        "name": runtime_item.name,
+        "planned_quantity": runtime_item.planned_quantity,
+        "purchased_quantity": runtime_item.purchased_quantity,
+        "unit_price": runtime_item.unit_price,
+        "location": runtime_item.location,
+        "notes": runtime_item.notes,
+        "version": runtime_item.version,
+    } == snapshot
+
+
+def test_bl030_rejects_new_item_from_another_execution_and_group(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("owner@example.com")
+    group = make_group(owner=user, name="Casa")
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+
+    other_user = make_user("other@example.com")
+    other_group = make_group(owner=other_user, name="Outro grupo")
+    other_template = create_template(
+        db, other_group, "Outra lista", RecurrenceType.monthly
+    )
+    other_execution = create_execution_from_template(
+        db,
+        other_template,
+        datetime(2026, 6, 16, tzinfo=timezone.utc),
+        other_user,
+    )
+    foreign_item = add_item_to_execution(db, other_execution, "Item privado", 1)
+
+    with pytest.raises(ValueError, match="não pertence à execução"):
+        learning.apply_template_suggestions(
+            db,
+            template,
+            [{"suggestion_id": f"new_item:{foreign_item.id}"}],
+            execution=execution,
+        )
+
+    assert template.items == []
+    assert foreign_item.template_item_id is None
+
+
+def test_bl030_rejects_already_linked_item_as_new_suggestion(
+    db, make_user, make_group
+):
+    learning = learning_service()
+    user = make_user("linked-suggestion@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    template_item = add_item_to_template(db, template, "Arroz", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    linked_item = execution.items[0]
+
+    with pytest.raises(ValueError, match="já está vinculado"):
+        learning.apply_template_suggestions(
+            db,
+            template,
+            [{"suggestion_id": f"new_item:{linked_item.id}"}],
+            execution=execution,
+        )
+
+    assert [item.id for item in template.items] == [template_item.id]
+    assert linked_item.template_item_id == template_item.id
+
+
+def test_bl030_rolls_back_template_item_when_link_commit_fails(
+    db, make_user, make_group, monkeypatch
+):
+    learning = learning_service()
+    user = make_user("atomic@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    runtime_item = add_item_to_execution(db, execution, "Feijão", 2)
+    session_type = type(db)
+    original_commit = session_type.commit
+
+    def fail_commit(_session):
+        raise RuntimeError("falha simulada")
+
+    monkeypatch.setattr(session_type, "commit", fail_commit)
+    with pytest.raises(RuntimeError, match="falha simulada"):
+        learning.apply_template_suggestions(
+            db,
+            template,
+            [{"suggestion_id": f"new_item:{runtime_item.id}"}],
+            execution=execution,
+        )
+    monkeypatch.setattr(session_type, "commit", original_commit)
+
+    assert db.scalar(
+        select(func.count(TemplateItem.id)).where(
+            TemplateItem.template_id == template.id
+        )
+    ) == 0
+    db.refresh(runtime_item)
+    assert runtime_item.template_item_id is None
+
+
+def test_bl030_close_rejects_forged_new_item_without_finalizing(
+    db, make_user, make_group
+):
+    user = make_user("close-owner@example.com")
+    group = make_group(owner=user, name="Casa")
+    template = create_template(db, group, "Mensal", RecurrenceType.monthly)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    other_execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 16, tzinfo=timezone.utc), user
+    )
+    foreign_item = add_item_to_execution(db, other_execution, "Outro item", 1)
+    suggestion_id = f"new_item:{foreign_item.id}"
+    request = make_form_request(
+        [
+            ("action", "discard"),
+            ("template_learning_present", suggestion_id),
+            ("template_learning_selected", suggestion_id),
+        ]
+    )
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            execution_routes.handle_close_execution(
+                request=request,
+                execution_id=execution.id,
+                action="discard",
+                new_date=None,
+                db=db,
+                user=user,
+            )
+        )
+
+    db.refresh(execution)
+    assert error.value.status_code == 422
+    assert execution.status == ExecutionStatus.scheduled
+    assert template.items == []
 
 
 def test_bl030_close_page_exposes_template_learning_controls():

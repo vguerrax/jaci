@@ -10,7 +10,7 @@ from app.models.enums import ExecutionStatus
 from app.models.execution import Execution, ExecutionItem
 from app.models.template import Template, TemplateItem
 from app.models.template_learning import TemplateLearningDismissal
-from app.services.template_service import add_item_to_template, update_template_item
+from app.services.template_service import stage_item_for_template, update_template_item
 
 MIN_RECURRENT_OCCURRENCES = 3
 BUDGET_DIVERGENCE_THRESHOLD = 0.10
@@ -303,11 +303,64 @@ def _parse_suggestion_id(suggestion_id: str) -> tuple[str, int]:
     return suggestion_type, int(raw_entity_id)
 
 
+def _validated_new_item_suggestion(
+    db: Session,
+    template: Template,
+    execution: Execution | None,
+    execution_item_id: int | None,
+) -> ExecutionItem:
+    if execution is None:
+        raise ValueError("A execução é obrigatória para incorporar um novo item.")
+    if (
+        execution.template_id != template.id
+        or execution.group_id != template.group_id
+        or execution.is_standalone
+    ):
+        raise ValueError("A execução não pertence ao template informado.")
+    if execution_item_id is None:
+        raise ValueError("O item sugerido não pertence à execução em fechamento.")
+
+    execution_item = db.get(ExecutionItem, execution_item_id)
+    if not execution_item or execution_item.execution_id != execution.id:
+        raise ValueError("O item sugerido não pertence à execução em fechamento.")
+    if execution_item.template_item_id is not None:
+        raise ValueError("O item sugerido já está vinculado a um item do template.")
+    return execution_item
+
+
+def _incorporate_execution_item(
+    db: Session,
+    template: Template,
+    execution_item: ExecutionItem,
+    suggestion: dict,
+) -> TemplateItem:
+    try:
+        template_item = stage_item_for_template(
+            db,
+            template,
+            execution_item.name,
+            suggestion.get("planned_quantity") or execution_item.planned_quantity,
+            suggestion.get("category_id", execution_item.category_id),
+            execution_item.notes,
+        )
+        execution_item.template_item_id = template_item.id
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+
+    db.refresh(template_item)
+    db.refresh(execution_item)
+    return template_item
+
+
 def apply_template_suggestions(
     db: Session,
     template: Template,
     suggestions: list[dict],
     selected_types: set[str] | None = None,
+    *,
+    execution: Execution | None = None,
 ) -> list[TemplateItem]:
     """Aplica somente sugestões confirmadas pelo usuário ao template."""
     applied: list[TemplateItem] = []
@@ -324,16 +377,17 @@ def apply_template_suggestions(
             continue
 
         if suggestion_type == "new_item":
-            execution_item = db.get(ExecutionItem, suggestion.get("execution_item_id"))
-            if not execution_item:
-                continue
-            item = add_item_to_template(
+            execution_item = _validated_new_item_suggestion(
                 db,
                 template,
-                execution_item.name,
-                suggestion.get("planned_quantity") or execution_item.planned_quantity,
-                suggestion.get("category_id", execution_item.category_id),
-                execution_item.notes,
+                execution,
+                suggestion.get("execution_item_id"),
+            )
+            item = _incorporate_execution_item(
+                db,
+                template,
+                execution_item,
+                suggestion,
             )
             applied.append(item)
         elif suggestion_type == "quantity":

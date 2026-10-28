@@ -22,7 +22,12 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nome do item</label>
-                        <input type="text" class="form-control" name="name" value="{{ item.name or '' }}" required>
+                        <input type="text" class="form-control" name="name" value="{{ item.name or '' }}" required{% if item.template_item_id %} readonly aria-describedby="linkedItemNameHelp{{ item.id }}"{% endif %}>
+                        {% if item.template_item_id %}
+                        <div class="form-text" id="linkedItemNameHelp{{ item.id }}">
+                            Para comprar outro produto, remova este item e adicione o correto.
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Quantidade</label>

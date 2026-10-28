@@ -3,11 +3,13 @@ from pathlib import Path
 
 from starlette.requests import Request
 
+from app.main import app
+
 from app.routers.sync_center import sync_center
 
 
 def make_request(path: str = "/sync") -> Request:
-    return Request({"type": "http", "method": "GET", "path": path})
+    return Request({"app": app, "type": "http", "method": "GET", "path": path})
 
 
 def test_sync_center_requires_authentication(db):

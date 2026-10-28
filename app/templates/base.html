@@ -123,6 +123,17 @@
                             <span class="me-2">{{ user.name or user.email }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <!-- <li>
+                                <span class="dropdown-item-text text-help small">
+                                    {{ 'Grupo: ' ~ active_group.name if active_group else 'Sem grupo ativo' }}
+                                </span>
+                            </li> -->
+                            <li>
+                                <span class="dropdown-item-text text-help small">{{ request.app.title}} {{ request.app.version }}</span>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="/auth/profile">Meu perfil</a></li>
                             <li class="d-block d-lg-none">
                                 <a class="dropdown-item" href="/notifications">
@@ -136,19 +147,8 @@
                                     </div>
                                 </a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <span class="dropdown-item-text text-help small">
-                                    {{ 'Grupo: ' ~ active_group.name if active_group else 'Sem grupo ativo' }}
-                                </span>
-                            </li>
                             <li><a class="dropdown-item" href="/groups">Grupos</a></li>
                             <li><a class="dropdown-item" href="/categories">Categorias</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item" href="/sync">Sincronização</a></li>
                             <li>
                                 <button class="dropdown-item" type="button" data-pwa-install hidden>
@@ -212,6 +212,16 @@
                                 aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="mb-3" data-linked-complete-item-name-group hidden>
+                                <label class="form-label" for="offlineCompleteItemName">Nome do item</label>
+                                <input id="offlineCompleteItemName" type="text" class="form-control"
+                                    data-linked-complete-item-name readonly
+                                    aria-describedby="offlineCompleteLinkedItemNameHelp">
+                                <div class="form-text" id="offlineCompleteLinkedItemNameHelp"
+                                    data-linked-complete-item-name-help>
+                                    Para comprar outro produto, remova este item e adicione o correto.
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label" for="offlineCompletePurchasedQuantity">Quantidade
                                     comprada</label>
@@ -265,6 +275,10 @@
                             <div class="mb-3">
                                 <label class="form-label" for="offlineEditItemName">Nome</label>
                                 <input id="offlineEditItemName" type="text" class="form-control" name="name" required>
+                                <div class="form-text" id="offlineLinkedItemNameHelp"
+                                    data-linked-item-name-help hidden>
+                                    Para comprar outro produto, remova este item e adicione o correto.
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="offlineEditPlannedQuantity">Quantidade planejada</label>

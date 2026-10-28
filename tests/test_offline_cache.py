@@ -461,6 +461,119 @@ def test_offline_update_item_operation_applies_pending_change(
     assert item.version == 2
 
 
+def test_offline_linked_item_update_preserves_name_and_updates_other_fields(
+    db, make_user, make_group, make_category
+):
+    user = make_user("ana-linked-offline@example.com")
+    group = make_group(owner=user)
+    category = make_category(group, "Hortifruti")
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(db, template, "Maçã", 1)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        template_item_id=template_item.id,
+        name="Maçã",
+        planned_quantity=1,
+    )
+    db.add(item)
+    db.commit()
+
+    result = asyncio.run(
+        sync_execution_item_operation(
+            ExecutionItemOperation(
+                execution_id=execution.id,
+                item_id=item.id,
+                action="update_item",
+                version=item.version,
+                name="Maçã",
+                planned_quantity=2,
+                category_id=category.id,
+                notes="Escolher maduras",
+            ),
+            db=db,
+            user=user,
+        )
+    )
+
+    db.refresh(item)
+    assert result["status"] == "applied"
+    assert item.name == "Maçã"
+    assert item.planned_quantity == 2
+    assert item.category_id == category.id
+    assert item.notes == "Escolher maduras"
+    assert item.version == 2
+
+
+def test_offline_linked_item_rename_creates_explicit_conflict_without_mutation(
+    db, make_user, make_group
+):
+    user = make_user("ana-linked-conflict@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    template_item = add_item_to_template(db, template, "Maçã", 1)
+    execution = Execution(
+        group_id=group.id,
+        template_id=template.id,
+        scheduled_date=datetime(2026, 6, 15, tzinfo=timezone.utc),
+        status=ExecutionStatus.in_progress,
+        created_by=user.id,
+    )
+    db.add(execution)
+    db.flush()
+    item = ExecutionItem(
+        execution_id=execution.id,
+        template_item_id=template_item.id,
+        name="Maçã",
+        planned_quantity=1,
+    )
+    db.add(item)
+    db.commit()
+    original_version = item.version
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            sync_execution_item_operation(
+                ExecutionItemOperation(
+                    execution_id=execution.id,
+                    item_id=item.id,
+                    action="update_item",
+                    version=item.version,
+                    name="Manga",
+                    planned_quantity=3,
+                    notes="Produto diferente",
+                ),
+                db=db,
+                user=user,
+            )
+        )
+
+    db.refresh(item)
+    assert error.value.status_code == 409
+    assert error.value.detail["type"] == "sync_conflict"
+    assert error.value.detail["reason"] == "linked_template_item_name_immutable"
+    assert error.value.detail["remote"]["template_item_id"] == template_item.id
+    assert item.name == "Maçã"
+    assert item.planned_quantity == 1
+    assert item.notes is None
+    assert item.version == original_version
+
+    audit = db.scalar(select(SyncConflictAudit))
+    assert audit is not None
+    assert audit.group_id == group.id
+    assert audit.user_id == user.id
+    assert audit.reason == "linked_template_item_name_immutable"
+    assert audit.remote_state["template_item_id"] == template_item.id
+
+
 def test_offline_item_operation_rejects_stale_version(db, make_user, make_group):
     user = make_user("ana@example.com")
     group = make_group(owner=user)
@@ -1098,6 +1211,7 @@ def test_base_template_exposes_offline_cache_panel():
     assert "data-offline-complete-item-modal-form" in base
     assert 'id="offlineEditItemModal"' in base
     assert "data-offline-edit-item-modal-form" in base
+    assert "data-linked-item-name-help" in base
     assert "Compras iniciadas offline serão sincronizadas automaticamente." in base
     assert "data-bs-toggle=\"modal\"" in base
     assert "!document.querySelector(targetSelector)" in base
@@ -1192,6 +1306,8 @@ def test_execution_item_controls_are_offline_capable():
 
     assert "data-offline-complete-item" in items
     assert "data-offline-edit-item" in items
+    assert 'data-template-item-id="{{ item.template_item_id or \'\' }}"' in items
+    assert items.count('data-template-item-id="{{ item.template_item_id or \'\' }}"') == 3
     assert "data-offline-incomplete-item" in items
     assert "data-offline-remove-item" in items
     assert 'data-bs-toggle="modal"' not in items
@@ -1217,6 +1333,29 @@ def test_execution_item_controls_are_offline_capable():
     assert "window.JaciModal.show(modalEl)" in edit_modal
     assert "window.JaciModal.hide" in edit_modal
     assert "bootstrap.Modal" not in edit_modal
+
+
+def test_offline_edit_modal_locks_only_linked_item_names_without_leaking_state():
+    base = Path("app/templates/base.html").read_text()
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert 'id="offlineEditItemName"' in base
+    assert "data-linked-item-name-help" in base
+    assert "const isTemplateLinked = Boolean(button.dataset.templateItemId);" in script
+    assert "nameInput.readOnly = isTemplateLinked;" in script
+    assert "linkedNameHelp.hidden = !isTemplateLinked;" in script
+    assert "button.dataset.templateItemId" in script
+
+
+def test_offline_purchase_modal_shows_linked_item_name_and_guidance():
+    base = Path("app/templates/base.html").read_text()
+    script = Path("app/static/js/offline-cache.js").read_text()
+
+    assert "data-linked-complete-item-name-group" in base
+    assert "data-linked-complete-item-name" in base
+    assert "data-linked-complete-item-name-help" in base
+    assert "linkedCompleteNameGroup.hidden = !isTemplateLinked;" in script
+    assert "linkedCompleteNameInput.value = button.dataset.itemName || '';" in script
 
 
 def test_offline_item_state_is_visible_and_mobile_panel_does_not_overlay_content():

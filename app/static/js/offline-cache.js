@@ -1807,6 +1807,16 @@
         form.querySelector('[name="location"]').value = lastLocation || '';
         form.querySelector('[name="notes"]').value = button.dataset.notes || '';
 
+        const linkedCompleteNameGroup = form.querySelector('[data-linked-complete-item-name-group]');
+        const linkedCompleteNameInput = form.querySelector('[data-linked-complete-item-name]');
+        const isTemplateLinked = Boolean(button.dataset.templateItemId);
+        if (linkedCompleteNameGroup) {
+            linkedCompleteNameGroup.hidden = !isTemplateLinked;
+        }
+        if (linkedCompleteNameInput) {
+            linkedCompleteNameInput.value = button.dataset.itemName || '';
+        }
+
         const title = modalEl.querySelector('#offlineCompleteItemModalLabel');
         if (title) {
             title.textContent = `${button.dataset.purchasedQuantity ? 'Editar compra' : 'Comprar'}: ${button.dataset.itemName || 'item'}`;
@@ -1838,7 +1848,19 @@
         form.dataset.forceOfflineSubmit = 'true';
         form.dataset.sourceButtonSelector = `[data-offline-edit-item][data-item-id="${button.dataset.itemId}"]`;
         form.querySelector('[name="version"]').value = button.dataset.version || '';
-        form.querySelector('[name="name"]').value = button.dataset.itemName || '';
+        const nameInput = form.querySelector('[name="name"]');
+        const linkedNameHelp = form.querySelector('[data-linked-item-name-help]');
+        const isTemplateLinked = Boolean(button.dataset.templateItemId);
+        nameInput.value = button.dataset.itemName || '';
+        nameInput.readOnly = isTemplateLinked;
+        if (isTemplateLinked) {
+            nameInput.setAttribute('aria-describedby', 'offlineLinkedItemNameHelp');
+        } else {
+            nameInput.removeAttribute('aria-describedby');
+        }
+        if (linkedNameHelp) {
+            linkedNameHelp.hidden = !isTemplateLinked;
+        }
         form.querySelector('[name="planned_quantity"]').value = button.dataset.plannedQuantity || '1';
         form.querySelector('[name="category_id"]').value = button.dataset.categoryId || '';
         form.querySelector('[name="notes"]').value = button.dataset.notes || '';

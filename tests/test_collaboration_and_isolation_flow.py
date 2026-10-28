@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime, timezone
 
 import pytest
+from fastapi import HTTPException
 from sqlalchemy import select
 from starlette.requests import Request
 
@@ -116,3 +117,50 @@ def test_stale_item_version_fails_explicitly_without_overwriting(
             },
         )
     ]
+
+
+def test_linked_item_tampered_post_returns_422_without_mutation_or_broadcast(
+    db, make_user, make_group, monkeypatch
+):
+    user = make_user("ana-linked-post@example.com")
+    group = make_group(owner=user)
+    template = create_template(db, group, "Feira", RecurrenceType.weekly)
+    add_item_to_template(db, template, "Maçã", 1)
+    execution = create_execution_from_template(
+        db, template, datetime(2026, 6, 15, tzinfo=timezone.utc), user
+    )
+    item = execution.items[0]
+    original_version = item.version
+    events = []
+
+    async def fake_broadcast(execution_id, event, data, exclude=None):
+        events.append((event, data))
+
+    monkeypatch.setattr(execution_routes.manager, "broadcast", fake_broadcast)
+    request = Request({"type": "http", "method": "POST", "path": "/"})
+
+    with pytest.raises(HTTPException) as error:
+        asyncio.run(
+            execution_routes.handle_update_item(
+                request=request,
+                execution_id=execution.id,
+                item_id=item.id,
+                name="Manga",
+                planned_quantity=4,
+                category_id=None,
+                notes="Produto diferente",
+                version=item.version,
+                db=db,
+                user=user,
+                active_group=group,
+            )
+        )
+
+    db.refresh(item)
+    assert error.value.status_code == 422
+    assert "vinculado à lista" in error.value.detail
+    assert item.name == "Maçã"
+    assert item.planned_quantity == 1
+    assert item.notes is None
+    assert item.version == original_version
+    assert events == []

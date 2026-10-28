@@ -149,7 +149,6 @@ async def health_check():
         "app": settings.app_name,
         "version": settings.app_version,
         "status": "running",
-        "modules_completed": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"],
     }
 
 
