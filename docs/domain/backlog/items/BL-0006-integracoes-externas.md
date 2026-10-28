@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0006` |
 | Título | Exportar compras para calendário e compartilhar listas, compras e convites |
+| Versão-alvo | `1.14.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Item 8 da ordem de prioridade do roadmap em `AGENTS.md` |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -112,3 +113,4 @@ enviando convites por e-mail.
 | `2026-07-24 00:48 -03` | Codex | Item criado em `recebido` | Migração do item aberto no roadmap legado |
 | `2026-08-05 22:07 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Casos de uso de calendário e WhatsApp, mecanismos sem APIs proprietárias, conteúdo mínimo e prioridade definidos com o usuário |
 | `2026-08-05 22:07 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Escopo limitado, riscos, dependências, duplicidades, responsável e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.14.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

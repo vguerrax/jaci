@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0022` |
 | Título | Unificar a gestão de categorias em uma única lista |
+| Versão-alvo | `1.8.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Solicitação do usuário para simplificar a gestão de categorias |
 | Ambiente/versão | Estado de `develop` (`2ca3e7e`) em `2026-09-17` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-09-17` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -105,3 +106,4 @@ inferiores para editar ou excluir.
 | `2026-09-17 16:36 -03` | Codex | Item criado em `recebido` | Solicitação do usuário para uma única lista de categorias |
 | `2026-09-17 16:36 -03` | Codex | `recebido` → `em_triagem` | Duplicidade visual e capacidades atuais confirmadas no template, rotas e serviço |
 | `2026-09-17 16:36 -03` | Usuário/Codex | `em_triagem` → `pronto_para_refinamento` | Escopo de linha única, prioridade P2, riscos e relação com BL-0013 definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.8.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

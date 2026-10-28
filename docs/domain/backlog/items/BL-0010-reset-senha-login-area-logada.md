@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0010` |
 | Título | Disponibilizar reset de senha via login e área logada |
+| Versão-alvo | `1.6.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -100,3 +101,4 @@ diretamente esse acesso.
 | `2026-07-24 00:57 -03` | Codex | Item criado em `recebido` | Solicitação do usuário |
 | `2026-08-05 22:38 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e responsável Engenharia Jaci confirmados; interface atual e contratos públicos e autenticados do Tupã confrontados |
 | `2026-08-05 22:38 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.6.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
