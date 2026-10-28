@@ -8,7 +8,7 @@
 | Título | Completar cobertura e rastreabilidade da operação offline |
 | Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -81,11 +81,11 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | Dependências | Implementação e cobertura atuais em `offline-cache.js`, `offline.py`, `test_offline_cache.py` e `test_sync_center.py`; BL-0011 acompanha futura cobertura ampla em navegador real sem bloquear este item |
 | Duplicidades | Nenhuma identificada; há sobreposição parcial com a [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md), restrita à infraestrutura futura de testes de UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Elaborar o refinamento para reconciliar a documentação e substituir ou remover os três contratos Python legados de FL-09, sem ampliar a fila para outros domínios |
+| Próximo passo | Aprovar refinamento versionado para substituir contratos legados por cobertura da fila real e reconciliar documentação |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [BL-0001](../../tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 - Implementação (commits/PRs): ainda não iniciada no processo atual.
 - Validações: triagem baseada no inventário documental, na implementação da
   fila e na cobertura automatizada existente; validações de implementação não
@@ -107,3 +107,4 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | `2026-08-05 14:54 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Escopo da triagem aprovado e evidências da arquitetura offline atual confrontadas |
 | `2026-08-05 14:54 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Confirmação, prioridade, recorte, riscos, dependências, duplicidades e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.4.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-10-28 20:40 -03` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Reconciliação FL-09, contratos Node e documentação refinados para 1.4.0; aprovação pendente |
