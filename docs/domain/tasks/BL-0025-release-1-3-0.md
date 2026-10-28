@@ -6,8 +6,8 @@
 - Branch: `feature/BL-0025-release-1-3-0`, criada da develop em `9ca2ad9`.
 - Responsável pelo refinamento: Engenharia Jaci.
 - Estado do refinamento: `pronto_para_implementacao`.
-- A branch é documental nesta etapa; será preservada após integração documental.
-  Antes das alterações executáveis, atualizá-la com a develop vigente.
+- A branch contém a preparação executável já aprovada; preservar a branch e
+  não integrar automaticamente as revisões documentais posteriores.
 - Aprovação: usuário aprovou explicitamente em 2026-10-28 após o commit
   documental `3f4f9cd` e merge `113b397`. Branch atualizada até `4d6143e`,
   incluindo versão no menu e simplificação da resposta `/health`, preservados.
@@ -28,12 +28,15 @@ mudanças de estrutura ou fluxos de trabalho.
    imagem construída e migrações verificadas em PostgreSQL descartável.
 4. Aceite manual da BL-0020 concluído e evidenciado, incluindo fallback HTML.
 5. Publicação da tag exata, verificações em produção e encerramento rastreados.
+6. Publicação exige versão explícita e grava APP_VERSION no arquivo de ambiente
+   selecionado antes de qualquer comando Docker.
 
 ## Escopo
 
 ### Incluído
 
 - Metadados 1.3.0, consolidação da develop, validação e publicação existentes.
+- Versão obrigatória na CLI de publish.sh e persistência de APP_VERSION no ambiente.
 - Conferência da correção Alembic para caracteres `%` na URL.
 - Correção dos estados documentais desatualizados na matriz de testes.
 - Notas externas da release, com descrição fiel das funcionalidades entregues.
@@ -77,13 +80,47 @@ mudanças de estrutura ou fluxos de trabalho.
 - Preparar texto externo das notas: BL-0020, correção Alembic e metadados;
   documentação de demandas futuras não deve ser anunciada como produto entregue.
 
+##### Fatia 1.1.2 — Exigir e persistir a versão na publicação
+
+- Ordem: 2; dependência: fatia 1.1.1 e aprovação explícita desta revisão versionada.
+- Origem: solicitação do usuário em 2026-10-28 após preparar o candidato e5451d4.
+- CLI: `./publish.sh <versao> [arquivo-env]`; arquivo padrão `.env.production`.
+  Exemplo padrão: `./publish.sh 1.3.0`; personalizado:
+  `./publish.sh 1.3.0 /caminho/ambiente.env`.
+- Aceitar `MAJOR.MINOR.PATCH`, também com prefixo `v` opcional; persistir sem `v`.
+  Rejeitar ausência, vazio, formato inválido ou argumentos excedentes com uso e
+  saída diferente de zero antes de modificar arquivo ou chamar Docker.
+- Exigir arquivo existente e gravável; não criar um ambiente de produção incompleto.
+- Substituir a atribuição ativa de APP_VERSION ou acrescentá-la se ausente;
+  consolidar atribuições ativas duplicadas em uma só, aceitando espaços e `export`.
+  Preservar comentários, demais configurações, permissões e dados sensíveis.
+- Atualizar via arquivo temporário no mesmo diretório e substituição atômica,
+  com limpeza em caso de erro; não executar/sourcear nem imprimir o conteúdo do env.
+- Exportar APP_VERSION com o valor informado para impedir que um valor antigo no
+  shell prevaleça sobre o arquivo na execução do Docker Compose.
+- Só após persistência bem-sucedida executar os quatro comandos Compose atuais,
+  sempre com o arquivo selecionado. Falha na atualização aborta antes do Docker.
+  Falha posterior de build/migração/publicação mantém a versão informada no arquivo,
+  retorna erro e interrompe a sequência; não afirmar publicação bem-sucedida.
+- Arquivos esperados: `publish.sh`, `README.md` e
+  `tests/test_publish.py`, além do acompanhamento BL-0025.
+- Testes TDD com Docker substituído por stub e env temporário: versão ausente,
+  inválida e argumentos extras não alteram arquivo nem chamam Docker; substituição,
+  inclusão, duplicatas, prefixo v, caminho personalizado com espaços, preservação
+  de dados/permissões e propagação do valor a todas as chamadas; arquivo ausente,
+  falha de escrita e falha do Docker abortam a sequência. Não usar .env.production real.
+- Validar com `bash -n publish.sh`, testes focados e regressão Python; atualizar
+  o grafo após código. Renovar o hash do candidato e a evidência de regressão.
+- Atualizar README e o comando desta release; teste não deve fazer deploy real.
+- Estado: refinamento pronto, aguardando aprovação posterior ao versionamento.
+
 ### Etapa 2 — Validar e obter aceite
 
 #### Ticket 2.1 — Fechar o candidato
 
 ##### Fatia 2.1.1 — Regressão e validação manual
 
-- Ordem: 2; dependência: fatia 1.1.1.
+- Ordem: 3; dependências: fatias 1.1.1 e 1.1.2.
 - Registrar o hash exato do candidato e mover item/índice para em_validacao.
 - Arquivos esperados: evidências em item/refinamento BL-0025 e atualização do
   aceite em item/refinamento BL-0020; sem novos testes salvo defeito que os justifique.
@@ -100,13 +137,13 @@ mudanças de estrutura ou fluxos de trabalho.
 
 ##### Fatia 3.1.1 — Integração, publicação e rastreabilidade
 
-- Ordem: 3; dependência: regressão aprovada e aceite manual registrado.
+- Ordem: 4; dependência: regressão aprovada e aceite manual registrado.
 - Arquivos esperados: índice, itens e refinamentos BL-0020/BL-0025; notas externas.
 - Integrar a preparação na develop com autorização; congelar o candidato sem
   funcionalidades posteriores. Se houver novos commits, revisar o delta e revalidar.
 - Integrar o candidato na main e criar tag anotada `v1.3.0` no resultado mediante
   autorização de publicação; conferir que a tag não existe antes de criá-la.
-- Publicar a tag exata com `./publish.sh /caminho/ambiente.env`, conforme README;
+- Publicar a tag exata com `./publish.sh 1.3.0 /caminho/ambiente.env`, conforme README;
   conferir APP_VERSION sem expor o arquivo de ambiente e preservar volume de backups.
 - Verificar os cenários de produção abaixo e publicar as notas externas da release.
 - Só então registrar ambiente, versão, tag, commit, data e evidências; concluir
@@ -180,8 +217,8 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 
 | Etapa/ticket | Fatias concluídas | Fatias restantes | Estado |
 | --- | ---: | ---: | --- |
-| 1 / 1.1 — Preparação | 1/1 | 0 | Concluída |
-| 2 / 2.1 — Validação | 0/1 | 1 | Automatizada aprovada; aceite manual pendente |
+| 1 / 1.1 — Preparação | 1/2 | 1 | Revisão da fatia 1.1.2 aguarda aprovação |
+| 2 / 2.1 — Validação | 0/1 | 1 | Revalidar após 1.1.2; aceite manual pendente |
 | 3 / 3.1 — Publicação | 0/1 | 1 | Pendente |
 
 ## Evidências da preparação — 2026-10-28
@@ -226,3 +263,12 @@ Suspender operacionalmente o fluxo afetado durante a correção e registrar o in
 - Documentação atualizada: item/refinamento BL-0025, índice e matriz de testes;
   nova regressão também registrada na BL-0020 sem alterar seu aceite pendente.
 - Publicação: pendente; sem integração de código em develop/main, push, tag ou deploy.
+
+## Revisão do escopo de publicação — 2026-10-28
+
+Solicitação de versão obrigatória e atualização do .env.production refinada na
+fatia 1.1.2. A aprovação anterior permanece válida para a fatia 1.1.1 já entregue;
+a nova fatia aguarda aprovação após versionamento. Não houve edição do script,
+teste executável novo, alteração do ambiente real ou publicação nesta revisão.
+O candidato e5451d4 permanece como evidência da preparação anterior; será renovado
+após a nova fatia. Os aceites de navegador/produção continuam pendentes.

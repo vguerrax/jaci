@@ -7,7 +7,7 @@
 | ID | `BL-0025` |
 | Título | Preparar e publicar versão 1.3.0 |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -26,7 +26,9 @@ publicação; os dois metadados internos de versão ainda declaram 1.0.0.
 
 Consolidar esse conteúdo na v1.3.0, com metadados coerentes, regressão atual,
 aceite manual e publicação rastreável. A reestruturação do projeto e dos fluxos
-de trabalho começará depois, em demanda independente.
+de trabalho começará depois, em demanda independente. A publicação deve exigir
+versão explícita e atualizar APP_VERSION no .env.production (ou env selecionado)
+antes dos comandos Docker.
 
 ### Impacto e abrangência
 
@@ -69,7 +71,7 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | Dependências | Aprovação do refinamento versionado, aceite BL-0020 e acesso ao ambiente de publicação |
 | Duplicidades | BL-0020 entrega o comportamento; BL-0025 coordena a release, sem duplicar implementação |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Obter aceite manual final da BL-0020; depois autorizar integração e publicação |
+| Próximo passo | Aprovar revisão versionada da fatia 1.1.2 (versão obrigatória no publish.sh) |
 
 ## Acompanhamento até produção
 
@@ -104,3 +106,4 @@ Manter a versão publicada atual até a conclusão das validações e do aceite.
 | `2026-10-28 18:19 -03` | Usuário/Codex | Ajuste dos testes autorizado e concluído | Commit adicional 4d6143e usa request.app no menu; 6 falhas reproduzidas e corrigidas fornecendo app nos requests sintéticos |
 | `2026-10-28 18:19 -03` | Codex | em_implementacao → em_validacao; etapa 1 concluída | 55 testes focados e 247 passes/5 xfail na regressão; imagem e PostgreSQL descartável aprovados; aceite manual e publicação pendentes |
 | `2026-10-28 18:19 -03` | Codex | Candidato técnico registrado em e5451d4 | Preparação e regressão aprovadas; branch preservada sem merge, tag ou publicação |
+| `2026-10-28 18:26 -03` | Usuário/Codex | em_validacao → em_refinamento → pronto_para_implementacao | Versão obrigatória e persistência no env refinadas na fatia 1.1.2; aguarda aprovação da revisão versionada, sem mudar o script ou ambiente real |
