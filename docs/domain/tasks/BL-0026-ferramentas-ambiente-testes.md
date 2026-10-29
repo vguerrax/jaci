@@ -182,3 +182,13 @@ com execução escalada. Nenhum browser Playwright foi criado ou executado.
   feature/BL-0026-ferramentas-ambiente-testes. develop permanece sem código da demanda.
 - Próximo passo: aceite do ambiente e autorização explícita de integração na develop
   antes de iniciar BL-0011 com a fundação disponível. Publicação da 1.4.0 não efetuada.
+
+## Entrega para integração
+
+- Fatia 1.1: b6a3b47; fatia 1.2: 245aa0e; merge da tarefa 1: e54974b.
+- Fatia 2.1: 02aef7e; merge da tarefa 2: 9005c51.
+- Branch de integração: feature/BL-0026-ferramentas-ambiente-testes.
+- Branches filhas preservadas: feature/BL-0026-t1-ambiente e feature/BL-0026-t2-scripts.
+- Escopo entregue: 3/3 fatias; 278 passes, cinco xfail legados e nenhum próprio.
+- develop permanece em 10ec091, aguardando autorização explícita de integração.
+  BL-0011 e BL-0001 aprovadas documentalmente; ainda sem implementação.

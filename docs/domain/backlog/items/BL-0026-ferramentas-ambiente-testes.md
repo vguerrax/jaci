@@ -76,7 +76,7 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 
 - Documento refinado: [BL-0026](../../tasks/BL-0026-ferramentas-ambiente-testes.md).
 - Implementação: 3/3 fatias entregues na integração feature/BL-0026-ferramentas-ambiente-testes;
-  tarefa 1 em b6a3b47/245aa0e, merge e54974b; tarefa 2 em branch própria.
+  tarefa 1 em b6a3b47/245aa0e, merge e54974b; tarefa 2 em 02aef7e, merge 9005c51 na integração; develop inalterada.
 - Validações: 278 passes/5 xfail legados, sem pendências próprias; bash -n e diff
   aprovados; migrações/seed em SQLite isolado, token/refresh/revogação, autorização
   HTTP/identidade WebSocket, scripts e smoke com servidor local aprovados.
