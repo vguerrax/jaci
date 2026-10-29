@@ -230,3 +230,5 @@ jaci.*
 .test-runtime/
 
 reports/
+
+node_modules/

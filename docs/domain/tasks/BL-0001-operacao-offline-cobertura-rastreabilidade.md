@@ -4,7 +4,7 @@
 
 - Item: [BL-0001](../backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: pronto_para_implementacao; aprovação posterior ao versionamento pendente.
+- Estado: em_validacao; refinamento versionado aprovado explicitamente pelo usuário.
 - Branch documental: feature/BL-0001-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0001-operacao-offline-cobertura-rastreabilidade.
 - Depois do merge documental, atualizar esta branch e usá-la para este item isolado.
@@ -109,12 +109,81 @@ fatia futura deste item. Os dois FL-08 continuam rastreados nas respectivas dema
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Reconciliação | 0/2 | 2 | Aguarda aprovação |
+| 1 — Reconciliação | 2/2 | 0 | Implementado e validado; publicação pendente |
 
-## Fechamento
+## Registro do fechamento documental anterior à aprovação
 
 - Código/testes: não iniciados; três xfail legados preservados nesta etapa.
 - Dependências: Node e implementação atual; BL-0011/BL-0026 são relacionadas, sem
   bloqueio obrigatório à conclusão desta demanda por Node/API.
 - Validações nesta etapa: links, estados e diff documental; sem execução UI/Node/Python.
 - Publicação e aceite: pendentes. Implementação exige aprovação deste documento versionado.
+
+## Início aprovado — 2026-10-29
+
+Aprovação explícita do refinamento c2f9ebb, no conjunto da 1.4.0, registrada antes
+dos testes. Branch atualizada até develop 9bda43a, incluindo BL-0026, BL-0011 e
+BL-0027 já integradas. Contratos Node usam a fila existente; nenhum comportamento
+de produção será alterado nesta demanda. Integração final depende de autorização.
+
+## Fatia 1.1 — Contratos efetivos
+
+Sete cenários Node executam o IIFE real, com fake-indexeddb 6.2.6 fixado por
+lockfile. Wrapper Pytest falhou com instrução de npm ci quando a dependência
+estava ausente e passou após instalação explícita. Não foi necessário alterar
+produção: persistência/recarga, coalescência com versão base, envio por criação e
+confirmação, retenção/ordem em falha de rede, sessão expirada, syncNow simultâneo
+no mesmo contexto e 409 com versões local/remota foram comprovados.
+
+Removidos somente os três contratos Python que importavam sync_service inexistente;
+os dois FL-08 permanecem xfail(strict=True). Focal Python: 47 passes/2 xfail.
+Comandos: node tests/js/offline_queue.test.cjs (sete cenários), node --test
+tests/js/offline_queue.test.cjs e scripts/run_tests.sh com os quatro módulos
+offline_queue_node/offline_cache/sync_center/future_user_flows. Node 26.3.1 local;
+CI fixa Node 24 com Action oficial por SHA e npm ci --ignore-scripts no job Python.
+Dependência exclusivamente de desenvolvimento, sem bundle ou runtime de produção.
+
+Validação focal UI autorizada: dois cenários Chromium de fila/recarga/reconexão
+e conflito/resolução passaram em 10,49s, run 92bb38833bb14123990e62ce6b462406.
+Setup aplicou as cinco migrações no SQLite sintético. Actionlint aprovou o workflow
+atualizado; compileall e diff --check sem erros. Grafo atualizado com AST.
+
+## Fatia 1.2 e validação final — 2026-10-29
+
+README, overview, FL-09, documento PWA e matriz de testes reconciliados com os
+handlers existentes. A matriz distingue leitura parcial, operações locais de
+execução, confirmação remota, estados da fila e recuperação. Administração de
+grupos/categorias/templates, criação de execuções e aprendizado continuam na API.
+Isolamento/autorização, preservação financeira, recorrência no servidor e
+separação template/execução não foram alterados. Nenhuma mudança de produção.
+
+- Fatia 1.1: c7cb3ed. Ticket único: 2/2 fatias concluídas, zero pendências próprias.
+- Regressão: `bash scripts/run_tests.sh --coverage -q`, Python 3.12.3,
+  **289 passes/2 xfail FL-08 em 64,42s**, cobertura **56,18%**, piso preservado.
+  Relatórios XML/JSON/HTML em reports/coverage. Node 26.3.1 executou sete cenários.
+- UI previamente autorizada: `ENV_FILE=.env.test bash scripts/run_ui_tests.sh -q`,
+  Chromium com dados/banco/servidor isolados: **9 passes em 24,99s**, run
+  376c6cff2cca442aa7a8e977d0fd700d. Nenhum cenário ignorado na suíte de navegador.
+- Uma rodada no sandbox atingiu timeout de 30s no contrato existente de mock HTTP.
+  Sem mudar código/timeout, o contrato isolado passou em 4,35s e a regressão final
+  fora das restrições de rede local passou integralmente. O erro inicial não foi
+  contado como aprovação.
+- Setup aplicou as cinco migrações no SQLite marcado de teste. Actionlint,
+  compileall, pip check, links locais e diff --check aprovados; grafo AST atualizado.
+- CI instala Node 24 e npm ci --ignore-scripts antes da suíte Python. Validação
+  remota aprovada conforme registro abaixo. Integração final na develop exige autorização
+  explícita; estado em_validacao até publicação e aceite da 1.4.0.
+
+## CI remoto e entrega para integração
+
+- PR de revisão em rascunho: https://github.com/vguerrax/jaci/pull/44.
+- Candidato 35129bf78754a61b93e0890953be70e23536fae9 aprovado no
+  [run 40816112651](https://github.com/vguerrax/jaci/actions/runs/40816112651):
+  Python coverage e Chromium mobile and desktop com success, incluindo instalação
+  Node/npm, suíte Python, preparação sintética, nove UI e artifacts previstos.
+- Commits das fatias: c7cb3ed (contratos/CI) e 990ac0f (documentação/evidências).
+  Registro posterior ao CI altera somente documentação de acompanhamento.
+- Branch feature/BL-0001-refinamento-1-4-0 preservada, 2/2 fatias concluídas e zero
+  contratos próprios pendentes. develop contém as BL-0026, BL-0027 e BL-0011;
+  integração desta BL-0001 ainda aguarda autorização explícita. Sem deploy.
+- Publicação e aceite da versão 1.4.0 pendentes; manter em_validacao.
