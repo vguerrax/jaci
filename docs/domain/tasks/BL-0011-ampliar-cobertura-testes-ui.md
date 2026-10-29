@@ -129,7 +129,7 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
 | --- | --- | --- | --- |
 | 1 — Cobertura | 1/1 | 0 | Concluída |
 | 2 — UI | 2/2 | 0 | Nove cenários aprovados |
-| 3 — CI | 0/1 | 1 | Pendente |
+| 3 — CI | 0/1 | 1 | YAML validado; execução GitHub pendente |
 
 ## Fechamento
 
@@ -209,3 +209,14 @@ Regressão da tarefa 2: **288 passes/5 xfail legados**, cobertura **56,18%**.
 Piso elevado para 56,18% com arredondamento à precisão do coverage, sem truncamento
 manual. Nenhum xfail próprio pendente. O piso inicial medido na tarefa 1 foi 55,97%
 na apresentação; o valor numérico versionado atual acompanha a regressão final.
+
+## Preparação CI
+
+Workflow tests.yml com jobs Python/Chromium em ubuntu-24.04, Python 3.12 e
+Actions oficiais v7 fixadas por hashes. Python usa runner comum e piso 56,18%;
+UI depende do sucesso Python, prepara Chromium/assets/ambiente e usa o runner.
+Artifacts limitados a cobertura e screenshots sintéticos/status, por sete dias.
+Token GitHub com contents:read, checkout sem persistir credenciais e nenhum deploy.
+YAML aprovado por actionlint (imagem b1934ee5f1c5). Execução remota em PR de
+rascunho será registrada antes de concluir a tarefa; merge final do item segue
+pendente de autorização explícita. Branch de tarefa: feature/BL-0011-t3-ci.
