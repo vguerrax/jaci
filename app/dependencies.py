@@ -8,6 +8,7 @@ from app.database import get_db
 from app.models.user import User
 from app.models.group import Group, group_members
 from app.utils.security import decode_access_token
+from app.services.auth_service import get_user_from_claims
 from sqlalchemy import select
 
 
@@ -32,7 +33,7 @@ async def get_current_user(
     if not tupa_user_id:
         return None
 
-    user = db.scalar(select(User).where(User.tupa_user_id == str(tupa_user_id)))
+    user = get_user_from_claims(db, payload)
     
     return user
 
@@ -107,7 +108,7 @@ async def get_current_user_ws(
     if not tupa_user_id:
         return None
 
-    user = db.scalar(select(User).where(User.tupa_user_id == str(tupa_user_id)))
+    user = get_user_from_claims(db, payload)
     return user
 
 

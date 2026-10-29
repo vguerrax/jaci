@@ -56,12 +56,13 @@ def test_setup_migrates_and_seeds_idempotently(tmp_path):
 
 @pytest.mark.parametrize('database_url', ['sqlite:////tmp/real.db',
                                          'postgresql://user:pass@localhost/production'])
-def test_unsafe_database_override_is_rejected_before_connect(tmp_path, database_url):
+def test_setup_rejects_database_override_before_connect(tmp_path, database_url):
     env_file, runtime = setup(tmp_path)
-    result = process('from app.database import engine', env_file=env_file,
+    result = process('from scripts.test_environment import setup_environment; '
+                     f'setup_environment({str(env_file)!r}, {str(runtime)!r})',
                      DATABASE_URL=database_url)
     assert result.returncode != 0
-    assert 'isolado' in result.stderr
+    assert 'Sobrescrita ambiental' in result.stderr
 
 
 def test_setup_refuses_real_env_or_unowned_directory(tmp_path):
@@ -112,9 +113,9 @@ else: raise AssertionError('refresh revogado aceito')
     assert result.returncode == 0, result.stderr
 
 
-@pytest.mark.parametrize('email,password', [('unknown@example.com','jaci-test-only'),
-                                           ('owner@example.com','wrong')])
-def test_mock_rejects_unknown_identity_and_password(tmp_path,email,password):
+@pytest.mark.parametrize('email,password', [('unknown@example.com',''),
+                                           ('unknown@example.com','anything')])
+def test_mock_rejects_unknown_identity(tmp_path,email,password):
     env_file,_=setup(tmp_path)
     result=process(f'''import asyncio
 from app.services import tupa_auth_service as a

@@ -11,10 +11,10 @@ class BasePage:
 
 
 class LoginPage(BasePage):
-    def login(self,email='owner@example.com'):
+    def login(self,email='owner@example.com',password='jaci-test-only'):
         self.goto_path('/auth/login')
         self.page.locator('form[action="/auth/password-login"] [name=email]').fill(email)
-        self.page.locator('form[action="/auth/password-login"] [name=password]').fill('jaci-test-only')
+        self.page.locator('form[action="/auth/password-login"] [name=password]').fill(password)
         self.page.locator('form[action="/auth/password-login"] button[type=submit]').click()
         self.page.wait_for_url(os.environ['PLAYWRIGHT_BASE_URL']+'/')
         expect(self.page.get_by_text('Ambiente de testes — Autenticação simulada')).to_be_visible()
