@@ -107,5 +107,4 @@ no navegador antes de cada publicação.
 | `2026-10-28 20:40 -03` | Codex | em_refinamento → pronto_para_implementacao | Escopo, etapas, contratos futuros e validação da 1.4.0 refinados; aguardando aprovação |
 | `2026-10-29 00:04 -03` | Usuário/Codex | Refinamento aprovado; em_implementacao | Integração BL-0026 autorizada e realizada em b289771; BL-0011 iniciada em branch de tarefa própria |
 | `2026-10-29` | Usuário/Codex | em_implementacao → em_validacao; 4/4 fatias entregues | Execução UI autorizada; 288 passes/5 xfail, cobertura 56,18%, nove cenários Chromium e CI remoto aprovados; sem merge final ou deploy |
-
 | `2026-10-29` | Usuário/Codex | Integração autorizada e realizada na develop | Merge 70d36ba da branch de integração; candidato 9fa6151 aprovado no run 40814716172; sem deploy |
