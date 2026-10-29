@@ -293,6 +293,26 @@ A rastreabilidade entre regras, fluxos e testes está em
 para contratos futuros documentados ou contratos legados explicitamente
 rastreados; um `XPASS` é tratado como falha até que o contrato seja revisado.
 
+### Ambiente sintético de testes (BL-0026)
+
+Prepare um banco SQLite isolado, sem Tupã ou credenciais reais:
+
+```bash
+bash scripts/setup_test_env.sh
+```
+
+O setup cria `.env.test`, banco migrado e seed idempotente em `.test-runtime/manual/`.
+Ele recusa bancos externos, arquivos de produção e diretórios ocupados sem marcador.
+O diretório e o arquivo de ambiente ficam fora do Git e da imagem Docker.
+Não copie configurações de produção: o setup gera as configurações sintéticas.
+
+As contas são `owner@example.com` e `member@example.com` na Casa A e
+`outsider@example.com` na Casa B. A senha exclusivamente de teste é `jaci-test-only`.
+O mock exige `APP_ENV=test`, `AUTH_MOCK=true`, `ENV_FILE` explícito e banco marcado;
+fora desse ambiente a inicialização falha. O formulário normal de login é usado,
+com autorização por grupo real. Cadastro, migração de identidades e demais ações
+externas não suportadas retornam erro explícito. Não há envio de e-mail no mock.
+
 ## 🔐 Segurança
 
 - Senhas armazenadas exclusivamente pelo Tupã
