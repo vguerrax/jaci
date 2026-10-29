@@ -81,13 +81,13 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | Dependências | Implementação e cobertura atuais em `offline-cache.js`, `offline.py`, `test_offline_cache.py` e `test_sync_center.py`; BL-0011 acompanha futura cobertura ampla em navegador real sem bloquear este item |
 | Duplicidades | Nenhuma identificada; há sobreposição parcial com a [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md), restrita à infraestrutura futura de testes de UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Autorizar integração na develop e registrar publicação/aceite da 1.4.0 após CI remoto |
+| Próximo passo | Autorizar integração na develop e registrar publicação/aceite da 1.4.0; CI remoto aprovado |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0001](../../tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
-- Implementação: 2/2 fatias na feature/BL-0001-refinamento-1-4-0; c7cb3ed entrega os sete cenários Node, wrapper Pytest, lockfile e instalação CI. Documentação reconciliada na segunda fatia.
-- Validações: 289 passes/2 xfail FL-08, cobertura 56,18%, sete cenários Node e nove Chromium aprovados; actionlint, migrações no SQLite sintético e links locais aprovados. Resultados e limitação do sandbox no refinamento.
+- Implementação: 2/2 fatias na feature/BL-0001-refinamento-1-4-0; c7cb3ed entrega os sete cenários Node, wrapper Pytest, lockfile e instalação CI. Documentação reconciliada em 990ac0f; PR de revisão https://github.com/vguerrax/jaci/pull/44.
+- Validações: 289 passes/2 xfail FL-08, cobertura 56,18%, sete cenários Node e nove Chromium aprovados; actionlint, migrações no SQLite sintético e links locais aprovados. CI 40816112651 aprovado nos jobs Python/Chromium em 35129bf. Resultados e limitação do sandbox no refinamento.
 - Publicação: ainda não publicada no processo atual.
 - Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md) e
   entregas offline do
@@ -108,3 +108,4 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | `2026-10-28 20:40 -03` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Reconciliação FL-09, contratos Node e documentação refinados para 1.4.0; aprovação pendente |
 | `2026-10-29` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Refinamento aprovado; branch atualizada com dependências integradas; início dos contratos Node da fila efetiva |
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | Sete Node, 289 passes/2 xfail FL-08, cobertura 56,18% e nove Chromium; sem alterações de produção ou publicação |
+| `2026-10-29` | Codex | Validação remota aprovada | PR 44; candidato 35129bf e run 40816112651 com ambos os jobs success; integração final aguarda autorização |

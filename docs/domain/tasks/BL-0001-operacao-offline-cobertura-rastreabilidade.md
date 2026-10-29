@@ -171,5 +171,19 @@ separação template/execução não foram alterados. Nenhuma mudança de produ�
 - Setup aplicou as cinco migrações no SQLite marcado de teste. Actionlint,
   compileall, pip check, links locais e diff --check aprovados; grafo AST atualizado.
 - CI instala Node 24 e npm ci --ignore-scripts antes da suíte Python. Validação
-  remota será registrada a seguir. Integração final na develop exige autorização
+  remota aprovada conforme registro abaixo. Integração final na develop exige autorização
   explícita; estado em_validacao até publicação e aceite da 1.4.0.
+
+## CI remoto e entrega para integração
+
+- PR de revisão em rascunho: https://github.com/vguerrax/jaci/pull/44.
+- Candidato 35129bf78754a61b93e0890953be70e23536fae9 aprovado no
+  [run 40816112651](https://github.com/vguerrax/jaci/actions/runs/40816112651):
+  Python coverage e Chromium mobile and desktop com success, incluindo instalação
+  Node/npm, suíte Python, preparação sintética, nove UI e artifacts previstos.
+- Commits das fatias: c7cb3ed (contratos/CI) e 990ac0f (documentação/evidências).
+  Registro posterior ao CI altera somente documentação de acompanhamento.
+- Branch feature/BL-0001-refinamento-1-4-0 preservada, 2/2 fatias concluídas e zero
+  contratos próprios pendentes. develop contém as BL-0026, BL-0027 e BL-0011;
+  integração desta BL-0001 ainda aguarda autorização explícita. Sem deploy.
+- Publicação e aceite da versão 1.4.0 pendentes; manter em_validacao.
