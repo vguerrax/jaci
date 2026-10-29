@@ -4,7 +4,7 @@
 
 - Item: [BL-0001](../backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: pronto_para_implementacao; aprovação posterior ao versionamento pendente.
+- Estado: em_implementacao; refinamento versionado aprovado explicitamente pelo usuário.
 - Branch documental: feature/BL-0001-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0001-operacao-offline-cobertura-rastreabilidade.
 - Depois do merge documental, atualizar esta branch e usá-la para este item isolado.
@@ -109,7 +109,7 @@ fatia futura deste item. Os dois FL-08 continuam rastreados nas respectivas dema
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Reconciliação | 0/2 | 2 | Aguarda aprovação |
+| 1 — Reconciliação | 1/2 | 1 | Contratos aprovados; documentação pendente |
 
 ## Fechamento
 
@@ -118,3 +118,32 @@ fatia futura deste item. Os dois FL-08 continuam rastreados nas respectivas dema
   bloqueio obrigatório à conclusão desta demanda por Node/API.
 - Validações nesta etapa: links, estados e diff documental; sem execução UI/Node/Python.
 - Publicação e aceite: pendentes. Implementação exige aprovação deste documento versionado.
+
+## Início aprovado — 2026-10-29
+
+Aprovação explícita do conjunto refinado da 1.4.0 registrada na conversa antes
+dos testes. Branch atualizada até develop 9bda43a, incluindo BL-0026, BL-0011 e
+BL-0027 já integradas. Contratos Node usam a fila existente; nenhum comportamento
+de produção será alterado nesta demanda. Integração final depende de autorização.
+
+## Fatia 1.1 — Contratos efetivos
+
+Sete cenários Node executam o IIFE real, com fake-indexeddb 6.2.6 fixado por
+lockfile. Wrapper Pytest falhou com instrução de npm ci quando a dependência
+estava ausente e passou após instalação explícita. Não foi necessário alterar
+produção: persistência/recarga, coalescência com versão base, envio por criação e
+confirmação, retenção/ordem em falha de rede, sessão expirada, syncNow simultâneo
+no mesmo contexto e 409 com versões local/remota foram comprovados.
+
+Removidos somente os três contratos Python que importavam sync_service inexistente;
+os dois FL-08 permanecem xfail(strict=True). Focal Python: 47 passes/2 xfail.
+Comandos: node tests/js/offline_queue.test.cjs (sete cenários), node --test
+ tests/js/offline_queue.test.cjs e scripts/run_tests.sh com os quatro módulos
+offline_queue_node/offline_cache/sync_center/future_user_flows. Node 26.3.1 local;
+CI fixa Node 24 com Action oficial por SHA e npm ci --ignore-scripts no job Python.
+Dependência exclusivamente de desenvolvimento, sem bundle ou runtime de produção.
+
+Validação focal UI autorizada: dois cenários Chromium de fila/recarga/reconexão
+e conflito/resolução passaram em 10,49s, run 92bb38833bb14123990e62ce6b462406.
+Setup aplicou as cinco migrações no SQLite sintético. Actionlint aprovou o workflow
+atualizado; compileall e diff --check sem erros. Grafo atualizado com AST.

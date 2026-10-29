@@ -1,0 +1,9 @@
+{
+  "name": "jaci-test-contracts",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/js/offline_queue.test.cjs"
+  },
+  "engines": { "node": ">=22" },
+  "devDependencies": { "fake-indexeddb": "6.2.6" }
+}
