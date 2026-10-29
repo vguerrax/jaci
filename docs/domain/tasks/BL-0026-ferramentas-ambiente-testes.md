@@ -192,3 +192,11 @@ com execução escalada. Nenhum browser Playwright foi criado ou executado.
 - Escopo entregue: 3/3 fatias; 278 passes, cinco xfail legados e nenhum próprio.
 - develop permanece em 10ec091, aguardando autorização explícita de integração.
   BL-0011 e BL-0001 aprovadas documentalmente; ainda sem implementação.
+
+## Integração autorizada — 2026-10-29
+
+Após autorização explícita do usuário, a branch do item foi integrada à develop em
+b289771 e publicada no remoto. A BL-0011 usou essa fundação com nove cenários
+Chromium aprovados e jobs remotos Python/UI aprovados (Actions 40814194309).
+Os registros anteriores de espera por integração são históricos. A demanda segue
+em_validacao até o aceite e publicação da release 1.4.0; não houve deploy nesta etapa.
