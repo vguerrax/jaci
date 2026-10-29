@@ -82,7 +82,8 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 - Validações: duas falhas corretivas reproduzidas antes do código; 48 testes
   focais aprovados, incluindo rejeição de categoria alheia sem finalizar ou vincular.
   Regressão: 282 passes/5 xfail legados, sem falhas/XPASS; grafo atualizado.
-  Cenário UI será repetido pela BL-0011 após a integração autorizada.
+  Cenário UI repetido pela BL-0011 com os mesmos dados sem categoria: aprovado
+  na suíte de nove cenários (20,65s), após merge d303c38.
 - Publicação: ainda não publicada.
 - Itens relacionados: BL-0011 e BL-0020.
 
@@ -98,3 +99,4 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 | `2026-10-29` | Codex | em_refinamento → pronto_para_implementacao | Correção mínima e validações refinadas, aguardando aprovação após versionamento |
 | `2026-10-29` | Usuário/Codex | Refinamento e integração aprovados; em_implementacao | Aprovação explícita posterior a e25a531; contratos com duas falhas esperadas e autorização estrangeira preservada |
 | `2026-10-29` | Codex | em_implementacao → em_validacao | 48 testes focais e regressão com 282 passes/5 xfail aprovados; sem migração e sem publicação |
+| `2026-10-29` | Codex | Aceite automatizado UI corretivo aprovado | Nove cenários Chromium aprovados, mantendo o item sem categoria; correção em develop d303c38; publicação 1.4.0 pendente |

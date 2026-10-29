@@ -70,7 +70,7 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | Dependências | Python 3.12+, Node para contratos JS existentes; Playwright/CI pertencem à BL-0011 |
 | Duplicidades | BL-0011 possui testes UI/cobertura/CI; BL-0001 possui reconciliação offline |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar ambiente manual e autorizar integração final na develop para liberar BL-0011 |
+| Próximo passo | Acompanhar aceite e publicação da 1.4.0; fundação já integrada e validada pela BL-0011 |
 
 ## Acompanhamento até produção
 
@@ -86,7 +86,7 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 
 ### Impedimentos
 
-- Aceite manual visual, autorização de integração na develop e publicação pendentes.
+- Publicação da 1.4.0 e aceite de release pendentes; integração realizada e UI automatizada aprovada.
 
 ## Histórico
 
@@ -97,3 +97,4 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | `2026-10-28 20:40 -03` | Codex | em_refinamento → pronto_para_implementacao | Refinamento pronto para revisão posterior ao versionamento |
 | `2026-10-28` | Usuário/Codex | Refinamentos aprovados; BL-0026 em_implementacao | Aprovação explícita posterior a 54cc1c8, 76c6aea e c2f9ebb; tarefa 1 em feature/BL-0026-t1-ambiente |
 | `2026-10-28 21:44 -03` | Codex | em_implementacao → em_validacao; 3/3 fatias entregues | Regressão com 278 passes/5 xfail; smoke HTTP local aprovado; sem merge na develop ou publicação |
+| `2026-10-29` | Usuário/Codex | Integração autorizada e realizada em b289771 | Fundação disponível na develop e usada pela BL-0011; nove cenários UI e CI remoto aprovados, sem publicação da 1.4.0 |
