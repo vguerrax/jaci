@@ -213,5 +213,19 @@ regressão total será feita quando ambos forem concluídos.
 - README, exemplo sintético e matriz de testes distinguem bypass manual (duas
   flags/base existente) dos guards dos scripts automatizados. Sem migração de
   esquema ou modificação do run.py/arquivo de ambiente/banco do usuário.
-- Implementação 2/2 fatias, zero pendências próprias; CI remoto a registrar.
+- Implementação 2/2 fatias, zero pendências próprias; CI remoto aprovado conforme registro abaixo.
   Integração executável na develop e publicação da 1.4.0 ainda pendentes.
+
+## CI remoto / entrega para integração
+
+- PR em rascunho: https://github.com/vguerrax/jaci/pull/45.
+- Candidato 98c788de81afd73f53cf23d36bd09a0417662e7b aprovado no
+  [run 40952438864](https://github.com/vguerrax/jaci/actions/runs/40952438864).
+  Jobs Python coverage e Chromium mobile and desktop concluíram com success,
+  incluindo as dez UI, preparação isolada e publicação dos artifacts previstos.
+- Commits das fatias: 10931df e 98c788d. Progresso: 2/2, zero pendências próprias.
+  O registro posterior ao CI altera somente os dois documentos de acompanhamento.
+- Branch feature/BL-0028-auth-mock-bypass-local preservada; integração executável
+  na develop aguarda autorização específica. A edição do usuário em run.py e sua
+  base de desenvolvimento permanecem preservadas; sem deploy.
+- Publicação e aceite da 1.4.0 pendentes; estado em_validacao.

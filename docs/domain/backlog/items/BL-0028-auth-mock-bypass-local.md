@@ -77,14 +77,14 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | Dependências | BL-0026, serviços de autenticação, middleware e suítes BL-0011 |
 | Duplicidades | Complementa e altera o contrato implementado da BL-0026; preservar seu histórico |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Autorizar integração executável após validação remota e registrar publicação/aceite da 1.4.0 |
+| Próximo passo | Autorizar integração executável na develop e registrar publicação/aceite da 1.4.0; validação remota aprovada |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0028](../../tasks/BL-0028-auth-mock-bypass-local.md).
 - Branch: feature/BL-0028-auth-mock-bypass-local, criada da develop.
-- Implementação: 2/2 fatias entregues na feature/BL-0028-auth-mock-bypass-local; primeira fatia 10931df. Bypass por usuário ativo na conexão ORM configurada, senha ignorada, sem alterar identidade Tupã.
-- Validações: 307 passes/2 xfail FL-08, cobertura 60,02%, dez Chromium aprovados; smoke PostgreSQL 17 com development.env, login sem senha, isolamento, reinício, logout e identidade preservada. CI remoto a registrar.
+- Implementação: 2/2 fatias entregues na feature/BL-0028-auth-mock-bypass-local; commits 10931df e 98c788d; PR de revisão https://github.com/vguerrax/jaci/pull/45. Bypass por usuário ativo na conexão ORM configurada, senha ignorada, sem alterar identidade Tupã.
+- Validações: 307 passes/2 xfail FL-08, cobertura 60,02%, dez Chromium aprovados; smoke PostgreSQL 17 com development.env, login sem senha, isolamento, reinício, logout e identidade preservada. CI 40952438864 aprovado nos jobs Python/Chromium em 98c788d.
 - Publicação: pendente; alvo 1.4.0.
 - Itens relacionados: BL-0026 e BL-0011.
 
@@ -101,3 +101,4 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | `2026-10-29` | Codex | em_refinamento → pronto_para_implementacao | Refinamento documental concluído; aprovação pós-versionamento pendente |
 | `2026-10-29` | Usuário/Codex | Refinamento 1ef2a8f aprovado; em_implementacao | Correção e testes Python/UI autorizados; merge documental 2543931, sem autorização de merge executável |
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | 307 passes/2 xfail, cobertura 60,02%, dez UI e PostgreSQL 17 aprovados; merge executável/publicação pendentes |
+| `2026-10-29` | Codex | CI remoto aprovado | PR 45; candidato 98c788d e run 40952438864 com Python/Chromium success; integração executável aguarda autorização |
