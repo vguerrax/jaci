@@ -4,7 +4,7 @@
 
 - Item: [BL-0026](../backlog/items/BL-0026-ferramentas-ambiente-testes.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: em_implementacao; aprovação explícita recebida após versionamento.
+- Estado: em_validacao; aprovação explícita recebida após versionamento.
 - Branch: feature/BL-0026-ferramentas-ambiente-testes, criada de develop.
 - Após merge documental, preservar e atualizar a branch com develop; será a branch
   de integração deste item. Branches filhas feature/BL-0026-t1-ambiente e
@@ -126,13 +126,14 @@ para funcionalidades de outras demandas nem alterar agora tests/ui.
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
 | 1 — Ambiente/mock | 2/2 | 0 | Concluída |
-| 2 — Scripts | 0/1 | 1 | Pendente |
+| 2 — Scripts | 1/1 | 0 | Concluída |
 
 ## Fechamento
 
-- Tarefa 1 concluída; nenhuma credencial/ambiente real alterado.
-- Validações documentais: links, índices, estados e diff serão conferidos antes do commit.
-- Validação executável/manual e publicação: pendentes, sem resultados presumidos.
+- Tarefas 1 e 2 concluídas (3/3 fatias); nenhuma credencial/ambiente real alterado.
+- Validações documentais: links, índices, estados e diff conferidos.
+- Validação executável e smoke HTTP aprovados; aceite visual em navegador,
+  integração final na develop e publicação da 1.4.0 pendentes.
 - Aprovação recebida; implementação conduzida com vgx-development.
 
 ## Evidência da fatia 1.1
@@ -154,3 +155,30 @@ da fatia 2.1; cinco são legados fora do escopo. Isolamento HTTP, cookies e logo
 validados com TestClient local e bloqueio de clientes externos nos testes.
 A execução restrita de TestClient bloqueou; a mesma validação local foi aprovada
 com execução escalada. Nenhum browser Playwright foi criado ou executado.
+
+## Evidência da fatia 2.1 / tarefa 2
+
+- Scripts setup_test_env.sh, run_test_server.sh e run_tests.sh entregues com
+  instalação explícita de dependências, host 127.0.0.1, porta padrão 8014 e sem reload.
+- Runner Python configura banco em memória sem mock nesse processo, preservando
+  as fixtures legadas; os contratos específicos usam subprocessos de mock isolados.
+  Ambiente herdado da aplicação é descartado, sem ler .env/.env.production.
+- Dois contratos de scripts falharam antes do código; depois dele, testes de seleção,
+  código de saída, configuração herdada e limpeza passaram. Cleanup só em diretório
+  marcado, e subprocessos pertencentes à execução são encerrados em falha/sinal.
+- Regresso final pelo runner: **278 passes, 5 xfail em 34,32s**, sem falhas/XPASS;
+  nenhum xfail próprio pendente. Os cinco existentes pertencem a BL-0001/0003/0004.
+- Smoke com servidor real em porta efêmera local: setup, login owner, indicação de
+  ambiente simulado, snapshot apenas da Casa A e logout/401 aprovados. Servidor e
+  diretório temporários foram removidos. HTTP e dependência de identidade WebSocket
+  testados; não foi feito aceite visual em navegador ou teste de browser offline.
+- Migrações aplicadas repetidamente somente nos bancos SQLite temporários do setup;
+  nenhuma revisão de esquema de produção foi criada. AUTH_MOCK persiste sessões em
+  arquivo SQLite separado, fora das tabelas do domínio.
+- bash -n dos três scripts e diff check aprovados; grafo AST atualizado;
+  pylint indisponível no ambiente, sem instalação ad hoc.
+- Commits da tarefa 1: b6a3b47 e 245aa0e; merge e54974b na integração BL-0026.
+  Branch da tarefa 2: feature/BL-0026-t2-scripts; retorna exclusivamente para a
+  feature/BL-0026-ferramentas-ambiente-testes. develop permanece sem código da demanda.
+- Próximo passo: aceite do ambiente e autorização explícita de integração na develop
+  antes de iniciar BL-0011 com a fundação disponível. Publicação da 1.4.0 não efetuada.

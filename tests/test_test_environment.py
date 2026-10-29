@@ -78,8 +78,6 @@ def test_setup_refuses_real_env_or_unowned_directory(tmp_path):
     assert (runtime / 'keep').read_text() == 'original'
 
 
-future_mock = pytest.mark.xfail(strict=True, run=False, reason='BL-0026 fatia 1.2')
-future_scripts = pytest.mark.xfail(strict=True, run=False, reason='BL-0026 fatia 2.1')
 
 
 def test_mock_login_refresh_restart_revocation_and_tamper(tmp_path):
@@ -145,6 +143,10 @@ with TestClient(app) as c:
         r=c.post('/auth/password-login',data={'email':email,'password':'jaci-test-only'})
         assert r.status_code==200,r.text
         assert c.cookies.get('jaci_session')
+        from app.dependencies import get_current_user_ws
+        with SessionLocal() as websocket_db:
+            identity=asyncio.run(get_current_user_ws(websocket_db,c.cookies.get('jaci_session')))
+            assert identity.email==email
         assert 'Autenticação simulada' in c.get('/').text
         db=SessionLocal()
         foreign=db.scalar(select(Group).where(Group.name=='Casa B' if email!='outsider@example.com' else Group.name=='Casa A'))
@@ -164,7 +166,6 @@ with TestClient(app) as c:
     assert result.returncode==0,result.stderr
 
 
-@future_scripts
 def test_test_runner_propagates_selection_and_exit_status(tmp_path):
     test_file=tmp_path/'test_exit.py'
     test_file.write_text('def test_selected(): assert False\n')
@@ -174,7 +175,6 @@ def test_test_runner_propagates_selection_and_exit_status(tmp_path):
     assert '1 failed' in result.stdout
 
 
-@future_scripts
 def test_test_server_refuses_missing_env_before_start(tmp_path):
     result=subprocess.run(['bash','scripts/run_test_server.sh'],cwd=ROOT,
                           env={**os.environ,'ENV_FILE':str(tmp_path/'.env.test')},
@@ -201,3 +201,47 @@ a._request=request
 assert asyncio.run(a.token('real@example.com','password'))=={'real_path':'unchanged'}
 ''',env_file=env_file)
     assert result.returncode==0,result.stderr
+
+
+def test_runner_discards_real_configuration_and_cleans_own_runtime(tmp_path):
+    test_file = tmp_path / 'test_isolation.py'
+    test_file.write_text('''import os
+from pathlib import Path
+from app.config import Settings
+def test_isolated():
+    settings=Settings()
+    assert settings.database_url=='sqlite://'
+    assert settings.app_env=='test'
+    assert not settings.auth_mock
+    assert not Path(os.environ['ENV_FILE']).name=='.env.production'
+''')
+    result = subprocess.run(['bash','scripts/run_tests.sh','-q',str(test_file)],
+        cwd=ROOT, capture_output=True, text=True, timeout=30,
+        env={**os.environ, 'DATABASE_URL':'postgresql://unused/production',
+             'ENV_FILE':str(tmp_path/'.env.production'), 'TMPDIR':str(tmp_path)})
+    assert result.returncode==0,result.stdout+result.stderr
+    assert not list(tmp_path.glob('jaci-test-python-*'))
+
+
+def test_cleanup_refuses_wrong_environment_and_preserves_unrelated_files(tmp_path):
+    env_file, runtime = setup(tmp_path)
+    outside = tmp_path/'keep.txt'
+    outside.write_text('keep')
+    other = tmp_path/'other.env'
+    other.write_text('KEEP=yes')
+    result=process(f'''import sys
+from scripts.test_environment import main
+sys.argv=['test_environment','--clean','--env-file',{str(other)!r},'--runtime-dir',{str(runtime)!r}]
+main()
+''')
+    assert result.returncode!=0
+    assert runtime.is_dir()
+    result=process(f'''import sys
+from scripts.test_environment import main
+sys.argv=['test_environment','--clean','--env-file',{str(env_file)!r},'--runtime-dir',{str(runtime)!r}]
+main()
+''')
+    assert result.returncode==0,result.stderr
+    assert not runtime.exists() and not env_file.exists()
+    assert outside.read_text()=='keep'
+    assert other.read_text()=='KEEP=yes'

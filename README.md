@@ -313,6 +313,40 @@ fora desse ambiente a inicialização falha. O formulário normal de login é us
 com autorização por grupo real. Cadastro, migração de identidades e demais ações
 externas não suportadas retornam erro explícito. Não há envio de e-mail no mock.
 
+Inicie o servidor local, sem reload e limitado a `127.0.0.1`:
+
+```bash
+bash scripts/run_test_server.sh                     # porta 8014
+bash scripts/run_test_server.sh --port 8015
+ENV_FILE=/tmp/jaci-test-exemplo/.env.test bash scripts/run_test_server.sh
+```
+
+Para um ambiente temporário separado (nome começando com `jaci-test-`):
+
+```bash
+bash scripts/setup_test_env.sh --env-file /tmp/jaci-test-exemplo/.env.test --runtime-dir /tmp/jaci-test-exemplo
+```
+
+O setup aplica migrações e seed somente no banco marcado. O servidor exige setup
+prévio e mantém esse banco entre reinícios. Para limpar explicitamente o ambiente
+manual padrão e seu `.env.test`, use `venv/bin/python -m scripts.test_environment --clean`.
+A limpeza recusa configurações que não correspondem ao diretório marcado.
+
+Execute a suíte Python ou selecione testes, sem carregar `.env`/`.env.production`:
+
+```bash
+bash scripts/run_tests.sh
+bash scripts/run_tests.sh -q tests/test_business_rules.py
+```
+
+O runner cria configuração temporária, usa as fixtures Python em memória e deixa
+`AUTH_MOCK=false` nesse processo (os contratos de mock criam seus próprios ambientes).
+Ele elimina configurações herdadas da aplicação, exclui `tests/ui`, propaga erros
+e limpa seu diretório e processos próprios. `TEST_PYTHON` permite selecionar outro
+executável Python; o padrão é `venv/bin/python`. Instale previamente
+`pip install -r requirements-dev.txt`; os scripts não instalam pacotes automaticamente.
+Playwright e seu runner são entregas futuras da BL-0011.
+
 ## 🔐 Segurança
 
 - Senhas armazenadas exclusivamente pelo Tupã
