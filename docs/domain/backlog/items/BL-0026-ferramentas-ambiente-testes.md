@@ -8,7 +8,7 @@
 | Título | Ferramentas, ambiente de testes e rastreabilidade das releases |
 | Tipo | `melhoria` |
 | Versão-alvo | `1.4.0` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -70,19 +70,23 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | Dependências | Python 3.12+, Node para contratos JS existentes; Playwright/CI pertencem à BL-0011 |
 | Duplicidades | BL-0011 possui testes UI/cobertura/CI; BL-0001 possui reconciliação offline |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar refinamento versionado antes de código e testes executáveis |
+| Próximo passo | Validar ambiente manual e autorizar integração final na develop para liberar BL-0011 |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0026](../../tasks/BL-0026-ferramentas-ambiente-testes.md).
-- Implementação (commits/PRs): não iniciada; branch feature/BL-0026-ferramentas-ambiente-testes.
-- Validações: documentais nesta etapa; scripts/mock ainda não implementados.
+- Implementação: 3/3 fatias entregues na integração feature/BL-0026-ferramentas-ambiente-testes;
+  tarefa 1 em b6a3b47/245aa0e, merge e54974b; tarefa 2 em 02aef7e, merge 9005c51 na integração; develop inalterada.
+- Validações: 278 passes/5 xfail legados, sem pendências próprias; bash -n e diff
+  aprovados; migrações/seed em SQLite isolado, token/refresh/revogação, autorização
+  HTTP/identidade WebSocket, scripts e smoke com servidor local aprovados.
+  Sem inspeção visual ou Playwright; pylint ausente.
 - Publicação: ainda não publicada.
 - Itens relacionados: BL-0011 e BL-0001, alvos da 1.4.0.
 
 ### Impedimentos
 
-- Nenhum técnico confirmado; gate de aprovação pendente.
+- Aceite manual visual, autorização de integração na develop e publicação pendentes.
 
 ## Histórico
 
@@ -91,3 +95,5 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | `2026-10-28 20:40 -03` | Codex | Registro em recebido, a_triar e a_definir | Execução da formalização do roadmap solicitada |
 | `2026-10-28 20:40 -03` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A e P1 | Escopo, limites, dependências e riscos inventariados |
 | `2026-10-28 20:40 -03` | Codex | em_refinamento → pronto_para_implementacao | Refinamento pronto para revisão posterior ao versionamento |
+| `2026-10-28` | Usuário/Codex | Refinamentos aprovados; BL-0026 em_implementacao | Aprovação explícita posterior a 54cc1c8, 76c6aea e c2f9ebb; tarefa 1 em feature/BL-0026-t1-ambiente |
+| `2026-10-28 21:44 -03` | Codex | em_implementacao → em_validacao; 3/3 fatias entregues | Regressão com 278 passes/5 xfail; smoke HTTP local aprovado; sem merge na develop ou publicação |

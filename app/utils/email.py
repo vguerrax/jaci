@@ -33,6 +33,8 @@ async def send_magic_link(email: str, token: str, group_id: int | None = None, g
     Se SMTP não configurado, faz log do link (modo dev).
     Retorna True se o e-mail foi enviado (ou logado com sucesso).
     """
+    if settings.auth_mock:
+        return True
     magic_link = _build_magic_link(token, group_id)
     
     is_invite = group_id and group_name and invited_by
