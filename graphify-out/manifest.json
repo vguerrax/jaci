@@ -90,9 +90,9 @@
     "semantic_hash": "e5a4ca90f9b3671a250dd86e68de090c"
   },
   "app/routers/auth.py": {
-    "mtime": 1793304402.9815357,
-    "ast_hash": "9d1450386a6e5489e5d385ab8d69dbca",
-    "semantic_hash": "9d1450386a6e5489e5d385ab8d69dbca"
+    "mtime": 1793306546.7589102,
+    "ast_hash": "3041a98e02072e7d46618478bd38b0b8",
+    "semantic_hash": ""
   },
   "app/routers/categories.py": {
     "mtime": 1793304402.9815357,
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1793304402.9798307,
-    "ast_hash": "9af9814b338745057d2a3b394e94c4e2",
+    "mtime": 1793306549.566407,
+    "ast_hash": "eb66b1b2d7d40b3cfe874d5909ce4841",
     "semantic_hash": ""
   },
   "app/static/offline.html": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/login.html": {
-    "mtime": 1793304403.0077899,
-    "ast_hash": "01a5c9d83b92795221024aab2f9a2c4c",
+    "mtime": 1793306546.7591205,
+    "ast_hash": "4b4b80a17192a8b8598ec58d5b199a25",
     "semantic_hash": ""
   },
   "app/templates/pages/login_error.html": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1793304403.0633674,
-    "ast_hash": "4d89c6894f8b0de05dcf4cf839c2eb6a",
+    "mtime": 1793306549.5732725,
+    "ast_hash": "a9692183f307f96e21d2fdbf3ac51e75",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -1050,8 +1050,8 @@
     "semantic_hash": ""
   },
   "app/services/test_auth_service.py": {
-    "mtime": 1793306192.786294,
-    "ast_hash": "d3fb8945084c52725e95c0b303ae547b",
+    "mtime": 1793306769.5101707,
+    "ast_hash": "28f9e49b98ab99fdb1d3bc8e3e829f23",
     "semantic_hash": ""
   },
   "scripts/run_test_server.sh": {
@@ -1160,8 +1160,8 @@
     "semantic_hash": ""
   },
   "tests/ui/test_purchase_playwright.py": {
-    "mtime": 1793306366.9267726,
-    "ast_hash": "85aa324025c76b629dcb38fa5c23cb58",
+    "mtime": 1793306484.331144,
+    "ast_hash": "d8a8b3558cf607bf1c4ceaa888cd0d24",
     "semantic_hash": ""
   },
   ".github/workflows/tests.yml": {
@@ -1185,8 +1185,8 @@
     "semantic_hash": ""
   },
   "tests/test_auth_mock_bypass.py": {
-    "mtime": 1793306397.2822878,
-    "ast_hash": "fa998e09ab51bdf7548612cbe217039d",
+    "mtime": 1793306756.4185038,
+    "ast_hash": "41da1c790f07c68e4ee886047bb76ac0",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0028-auth-mock-bypass-local.md": {
@@ -1195,8 +1195,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0028-auth-mock-bypass-local.md": {
-    "mtime": 1793306122.365483,
-    "ast_hash": "2c44b3e096fbe41a1981966766e8d9eb",
+    "mtime": 1793306481.592296,
+    "ast_hash": "7df04c8466101a75fc946eff2e08506b",
     "semantic_hash": ""
   }
 }

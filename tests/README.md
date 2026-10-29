@@ -119,3 +119,20 @@ dados sintéticos. A documentação não amplia a fila para outras entidades.
 
 Resultados e commits da entrega estão no
 [refinamento da BL-0001](../docs/domain/tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
+
+
+# Bypass local AUTH_MOCK — BL-0028
+
+`tests/test_auth_mock_bypass.py` cobre ativação por duas flags, nome de ambiente
+arbitrário, configuração SQLite/PostgreSQL, login com usuário fora do seed e sem
+vínculo Tupã, senha ignorada, recusa de usuário ausente/inativo, identidade
+HTTP/WS/middleware e autorização por grupo. Os contratos anteriores de rotação,
+revogação, reinício e caminho real continuam em tests/test_test_environment.py.
+Os guards de setup/seed continuam obrigatórios nas ferramentas, sem restringir
+os bancos aceitos pelo modo mock da aplicação. Nenhum teste usa base do usuário.
+
+O cenário UI test_mock_login_accepts_local_user_without_tupa_or_password usa um
+usuário sintético criado fora das três contas do seed e senha vazia; comprova o
+login normal sem atribuir tupa_user_id. A suíte passa a conter dez cenários.
+Resultados executados ficam no refinamento BL-0028; declaração de cobertura não
+substitui evidência de execução. Dois contratos FL-08 permanecem fora do escopo.

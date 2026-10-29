@@ -16,6 +16,8 @@ from app.config import get_settings
 from app.testing_environment import PROJECT_ROOT
 
 ISSUER = 'jaci-test'
+
+
 def _runtime():
     settings = get_settings()
     if not settings.auth_mock or settings.app_env != 'test':
@@ -73,6 +75,10 @@ def _user(*, email=None, user_id=None):
         if email is not None:
             query = query.where(func.lower(User.email) == email.strip().lower())
         else:
+            try:
+                user_id = int(user_id)
+            except (ValueError, TypeError):
+                return None
             query = query.where(User.id == user_id)
         return db.execute(query).first()
 

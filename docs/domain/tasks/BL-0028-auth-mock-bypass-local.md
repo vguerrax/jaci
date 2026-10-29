@@ -4,7 +4,7 @@
 
 - Item: [BL-0028](../backlog/items/BL-0028-auth-mock-bypass-local.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: em_implementacao; aprovação explícita recebida para correção e testes Python/UI.
+- Estado: em_validacao; aprovação explícita recebida para correção e testes Python/UI.
 - Branch: feature/BL-0028-auth-mock-bypass-local, criada de develop 0c03134.
 - Item isolado, um ticket com duas fatias sequenciais na mesma branch. Preservar
   branches anteriores e a edição local do usuário em run.py; usar worktree.
@@ -152,7 +152,7 @@ nenhum permanece ao fechar o ticket. Dois FL-08 fora do escopo continuam pendent
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Bypass local | 1/2 | 1 | Adaptador validado; formulário pendente |
+| 1 — Bypass local | 2/2 | 0 | Implementado e validado; integração pendente |
 
 ## Fechamento documental
 
@@ -184,3 +184,34 @@ campos ausentes no mailer que não utiliza. Três UI (login, fila/reconexão e
 conflito/resolução) passaram em 27,91s, run 393eea00e8c545df8b23f88d5bceccaa.
 Compileall, diff e grafo AST aprovados. Contratos da fatia 1.2 permanecem futuros;
 regressão total será feita quando ambos forem concluídos.
+
+## Fatia 1.2 — Formulário e regressão final
+
+- Fatia 1.1 versionada em 10931df. Dois contratos de formulário falharam antes do
+  ajuste: senha obrigatória no mock e login sem grupos. Agora senha é opcional no
+  mock, obrigatória no caminho real, com indicação visível; usuário sem grupos
+  autentica sem indexação inválida. Nenhum usuário/grupo é criado no login.
+- PostgreSQL 17 descartável revelou integer = varchar no lookup do sub textual.
+  O erro 500 foi reproduzido, e um contrato do bind PostgreSQL falhou antes da
+  conversão explícita para int. Mesmo cenário aprovado após a correção.
+- Smoke PostgreSQL: venv/bin/python /tmp/jaci-bl0028-postgres-smoke.py. Instância Docker própria com tmpfs e porta efêmera localhost;
+  cinco migrações aplicadas, development.env com as duas flags, sem SMTP/seed/
+  marcador. Usuário sintético existente sem tupa_user_id entrou sem senha;
+  autorização de grupo, sessão após reinício, logout/401 e preservação de IDs/hash/
+  grupos aprovados. Servidor, container e diretório próprios removidos.
+- Focal final de auth/formulário: 21 passes. Regressão pelo runner isolado:
+  **307 passes/2 xfail FL-08 em 88,68s**, cobertura **60,02%**, piso 56,18% mantido.
+  Nenhum xfail da BL-0028; 19 avisos de depreciação datetime.utcnow do python-jose.
+- UI final autorizada: **10 passes em 33,66s**, run
+  16f8e7ec471140a3b4424f4ecf9e9d5f. Inclui usuário fora do seed, senha vazia e
+  tupa_user_id preservado, além dos nove fluxos anteriores. Artifacts sintéticos
+  em reports/playwright/<run>/result.json, sem traces/vídeos/cookies publicados.
+- A primeira rodada de regressão foi interrompida pelo reinício do servidor de
+  execução; não foi considerada aprovação. A rodada final acima concluiu após
+  a correção PostgreSQL. Compileall, pip check, diff e grafo AST aprovados.
+  Pylint indisponível no ambiente; não instalado ad hoc.
+- README, exemplo sintético e matriz de testes distinguem bypass manual (duas
+  flags/base existente) dos guards dos scripts automatizados. Sem migração de
+  esquema ou modificação do run.py/arquivo de ambiente/banco do usuário.
+- Implementação 2/2 fatias, zero pendências próprias; CI remoto a registrar.
+  Integração executável na develop e publicação da 1.4.0 ainda pendentes.

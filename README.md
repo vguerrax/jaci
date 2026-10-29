@@ -304,6 +304,30 @@ A rastreabilidade entre regras, fluxos e testes está em
 para os dois contratos futuros FL-08 (histórico de preços e análise de gastos);
 um `XPASS` é tratado como falha até que o contrato seja revisado.
 
+### AUTH_MOCK — bypass do Tupã (BL-0028)
+
+Com `APP_ENV=test` e `AUTH_MOCK=true`, o formulário de login aceita o e-mail de
+qualquer usuário existente e ativo na base configurada. A senha é opcional e
+ignorada; não é consultada no Tupã nem no hash legado. Usuários desconhecidos ou
+inativos são recusados, sem cadastro automático. IDs, vínculo Tupã e grupos são
+preservados, inclusive quando o usuário ainda não possui `tupa_user_id`.
+
+Essas duas flags habilitam o modo com o banco já configurado, SQLite ou PostgreSQL.
+Não é necessário nome especial de arquivo de ambiente, seed ou marcador de banco.
+Por exemplo, usando suas configurações de desenvolvimento em `development.env`:
+
+```bash
+ENV_FILE=development.env venv/bin/python run.py --port 8007 --no-restart
+```
+
+A autorização por grupo continua normal e a interface mostra autenticação
+simulada. Cadastro/migração externa e envio de e-mail ficam indisponíveis no mock.
+Tokens são assinados localmente; refresh/logout e revogação usam cache privado
+criado automaticamente, separado por projeto/conexão. Reiniciar o processo mantém
+as sessões enquanto esse cache existir; nenhuma preparação manual é necessária.
+AUTH_MOCK é desativado por padrão e recusado com APP_ENV diferente de test.
+Com AUTH_MOCK=false, a autenticação utiliza a configuração normal do Tupã.
+
 ### Ambiente sintético de testes (BL-0026)
 
 Prepare um banco SQLite isolado, sem Tupã ou credenciais reais:
@@ -318,11 +342,12 @@ O diretório e o arquivo de ambiente ficam fora do Git e da imagem Docker.
 Não copie configurações de produção: o setup gera as configurações sintéticas.
 
 As contas são `owner@example.com` e `member@example.com` na Casa A e
-`outsider@example.com` na Casa B. A senha exclusivamente de teste é `jaci-test-only`.
-O mock exige `APP_ENV=test`, `AUTH_MOCK=true`, `ENV_FILE` explícito e banco marcado;
-fora desse ambiente a inicialização falha. O formulário normal de login é usado,
-com autorização por grupo real. Cadastro, migração de identidades e demais ações
-externas não suportadas retornam erro explícito. Não há envio de e-mail no mock.
+`outsider@example.com` na Casa B. As automações podem preencher `jaci-test-only`,
+mas a senha é ignorada pelo bypass. Esse seed é uma conveniência para testes.
+
+Os scripts de setup/seed/servidor/UI exigem .env.test e banco marcado para isolar
+as execuções automatizadas. Essas restrições são das ferramentas; o AUTH_MOCK da
+aplicação exige somente as duas flags e um usuário ativo na base configurada.
 
 Inicie o servidor local, sem reload e limitado a `127.0.0.1`:
 

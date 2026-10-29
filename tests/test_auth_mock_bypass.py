@@ -129,10 +129,6 @@ def test_mock_sessions_expire_rotate_revoke_and_recheck_activity(db, make_user, 
         asyncio.run(tupa.refresh(renewed['refresh_token']))
 
 
-future_form = pytest.mark.xfail(strict=True, reason='BL-0028 fatia 1.2: formulário')
-
-
-@future_form
 def test_mock_http_login_accepts_missing_password_and_user_without_groups(
     db, make_user, mock_auth, monkeypatch
 ):
@@ -153,7 +149,6 @@ def test_mock_http_login_accepts_missing_password_and_user_without_groups(
         app.dependency_overrides.pop(get_db, None)
 
 
-@future_form
 def test_mock_form_password_optional_while_real_form_requires_it(monkeypatch):
     class PasswordField(HTMLParser):
         required = None
@@ -192,3 +187,20 @@ assert app is not None
 ''', env_file=tmp_path/'development.env', APP_ENV='test', AUTH_MOCK='true',
         DATABASE_URL='sqlite:///'+str(tmp_path/'ordinary.sqlite'))
     assert result.returncode == 0, result.stderr
+
+
+def test_mock_id_lookup_binds_integer_for_postgresql(db, make_user, mock_auth, monkeypatch):
+    from app import database
+    from sqlalchemy.dialects import postgresql
+    user = make_user('postgres-contract@example.com')
+    class TypedSession:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def execute(self, statement):
+            compiled = statement.compile(dialect=postgresql.dialect())
+            assert list(compiled.params.values()) == [user.id]
+            return db.execute(statement)
+    monkeypatch.setattr(database, 'SessionLocal', TypedSession)
+    assert mock_auth[0]._user(user_id=str(user.id)).id == user.id

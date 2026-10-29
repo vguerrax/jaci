@@ -8,7 +8,7 @@
 | Título | Usar AUTH_MOCK como bypass do Tupã para usuários locais |
 | Versão-alvo | `1.4.0` |
 | Tipo | `ajuste` |
-| Estado | `em_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-29` |
@@ -77,20 +77,20 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | Dependências | BL-0026, serviços de autenticação, middleware e suítes BL-0011 |
 | Duplicidades | Complementa e altera o contrato implementado da BL-0026; preservar seu histórico |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar refinamento versionado antes de testes e implementação |
+| Próximo passo | Autorizar integração executável após validação remota e registrar publicação/aceite da 1.4.0 |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0028](../../tasks/BL-0028-auth-mock-bypass-local.md).
 - Branch: feature/BL-0028-auth-mock-bypass-local, criada da develop.
-- Implementação: não iniciada; duas fatias especificadas.
-- Validações: análise documental de configuração, adaptadores e resolução de identidade.
+- Implementação: 2/2 fatias entregues na feature/BL-0028-auth-mock-bypass-local; primeira fatia 10931df. Bypass por usuário ativo na conexão ORM configurada, senha ignorada, sem alterar identidade Tupã.
+- Validações: 307 passes/2 xfail FL-08, cobertura 60,02%, dez Chromium aprovados; smoke PostgreSQL 17 com development.env, login sem senha, isolamento, reinício, logout e identidade preservada. CI remoto a registrar.
 - Publicação: pendente; alvo 1.4.0.
 - Itens relacionados: BL-0026 e BL-0011.
 
 ### Impedimentos
 
-- Aprovação explícita do refinamento versionado antes dos artefatos executáveis.
+- Integração na develop e publicação/aceite da 1.4.0 pendentes; sem bloqueio técnico local.
 
 ## Histórico
 
@@ -100,3 +100,4 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | `2026-10-29` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A/P1 | Divergência de contrato confirmada, riscos e dependências delimitados |
 | `2026-10-29` | Codex | em_refinamento → pronto_para_implementacao | Refinamento documental concluído; aprovação pós-versionamento pendente |
 | `2026-10-29` | Usuário/Codex | Refinamento 1ef2a8f aprovado; em_implementacao | Correção e testes Python/UI autorizados; merge documental 2543931, sem autorização de merge executável |
+| `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | 307 passes/2 xfail, cobertura 60,02%, dez UI e PostgreSQL 17 aprovados; merge executável/publicação pendentes |

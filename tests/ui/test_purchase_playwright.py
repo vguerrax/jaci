@@ -1,5 +1,4 @@
 import os
-import pytest
 from playwright.sync_api import expect
 from tests.ui.helpers.playwright import PLAYWRIGHT_SKIP_MARK
 from tests.ui.pages.shopping import LoginPage,PurchasePage,TemplatePage
@@ -161,7 +160,6 @@ def test_concurrent_purchase_requires_explicit_conflict_resolution(page,browser,
         second_context.close()
 
 
-@pytest.mark.xfail(strict=True,reason='BL-0028 fatia 1.2: formulário')
 def test_mock_login_accepts_local_user_without_tupa_or_password(page):
     from tests.ui.factories.shopping import create_local_account
     from app.models import User
