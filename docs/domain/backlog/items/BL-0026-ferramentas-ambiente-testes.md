@@ -8,7 +8,7 @@
 | Título | Ferramentas, ambiente de testes e rastreabilidade das releases |
 | Tipo | `melhoria` |
 | Versão-alvo | `1.4.0` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -70,7 +70,7 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | Dependências | Python 3.12+, Node para contratos JS existentes; Playwright/CI pertencem à BL-0011 |
 | Duplicidades | BL-0011 possui testes UI/cobertura/CI; BL-0001 possui reconciliação offline |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar refinamento versionado antes de código e testes executáveis |
+| Próximo passo | Implementar fatias aprovadas na branch da tarefa 1 |
 
 ## Acompanhamento até produção
 
@@ -91,3 +91,4 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | `2026-10-28 20:40 -03` | Codex | Registro em recebido, a_triar e a_definir | Execução da formalização do roadmap solicitada |
 | `2026-10-28 20:40 -03` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A e P1 | Escopo, limites, dependências e riscos inventariados |
 | `2026-10-28 20:40 -03` | Codex | em_refinamento → pronto_para_implementacao | Refinamento pronto para revisão posterior ao versionamento |
+| `2026-10-28` | Usuário/Codex | Refinamentos aprovados; BL-0026 em_implementacao | Aprovação explícita posterior a 54cc1c8, 76c6aea e c2f9ebb; tarefa 1 em feature/BL-0026-t1-ambiente |

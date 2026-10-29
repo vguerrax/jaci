@@ -29,3 +29,6 @@ docker-compose.yml
 
 # Outros
 README.md
+
+# Ambiente e sessões sintéticas nunca entram na imagem publicada
+.test-runtime/

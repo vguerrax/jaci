@@ -4,7 +4,7 @@
 
 - Item: [BL-0026](../backlog/items/BL-0026-ferramentas-ambiente-testes.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: pronto_para_implementacao; aprovação posterior ao versionamento pendente.
+- Estado: em_implementacao; aprovação explícita recebida após versionamento.
 - Branch: feature/BL-0026-ferramentas-ambiente-testes, criada de develop.
 - Após merge documental, preservar e atualizar a branch com develop; será a branch
   de integração deste item. Branches filhas feature/BL-0026-t1-ambiente e
@@ -125,7 +125,7 @@ para funcionalidades de outras demandas nem alterar agora tests/ui.
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Ambiente/mock | 0/2 | 2 | Aguarda aprovação |
+| 1 — Ambiente/mock | 1/2 | 1 | Configuração/seed concluídos; mock pendente |
 | 2 — Scripts | 0/1 | 1 | Pendente |
 
 ## Fechamento
@@ -134,3 +134,10 @@ para funcionalidades de outras demandas nem alterar agora tests/ui.
 - Validações documentais: links, índices, estados e diff serão conferidos antes do commit.
 - Validação executável/manual e publicação: pendentes, sem resultados presumidos.
 - Implementação: usar vgx-development após aprovação deste refinamento versionado.
+
+## Evidência da fatia 1.1
+
+Contratos do escopo criados antes do código; seis falhas iniciais reproduzidas.
+Configuração exige APP_ENV=test e banco SQLite marcado para AUTH_MOCK; setup e seed
+isolados e idempotentes. Fatias futuras têm xfail(strict=True) temporário.
+O diretório sintético é excluído do Git e do contexto Docker, incluindo segredo.

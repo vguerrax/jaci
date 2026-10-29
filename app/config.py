@@ -2,9 +2,14 @@ from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 import os
+from typing import Literal
+from pathlib import Path
 
 
 class Settings(BaseSettings):
+    app_env: Literal["development", "test", "production"] = "production"
+    auth_mock: bool = False
+
     # Application
     app_name: str = "Jaci"
     app_version: str = "1.3.0"
@@ -64,6 +69,17 @@ class Settings(BaseSettings):
         if value.startswith("postgresql://"):
             return value.replace("postgresql://", "postgresql+psycopg://", 1)
         return value
+
+    @model_validator(mode="after")
+    def validate_mock_environment(self) -> "Settings":
+        if self.auth_mock:
+            if self.app_env != "test":
+                raise ValueError("AUTH_MOCK exige APP_ENV=test.")
+            if not os.environ.get("ENV_FILE") or Path(os.environ["ENV_FILE"]).name != ".env.test":
+                raise ValueError("AUTH_MOCK exige ENV_FILE explícito .env.test.")
+            from app.testing_environment import validate_database
+            validate_database(self.database_url)
+        return self
 
     @model_validator(mode="after")
     def disable_secure_cookie_in_debug(self) -> "Settings":

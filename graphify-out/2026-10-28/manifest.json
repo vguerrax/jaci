@@ -300,9 +300,9 @@
     "semantic_hash": "fdd6180da4a523747722817001a42747"
   },
   "publish.sh": {
-    "mtime": 1781555185.5655775,
-    "ast_hash": "f8d59326fea7f67ef61894816a944650",
-    "semantic_hash": "f8d59326fea7f67ef61894816a944650"
+    "mtime": 1793222963.076815,
+    "ast_hash": "e0a0b1353dcbbe35fa2b5e8fbbcbc5d6",
+    "semantic_hash": ""
   },
   "run.py": {
     "mtime": 1781555185.56591,
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1785940691.6562827,
-    "ast_hash": "622f584998cbab1beadcdf19c60ede90",
+    "mtime": 1793222963.1288157,
+    "ast_hash": "ca3c516b498ee370d3028de9e9b4fa1d",
     "semantic_hash": ""
   },
   "app/static/offline.html": {
@@ -670,7 +670,7 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1793222247.886846,
+    "mtime": 1793222934.4860559,
     "ast_hash": "1ce0ce183320757c2a3d05ed78d58458",
     "semantic_hash": ""
   },
@@ -950,8 +950,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
-    "mtime": 1786038730.2325983,
-    "ast_hash": "b1465b91b6e61708a6cdd94c050b8302",
+    "mtime": 1793222424.9558892,
+    "ast_hash": "834a570866d24c26956056e2a15ed8a6",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0020-bloquear-renomeacao-item-vinculado.md": {
@@ -980,8 +980,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0025-release-1-3-0.md": {
-    "mtime": 1793222247.8888292,
-    "ast_hash": "1186af73a8386bd08b298cc8cd2a5e82",
+    "mtime": 1793222934.485762,
+    "ast_hash": "44f800892878c30e3f5c2b15ec889907",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0021-api-integracoes-execucoes.md": {
@@ -990,8 +990,13 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0025-release-1-3-0.md": {
-    "mtime": 1793222247.8937533,
-    "ast_hash": "00fb0957394f00a29a3acc16eba14459",
+    "mtime": 1793222934.4863145,
+    "ast_hash": "476b4fd2db238f7c9eaf4088327962d7",
+    "semantic_hash": ""
+  },
+  "tests/test_publish.py": {
+    "mtime": 1793222963.023814,
+    "ast_hash": "fe54762a5bb207163039371db221113b",
     "semantic_hash": ""
   }
 }
