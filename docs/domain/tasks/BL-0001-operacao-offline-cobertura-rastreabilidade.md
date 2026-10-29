@@ -187,3 +187,16 @@ separação template/execução não foram alterados. Nenhuma mudança de produ�
   contratos próprios pendentes. develop contém as BL-0026, BL-0027 e BL-0011;
   integração desta BL-0001 ainda aguarda autorização explícita. Sem deploy.
 - Publicação e aceite da versão 1.4.0 pendentes; manter em_validacao.
+
+## Integração aprovada — 2026-10-29
+
+O usuário autorizou explicitamente a integração depois da apresentação do PR 44,
+das 2/2 fatias e das evidências locais/remotas. Merge na develop: **f5ac74f**,
+da feature/BL-0001-refinamento-1-4-0 (head 0d0c575). A árvore do merge é idêntica
+à branch aprovada; o registro posterior ao candidato 35129bf altera somente os
+dois documentos de acompanhamento. Branch de implementação preservada.
+
+A develop passa a conter as quatro entregas da 1.4.0: BL-0026, BL-0011, BL-0001 e
+a correção BL-0027 descoberta no aceite UI. Implementação da BL-0001: 2/2 fatias,
+zero pendências próprias. Estado permanece em_validacao até publicação e aceite
+da 1.4.0. Nenhum deploy ou alteração de ambiente de produção nesta integração.
