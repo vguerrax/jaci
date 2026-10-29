@@ -71,11 +71,22 @@ def run_python_tests(arguments: list[str]) -> int:
     environment.update(ENV_FILE=str(env_file), APP_ENV='test', AUTH_MOCK='false',
                        DATABASE_URL='sqlite://', DEBUG='false', SMTP_USER='test@example.com',
                        SMTP_PASSWORD='synthetic-only', SMTP_MOCK='true', BACKUP_ENABLED='false')
+    coverage_arguments = []
+    if '--coverage' in arguments:
+        arguments = [arg for arg in arguments if arg != '--coverage']
+        reports = Path(os.environ.get('COVERAGE_REPORT_DIR', PROJECT_ROOT/'reports/coverage')).resolve()
+        reports.mkdir(parents=True, exist_ok=True)
+        environment['COVERAGE_FILE'] = str(reports/'.coverage')
+        coverage_arguments = [
+            '--cov=app', '--cov-branch', '--cov-config=.coveragerc',
+            '--cov-report=term-missing', f'--cov-report=xml:{reports/"coverage.xml"}',
+            f'--cov-report=html:{reports/"html"}', f'--cov-report=json:{reports/"coverage.json"}',
+        ]
     previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
     process = None
     try:
         process = subprocess.Popen(
-            [sys.executable, '-m', 'pytest', '--ignore=tests/ui', *arguments],
+            [sys.executable, '-m', 'pytest', '--ignore=tests/ui', *coverage_arguments, *arguments],
             env=environment, cwd=PROJECT_ROOT, start_new_session=True)
         return process.wait()
     finally:

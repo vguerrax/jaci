@@ -4,7 +4,7 @@
 
 - Item: [BL-0011](../backlog/items/BL-0011-ampliar-cobertura-testes-ui.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: pronto_para_implementacao; aprovação posterior ao versionamento pendente.
+- Estado: em_implementacao; aprovação explícita recebida após versionamento.
 - Branch documental: feature/BL-0011-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0011-ampliar-cobertura-testes-ui e seus commits.
 - Depois do merge documental, atualizar esta branch pela develop antes do código;
@@ -127,7 +127,7 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Cobertura | 0/1 | 1 | Aguarda aprovação |
+| 1 — Cobertura | 1/1 | 0 | Concluída |
 | 2 — UI | 0/2 | 2 | Pendente ambiente BL-0026 |
 | 3 — CI | 0/1 | 1 | Pendente |
 
@@ -137,3 +137,27 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
 - Validação nesta etapa: somente links, estados, índice e diff documental.
 - Medição de cobertura e execuções Python/UI/CI: pendentes, sem percentual presumido.
 - Publicação: pendente; implementação requer aprovação deste refinamento versionado.
+
+## Início da implementação
+
+BL-0026 integrada com autorização explícita em b289771. Branch de integração
+BL-0011 atualizada e tarefa 1 iniciada em feature/BL-0011-t1-cobertura.
+
+## Evidência da tarefa 1 — Cobertura
+
+- pytest-cov 7.1.0 / coverage 7.17.0 instalados e fixados no requirements-dev.
+  Compatibilidade conferida nos metadados do pacote e instalação no Python 3.12.
+  Referência: https://pypi.org/project/pytest-cov/7.1.0/.
+- Três contratos vermelhos precederam o runner --coverage. Os três agora passam:
+  relatórios para seleção focal, piso 100 reprovando seleção aprovada e falha de teste
+  preservada. O runner comum mantém uso sem cobertura para ciclos focais.
+- Regressão com cobertura: **281 passes e 7 xfail**, sendo dois contratos futuros da
+  tarefa UI; cinco legados permanecem fora do escopo. Sem falhas/XPASS.
+- Baseline combinada de linhas e branches: **55,97%**, armazenada em .coveragerc.
+  Relatórios XML/JSON/HTML em reports/coverage, ignorados no Git e no Docker.
+- Medição do processo pytest, não JavaScript, browser ou subprocessos não instrumentados.
+  Testes de mock/seed em subprocessos continuam aprovados mas não alimentam essa métrica;
+  porcentagem não representa cobertura integral de todos os processos do produto.
+- scripts/run_tests.sh --coverage aplica o piso; seleções focais podem usar
+  --cov-fail-under=0 explicitamente sem alterar a baseline versionada.
+- Redução do piso exige revisão documentada; aumentos acompanham evolução medida.

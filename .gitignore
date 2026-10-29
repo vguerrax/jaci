@@ -228,3 +228,5 @@ jaci.*
 # BL-0026: ambiente sintético local
 .env.test
 .test-runtime/
+
+reports/
