@@ -81,7 +81,7 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | Dependências | Implementação e cobertura atuais em `offline-cache.js`, `offline.py`, `test_offline_cache.py` e `test_sync_center.py`; BL-0011 acompanha futura cobertura ampla em navegador real sem bloquear este item |
 | Duplicidades | Nenhuma identificada; há sobreposição parcial com a [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md), restrita à infraestrutura futura de testes de UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Autorizar integração na develop e registrar publicação/aceite da 1.4.0; CI remoto aprovado |
+| Próximo passo | Registrar publicação e aceite da 1.4.0; integração autorizada e realizada na develop |
 
 ## Acompanhamento até produção
 
@@ -95,7 +95,7 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 
 ### Impedimentos
 
-- Integração e publicação da 1.4.0 pendentes; implementação e validação local aprovadas.
+- Publicação e aceite da 1.4.0 pendentes; integração na develop realizada em f5ac74f.
 
 ## Histórico
 
@@ -109,3 +109,4 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | `2026-10-29` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Refinamento aprovado; branch atualizada com dependências integradas; início dos contratos Node da fila efetiva |
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | Sete Node, 289 passes/2 xfail FL-08, cobertura 56,18% e nove Chromium; sem alterações de produção ou publicação |
 | `2026-10-29` | Codex | Validação remota aprovada | PR 44; candidato 35129bf e run 40816112651 com ambos os jobs success; integração final aguarda autorização |
+| `2026-10-29` | Usuário/Codex | Integração autorizada e realizada na develop | Merge f5ac74f da feature/BL-0001-refinamento-1-4-0, contendo o candidato validado e seu acompanhamento documental; 2/2 fatias, sem deploy |
