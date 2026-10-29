@@ -588,3 +588,68 @@ def test_completed_item_cannot_be_removed(db, make_user, make_group):
 
     with pytest.raises(ValueError, match="item já concluído"):
         remove_item_from_execution(db, execution.items[0])
+
+
+def test_uncategorized_learning_choice_normalizes_zero_to_none():
+    from starlette.datastructures import FormData
+    choices=execution_routes._read_template_learning_choices(FormData([
+        ('template_learning_selected','new_item:42'),
+        ('template_learning_present','new_item:42'),
+        ('category_id_new_item:42','0'),
+        ('planned_quantity_new_item:42','2'),
+    ]))
+    assert choices['apply'][0]['category_id'] is None
+
+
+def test_learning_choice_preserves_positive_category_id():
+    from starlette.datastructures import FormData
+    choices=execution_routes._read_template_learning_choices(FormData([
+        ('template_learning_selected','new_item:42'),
+        ('template_learning_present','new_item:42'),
+        ('category_id_new_item:42','9'),
+    ]))
+    assert choices['apply'][0]['category_id']==9
+
+
+@pytest.mark.parametrize("foreign_category", [False, True])
+def test_closing_purchase_incorporates_uncategorized_item_without_changing_finances(
+    db, make_user, make_group, make_category, foreign_category
+):
+    from urllib.parse import urlencode
+    user=make_user('uncategorized@example.com')
+    group=make_group(owner=user)
+    template=create_template(db,group,'Compra sem categoria',RecurrenceType.weekly)
+    execution=create_execution_from_template(db,template,datetime.now(timezone.utc),user)
+    item=add_item_to_execution(db,execution,'Produto novo',2)
+    start_execution(db,execution)
+    complete_item(db,item,2,5.5)
+    category=make_category(make_group('Other')) if foreign_category else None
+    body=urlencode({
+        'template_learning_present':f'new_item:{item.id}',
+        'template_learning_selected':f'new_item:{item.id}',
+        f'category_id_new_item:{item.id}':str(category.id) if category else '0',
+        f'planned_quantity_new_item:{item.id}':'2',
+    }).encode()
+    async def receive():
+        return {'type':'http.request','body':body,'more_body':False}
+    request=Request({'app':app,'type':'http','method':'POST','path':'/',
+        'headers':[(b'content-type',b'application/x-www-form-urlencoded')]},receive)
+    if foreign_category:
+        from fastapi import HTTPException
+        with pytest.raises(HTTPException) as error:
+            asyncio.run(execution_routes.handle_close_execution(
+                request,execution.id,action='discard',new_date=None,db=db,user=user))
+        assert error.value.status_code==422
+        db.refresh(item)
+        assert item.template_item_id is None
+        assert execution.status==ExecutionStatus.in_progress
+        return
+    response=asyncio.run(execution_routes.handle_close_execution(
+        request,execution.id,action='discard',new_date=None,db=db,user=user))
+    assert response.status_code==303
+    db.refresh(item)
+    assert item.template_item_id is not None
+    linked=db.get(TemplateItem,item.template_item_id)
+    assert linked.category_id is None
+    assert item.purchased_quantity==2 and item.unit_price==5.5 and item.total_price==11
+    assert execution.status==ExecutionStatus.completed

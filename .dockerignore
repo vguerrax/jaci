@@ -34,3 +34,5 @@ README.md
 .test-runtime/
 
 reports/
+
+.cache/

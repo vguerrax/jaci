@@ -76,8 +76,17 @@ atual da implementação e devem ser reconciliados no BL-0001.
 # Cobertura Python — BL-0011
 
 `bash scripts/run_tests.sh --coverage` gera terminal, XML, JSON e HTML em
-`reports/coverage/`. O piso combinado de linhas/branches é 55,97%, medido na
+`reports/coverage/`. O piso combinado de linhas/branches é 56,18%, medido na
 implementação inicial e versionado em `.coveragerc`. Não reduzir sem revisão.
 Para selecionar testes sem exigir o piso da suíte completa:
 `bash scripts/run_tests.sh --coverage --cov-fail-under=0 tests/test_business_rules.py`.
 A métrica não inclui JavaScript, browser ou subprocessos não instrumentados.
+
+# Navegador — BL-0011
+
+Nove cenários em tests/ui/test_purchase_playwright.py aprovados por Chromium
+(390x844 e smoke 1280x800), pelo runner isolado. Cobrem autenticação sintética,
+snapshot, compra/total, identidade BL-0020, incorporação sem categoria BL-0027,
+isolamento, fila offline, recarga/reconexão e concorrência/resolução explícita.
+Relatórios são evidências de teste, não publicação da release. A reconciliação
+dos contratos legados FL-09 ainda pertence à BL-0001.

@@ -412,3 +412,32 @@ Este projeto é de uso pessoal. Sinta-se livre para usar, modificar e compartilh
 Jaci, na mitologia Tupi-Guarani, é a deusa da lua e mãe dos frutos. Protetora das plantas, dos ciclos e da fertilidade da terra — o espírito perfeito para um aplicativo que ajuda a organizar a despensa com cuidado e conexão com a natureza.
 
 Feito com 🌙 por vguerrax
+
+### Cobertura e testes de navegador — BL-0011
+
+```bash
+bash scripts/run_tests.sh --coverage
+# Instalação explícita de browser e bundles de teste:
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" venv/bin/python -m playwright install chromium
+venv/bin/python -m scripts.setup_ui_assets
+bash scripts/setup_test_env.sh
+# Executar somente após autorização da validação UI:
+ENV_FILE=.env.test bash scripts/run_ui_tests.sh
+ENV_FILE=.env.test bash scripts/run_ui_tests.sh tests/ui/test_purchase_playwright.py -k login
+```
+
+O piso atual é 56,18% para linhas/branches Python (processo pytest). Relatórios
+em `reports/coverage`; seleções focais podem usar `--cov-fail-under=0` sem baixar
+a baseline versionada. UI/JavaScript não entram nessa porcentagem.
+
+O runner UI valida `.env.test`, cria novo banco e servidor local em porta efêmera,
+e remove somente esses recursos ao terminar. Não reutiliza o servidor manual.
+`UI_TEST_WORKERS=1` é obrigatório nesta entrega. Chromium inicia com viewport
+390x844; há um smoke desktop 1280x800. A suíte Python exclui `tests/ui`; a coleta
+UI direta permanece desabilitada sem `JACI_RUN_PLAYWRIGHT=1`, definido pelo runner.
+
+O runner exige assets previamente preparados e usa os bundles reais de Bootstrap
+e HTMX, verificados por hash. Recursos externos opcionais de fontes/ícones são
+bloqueados no ambiente UI. Capturas sintéticas de falha e status ficam em
+`reports/playwright/<execução>/`; traces e vídeos ficam desativados para não
+publicar cookies ou payloads de login. Não usar dados reais nas fixtures.
