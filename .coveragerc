@@ -1,0 +1,8 @@
+[run]
+branch = True
+source = app
+
+[report]
+precision = 2
+fail_under = 56.18
+show_missing = True

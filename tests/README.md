@@ -72,3 +72,21 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | BL-075 Detectar divergências recorrentes de orçamento | Implementado | `test_bl075_budget_suggestion_uses_median_from_completed_template_executions`, `test_bl075_budget_learning_ignores_standalone_and_unfinished_executions` |
 | BL-076 Sugerir atualização do orçamento do template | Implementado | `test_bl076_accepts_budget_suggestion_only_for_future_executions`, `test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution`, `test_bl076_close_flow_accepts_or_rejects_budget_suggestion` |
 | RNF-S4.04 Desativar sugestões por grupo | Implementado | `test_rnf_s4_group_can_disable_template_learning_suggestions` |
+
+# Cobertura Python — BL-0011
+
+`bash scripts/run_tests.sh --coverage` gera terminal, XML, JSON e HTML em
+`reports/coverage/`. O piso combinado de linhas/branches é 56,18%, medido na
+implementação inicial e versionado em `.coveragerc`. Não reduzir sem revisão.
+Para selecionar testes sem exigir o piso da suíte completa:
+`bash scripts/run_tests.sh --coverage --cov-fail-under=0 tests/test_business_rules.py`.
+A métrica não inclui JavaScript, browser ou subprocessos não instrumentados.
+
+# Navegador — BL-0011
+
+Nove cenários em tests/ui/test_purchase_playwright.py aprovados por Chromium
+(390x844 e smoke 1280x800), pelo runner isolado. Cobrem autenticação sintética,
+snapshot, compra/total, identidade BL-0020, incorporação sem categoria BL-0027,
+isolamento, fila offline, recarga/reconexão e concorrência/resolução explícita.
+Relatórios são evidências de teste, não publicação da release. A reconciliação
+dos contratos legados FL-09 ainda pertence à BL-0001.
