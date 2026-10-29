@@ -125,15 +125,15 @@ para funcionalidades de outras demandas nem alterar agora tests/ui.
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Ambiente/mock | 1/2 | 1 | Configuração/seed concluídos; mock pendente |
+| 1 — Ambiente/mock | 2/2 | 0 | Concluída |
 | 2 — Scripts | 0/1 | 1 | Pendente |
 
 ## Fechamento
 
-- Código/testes: não iniciados; nenhuma credencial/ambiente real alterado.
+- Tarefa 1 concluída; nenhuma credencial/ambiente real alterado.
 - Validações documentais: links, índices, estados e diff serão conferidos antes do commit.
 - Validação executável/manual e publicação: pendentes, sem resultados presumidos.
-- Implementação: usar vgx-development após aprovação deste refinamento versionado.
+- Aprovação recebida; implementação conduzida com vgx-development.
 
 ## Evidência da fatia 1.1
 
@@ -141,3 +141,16 @@ Contratos do escopo criados antes do código; seis falhas iniciais reproduzidas.
 Configuração exige APP_ENV=test e banco SQLite marcado para AUTH_MOCK; setup e seed
 isolados e idempotentes. Fatias futuras têm xfail(strict=True) temporário.
 O diretório sintético é excluído do Git e do contexto Docker, incluindo segredo.
+
+## Evidência da fatia 1.2 / tarefa 1
+
+Mock de login/refresh/logout implementado na fronteira Tupã. Sessões SQLite e
+segredo aleatório por ambiente sobrevivem a reinício. Token adulterado/expirado,
+refresh reutilizado e sessão revogada são rejeitados. O caminho real rejeita
+issuer de teste antes de consultar JWKS. Operações não suportadas falham sem rede.
+SMTP é suprimido no mock e a interface sinaliza autenticação simulada.
+Regressão da tarefa 1: **274 passes e 7 xfail**, dos quais dois contratos temporários
+da fatia 2.1; cinco são legados fora do escopo. Isolamento HTTP, cookies e logout
+validados com TestClient local e bloqueio de clientes externos nos testes.
+A execução restrita de TestClient bloqueou; a mesma validação local foi aprovada
+com execução escalada. Nenhum browser Playwright foi criado ou executado.

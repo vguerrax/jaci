@@ -190,9 +190,9 @@
     "semantic_hash": ""
   },
   "app/services/tupa_auth_service.py": {
-    "mtime": 1781556843.167007,
-    "ast_hash": "e5ec090ad15fea580d4350b58fb1aa57",
-    "semantic_hash": "e5ec090ad15fea580d4350b58fb1aa57"
+    "mtime": 1793234391.5007446,
+    "ast_hash": "16a92654204fb96a2b30623eabf70fd6",
+    "semantic_hash": ""
   },
   "app/static/js/execution-sync.js": {
     "mtime": 1785980926.632561,
@@ -230,9 +230,9 @@
     "semantic_hash": "9973a1eee6a576740460f12a92a10679"
   },
   "app/templating.py": {
-    "mtime": 1781024338.2823718,
-    "ast_hash": "0b9ad6abb97c87540dd88201eec1099c",
-    "semantic_hash": "0b9ad6abb97c87540dd88201eec1099c"
+    "mtime": 1793234311.68685,
+    "ast_hash": "205f1aa5eada161c558db0dfd69e2618",
+    "semantic_hash": ""
   },
   "app/utils/__init__.py": {
     "mtime": 1781183350.3971674,
@@ -245,9 +245,9 @@
     "semantic_hash": "eae18ffc5da425e65b1e256185b2da00"
   },
   "app/utils/email.py": {
-    "mtime": 1781024971.7939734,
-    "ast_hash": "d8711217f051b74322dcec82c796ec6a",
-    "semantic_hash": "d8711217f051b74322dcec82c796ec6a"
+    "mtime": 1793234311.6877446,
+    "ast_hash": "f19e9f5027322d8e86147beb44ccf259",
+    "semantic_hash": ""
   },
   "app/utils/security.py": {
     "mtime": 1781556843.1688063,
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "app/templates/base.html": {
-    "mtime": 1793223478.0586143,
-    "ast_hash": "6df698f537882dd3e9054011596d5039",
+    "mtime": 1793234311.6871045,
+    "ast_hash": "4c9301f551ba80d7b0147a926e2cd43d",
     "semantic_hash": ""
   },
   "app/templates/components/confirm_modal.html": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "tests/test_test_environment.py": {
-    "mtime": 1793234111.8328836,
-    "ast_hash": "3ef0d69536f4c3bc9101cb0bb6516d31",
+    "mtime": 1793234365.846132,
+    "ast_hash": "2d8ded1b7bb14d94f26054a76e150629",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0026-ferramentas-ambiente-testes.md": {
@@ -1045,8 +1045,13 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0026-ferramentas-ambiente-testes.md": {
-    "mtime": 1793230960.212278,
-    "ast_hash": "da7392cf4540f542446703e8635d793c",
+    "mtime": 1793234207.0433168,
+    "ast_hash": "d11a72b03b3ddb7daa03591e3960566b",
+    "semantic_hash": ""
+  },
+  "app/services/test_auth_service.py": {
+    "mtime": 1793234311.6607678,
+    "ast_hash": "6c63d272f48482d737c1e93556abdf67",
     "semantic_hash": ""
   }
 }

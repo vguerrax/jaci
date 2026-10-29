@@ -82,7 +82,6 @@ future_mock = pytest.mark.xfail(strict=True, run=False, reason='BL-0026 fatia 1.
 future_scripts = pytest.mark.xfail(strict=True, run=False, reason='BL-0026 fatia 2.1')
 
 
-@future_mock
 def test_mock_login_refresh_restart_revocation_and_tamper(tmp_path):
     env_file, _ = setup(tmp_path)
     login = process('import asyncio,json; from app.services import tupa_auth_service as a; '
@@ -98,6 +97,14 @@ assert a.decode_access_token(access)['email']=='owner@example.com'
 assert a.decode_access_token(access+'bad') is None
 new=asyncio.run(a.refresh(refresh))
 assert a.decode_access_token(new['access_token']) is not None
+try: asyncio.run(a.refresh(refresh))
+except a.TupaError: pass
+else: raise AssertionError('refresh antigo reutilizado')
+from jose import jwt
+from app.services.test_auth_service import _secret
+expired=jwt.get_unverified_claims(new['access_token'])
+expired['exp']=1
+assert a.decode_access_token(jwt.encode(expired,_secret(),algorithm='HS256')) is None
 asyncio.run(a.logout(new['access_token']))
 assert a.decode_access_token(new['access_token']) is None
 try: asyncio.run(a.refresh(new['refresh_token']))
@@ -107,7 +114,6 @@ else: raise AssertionError('refresh revogado aceito')
     assert result.returncode == 0, result.stderr
 
 
-@future_mock
 @pytest.mark.parametrize('email,password', [('unknown@example.com','jaci-test-only'),
                                            ('owner@example.com','wrong')])
 def test_mock_rejects_unknown_identity_and_password(tmp_path,email,password):
@@ -121,7 +127,6 @@ else: raise AssertionError('identidade aceita')
     assert result.returncode==0,result.stderr
 
 
-@future_mock
 def test_mock_http_authorization_and_unsupported_operations(tmp_path):
     env_file,_=setup(tmp_path)
     result=process('''import asyncio
@@ -131,6 +136,10 @@ from app.database import SessionLocal
 from app.models import Group
 from sqlalchemy import select
 from app.services import tupa_auth_service as auth
+def no_network(*args,**kwargs): raise AssertionError('rede externa')
+import httpx
+httpx.AsyncClient = no_network
+auth._jwks = no_network
 with TestClient(app) as c:
     for email in ['owner@example.com','member@example.com','outsider@example.com']:
         r=c.post('/auth/password-login',data={'email':email,'password':'jaci-test-only'})
@@ -142,6 +151,10 @@ with TestClient(app) as c:
         c.cookies.set('jaci_active_group',str(foreign.id))
         body=c.get('/').text
         assert 'Erro interno' not in body
+        snapshot=c.get('/api/offline/snapshot').json()
+        assert foreign.id not in [g['id'] for g in snapshot['groups']]
+        denied=c.get('/groups/'+str(foreign.id),follow_redirects=False)
+        assert denied.status_code in (302,303,403,404)
         db.close()
         assert c.get('/auth/logout').status_code==200
     try: asyncio.run(auth.create_user('new@example.com','password'))
@@ -168,3 +181,23 @@ def test_test_server_refuses_missing_env_before_start(tmp_path):
                           capture_output=True,text=True)
     assert result.returncode!=0
     assert 'ambiente' in result.stderr.lower()
+
+
+def test_real_auth_path_rejects_mock_tokens_without_network(tmp_path):
+    env_file,_=setup(tmp_path)
+    result=process('''import asyncio
+from app.services import tupa_auth_service as a
+from app.config import Settings
+tokens=asyncio.run(a.token('owner@example.com','jaci-test-only'))
+a.settings=Settings(auth_mock=False,tupa_product_id='test-product',_env_file=None)
+def no_jwks(): raise AssertionError('mock token chegou ao JWKS real')
+a._jwks=no_jwks
+assert a.decode_access_token(tokens['access_token']) is None
+async def request(method,path,**kwargs):
+    assert method=='POST' and path=='/auth/token'
+    assert kwargs['json']['product_id']=='test-product'
+    return {'real_path':'unchanged'}
+a._request=request
+assert asyncio.run(a.token('real@example.com','password'))=={'real_path':'unchanged'}
+''',env_file=env_file)
+    assert result.returncode==0,result.stderr
