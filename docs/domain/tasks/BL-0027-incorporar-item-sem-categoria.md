@@ -70,5 +70,9 @@ O cenário UI reprovado deve passar com os mesmos dados sem categoria.
 - Código: normalização 0 para None no parser HTML. Contratos corretivos vermelhos
   antes da alteração, 48 testes focais verdes depois dela; categoria alheia rejeitada.
 - Validação: regressão 282 passes/5 xfail; migrações não necessárias; grafo atualizado.
-  UI corretiva será executada novamente na BL-0011 após a integração autorizada.
+  UI corretiva executada na BL-0011: nove cenários aprovados em 20,65s;
+  mesmas entradas sem categoria e snapshot financeiro preservado.
 - Publicação: pendente.
+
+- Correção 12ee496 integrada com autorização na develop em d303c38;
+  aceite UI automatizado aprovado, publicação da 1.4.0 ainda pendente.
