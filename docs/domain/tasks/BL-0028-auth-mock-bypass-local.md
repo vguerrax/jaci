@@ -229,3 +229,16 @@ regressão total será feita quando ambos forem concluídos.
   na develop aguarda autorização específica. A edição do usuário em run.py e sua
   base de desenvolvimento permanecem preservadas; sem deploy.
 - Publicação e aceite da 1.4.0 pendentes; estado em_validacao.
+
+## Integração autorizada na develop
+
+Após solicitação explícita do usuário, a branch
+feature/BL-0028-auth-mock-bypass-local foi integrada e enviada à develop pelo
+merge **e7bf602**, preservando o commit 00a7bc9 do usuário em run.py. A integração
+não alterou o arquivo de ambiente ou banco do usuário e não executou migrações.
+
+Progresso: 2/2 fatias, zero pendências de implementação. Validação prévia do
+candidato 98c788d: 307 testes Python, dez Chromium, PostgreSQL 17 e CI aprovados,
+cobertura 60,02%. Branches preservadas. Estado em_validacao até publicação e
+aceite da 1.4.0; sem deploy. Os registros de espera acima representam o estágio
+anterior à autorização final.

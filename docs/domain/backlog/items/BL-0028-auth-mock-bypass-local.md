@@ -77,7 +77,7 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | Dependências | BL-0026, serviços de autenticação, middleware e suítes BL-0011 |
 | Duplicidades | Complementa e altera o contrato implementado da BL-0026; preservar seu histórico |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Autorizar integração executável na develop e registrar publicação/aceite da 1.4.0; validação remota aprovada |
+| Próximo passo | Registrar publicação e aceite da 1.4.0; integração executável autorizada e realizada na develop |
 
 ## Acompanhamento até produção
 
@@ -90,7 +90,7 @@ o uso solicitado com os usuários da base de desenvolvimento.
 
 ### Impedimentos
 
-- Integração na develop e publicação/aceite da 1.4.0 pendentes; sem bloqueio técnico local.
+- Publicação e aceite da 1.4.0 pendentes; integração na develop realizada em e7bf602.
 
 ## Histórico
 
@@ -102,3 +102,4 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | `2026-10-29` | Usuário/Codex | Refinamento 1ef2a8f aprovado; em_implementacao | Correção e testes Python/UI autorizados; merge documental 2543931, sem autorização de merge executável |
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | 307 passes/2 xfail, cobertura 60,02%, dez UI e PostgreSQL 17 aprovados; merge executável/publicação pendentes |
 | `2026-10-29` | Codex | CI remoto aprovado | PR 45; candidato 98c788d e run 40952438864 com Python/Chromium success; integração executável aguarda autorização |
+| `2026-10-29` | Usuário/Codex | Integração executável autorizada e realizada na develop | Merge e7bf602 da feature/BL-0028-auth-mock-bypass-local; commit do usuário 00a7bc9 preservado; sem alteração do ambiente ou deploy |
