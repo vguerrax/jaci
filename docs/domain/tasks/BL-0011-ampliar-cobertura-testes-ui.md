@@ -238,3 +238,11 @@ pendente de autorização explícita. Branch de tarefa: feature/BL-0011-t3-ci.
   não marcar concluido. Proteção de branch do GitHub não foi alterada.
 - O PR de rascunho comprova o workflow; não houve deploy nem autorização de
   integração da branch individual da tarefa.
+
+## Integração aprovada
+
+Em 2026-10-29, o usuário autorizou expressamente a integração. Merge da branch
+feature/BL-0011-refinamento-1-4-0 na develop: **70d36ba**. Candidato final
+9fa6151 aprovado nos dois jobs do [run 40814716172](https://github.com/vguerrax/jaci/actions/runs/40814716172).
+Branches preservadas; publicação e aceite da 1.4.0 continuam pendentes. Estado
+em_validacao, sem deploy. Os registros anteriores descrevem o estágio de cada tarefa.
