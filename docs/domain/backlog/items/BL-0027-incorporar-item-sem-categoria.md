@@ -8,7 +8,7 @@
 | Título | Incorporar item sem categoria ao finalizar compra |
 | Tipo | `bug` |
 | Versão-alvo | `1.4.0` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `S2` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-29` |
@@ -77,14 +77,18 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0027](../../tasks/BL-0027-incorporar-item-sem-categoria.md).
-- Implementação: não iniciada; branch feature/BL-0027-incorporar-item-sem-categoria.
-- Validações: reprodução UI; contratos corretivos ainda não criados.
+- Implementação: normalização mínima no parser HTML, preservando validação de grupo;
+  branch feature/BL-0027-incorporar-item-sem-categoria.
+- Validações: duas falhas corretivas reproduzidas antes do código; 48 testes
+  focais aprovados, incluindo rejeição de categoria alheia sem finalizar ou vincular.
+  Regressão: 282 passes/5 xfail legados, sem falhas/XPASS; grafo atualizado.
+  Cenário UI será repetido pela BL-0011 após a integração autorizada.
 - Publicação: ainda não publicada.
 - Itens relacionados: BL-0011 e BL-0020.
 
 ### Impedimentos
 
-- Aprovação do refinamento e da integração pendente; cenário UI da BL-0011 reprovado.
+- Aceite UI final e publicação pendentes; integração autorizada pelo usuário.
 
 ## Histórico
 
@@ -92,3 +96,5 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 | --- | --- | --- | --- |
 | `2026-10-29` | Codex | recebido → em_triagem → pronto_para_refinamento; S2/P1 | Defeito reproduzido pelo Playwright autorizado, distinto da implementação de testes |
 | `2026-10-29` | Codex | em_refinamento → pronto_para_implementacao | Correção mínima e validações refinadas, aguardando aprovação após versionamento |
+| `2026-10-29` | Usuário/Codex | Refinamento e integração aprovados; em_implementacao | Aprovação explícita posterior a e25a531; contratos com duas falhas esperadas e autorização estrangeira preservada |
+| `2026-10-29` | Codex | em_implementacao → em_validacao | 48 testes focais e regressão com 282 passes/5 xfail aprovados; sem migração e sem publicação |
