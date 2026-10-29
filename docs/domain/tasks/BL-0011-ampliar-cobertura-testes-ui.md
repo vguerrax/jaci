@@ -4,7 +4,7 @@
 
 - Item: [BL-0011](../backlog/items/BL-0011-ampliar-cobertura-testes-ui.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: em_implementacao; aprovação explícita recebida após versionamento.
+- Estado: em_validacao; aprovação explícita recebida após versionamento.
 - Branch documental: feature/BL-0011-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0011-ampliar-cobertura-testes-ui e seus commits.
 - Depois do merge documental, atualizar esta branch pela develop antes do código;
@@ -129,7 +129,7 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
 | --- | --- | --- | --- |
 | 1 — Cobertura | 1/1 | 0 | Concluída |
 | 2 — UI | 2/2 | 0 | Nove cenários aprovados |
-| 3 — CI | 0/1 | 1 | Pendente |
+| 3 — CI | 1/1 | 0 | Python e Chromium aprovados no GitHub |
 
 ## Fechamento
 
@@ -138,7 +138,7 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
   execução de navegador; workflow CI ainda não implementado.
 - Validação: 281 passes na tarefa 1 e 55,97% de cobertura; cinco contratos
   focais de cobertura/guardas aprovados após criação do runner.
-- UI autorizada e executada: nove cenários aprovados; execução remota de CI pendente.
+- UI autorizada e executada: nove cenários aprovados; CI remoto aprovado em ambos os jobs.
 - Publicação: pendente; refinamento aprovado e em implementação.
   Execução UI aguarda solicitação explícita exigida pela skill vgx-ui-tests.
 
@@ -209,3 +209,32 @@ Regressão da tarefa 2: **288 passes/5 xfail legados**, cobertura **56,18%**.
 Piso elevado para 56,18% com arredondamento à precisão do coverage, sem truncamento
 manual. Nenhum xfail próprio pendente. O piso inicial medido na tarefa 1 foi 55,97%
 na apresentação; o valor numérico versionado atual acompanha a regressão final.
+
+## Preparação CI
+
+Workflow tests.yml com jobs Python/Chromium em ubuntu-24.04, Python 3.12 e
+Actions oficiais v7 fixadas por hashes. Python usa runner comum e piso 56,18%;
+UI depende do sucesso Python, prepara Chromium/assets/ambiente e usa o runner.
+Artifacts limitados a cobertura e screenshots sintéticos/status, por sete dias.
+Token GitHub com contents:read, checkout sem persistir credenciais e nenhum deploy.
+YAML aprovado por actionlint (imagem b1934ee5f1c5). Execução remota em PR de
+rascunho será registrada antes de concluir a tarefa; merge final do item segue
+pendente de autorização explícita. Branch de tarefa: feature/BL-0011-t3-ci.
+
+## Evidência da tarefa 3 / entrega para integração
+
+- Workflow em 78cbfb1, branch feature/BL-0011-t3-ci. PR rascunho:
+  https://github.com/vguerrax/jaci/pull/43 (somente validação, sem merge).
+- GitHub Actions run 40814194309, head 78cbfb19fe2960cdad516ebb61a09698f9705054:
+  https://github.com/vguerrax/jaci/actions/runs/40814194309.
+  Jobs Python coverage e Chromium mobile and desktop concluíram com success,
+  incluindo instalação, runners isolados e publicação dos artifacts previstos.
+- Regressão local final: 288 passes/5 xfail legados e 56,18% de cobertura combinada;
+  nove Playwright aprovados em 20,65s. Nenhum xfail próprio pendente.
+- Commits: 048a000 (tarefa 1), c15e453 (tarefa 2) e 78cbfb1 (workflow).
+  Tarefa 3 retorna somente à feature/BL-0011-refinamento-1-4-0; integração final na
+  develop aguarda autorização explícita. Branches e worktrees preservados.
+- Progresso: 4/4 fatias implementadas e validadas. Publicação da 1.4.0 pendente;
+  não marcar concluido. Proteção de branch do GitHub não foi alterada.
+- O PR de rascunho comprova o workflow; não houve deploy nem autorização de
+  integração da branch individual da tarefa.

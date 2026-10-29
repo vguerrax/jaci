@@ -441,3 +441,14 @@ e HTMX, verificados por hash. Recursos externos opcionais de fontes/ícones são
 bloqueados no ambiente UI. Capturas sintéticas de falha e status ficam em
 `reports/playwright/<execução>/`; traces e vídeos ficam desativados para não
 publicar cookies ou payloads de login. Não usar dados reais nas fixtures.
+
+### CI no GitHub
+
+O workflow `Jaci tests` executa em PRs e pushes para `develop`/`main`, além de
+disparo manual. O job Python aplica o piso de cobertura e libera o job Chromium
+apenas após sucesso. Ambos usam os scripts locais e dados sintéticos, sem
+segredos Tupã ou de produção. Artifacts são retidos por sete dias; não há deploy.
+
+Depois que o workflow executar no repositório, configure nas regras de proteção
+da branch os checks `Python coverage` e `Chromium mobile and desktop` como
+obrigatórios. Criar o YAML não altera automaticamente as regras do GitHub.
