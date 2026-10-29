@@ -8,8 +8,8 @@ logger = logging.getLogger("jaci.email")
 
 # Configuração do FastMail
 mail_config = ConnectionConfig(
-    MAIL_USERNAME=settings.smtp_user,
-    MAIL_PASSWORD=settings.smtp_password,
+    MAIL_USERNAME=(settings.smtp_user or "") if settings.auth_mock else settings.smtp_user,
+    MAIL_PASSWORD=(settings.smtp_password or "") if settings.auth_mock else settings.smtp_password,
     MAIL_FROM=settings.smtp_from,
     MAIL_PORT=settings.smtp_port,
     MAIL_SERVER=settings.smtp_host,

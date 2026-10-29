@@ -1,4 +1,4 @@
-"""Autenticação sintética. Só é acessível após as guardas de APP_ENV/AUTH_MOCK."""
+"""Bypass Tupã para usuários locais, habilitado somente por APP_ENV=test/AUTH_MOCK."""
 from contextlib import closing
 import hashlib
 import hmac
@@ -6,31 +6,55 @@ import os
 import secrets
 import sqlite3
 import time
+import tempfile
+from pathlib import Path
 
 from jose import JWTError, jwt
+from sqlalchemy import func, select
 
 from app.config import get_settings
-from app.testing_environment import validate_database
+from app.testing_environment import PROJECT_ROOT
 
 ISSUER = 'jaci-test'
-PASSWORD = 'jaci-test-only'
-ACCOUNTS = {'owner@example.com', 'member@example.com', 'outsider@example.com'}
-
-
 def _runtime():
     settings = get_settings()
     if not settings.auth_mock or settings.app_env != 'test':
         raise ValueError('AUTH_MOCK não autorizado.')
-    return validate_database(settings.database_url).parent
+    fingerprint = hashlib.sha256(
+        f'{PROJECT_ROOT}\0{settings.database_url}'.encode()
+    ).hexdigest()
+    root = Path(tempfile.gettempdir()) / f'jaci-auth-mock-{os.getuid()}'
+    directory = root / fingerprint
+    for path in (root, directory):
+        path.mkdir(mode=0o700, exist_ok=True)
+        if path.is_symlink() or path.stat().st_uid != os.getuid() or path.stat().st_mode & 0o077:
+            raise ValueError('Cache de sessão mock deve ser privado ao usuário do processo.')
+    return directory
 
 
 def _secret():
-    return (_runtime() / 'auth-secret').read_text()
+    directory = _runtime()
+    target = directory / 'auth-secret'
+    # Publicar o arquivo completo de modo atômico também no primeiro login concorrente.
+    if not target.exists():
+        with tempfile.NamedTemporaryFile(mode='w', dir=directory, delete=False) as output:
+            temporary = Path(output.name)
+            output.write(secrets.token_urlsafe(48))
+        try:
+            try:
+                os.link(temporary, target)
+            except FileExistsError:
+                pass
+        finally:
+            temporary.unlink()
+    if target.is_symlink() or target.stat().st_mode & 0o077:
+        raise ValueError('Segredo de sessão mock deve ser privado.')
+    return target.read_text()
 
 
 def _sessions():
     path = _runtime() / 'auth-sessions.sqlite3'
-    fd = os.open(path, os.O_CREAT | os.O_RDWR, 0o600)
+    fd = os.open(path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
     os.close(fd)
     db = sqlite3.connect(path, timeout=10)
     db.row_factory = sqlite3.Row
@@ -41,10 +65,16 @@ def _sessions():
     return db
 
 
-def _user(email):
-    with closing(sqlite3.connect(_runtime() / 'jaci.sqlite3')) as db:
-        return db.execute('SELECT tupa_user_id FROM users WHERE email=? AND is_active=1',
-                          (email,)).fetchone()
+def _user(*, email=None, user_id=None):
+    from app.database import SessionLocal
+    from app.models.user import User
+    with SessionLocal() as db:
+        query = select(User.id, User.email).where(User.is_active.is_(True))
+        if email is not None:
+            query = query.where(func.lower(User.email) == email.strip().lower())
+        else:
+            query = query.where(User.id == user_id)
+        return db.execute(query).first()
 
 
 def _error():
@@ -70,17 +100,15 @@ def _tokens(sid, sub, email):
 
 
 def token(email, password):
-    email = email.strip().lower()
-    if email not in ACCOUNTS or not hmac.compare_digest(password, PASSWORD):
-        raise _error()
-    user = _user(email)
+    _runtime()  # Validar o modo antes de consultar a base configurada.
+    user = _user(email=email)
     if user is None:
         raise _error()
     sid = secrets.token_urlsafe(24)
-    jti, refresh_hash, tokens = _tokens(sid, user[0], email)
+    jti, refresh_hash, tokens = _tokens(sid, str(user.id), user.email)
     with closing(_sessions()) as db, db:
         db.execute('INSERT INTO sessions VALUES (?,?,?,?,?,?,0)',
-                   (sid, user[0], email, jti, refresh_hash, int(time.time())+86400))
+                   (sid, str(user.id), user.email, jti, refresh_hash, int(time.time())+86400))
     return tokens
 
 
@@ -96,9 +124,10 @@ def decode_access_token(access):
         with closing(_sessions()) as db:
             row = db.execute('SELECT * FROM sessions WHERE id=?',
                              (payload.get('sid'),)).fetchone()
+        user = _user(user_id=payload['sub'])
         if (row is None or row['revoked'] or row['sub'] != payload['sub']
                 or row['email'] != payload.get('email') or row['jti'] != payload.get('jti')
-                or _user(row['email']) is None):
+                or user is None or user.email != row['email']):
             return None
         return payload
     except (JWTError, KeyError, TypeError, ValueError):
@@ -112,7 +141,7 @@ def refresh(refresh_token):
         row = db.execute('SELECT * FROM sessions WHERE id=?', (sid,)).fetchone()
         if (row is None or row['revoked'] or row['refresh_until'] <= time.time()
                 or not hmac.compare_digest(row['refresh_hash'], _hash(refresh_token))
-                or _user(row['email']) is None):
+                or _user(user_id=row['sub']) is None):
             raise _error()
         jti, digest, tokens = _tokens(sid, row['sub'], row['email'])
         db.execute('UPDATE sessions SET jti=?, refresh_hash=? WHERE id=?', (jti,digest,sid))

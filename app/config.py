@@ -3,7 +3,6 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 import os
 from typing import Literal
-from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -75,10 +74,6 @@ class Settings(BaseSettings):
         if self.auth_mock:
             if self.app_env != "test":
                 raise ValueError("AUTH_MOCK exige APP_ENV=test.")
-            if not os.environ.get("ENV_FILE") or Path(os.environ["ENV_FILE"]).name != ".env.test":
-                raise ValueError("AUTH_MOCK exige ENV_FILE explícito .env.test.")
-            from app.testing_environment import validate_database
-            validate_database(self.database_url)
         return self
 
     @model_validator(mode="after")

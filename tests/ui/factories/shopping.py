@@ -23,3 +23,18 @@ def create_purchase(*,started=True,extra_item=False):
         return {'execution':execution.id,'item':execution.items[0].id,
                 'template':template.id,'template_item':item.id,'name':item.name,
                 'extra':additional_id if extra_item else None}
+
+
+def create_local_account():
+    from app.models import group_members
+    with ui_db_session() as db:
+        email=unique_ui_name('local')+'@example.com'
+        user=User(email=email,name='Local teste',is_profile_complete=True)
+        db.add(user)
+        db.flush()
+        group=Group(name=unique_ui_name('Casa local'),owner_id=user.id)
+        db.add(group)
+        db.flush()
+        db.execute(group_members.insert().values(group_id=group.id,user_id=user.id))
+        db.commit()
+        return {'email':email,'id':user.id}

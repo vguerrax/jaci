@@ -4,7 +4,7 @@
 
 - Item: [BL-0028](../backlog/items/BL-0028-auth-mock-bypass-local.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: pronto_para_implementacao; aprovação pós-versionamento pendente.
+- Estado: em_implementacao; aprovação explícita recebida para correção e testes Python/UI.
 - Branch: feature/BL-0028-auth-mock-bypass-local, criada de develop 0c03134.
 - Item isolado, um ticket com duas fatias sequenciais na mesma branch. Preservar
   branches anteriores e a edição local do usuário em run.py; usar worktree.
@@ -152,7 +152,7 @@ nenhum permanece ao fechar o ticket. Dois FL-08 fora do escopo continuam pendent
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Bypass local | 0/2 | 2 | Aguarda aprovação do refinamento |
+| 1 — Bypass local | 1/2 | 1 | Adaptador validado; formulário pendente |
 
 ## Fechamento documental
 
@@ -162,3 +162,25 @@ nenhum permanece ao fechar o ticket. Dois FL-08 fora do escopo continuam pendent
 - Implementação, execução de novos testes, integração executável e publicação
   pendentes. Esta especificação substitui as restrições do mock da BL-0026 após
   aprovação e implementação, sem reescrever sua evidência histórica.
+
+## Aprovação e início
+
+Usuário aprovou 1ef2a8f após apresentação do refinamento, incluindo testes Python/UI
+e integração documental. Documentação integrada em 2543931 antes dos executáveis.
+Trabalho em worktree isolada; run.py do usuário preservado.
+
+## Fatia 1.1 — Adaptador e identidade local
+
+Doze falhas foram reproduzidas nos contratos antes da produção. O lookup agora
+usa ORM na conexão configurada, senha ignorada e ID local no emissor jaci-test;
+nenhum vínculo Tupã é preenchido. Cache privado de segredo/sessões é inicializado
+automaticamente, por projeto/conexão, mantendo rotação, revogação e reinício.
+Guards dos scripts continuam marcando seus próprios bancos sintéticos.
+
+Validação: 30 passes/2 contratos futuros do formulário no focal completo; após
+novo contrato de startup sem SMTP, 15 passes/2 futuros no módulo BL-0028. A falha
+SMTP foi reproduzida antes do ajuste mínimo em app/utils/email.py: só o mock aceita
+campos ausentes no mailer que não utiliza. Três UI (login, fila/reconexão e
+conflito/resolução) passaram em 27,91s, run 393eea00e8c545df8b23f88d5bceccaa.
+Compileall, diff e grafo AST aprovados. Contratos da fatia 1.2 permanecem futuros;
+regressão total será feita quando ambos forem concluídos.

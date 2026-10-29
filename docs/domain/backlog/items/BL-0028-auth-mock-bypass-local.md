@@ -8,7 +8,7 @@
 | Título | Usar AUTH_MOCK como bypass do Tupã para usuários locais |
 | Versão-alvo | `1.4.0` |
 | Tipo | `ajuste` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-29` |
@@ -99,3 +99,4 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | `2026-10-29` | Usuário/Codex | Criado em recebido, a_triar e a_definir | Usuário esclareceu o comportamento desejado do AUTH_MOCK |
 | `2026-10-29` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A/P1 | Divergência de contrato confirmada, riscos e dependências delimitados |
 | `2026-10-29` | Codex | em_refinamento → pronto_para_implementacao | Refinamento documental concluído; aprovação pós-versionamento pendente |
+| `2026-10-29` | Usuário/Codex | Refinamento 1ef2a8f aprovado; em_implementacao | Correção e testes Python/UI autorizados; merge documental 2543931, sem autorização de merge executável |
