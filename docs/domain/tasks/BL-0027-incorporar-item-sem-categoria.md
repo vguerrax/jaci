@@ -6,7 +6,7 @@
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
 - Branch: feature/BL-0027-incorporar-item-sem-categoria, de develop b289771,
   em worktree separado para preservar a BL-0011 em andamento.
-- Estado: pronto_para_implementacao; aprovação posterior ao versionamento pendente.
+- Estado: em_validacao; refinamento e integração aprovados explicitamente após e25a531.
 - Depois do merge documental, atualizar a branch antes do código. Não alterar nem
   integrar o código funcional pela branch de testes BL-0011.
 
@@ -62,11 +62,13 @@ O cenário UI reprovado deve passar com os mesmos dados sem categoria.
 
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Correção | 0/1 | 1 | Aguarda aprovação |
+| 1 — Correção | 1/1 | 0 | Correção e testes aprovados; aceite UI pendente |
 
 ## Fechamento
 
 - Reprodução: UI da BL-0011 reprovada; evidência sintética no item.
-- Código e testes corretivos: não iniciados; somente refinamento nesta etapa.
-- Validações documentais: links, índice e diff antes do commit.
+- Código: normalização 0 para None no parser HTML. Contratos corretivos vermelhos
+  antes da alteração, 48 testes focais verdes depois dela; categoria alheia rejeitada.
+- Validação: regressão 282 passes/5 xfail; migrações não necessárias; grafo atualizado.
+  UI corretiva será executada novamente na BL-0011 após a integração autorizada.
 - Publicação: pendente.

@@ -104,7 +104,7 @@ def _read_template_learning_choices(form) -> dict[str, list[dict]]:
                     "suggestion_id": suggestion_id,
                     "type": "new_item",
                     "execution_item_id": entity_id,
-                    "category_id": _to_int(form.get(f"category_id_{suggestion_id}")),
+                    "category_id": _to_int(form.get(f"category_id_{suggestion_id}")) or None,
                     "planned_quantity": _to_float(
                         form.get(f"planned_quantity_{suggestion_id}"),
                         1,
