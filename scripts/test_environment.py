@@ -70,7 +70,7 @@ def run_python_tests(arguments: list[str]) -> int:
                    if key.lower() not in Settings.model_fields and key != 'ENV_FILE'}
     environment.update(ENV_FILE=str(env_file), APP_ENV='test', AUTH_MOCK='false',
                        DATABASE_URL='sqlite://', DEBUG='false', SMTP_USER='test@example.com',
-                       SMTP_PASSWORD='synthetic-only', SMTP_MOCK='true', BACKUP_ENABLED='false')
+                       SMTP_PASSWORD='synthetic-only', SMTP_MOCK='true', BACKUP_ENABLED='false', JACI_RUN_PLAYWRIGHT='0')
     coverage_arguments = []
     if '--coverage' in arguments:
         arguments = [arg for arg in arguments if arg != '--coverage']

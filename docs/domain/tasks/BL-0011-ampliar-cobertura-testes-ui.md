@@ -128,15 +128,19 @@ obter solicitação explícita e usar sempre scripts/run_ui_tests.sh, conforme v
 | Etapa/ticket | Fatias concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
 | 1 — Cobertura | 1/1 | 0 | Concluída |
-| 2 — UI | 0/2 | 2 | Pendente ambiente BL-0026 |
+| 2 — UI | 2/2 | 0 | Nove cenários aprovados |
 | 3 — CI | 0/1 | 1 | Pendente |
 
 ## Fechamento
 
-- Código/testes/workflow: não iniciados; nenhum arquivo tests/ui alterado.
-- Validação nesta etapa: somente links, estados, índice e diff documental.
-- Medição de cobertura e execuções Python/UI/CI: pendentes, sem percentual presumido.
-- Publicação: pendente; implementação requer aprovação deste refinamento versionado.
+- Cobertura entregue em 048a000, integrada somente na branch BL-0011.
+  Runner e nove cenários UI escritos na branch feature/BL-0011-t2-ui, sem
+  execução de navegador; workflow CI ainda não implementado.
+- Validação: 281 passes na tarefa 1 e 55,97% de cobertura; cinco contratos
+  focais de cobertura/guardas aprovados após criação do runner.
+- UI autorizada e executada: nove cenários aprovados; execução remota de CI pendente.
+- Publicação: pendente; refinamento aprovado e em implementação.
+  Execução UI aguarda solicitação explícita exigida pela skill vgx-ui-tests.
 
 ## Início da implementação
 
@@ -161,3 +165,47 @@ BL-0011 atualizada e tarefa 1 iniciada em feature/BL-0011-t1-cobertura.
 - scripts/run_tests.sh --coverage aplica o piso; seleções focais podem usar
   --cov-fail-under=0 explicitamente sem alterar a baseline versionada.
 - Redução do piso exige revisão documentada; aumentos acompanham evolução medida.
+
+## Preparação UI — execução ainda pendente
+
+Runner, fixtures, Page Objects e nove cenários escritos; Chromium baixado em cache
+local. Dependências pytest-playwright 0.10.0 / playwright 1.64.1 fixadas.
+Os dois contratos de recusa do runner passaram sem iniciar browser.
+Bootstrap 5.3.3 e HTMX 2.0.4 são os bundles reais do produto: cache de teste explícito
+com hashes versionados em tests/ui/assets.json, sem instalar framework na aplicação.
+Instalação dos assets é separada do runner para não depender de CDN durante o teste.
+Artifacts públicos são limitados a screenshots sintéticos de falha e status JSON;
+traces/vídeos são desativados porque podem registrar cookies/corpos de login.
+A skill vgx-ui-tests exige solicitação explícita de execução UI após criar os testes;
+a autorização foi pedida, sem executar os cenários por inferência.
+
+Dependências verificadas por pip check, sem incompatibilidades; compileall e diff
+aprovados. A preparação UI não foi integrada à branch do item por faltar a
+validação de navegador. Código da BL-0011 permanece fora da develop.
+
+## Evidência da tarefa 2 — Navegador
+
+- Execução UI explicitamente solicitada pelo usuário em 2026-10-29. Primeira rodada:
+  7 passes e 2 falhas. Defeito de incorporação sem categoria registrado como BL-0027,
+  refinado em e25a531, corrigido em 12ee496 e integrado à develop com autorização.
+- Espera do teste concorrente corrigida para o evento real jaci:sync-error após
+  persistência da fila; não usar Promise assíncrona como condição booleana. Os dois
+  contextos mantêm seus cookies e IndexedDB independentes; valor remoto preservado
+  após resolução explícita Usar servidor.
+- Runner corrigido para recriar pasta vazia removida pelo Playwright antes de gravar
+  resumo; limpeza de processos/diretório ocorre mesmo se houver erro de artifacts.
+- Rodada final: **9 passes em 20,65s**, run abd0941017004287bd800d4b7517fec6.
+  Resultados sintéticos em reports/playwright/<run>/result.json; não há screenshots
+  de sucesso, traces, vídeos, cookies ou payloads de login publicados.
+- Cenários: login/logout móvel; compra/total/nome protegido; isolamento outsider;
+  desktop; criar lista/execução snapshot; avulso renomeável; incorporação confirmada
+  sem categoria; fila persistida após recarga/reconexão sem duplicação; concorrência
+  e resolução explícita. Mesmos dados da falha de categoria foram mantidos.
+- Compilação Python, guards do runner, bash -n e diff aprovados. Chromium e bundles
+  reais em cache, sem mock da fila. Workflow foi preparado em branch de tarefa
+  isolada e aprovado por actionlint; só será integrado após validação remota.
+
+Regressão da tarefa 2: **288 passes/5 xfail legados**, cobertura **56,18%**.
+Piso elevado para 56,18% com arredondamento à precisão do coverage, sem truncamento
+manual. Nenhum xfail próprio pendente. O piso inicial medido na tarefa 1 foi 55,97%
+na apresentação; o valor numérico versionado atual acompanha a regressão final.

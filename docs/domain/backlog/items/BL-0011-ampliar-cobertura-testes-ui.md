@@ -82,9 +82,11 @@ no navegador antes de cada publicação.
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0011](../../tasks/BL-0011-ampliar-cobertura-testes-ui.md).
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: somente diagnóstico documental; cobertura e testes de UI ainda
-  não implementados.
+- Implementação: tarefa 1 em 048a000, branch feature/BL-0011-refinamento-1-4-0;
+  tarefa 2 em feature/BL-0011-t2-ui, com runner e nove cenários ainda não executados.
+- Validações: tarefa 1 com 281 passes/7 xfail temporários/legados, cobertura
+  Python combinada 55,97%; cinco testes focais de relatórios/guardas aprovados.
+  Execuções de navegador e CI pendentes; não consideradas aprovadas.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
