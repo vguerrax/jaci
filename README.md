@@ -235,8 +235,8 @@ Os fluxos implementados e os contratos futuros são guiados por
   grupos, Home operacional, consulta básica da agenda/histórico, aprendizado de
   templates e operação offline de execuções com fila local, sincronização e
   resolução explícita de conflitos.
-- Em evolução: cobertura e rastreabilidade offline remanescente, histórico de
-  preços e análise de gastos.
+- Em evolução: histórico de preços e análise de gastos. A cobertura offline da
+  1.4.0 está em validação, conforme o backlog.
 
 O [backlog ativo](docs/domain/backlog/README.md) é a fonte de verdade para o
 estado das demandas. Contratos futuros usam `xfail(strict=True)` até a
@@ -273,10 +273,16 @@ aplicadas primeiro ao estado local e registradas numa fila persistente. Ao
 reconectar, a fila sincroniza em ordem, preserva operações com falha e exige
 resolução explícita quando há conflito.
 
+Iniciar uma execução existente, editar seu agendamento e alterar itens são
+operações locais enfileiradas. Criar grupos, categorias, templates e execuções
+continua exigindo API. A finalização offline é provisória até sincronizar; a
+recorrência é gerada somente no servidor. Abra a compra online antes de precisar
+usá-la sem rede: páginas e dados ainda não armazenados não ficam disponíveis.
+
 O escopo implementado, as limitações atuais e o roteiro de validação manual
 estão em
 [docs/domain/pwa-offline-foundation.md](docs/domain/pwa-offline-foundation.md).
-A cobertura e a rastreabilidade remanescentes estão no
+A matriz de operações e os contratos reconciliados estão no
 [BL-0001](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ## Testes
@@ -285,13 +291,18 @@ Instale as dependências de desenvolvimento e execute a suíte:
 
 ```bash
 pip install -r requirements-dev.txt
-venv/bin/pytest
+npm ci --ignore-scripts
+bash scripts/run_tests.sh
 ```
+
+Node.js 22+ é necessário para os contratos da fila JavaScript; o CI utiliza Node 24.
+`npm test` executa apenas esses contratos com fake-indexeddb fixado no lockfile.
+Essa dependência é exclusiva de desenvolvimento e não entra no frontend publicado.
 
 A rastreabilidade entre regras, fluxos e testes está em
 [tests/README.md](tests/README.md). Uma execução saudável pode conter casos `XFAIL`
-para contratos futuros documentados ou contratos legados explicitamente
-rastreados; um `XPASS` é tratado como falha até que o contrato seja revisado.
+para os dois contratos futuros FL-08 (histórico de preços e análise de gastos);
+um `XPASS` é tratado como falha até que o contrato seja revisado.
 
 ### Ambiente sintético de testes (BL-0026)
 
@@ -345,7 +356,8 @@ Ele elimina configurações herdadas da aplicação, exclui `tests/ui`, propaga 
 e limpa seu diretório e processos próprios. `TEST_PYTHON` permite selecionar outro
 executável Python; o padrão é `venv/bin/python`. Instale previamente
 `pip install -r requirements-dev.txt`; os scripts não instalam pacotes automaticamente.
-Playwright e seu runner são entregas futuras da BL-0011.
+Instale também `npm ci --ignore-scripts` para os contratos FL-09. Playwright e o
+runner isolado já foram entregues na BL-0011; veja a seção de testes de navegador.
 
 ## 🔐 Segurança
 
