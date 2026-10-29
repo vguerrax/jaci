@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1793243327.5151298,
-    "ast_hash": "04629f7e48c0ebaeafd0008a9f7a9fbf",
+    "mtime": 1793245570.011932,
+    "ast_hash": "86cd3447cafc299f61b2eaeaa836832b",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -1040,8 +1040,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0011-ampliar-cobertura-testes-ui.md": {
-    "mtime": 1793244004.105388,
-    "ast_hash": "092f1f0af2036f4571c1bd7dc329c2c1",
+    "mtime": 1793245570.011513,
+    "ast_hash": "53a640df266ae88b0b84fca1e8fc7bd6",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0026-ferramentas-ambiente-testes.md": {
@@ -1160,8 +1160,8 @@
     "semantic_hash": ""
   },
   "tests/ui/test_purchase_playwright.py": {
-    "mtime": 1793245032.3649073,
-    "ast_hash": "4cd9fb6a23046b177f2100fa427dbdf3",
+    "mtime": 1793245476.8885145,
+    "ast_hash": "10e0ffef54668de9c7ff36c735ee81a5",
     "semantic_hash": ""
   }
 }
