@@ -167,6 +167,7 @@ não muda de caminho nem é apagado.
 | [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0026](items/BL-0026-ferramentas-ambiente-testes.md) | Ferramentas, ambiente de testes e rastreabilidade das releases | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-28` |
+| [BL-0027](items/BL-0027-incorporar-item-sem-categoria.md) | Incorporar item sem categoria ao finalizar compra | `bug` | `S2` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-29` |
 
 ### Itens arquivados
 

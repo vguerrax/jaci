@@ -56,3 +56,8 @@ O [índice](README.md) e os itens são a fonte dos estados; esta visão não os 
 6. Correções de releases publicadas usam 1.x.y; não preencher uma versão-alvo como entregue.
 7. Depois da 1.4.0, refinar apenas a próxima release; este plano não antecipa decisões
    de produto ou infraestrutura das demais versões.
+
+## Correções descobertas na validação da 1.4.0
+
+[BL-0027](items/BL-0027-incorporar-item-sem-categoria.md): incorporação sem
+categoria rejeitada no fechamento; correção independente necessária para o aceite UI.
