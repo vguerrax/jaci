@@ -61,3 +61,13 @@ O [índice](README.md) e os itens são a fonte dos estados; esta visão não os 
 
 [BL-0027](items/BL-0027-incorporar-item-sem-categoria.md): incorporação sem
 categoria rejeitada no fechamento; correção independente necessária para o aceite UI.
+
+
+## Ajuste de contrato do AUTH_MOCK antes da 1.4.0
+
+[BL-0028](items/BL-0028-auth-mock-bypass-local.md): o usuário esclareceu que
+APP_ENV=test e AUTH_MOCK=true devem habilitar login para usuários ativos da base
+configurada, sem validação de senha no Tupã, contas fixas, nome de arquivo de
+ambiente obrigatório ou banco marcado. O ambiente sintético dos scripts continua
+isolado e opcional para esse uso manual. Refinamento versionado exige aprovação
+antes de testes/código; não confundir a BL-0026 já implementada com este ajuste.
