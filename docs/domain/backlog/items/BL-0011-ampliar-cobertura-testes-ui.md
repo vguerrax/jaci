@@ -8,7 +8,7 @@
 | Título | Ampliar cobertura automatizada e testes de UI |
 | Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -77,7 +77,7 @@ no navegador antes de cada publicação.
 | Dependências | BL-0026 para ambiente/mock e scripts Python; Chromium e dependências de browser no CI |
 | Duplicidades | BL-0001 reconcilia contratos legados e matriz offline; esta demanda possui infraestrutura UI/CI/cobertura |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar refinamento versionado; implementar após a fundação da BL-0026 |
+| Próximo passo | Medir cobertura e implementar infraestrutura UI/CI aprovada |
 
 ## Acompanhamento até produção
 
@@ -100,3 +100,4 @@ no navegador antes de cada publicação.
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.4.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
 | `2026-10-28 20:40 -03` | Codex | recebido → em_triagem → pronto_para_refinamento; N/A e P1 | Inventário atualizado pela regressão histórica da 1.3.0; lacunas de browser/cobertura/CI confirmadas |
 | `2026-10-28 20:40 -03` | Codex | em_refinamento → pronto_para_implementacao | Escopo, etapas, contratos futuros e validação da 1.4.0 refinados; aguardando aprovação |
+| `2026-10-29 00:04 -03` | Usuário/Codex | Refinamento aprovado; em_implementacao | Integração BL-0026 autorizada e realizada em b289771; BL-0011 iniciada em branch de tarefa própria |

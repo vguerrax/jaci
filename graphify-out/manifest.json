@@ -10,7 +10,7 @@
     "semantic_hash": ""
   },
   "app/config.py": {
-    "mtime": 1793234454.9758315,
+    "mtime": 1793243055.772498,
     "ast_hash": "1328ecd0b14e0c30c7fbdafff8ca4402",
     "semantic_hash": ""
   },
@@ -190,7 +190,7 @@
     "semantic_hash": ""
   },
   "app/services/tupa_auth_service.py": {
-    "mtime": 1793234454.9758315,
+    "mtime": 1793243055.773498,
     "ast_hash": "16a92654204fb96a2b30623eabf70fd6",
     "semantic_hash": ""
   },
@@ -230,7 +230,7 @@
     "semantic_hash": "9973a1eee6a576740460f12a92a10679"
   },
   "app/templating.py": {
-    "mtime": 1793234454.9768314,
+    "mtime": 1793243055.773498,
     "ast_hash": "205f1aa5eada161c558db0dfd69e2618",
     "semantic_hash": ""
   },
@@ -245,7 +245,7 @@
     "semantic_hash": "eae18ffc5da425e65b1e256185b2da00"
   },
   "app/utils/email.py": {
-    "mtime": 1793234454.9768314,
+    "mtime": 1793243055.773498,
     "ast_hash": "f19e9f5027322d8e86147beb44ccf259",
     "semantic_hash": ""
   },
@@ -455,7 +455,7 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1793234642.6175327,
+    "mtime": 1793243055.772498,
     "ast_hash": "77b7f244678054a885ebc992766eced8",
     "semantic_hash": ""
   },
@@ -465,7 +465,7 @@
     "semantic_hash": ""
   },
   "app/templates/base.html": {
-    "mtime": 1793234454.9758315,
+    "mtime": 1793243055.773498,
     "ast_hash": "4c9301f551ba80d7b0147a926e2cd43d",
     "semantic_hash": ""
   },
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1793234454.9768314,
-    "ast_hash": "bed6724b48c9f21b99e7b4039708f54f",
+    "mtime": 1793243083.7615445,
+    "ast_hash": "5d22c27c870c0febbfac5a59add4ba14",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -680,7 +680,7 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md": {
-    "mtime": 1793234072.2743113,
+    "mtime": 1793243055.774498,
     "ast_hash": "54713501a83ab53e5192eb50cd927341",
     "semantic_hash": ""
   },
@@ -730,8 +730,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0011-ampliar-cobertura-testes-ui.md": {
-    "mtime": 1793234072.2743113,
-    "ast_hash": "a76ebeea07831a6fe491ad7b1adfc6a2",
+    "mtime": 1793243083.7612395,
+    "ast_hash": "650c8e6d40bdff042b87d3a0fd1ef5ee",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0012-vgx-doc-management.md": {
@@ -815,8 +815,8 @@
     "semantic_hash": ""
   },
   "requirements-dev.txt": {
-    "mtime": 1781541668.1219501,
-    "ast_hash": "0a59cf5335943a974c8bc63c6e8c874e",
+    "mtime": 1793243179.6235924,
+    "ast_hash": "e33e50ef70298d4c93ba021b01867de0",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1793230076.971584,
-    "ast_hash": "3bbe219f9e283883f655d68ec00db4c1",
+    "mtime": 1793243315.2020648,
+    "ast_hash": "04629f7e48c0ebaeafd0008a9f7a9fbf",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -1000,33 +1000,33 @@
     "semantic_hash": ""
   },
   "app/testing_environment.py": {
-    "mtime": 1793234454.9768314,
+    "mtime": 1793243055.773498,
     "ast_hash": "c15af76062fb1206d8c77c7ab1d73ec5",
     "semantic_hash": ""
   },
   "scripts/seed_test_data.py": {
-    "mtime": 1793234455.0108318,
+    "mtime": 1793243055.8104985,
     "ast_hash": "803b6abcc50b3daf418185c99693d036",
     "semantic_hash": ""
   },
   "scripts/setup_test_env.sh": {
-    "mtime": 1793234455.011832,
+    "mtime": 1793243055.8104985,
     "ast_hash": "4297e2eba239e053c7a85ce323e99325",
     "semantic_hash": ""
   },
   "scripts/test_environment.py": {
-    "mtime": 1793234518.6251395,
-    "ast_hash": "f39424fe57f25f3999ebd5a50014e56f",
+    "mtime": 1793243179.6241481,
+    "ast_hash": "4ac74d5e092558adde7b86dca5927187",
     "semantic_hash": ""
   },
   "tests/test_test_environment.py": {
-    "mtime": 1793234642.6172767,
+    "mtime": 1793243055.8114984,
     "ast_hash": "0e976d5a103208cb3552be41bfd33816",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0026-ferramentas-ambiente-testes.md": {
-    "mtime": 1793234454.9768314,
-    "ast_hash": "51f91ca322e15c55a4a3de83b087adc2",
+    "mtime": 1793243055.774498,
+    "ast_hash": "eaa4ecfb2816fe35d0e3de4b1433fe65",
     "semantic_hash": ""
   },
   "docs/domain/backlog/releases.md": {
@@ -1035,33 +1035,43 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md": {
-    "mtime": 1793234072.2743113,
+    "mtime": 1793243055.774498,
     "ast_hash": "43568c08b556d3fb22deb6591b9d445b",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0011-ampliar-cobertura-testes-ui.md": {
-    "mtime": 1793234072.2743113,
-    "ast_hash": "a7f0ffcd5c8bfefe5b5f941187874ab5",
+    "mtime": 1793243315.201896,
+    "ast_hash": "102f23e639ed3b6a7cf6323940c14aaa",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0026-ferramentas-ambiente-testes.md": {
-    "mtime": 1793234454.9768314,
-    "ast_hash": "88cc942d0750185764e4493146efb45c",
+    "mtime": 1793243055.775865,
+    "ast_hash": "3c7dac8df56f44e19095d6797dfb7f45",
     "semantic_hash": ""
   },
   "app/services/test_auth_service.py": {
-    "mtime": 1793234454.9758315,
+    "mtime": 1793243055.772498,
     "ast_hash": "6c63d272f48482d737c1e93556abdf67",
     "semantic_hash": ""
   },
   "scripts/run_test_server.sh": {
-    "mtime": 1793234518.6252854,
+    "mtime": 1793243055.8104985,
     "ast_hash": "3b7a088c361735a0a44fc648da2da8e8",
     "semantic_hash": ""
   },
   "scripts/run_tests.sh": {
-    "mtime": 1793234518.6253734,
+    "mtime": 1793243055.8104985,
     "ast_hash": "e00a8f48a9f13338dfbde118fc2649d9",
+    "semantic_hash": ""
+  },
+  "tests/test_coverage_runner.py": {
+    "mtime": 1793243144.4626832,
+    "ast_hash": "a063457049f1441fca5168b4ad5dc8a8",
+    "semantic_hash": ""
+  },
+  "tests/test_ui_runner.py": {
+    "mtime": 1793243179.5781527,
+    "ast_hash": "fd5cad5d63fce0409c27a0234fb621e0",
     "semantic_hash": ""
   }
 }
