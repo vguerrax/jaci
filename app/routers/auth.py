@@ -1,5 +1,5 @@
 import logging
-from fastapi import APIRouter, Request, Response, Depends, Form, Query
+from fastapi import APIRouter, Request, Response, Depends, Form, Query, HTTPException
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import select
@@ -165,11 +165,14 @@ async def password_login(
     request: Request,
     response: Response,
     email: str = Form(...),
-    password: str = Form(...),
+    password: str = Form(""),
     db: Session = Depends(get_db),
 ):
     """Login com e-mail e senha."""
     from app.main import templates
+
+    if not settings.auth_mock and not password:
+        raise HTTPException(status_code=422, detail="Senha obrigatória.")
 
     try:
         result = await authenticate_with_password(db, email, password)
@@ -197,6 +200,7 @@ async def password_login(
         )
         
     user, tokens = result
+    group_id = user.groups[0].id if user.groups else None
 
     if not user.is_profile_complete:
         response = RedirectResponse(url="/auth/setup", status_code=303)
@@ -212,22 +216,23 @@ async def password_login(
             "redirect_url": "/",
             "user_id": user.id,
             "email": user.email,
-            "group_id": user.groups[0].id,
+            "group_id": group_id,
         },
     )
     
     # Set cookies on the response
     set_auth_cookies(response, **tokens)
     
-    response.set_cookie(
-        key="jaci_active_group",
-        value=str(user.groups[0].id),
-        httponly=True,
-        secure=settings.secure_cookie,
-        samesite="lax",
-        path="/",
-        max_age=60 * 60 * 24 * 30,
-    )
+    if group_id is not None:
+        response.set_cookie(
+            key="jaci_active_group",
+            value=str(group_id),
+            httponly=True,
+            secure=settings.secure_cookie,
+            samesite="lax",
+            path="/",
+            max_age=60 * 60 * 24 * 30,
+        )
     
     return response
 

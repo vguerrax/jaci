@@ -5,7 +5,7 @@
 - Item de backlog: [BL-0020](../backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md)
 - Branch: `feature/BL-0020-bloquear-renomeacao-item-vinculado`
 - Responsável pelo refinamento: Engenharia Jaci
-- Estado do refinamento: `em_validacao`
+- Estado do refinamento: `concluido`
 - Itens relacionados: `BL-0003`, `BL-0005` e `BL-0011`
 - Decisões de produto: nome vinculado visível em modo somente leitura; item
   incorporado recebe vínculo de proveniência; item da lista torna o nome
@@ -325,13 +325,17 @@ ao concluí-la e sem `xfail(strict=True)` desta demanda:
   validação do fallback HTML aprovou novamente os 44 testes focados.
 - Resultado da validação manual: primeira rodada reprovada porque o modal de
   item comprado omitia o campo de nome e a orientação. Correção implementada;
-  a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 aguarda
+  a segunda rodada foi aprovada pelo usuário em `2026-08-05`. A etapa 2 aguardava
   novo aceite: a primeira rodada dessa etapa encontrou uma resposta JSON após
   tentativa de renomeação; o fallback foi corrigido para renderizar a lista com
   alerta, nome `readonly` e ajuda contextual. A infraestrutura Playwright
-  permanece futura na `BL-0011`.
+  permanece futura na `BL-0011`. O aceite final da etapa 2 foi confirmado pelo
+  usuário em `2026-10-28`, incluindo edição protegida, sincronização offline e PWA.
 - Resultado da regressão total: migrações no head; 247 testes aprovados e 5
   `xfail` legados fora do escopo após a etapa 2.
 - `xfail(strict=True)` pendentes no escopo: nenhum.
 - Documentação atualizada: item, índice, matriz de testes e este refinamento;
   grafo AST-only reconstruído.
+
+- Publicação: Produção, versão `1.3.0`, tag `v1.3.0`, commit `ff16202`, em `2026-10-28`, informada pelo usuário; aceite manual confirmado pelo usuário.
+- Integração da release: PR #41 (`3876c71`) na develop e PR #42 (`ff16202`) na main.

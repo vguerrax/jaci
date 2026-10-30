@@ -7,6 +7,7 @@
 ## Rastreabilidade
 
 - Item de backlog: `<link para docs/domain/backlog/items/BL-NNNN-slug.md>`
+- Versão-alvo: `<versão ou a_definir>`
 - Branch: `feature/BL-NNNN-slug`
 - Responsável pelo refinamento: `<nome ou equipe>`
 - Estado do refinamento: `<em_refinamento | pronto_para_implementacao | concluido>`
@@ -113,6 +114,7 @@ houver `xfail(strict=True)` pendente para ele.
 ## Fechamento
 
 - Commits/PRs: `<links>`
+- Evidências por execução: `<comando, data, commit, ambiente e resultado sanitizado>`
 - Resultado das validações focadas: `<resumo>`
 - Resultado da validação manual: `<resumo ou N/A justificado>`
 - Resultado da regressão total: `<resumo>`

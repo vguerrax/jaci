@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0008` |
 | Título | Disponibilizar autoexclusão e anonimização de conta |
+| Versão-alvo | `1.7.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Limitação do MVP registrada nos Termos de Uso e na Política de Privacidade |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -95,3 +96,4 @@ legais e aguardar processamento manual.
 | `2026-07-24 00:48 -03` | Codex | Item criado em `recebido` | Migração da limitação de MVP documentada |
 | `2026-08-05 22:24 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1, escopo restrito ao Jaci e preservação anonimizada dos grupos confirmados; fluxo legal e integração existente com o Tupã confrontados |
 | `2026-08-05 22:24 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.7.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

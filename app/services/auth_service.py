@@ -4,12 +4,31 @@ import logging
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
+from app.config import get_settings
 from app.models.user import User
 from app.models.group import Group, group_members
 from app.models.category import Category, DEFAULT_CATEGORIES
 from app.services import tupa_auth_service
 
 logger = logging.getLogger("jaci.auth")
+
+
+def get_user_from_claims(db: Session, payload: dict) -> User | None:
+    """Resolve a identidade local sem atribuir IDs de teste ao vínculo Tupã."""
+    subject = payload.get("sub")
+    if not subject:
+        return None
+    if get_settings().auth_mock:
+        if payload.get("iss") != "jaci-test":
+            return None
+        try:
+            user_id = int(subject)
+        except (ValueError, TypeError):
+            return None
+        return db.scalar(select(User).where(User.id == user_id, User.is_active.is_(True)))
+    if payload.get("iss") == "jaci-test":
+        return None
+    return db.scalar(select(User).where(User.tupa_user_id == str(subject)))
 
 
 def get_or_create_tupa_user(
@@ -59,13 +78,18 @@ def get_or_create_tupa_user(
 async def authenticate_with_password(
     db: Session, email: str, password: str
 ) -> tuple[User, dict] | None:
-    """Autentica no Tupã e carrega o perfil local."""
+    """Autentica pelo adaptador selecionado e carrega o perfil local."""
     tokens = await tupa_auth_service.token(email, password)
     payload = tupa_auth_service.decode_access_token(tokens["access_token"])
     if not payload or not payload.get("sub"):
         return None
 
-    user = get_or_create_tupa_user(db, str(payload["sub"]), payload.get("email", email))
+    if get_settings().auth_mock:
+        user = get_user_from_claims(db, payload)
+        if user is None:
+            return None
+    else:
+        user = get_or_create_tupa_user(db, str(payload["sub"]), payload.get("email", email))
     user.last_login_at = datetime.now(timezone.utc)
     db.commit()
     return user, tokens

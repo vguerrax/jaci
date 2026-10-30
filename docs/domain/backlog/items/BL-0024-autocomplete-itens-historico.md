@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0024` |
 | Título | Autocompletar nomes de itens pelo histórico do grupo |
+| Versão-alvo | `1.8.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Solicitação do usuário para reutilizar nomes já conhecidos pelo grupo |
 | Ambiente/versão | Estado de `develop` (`67059b3`) em `2026-09-17` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-09-17` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -117,3 +118,4 @@ reproduzir manualmente a grafia anterior.
 | `2026-09-17 16:38 -03` | Codex | Item criado em `recebido` | Solicitação de autocomplete no nome de novos itens |
 | `2026-09-17 16:38 -03` | Codex | `recebido` → `em_triagem` | Ausência de sugestões e fontes históricas confirmadas nos modelos e formulários |
 | `2026-09-17 16:38 -03` | Usuário/Codex | `em_triagem` → `pronto_para_refinamento` | Fonte templates+execuções, escopo apenas de adição, prioridade P2 e riscos definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.8.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

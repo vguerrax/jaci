@@ -225,3 +225,10 @@ data-dev
 jaci.*
 .prod.env
 .env.production
+# BL-0026: ambiente sintético local
+.env.test
+.test-runtime/
+
+reports/
+
+node_modules/

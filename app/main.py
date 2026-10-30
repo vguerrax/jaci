@@ -23,6 +23,7 @@ from app.routers.offline import router as offline_router
 from app.routers.sync_center import router as sync_center_router
 from app.websocket.handlers import execution_ws_handler
 from app.utils.security import decode_access_token
+from app.services.auth_service import get_user_from_claims
 
 settings = get_settings()
 
@@ -79,9 +80,7 @@ async def add_unread_count(request: Request, call_next):
                 db = SessionLocal()
                 try:
                     from app.services.notification_service import get_unread_count
-                    user = db.scalar(
-                        select(User).where(User.tupa_user_id == str(tupa_user_id))
-                    )
+                    user = get_user_from_claims(db, payload)
                     if user:
                         unread_count = get_unread_count(db, user.id)
                 except Exception:

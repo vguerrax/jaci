@@ -19,12 +19,14 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--restart",
+        "-r",
         action=argparse.BooleanOptionalAction,
         default=True,
         help="Reinicia automaticamente ao alterar arquivos (padrão: ativo).",
     )
     parser.add_argument(
         "--env-file",
+        "-e",
         default=".env",
         help="Arquivo de ambiente carregado antes da aplicação (padrão: .env).",
     )

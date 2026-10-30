@@ -26,6 +26,8 @@ def _service_headers() -> dict[str, str]:
 
 
 async def _request(method: str, path: str, **kwargs) -> dict[str, Any]:
+    if settings.auth_mock:
+        raise TupaError("Operação indisponível na autenticação simulada.", 501)
     try:
         async with httpx.AsyncClient(timeout=settings.tupa_timeout_seconds) as client:
             response = await client.request(method, _url(path), **kwargs)
@@ -56,6 +58,8 @@ def _credentials(email: str, password: str) -> dict[str, str]:
 
 
 async def create_user(email: str, password: str) -> str:
+    if settings.auth_mock:
+        raise TupaError("Cadastro indisponível na autenticação simulada.", 501)
     data = await _request(
         "POST",
         "/auth/users",
@@ -66,6 +70,8 @@ async def create_user(email: str, password: str) -> str:
 
 
 async def migrate_user(email: str, password_hash: str) -> str:
+    if settings.auth_mock:
+        raise TupaError("Migração indisponível na autenticação simulada.", 501)
     if not settings.tupa_product_id:
         raise TupaError("TUPA_PRODUCT_ID não está configurado.", 500)
     data = await _request(
@@ -82,16 +88,26 @@ async def migrate_user(email: str, password_hash: str) -> str:
 
 
 async def token(email: str, password: str) -> dict[str, Any]:
+    if settings.auth_mock:
+        from app.services.test_auth_service import token as mock_token
+        return mock_token(email, password)
     return await _request("POST", "/auth/token", json=_credentials(email, password))
 
 
 async def refresh(refresh_token: str) -> dict[str, Any]:
+    if settings.auth_mock:
+        from app.services.test_auth_service import refresh as mock_refresh
+        return mock_refresh(refresh_token)
     return await _request(
         "POST", "/auth/refresh", json={"refresh_token": refresh_token}
     )
 
 
 async def logout(access_token: str) -> None:
+    if settings.auth_mock:
+        from app.services.test_auth_service import logout as mock_logout
+        mock_logout(access_token)
+        return
     await _request(
         "POST",
         "/auth/logout",
@@ -111,7 +127,12 @@ def _jwks() -> dict[str, Any]:
 
 
 def decode_access_token(access_token: str) -> dict[str, Any] | None:
+    if settings.auth_mock:
+        from app.services.test_auth_service import decode_access_token as mock_decode
+        return mock_decode(access_token)
     try:
+        if jwt.get_unverified_claims(access_token).get("iss") == "jaci-test":
+            return None
         header = jwt.get_unverified_header(access_token)
         keys = _jwks().get("keys", [])
         key = next(

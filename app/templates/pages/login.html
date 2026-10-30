@@ -29,13 +29,16 @@
                     <label for="login-password" class="form-label">Senha</label>
                     <div class="input-group">
                         <input type="password" class="form-control" id="login-password" name="password"
-                            placeholder="Sua senha" required autocomplete="current-password">
+                            placeholder="Sua senha" {% if not auth_mock_enabled %}required{% endif %} autocomplete="current-password">
                         <button type="button" class="btn btn-outline-secondary" id="toggle-login-password"
                             aria-label="Mostrar senha" aria-pressed="false">
                             <i class="bi bi-eye-fill" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
+                {% if auth_mock_enabled %}
+                <p class="text-help">Modo de testes: entre com o e-mail de um usuário existente. A senha é ignorada.</p>
+                {% endif %}
                 <button type="submit" class="btn btn-primary w-100">
                     Entrar
                     <i class="bi bi-unlock-fill"></i>

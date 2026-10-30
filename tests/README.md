@@ -24,7 +24,8 @@
 Execute a suíte com:
 
 ```bash
-venv/bin/pytest
+npm ci --ignore-scripts
+bash scripts/run_tests.sh
 ```
 
 # Rastreabilidade dos fluxos do usuário
@@ -39,13 +40,14 @@ venv/bin/pytest
 | FL-06 Aprendizado do template | Implementado | `test_fl06_finishing_purchase_suggests_runtime_items_without_applying_them`, `test_fl06_only_selected_suggestions_are_applied_to_template` |
 | FL-07 Gestão de grupos | Implementado | `test_member_can_be_invited_to_the_group`, `test_fl07_accepted_member_can_access_shared_templates_and_executions` |
 | FL-08 Agenda e histórico | Parcial | `test_fl08_completed_execution_remains_available_in_agenda_history`; histórico de preços está no [BL-0003](../docs/domain/backlog/items/BL-0003-historico-precos.md) e análise de gastos no [BL-0004](../docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md) |
-| FL-09 Operação offline | Implementado com rastreabilidade pendente | fila IndexedDB, sincronização e resolução explícita cobertas por `tests/test_offline_cache.py` e `tests/test_sync_center.py`; contratos Python legados permanecem em `xfail` e são acompanhados pelo [BL-0001](../docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) |
+| FL-09 Operação offline | Implementado; reconciliação em validação para 1.4.0 | `tests/js/offline_queue.test.cjs` via `tests/test_offline_queue_node.py`, API em `tests/test_offline_cache.py`, central em `tests/test_sync_center.py` e browser em `tests/ui/test_purchase_playwright.py`; limites na [matriz de operações](../docs/domain/pwa-offline-foundation.md#matriz-atual-de-operações) |
 | FL-10 Home operacional | Implementado | `test_home_renders_one_touch_purchase_actions_and_global_sync_indicator` e `tests/test_home_dashboard.py` |
 
 Os contratos futuros usam `xfail(strict=True)`. Enquanto não implementados,
 aparecem como `XFAIL`; quando começarem a passar, o `XPASS` falhará a suíte até
-que o fluxo seja revisado. Os contratos legados de FL-09 não definem o estado
-atual da implementação e devem ser reconciliados no BL-0001.
+que o fluxo seja revisado. Permanecem somente os dois FL-08 de histórico de preços
+(BL-0003) e análise de gastos (BL-0004); os três contratos FL-09 obsoletos foram
+substituídos após os contratos da fila real passarem.
 
 # Demandas do backlog com cobertura rastreada
 
@@ -53,10 +55,11 @@ atual da implementação e devem ser reconciliados no BL-0001.
 |---|---|---|
 | [BL-0014](../docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md) Resumo de orçamento fixo | Concluído | `tests/test_sticky_budget.py`, `tests/test_agenda_and_budget_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py` e `tests/test_pwa.py` |
 | [BL-0016](../docs/domain/backlog/items/BL-0016-botao-flutuante-adicionar-itens.md) Adição contextual por modal | Concluído | `tests/test_item_add_fab.py`, `tests/test_template_execution_flow.py`, `tests/test_execution_totals_regression.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py`, `tests/test_item_filter.py` e `tests/test_sticky_budget.py` |
-| [BL-0017](../docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md) Nome exclusivo para compra sem lista | Concluído | `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`; cenários Playwright futuros permanecem relacionados à BL-0011 |
-| [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Concluído | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
-| [BL-0020](../docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md) Identidade imutável para item vinculado | Em validação | `tests/test_template_learning_tdd.py`, `tests/test_template_execution_flow.py`, `tests/test_business_rules.py`, `tests/test_collaboration_and_isolation_flow.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; cenário Playwright futuro relacionado à BL-0011 |
-| [BL-0025](../docs/domain/backlog/items/BL-0025-release-1-3-0.md) Preparação da release e versão obrigatória na publicação | Em validação | `tests/test_publish.py`; env temporário e Docker simulado, sem publicar |
+| [BL-0017](../docs/domain/backlog/items/BL-0017-nome-execucao-avulsa.md) Nome exclusivo para compra sem lista | Concluído | `tests/test_scheduled_execution_editing.py` e `tests/test_offline_cache.py`; Playwright cobre renomeação avulsa na BL-0011 |
+| [BL-0018](../docs/domain/backlog/items/BL-0018-corrigir-backdrop-modal-completar-item.md) Backdrop do modal de completar item | Concluído | `tests/test_item_add_fab.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; Playwright cobre compra/modal e identidade protegida na BL-0011 |
+| [BL-0020](../docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md) Identidade imutável para item vinculado | Concluído | `tests/test_template_learning_tdd.py`, `tests/test_template_execution_flow.py`, `tests/test_business_rules.py`, `tests/test_collaboration_and_isolation_flow.py`, `tests/test_offline_cache.py`, `tests/test_pwa.py` e `tests/test_sticky_budget.py`; Playwright cobre compra/modal e identidade protegida na BL-0011 |
+| [BL-0025](../docs/domain/backlog/items/BL-0025-release-1-3-0.md) Preparação da release e versão obrigatória na publicação | Concluído | `tests/test_publish.py`; env temporário e Docker simulado, sem publicar |
+| [BL-0026](../docs/domain/backlog/items/BL-0026-ferramentas-ambiente-testes.md) Ambiente, AUTH_MOCK e scripts | Em validação | `tests/test_test_environment.py`; subprocessos isolados, HTTP com TestClient e identidade WebSocket; smoke servidor local registrado no refinamento |
 
 # Backlog legado — Sprint 4 — Aprendizado contínuo dos templates
 
@@ -71,3 +74,65 @@ atual da implementação e devem ser reconciliados no BL-0001.
 | BL-075 Detectar divergências recorrentes de orçamento | Implementado | `test_bl075_budget_suggestion_uses_median_from_completed_template_executions`, `test_bl075_budget_learning_ignores_standalone_and_unfinished_executions` |
 | BL-076 Sugerir atualização do orçamento do template | Implementado | `test_bl076_accepts_budget_suggestion_only_for_future_executions`, `test_bl076_rejected_budget_suggestion_is_not_represented_for_same_execution`, `test_bl076_close_flow_accepts_or_rejects_budget_suggestion` |
 | RNF-S4.04 Desativar sugestões por grupo | Implementado | `test_rnf_s4_group_can_disable_template_learning_suggestions` |
+
+# Cobertura Python — BL-0011
+
+`bash scripts/run_tests.sh --coverage` gera terminal, XML, JSON e HTML em
+`reports/coverage/`. O piso combinado de linhas/branches é 56,18%, medido na
+implementação inicial e versionado em `.coveragerc`. Não reduzir sem revisão.
+Para selecionar testes sem exigir o piso da suíte completa:
+`bash scripts/run_tests.sh --coverage --cov-fail-under=0 tests/test_business_rules.py`.
+A métrica não inclui JavaScript, browser ou subprocessos não instrumentados.
+
+# Navegador — BL-0011
+
+Nove cenários em tests/ui/test_purchase_playwright.py aprovados por Chromium
+(390x844 e smoke 1280x800), pelo runner isolado. Cobrem autenticação sintética,
+snapshot, compra/total, identidade BL-0020, incorporação sem categoria BL-0027,
+isolamento, fila offline, recarga/reconexão e concorrência/resolução explícita.
+Relatórios são evidências de teste, não publicação da release. Os dois cenários
+offline são também referências da reconciliação FL-09 na BL-0001.
+
+
+# Contratos offline FL-09 — BL-0001
+
+Node.js 22+ e `npm ci --ignore-scripts` são obrigatórios. `npm test` executa o
+JavaScript real em VM com fake-indexeddb 6.2.6; não utiliza rede, navegador ou banco
+remoto. O wrapper `tests/test_offline_queue_node.py` executa Node na suíte Python
+e propaga falhas; ausência do runtime/dependência falha com instrução de instalação.
+O CI instala Node 24 e o lockfile antes do job Python. A cobertura percentual Python
+não mede os cenários JS; o teste agregado representa sete cenários Node distintos.
+
+| Contrato legado removido de test_future_user_flows.py | Substituto Node em tests/js/offline_queue.test.cjs | API/autorização existente | Chromium real BL-0011 |
+| --- | --- | --- | --- |
+| test_fl09_offline_operation_is_queued_before_remote_sync | enqueue persiste antes de rede e sobrevive à recarga; alterações do mesmo item preservam a versão base | test_offline_snapshot_is_scoped_to_user_groups; test_offline_start_execution_operation_rejects_foreign_execution | test_offline_queue_survives_reload_and_reconnects_once |
+| test_fl09_reconnection_synchronizes_queued_operations_without_data_loss | reconexão envia por criação e remove somente após confirmação; falha de rede retém a operação e impede ultrapassagem; sessão expirada não confirma; syncNow simultâneo não duplica no mesmo contexto | test_offline_complete_item_operation_applies_pending_change; test_offline_finalize_execution_operation_generates_next_cycle_on_sync | test_offline_queue_survives_reload_and_reconnects_once |
+| test_fl09_sync_conflict_requires_explicit_resolution_and_preserves_both_versions | 409 preserva versões local/remota e exige resolução explícita | test_offline_item_operation_rejects_stale_version; test_offline_conflict_history_lists_and_resolves_audits | test_concurrent_purchase_requires_explicit_conflict_resolution |
+
+Os antigos testes importavam `app.services.sync_service`, que não existe. A
+remoção reconcilia o contrato com a implementação já existente em IndexedDB,
+sem criar sincronização em Python. Os contratos Node não demonstram persistência
+em disco de um browser: a recarga simulada reutiliza a mesma fábrica IndexedDB.
+Essa propriedade é verificada separadamente pelo cenário Chromium com recarga.
+Segurança por grupo e auditoria continuam comprovadas pelos testes de API, com
+dados sintéticos. A documentação não amplia a fila para outras entidades.
+
+Resultados e commits da entrega estão no
+[refinamento da BL-0001](../docs/domain/tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
+
+
+# Bypass local AUTH_MOCK — BL-0028
+
+`tests/test_auth_mock_bypass.py` cobre ativação por duas flags, nome de ambiente
+arbitrário, configuração SQLite/PostgreSQL, login com usuário fora do seed e sem
+vínculo Tupã, senha ignorada, recusa de usuário ausente/inativo, identidade
+HTTP/WS/middleware e autorização por grupo. Os contratos anteriores de rotação,
+revogação, reinício e caminho real continuam em tests/test_test_environment.py.
+Os guards de setup/seed continuam obrigatórios nas ferramentas, sem restringir
+os bancos aceitos pelo modo mock da aplicação. Nenhum teste usa base do usuário.
+
+O cenário UI test_mock_login_accepts_local_user_without_tupa_or_password usa um
+usuário sintético criado fora das três contas do seed e senha vazia; comprova o
+login normal sem atribuir tupa_user_id. A suíte passa a conter dez cenários.
+Resultados executados ficam no refinamento BL-0028; declaração de cobertura não
+substitui evidência de execução. Dois contratos FL-08 permanecem fora do escopo.

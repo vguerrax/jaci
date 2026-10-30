@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0003` |
 | Título | Disponibilizar histórico de preços por grupo e item |
+| Versão-alvo | `1.10.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | FL-08, item 4 do roadmap e contrato futuro de histórico de preços |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-08-05` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -99,3 +100,4 @@ Abrir manualmente cada execução finalizada e comparar os valores.
 | `2026-07-24 00:48 -03` | Codex | Item criado em `recebido` | Migração do roadmap, fluxo parcial e contrato futuro |
 | `2026-08-05 15:16 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Identidade por nome normalizado, acesso contextual e prioridade definidos com o usuário |
 | `2026-08-05 15:16 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Fontes históricas, riscos, dependências, duplicidades e próximo passo definidos |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.10.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

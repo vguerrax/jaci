@@ -1,0 +1,94 @@
+name: Jaci tests
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python coverage
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install IndexedDB contract dependency
+        run: npm ci --ignore-scripts
+      - name: Install development dependencies
+        run: |
+          python -m venv venv
+          venv/bin/python -m pip install -r requirements-dev.txt
+      - name: Run isolated Python suite with coverage
+        run: bash scripts/run_tests.sh --coverage
+      - name: Publish coverage reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: python-coverage
+          path: |
+            reports/coverage/coverage.xml
+            reports/coverage/coverage.json
+            reports/coverage/html/
+          if-no-files-found: warn
+          retention-days: 7
+
+  ui:
+    name: Chromium mobile and desktop
+    needs: python
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ENV_FILE: .env.test
+      UI_TEST_WORKERS: '1'
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - name: Install development dependencies
+        run: |
+          python -m venv venv
+          venv/bin/python -m pip install -r requirements-dev.txt
+      - name: Install Chromium and pinned UI assets
+        run: |
+          venv/bin/python -m playwright install --with-deps chromium
+          venv/bin/python -m scripts.setup_ui_assets
+      - name: Prepare synthetic environment
+        run: bash scripts/setup_test_env.sh
+      - name: Run isolated browser suite
+        run: ENV_FILE=.env.test bash scripts/run_ui_tests.sh
+      - name: Publish synthetic failure screenshots and status
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: playwright-results
+          path: |
+            reports/playwright/**/*.png
+            reports/playwright/**/result.json
+          if-no-files-found: warn
+          retention-days: 7

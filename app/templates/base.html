@@ -40,6 +40,9 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-lunar">
+    {% if auth_mock_enabled %}
+    <div class="alert alert-warning text-center mb-0" role="status">Ambiente de testes — Autenticação simulada</div>
+    {% endif %}
     <div id="page-loading" class="page-loading" role="status" aria-live="polite" aria-hidden="true" hidden>
         <div class="page-loading-card">
             <span class="page-loading-spinner" aria-hidden="true"></span>

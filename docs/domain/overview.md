@@ -21,3 +21,19 @@ Antes do Jaci, uma família ou grupo que faz compras recorrentes (compra do mês
 - **Sem noção de gasto em tempo real:** chegar no caixa e descobrir que estourou o orçamento
 
 O Jaci ataca essas dores com templates recorrentes, execução em tempo real multiusuário, registro financeiro por item, e agenda inteligente.
+
+
+## Operação com conexão instável
+
+A execução de compras já utiliza IndexedDB e uma fila persistente: ações
+suportadas são registradas no dispositivo antes do envio à API. O estado local
+pendente não confirma persistência remota. Ao reconectar, a aplicação sincroniza
+as operações; divergências de versão exigem decisão explícita, preservando os
+dados local e remoto para resolução. Socket.IO complementa a atualização visual.
+
+É necessário ter aberto as páginas e armazenado os dados anteriormente. Criar ou
+administrar grupos, categorias e templates, autenticar e criar execuções exige
+API. Finalizar localmente não gera o próximo ciclo recorrente: isso acontece no
+servidor durante a sincronização. A [matriz de operações e recuperação](pwa-offline-foundation.md#matriz-atual-de-operações)
+detalha o alcance e os limites; os testes estão rastreados na
+[BL-0001](backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).

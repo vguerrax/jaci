@@ -6,6 +6,7 @@
 | --- | --- |
 | ID | `BL-0021` |
 | Título | Expor API externa para criar e editar execuções |
+| Versão-alvo | `1.13.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
@@ -14,7 +15,7 @@
 | Origem | Solicitação do usuário para integrar o Jaci a outros sistemas |
 | Ambiente/versão | Estado de `develop` (`179ce51`) em `2026-09-16` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-09-16` |
+| Atualizado em | `2026-10-28` |
 
 ### Comportamento observado
 
@@ -121,3 +122,4 @@ quebraria os limites de segurança e compatibilidade do produto.
 | `2026-09-16 19:45 -03` | Codex | `recebido` → `em_triagem` | Escopo confrontado com autenticação, grupos, execuções e API offline existentes |
 | `2026-09-16 19:45 -03` | Usuário/Codex | `em_triagem` → `pronto_para_refinamento` | Escopo, autoria, leitura, concorrência, validade da chave e Redis decididos com o usuário |
 | `2026-09-16 19:45 -03` | Codex | `pronto_para_refinamento` → `em_refinamento` → `pronto_para_implementacao` | Contrato HTTP, riscos, fatias TDD e validações definidos; aguarda aprovação explícita |
+| `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.13.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |

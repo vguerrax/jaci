@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 import os
 
 os.environ["DEBUG"] = "false"
-os.environ["DATABASE_URL"] = "sqlite://"
+if os.environ.get("JACI_RUN_PLAYWRIGHT") != "1":
+    os.environ["DATABASE_URL"] = "sqlite://"
 
 import pytest
 from sqlalchemy import create_engine, event

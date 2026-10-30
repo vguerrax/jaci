@@ -235,8 +235,8 @@ Os fluxos implementados e os contratos futuros são guiados por
   grupos, Home operacional, consulta básica da agenda/histórico, aprendizado de
   templates e operação offline de execuções com fila local, sincronização e
   resolução explícita de conflitos.
-- Em evolução: cobertura e rastreabilidade offline remanescente, histórico de
-  preços e análise de gastos.
+- Em evolução: histórico de preços e análise de gastos. A cobertura offline da
+  1.4.0 está em validação, conforme o backlog.
 
 O [backlog ativo](docs/domain/backlog/README.md) é a fonte de verdade para o
 estado das demandas. Contratos futuros usam `xfail(strict=True)` até a
@@ -273,10 +273,16 @@ aplicadas primeiro ao estado local e registradas numa fila persistente. Ao
 reconectar, a fila sincroniza em ordem, preserva operações com falha e exige
 resolução explícita quando há conflito.
 
+Iniciar uma execução existente, editar seu agendamento e alterar itens são
+operações locais enfileiradas. Criar grupos, categorias, templates e execuções
+continua exigindo API. A finalização offline é provisória até sincronizar; a
+recorrência é gerada somente no servidor. Abra a compra online antes de precisar
+usá-la sem rede: páginas e dados ainda não armazenados não ficam disponíveis.
+
 O escopo implementado, as limitações atuais e o roteiro de validação manual
 estão em
 [docs/domain/pwa-offline-foundation.md](docs/domain/pwa-offline-foundation.md).
-A cobertura e a rastreabilidade remanescentes estão no
+A matriz de operações e os contratos reconciliados estão no
 [BL-0001](docs/domain/backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ## Testes
@@ -285,13 +291,98 @@ Instale as dependências de desenvolvimento e execute a suíte:
 
 ```bash
 pip install -r requirements-dev.txt
-venv/bin/pytest
+npm ci --ignore-scripts
+bash scripts/run_tests.sh
 ```
+
+Node.js 22+ é necessário para os contratos da fila JavaScript; o CI utiliza Node 24.
+`npm test` executa apenas esses contratos com fake-indexeddb fixado no lockfile.
+Essa dependência é exclusiva de desenvolvimento e não entra no frontend publicado.
 
 A rastreabilidade entre regras, fluxos e testes está em
 [tests/README.md](tests/README.md). Uma execução saudável pode conter casos `XFAIL`
-para contratos futuros documentados ou contratos legados explicitamente
-rastreados; um `XPASS` é tratado como falha até que o contrato seja revisado.
+para os dois contratos futuros FL-08 (histórico de preços e análise de gastos);
+um `XPASS` é tratado como falha até que o contrato seja revisado.
+
+### AUTH_MOCK — bypass do Tupã (BL-0028)
+
+Com `APP_ENV=test` e `AUTH_MOCK=true`, o formulário de login aceita o e-mail de
+qualquer usuário existente e ativo na base configurada. A senha é opcional e
+ignorada; não é consultada no Tupã nem no hash legado. Usuários desconhecidos ou
+inativos são recusados, sem cadastro automático. IDs, vínculo Tupã e grupos são
+preservados, inclusive quando o usuário ainda não possui `tupa_user_id`.
+
+Essas duas flags habilitam o modo com o banco já configurado, SQLite ou PostgreSQL.
+Não é necessário nome especial de arquivo de ambiente, seed ou marcador de banco.
+Por exemplo, usando suas configurações de desenvolvimento em `development.env`:
+
+```bash
+ENV_FILE=development.env venv/bin/python run.py --port 8007 --no-restart
+```
+
+A autorização por grupo continua normal e a interface mostra autenticação
+simulada. Cadastro/migração externa e envio de e-mail ficam indisponíveis no mock.
+Tokens são assinados localmente; refresh/logout e revogação usam cache privado
+criado automaticamente, separado por projeto/conexão. Reiniciar o processo mantém
+as sessões enquanto esse cache existir; nenhuma preparação manual é necessária.
+AUTH_MOCK é desativado por padrão e recusado com APP_ENV diferente de test.
+Com AUTH_MOCK=false, a autenticação utiliza a configuração normal do Tupã.
+
+### Ambiente sintético de testes (BL-0026)
+
+Prepare um banco SQLite isolado, sem Tupã ou credenciais reais:
+
+```bash
+bash scripts/setup_test_env.sh
+```
+
+O setup cria `.env.test`, banco migrado e seed idempotente em `.test-runtime/manual/`.
+Ele recusa bancos externos, arquivos de produção e diretórios ocupados sem marcador.
+O diretório e o arquivo de ambiente ficam fora do Git e da imagem Docker.
+Não copie configurações de produção: o setup gera as configurações sintéticas.
+
+As contas são `owner@example.com` e `member@example.com` na Casa A e
+`outsider@example.com` na Casa B. As automações podem preencher `jaci-test-only`,
+mas a senha é ignorada pelo bypass. Esse seed é uma conveniência para testes.
+
+Os scripts de setup/seed/servidor/UI exigem .env.test e banco marcado para isolar
+as execuções automatizadas. Essas restrições são das ferramentas; o AUTH_MOCK da
+aplicação exige somente as duas flags e um usuário ativo na base configurada.
+
+Inicie o servidor local, sem reload e limitado a `127.0.0.1`:
+
+```bash
+bash scripts/run_test_server.sh                     # porta 8014
+bash scripts/run_test_server.sh --port 8015
+ENV_FILE=/tmp/jaci-test-exemplo/.env.test bash scripts/run_test_server.sh
+```
+
+Para um ambiente temporário separado (nome começando com `jaci-test-`):
+
+```bash
+bash scripts/setup_test_env.sh --env-file /tmp/jaci-test-exemplo/.env.test --runtime-dir /tmp/jaci-test-exemplo
+```
+
+O setup aplica migrações e seed somente no banco marcado. O servidor exige setup
+prévio e mantém esse banco entre reinícios. Para limpar explicitamente o ambiente
+manual padrão e seu `.env.test`, use `venv/bin/python -m scripts.test_environment --clean`.
+A limpeza recusa configurações que não correspondem ao diretório marcado.
+
+Execute a suíte Python ou selecione testes, sem carregar `.env`/`.env.production`:
+
+```bash
+bash scripts/run_tests.sh
+bash scripts/run_tests.sh -q tests/test_business_rules.py
+```
+
+O runner cria configuração temporária, usa as fixtures Python em memória e deixa
+`AUTH_MOCK=false` nesse processo (os contratos de mock criam seus próprios ambientes).
+Ele elimina configurações herdadas da aplicação, exclui `tests/ui`, propaga erros
+e limpa seu diretório e processos próprios. `TEST_PYTHON` permite selecionar outro
+executável Python; o padrão é `venv/bin/python`. Instale previamente
+`pip install -r requirements-dev.txt`; os scripts não instalam pacotes automaticamente.
+Instale também `npm ci --ignore-scripts` para os contratos FL-09. Playwright e o
+runner isolado já foram entregues na BL-0011; veja a seção de testes de navegador.
 
 ## 🔐 Segurança
 
@@ -358,3 +449,43 @@ Este projeto é de uso pessoal. Sinta-se livre para usar, modificar e compartilh
 Jaci, na mitologia Tupi-Guarani, é a deusa da lua e mãe dos frutos. Protetora das plantas, dos ciclos e da fertilidade da terra — o espírito perfeito para um aplicativo que ajuda a organizar a despensa com cuidado e conexão com a natureza.
 
 Feito com 🌙 por vguerrax
+
+### Cobertura e testes de navegador — BL-0011
+
+```bash
+bash scripts/run_tests.sh --coverage
+# Instalação explícita de browser e bundles de teste:
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.cache/playwright" venv/bin/python -m playwright install chromium
+venv/bin/python -m scripts.setup_ui_assets
+bash scripts/setup_test_env.sh
+# Executar somente após autorização da validação UI:
+ENV_FILE=.env.test bash scripts/run_ui_tests.sh
+ENV_FILE=.env.test bash scripts/run_ui_tests.sh tests/ui/test_purchase_playwright.py -k login
+```
+
+O piso atual é 56,18% para linhas/branches Python (processo pytest). Relatórios
+em `reports/coverage`; seleções focais podem usar `--cov-fail-under=0` sem baixar
+a baseline versionada. UI/JavaScript não entram nessa porcentagem.
+
+O runner UI valida `.env.test`, cria novo banco e servidor local em porta efêmera,
+e remove somente esses recursos ao terminar. Não reutiliza o servidor manual.
+`UI_TEST_WORKERS=1` é obrigatório nesta entrega. Chromium inicia com viewport
+390x844; há um smoke desktop 1280x800. A suíte Python exclui `tests/ui`; a coleta
+UI direta permanece desabilitada sem `JACI_RUN_PLAYWRIGHT=1`, definido pelo runner.
+
+O runner exige assets previamente preparados e usa os bundles reais de Bootstrap
+e HTMX, verificados por hash. Recursos externos opcionais de fontes/ícones são
+bloqueados no ambiente UI. Capturas sintéticas de falha e status ficam em
+`reports/playwright/<execução>/`; traces e vídeos ficam desativados para não
+publicar cookies ou payloads de login. Não usar dados reais nas fixtures.
+
+### CI no GitHub
+
+O workflow `Jaci tests` executa em PRs e pushes para `develop`/`main`, além de
+disparo manual. O job Python aplica o piso de cobertura e libera o job Chromium
+apenas após sucesso. Ambos usam os scripts locais e dados sintéticos, sem
+segredos Tupã ou de produção. Artifacts são retidos por sete dias; não há deploy.
+
+Depois que o workflow executar no repositório, configure nas regras de proteção
+da branch os checks `Python coverage` e `Chromium mobile and desktop` como
+obrigatórios. Criar o YAML não altera automaticamente as regras do GitHub.

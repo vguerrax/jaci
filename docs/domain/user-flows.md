@@ -379,9 +379,21 @@ Resolver conflitos (se necessário)
 
 ## Estado e rastreabilidade
 
-A operação offline de execuções possui fila local, sincronização, retentativa e
-resolução explícita de conflitos. Cobertura remanescente e contratos legados
-estão no
+A operação offline de execuções possui fila IndexedDB, sincronização, retentativa
+e resolução explícita de conflitos. O usuário precisa ter aberto a compra e
+armazenado seus dados antes da perda de conexão. Iniciar/editar uma execução
+agendada, adicionar/editar/remover/concluir itens e finalizar são suportados
+dentro dos limites da [matriz de operações](pwa-offline-foundation.md#matriz-atual-de-operações).
+Criar grupos, categorias, templates e execuções exige API.
+
+A confirmação local representa uma pendência até o servidor aceitar a operação.
+Falhas de rede retêm a fila; HTTP 409 exige resolução explícita na Central de
+Sincronização. Não limpar dados do navegador para tentar resolver uma pendência.
+A recorrência é gerada apenas após a finalização sincronizada no servidor.
+
+Contratos comportamentais Node, autorização/auditoria na API e dois cenários reais
+Chromium substituem os três contratos Python legados de FL-09. A matriz de
+rastreabilidade e a publicação pendente da 1.4.0 estão na
 [BL-0001](backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ---
