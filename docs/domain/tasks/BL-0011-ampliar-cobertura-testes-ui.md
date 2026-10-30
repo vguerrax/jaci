@@ -246,3 +246,18 @@ feature/BL-0011-refinamento-1-4-0 na develop: **70d36ba**. Candidato final
 9fa6151 aprovado nos dois jobs do [run 40814716172](https://github.com/vguerrax/jaci/actions/runs/40814716172).
 Branches preservadas; publicação e aceite da 1.4.0 continuam pendentes. Estado
 em_validacao, sem deploy. Os registros anteriores descrevem o estágio de cada tarefa.
+
+## Publicação 1.4.0 — 2026-10-29
+
+Publicação em produção informada pelo usuário. Tag v1.4.0 em
+a1e188eecaff68cf1a24d65e7286c595338c7516 (PR #46), conferida localmente,
+contendo a correção AUTH_MOCK 98c788d e o commit do usuário 00a7bc9 em run.py.
+Validação final da release já registrada: 307 testes Python aprovados, dois xfail
+FL-08 externos ao escopo, dez Chromium, PostgreSQL 17 e CI aprovados; cobertura
+60,02%. Nenhum novo teste, migração, deploy ou ajuste de ambiente foi executado
+para este registro. Os registros anteriores de publicação pendente são históricos.
+
+Estado em_validacao mantido até confirmação do aceite final da release, sem
+inferir aceite manual do anúncio de publicação. Acompanhamento consolidado na
+branch coordenadora feature/BL-0026-ferramentas-ambiente-testes, preservada até
+a liberação de integração pelo usuário.

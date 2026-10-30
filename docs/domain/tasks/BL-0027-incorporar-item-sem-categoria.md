@@ -76,3 +76,18 @@ O cenário UI reprovado deve passar com os mesmos dados sem categoria.
 
 - Correção 12ee496 integrada com autorização na develop em d303c38;
   aceite UI automatizado aprovado, publicação da 1.4.0 ainda pendente.
+
+## Publicação 1.4.0 — 2026-10-29
+
+Publicação em produção informada pelo usuário. Tag v1.4.0 em
+a1e188eecaff68cf1a24d65e7286c595338c7516 (PR #46), conferida localmente,
+contendo a correção AUTH_MOCK 98c788d e o commit do usuário 00a7bc9 em run.py.
+Validação final da release já registrada: 307 testes Python aprovados, dois xfail
+FL-08 externos ao escopo, dez Chromium, PostgreSQL 17 e CI aprovados; cobertura
+60,02%. Nenhum novo teste, migração, deploy ou ajuste de ambiente foi executado
+para este registro. Os registros anteriores de publicação pendente são históricos.
+
+Estado em_validacao mantido até confirmação do aceite final da release, sem
+inferir aceite manual do anúncio de publicação. Acompanhamento consolidado na
+branch coordenadora feature/BL-0026-ferramentas-ambiente-testes, preservada até
+a liberação de integração pelo usuário.

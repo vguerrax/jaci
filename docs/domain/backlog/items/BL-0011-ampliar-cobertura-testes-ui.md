@@ -77,7 +77,7 @@ no navegador antes de cada publicação.
 | Dependências | BL-0026 para ambiente/mock e scripts Python; Chromium e dependências de browser no CI |
 | Duplicidades | BL-0001 reconcilia contratos legados e matriz offline; esta demanda possui infraestrutura UI/CI/cobertura |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Autorizar integração final na develop e registrar publicação da 1.4.0 |
+| Próximo passo | Confirmar aceite final da release para concluir e arquivar a demanda |
 
 ## Acompanhamento até produção
 
@@ -90,12 +90,12 @@ no navegador antes de cada publicação.
   GitHub Actions 40814194309: Python coverage e Chromium mobile and desktop
   concluíram com success em 78cbfb1. Link:
   https://github.com/vguerrax/jaci/actions/runs/40814194309.
-- Publicação: ainda não publicada.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; aceite final manual ainda não confirmado.
 - Itens relacionados: [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ### Impedimentos
 
-- Publicação da 1.4.0 pendente; implementação, validações e integração aprovadas.
+- Publicação registrada; confirmação do aceite final da 1.4.0 pendente.
 
 ## Histórico
 
@@ -108,3 +108,4 @@ no navegador antes de cada publicação.
 | `2026-10-29 00:04 -03` | Usuário/Codex | Refinamento aprovado; em_implementacao | Integração BL-0026 autorizada e realizada em b289771; BL-0011 iniciada em branch de tarefa própria |
 | `2026-10-29` | Usuário/Codex | em_implementacao → em_validacao; 4/4 fatias entregues | Execução UI autorizada; 288 passes/5 xfail, cobertura 56,18%, nove cenários Chromium e CI remoto aprovados; sem merge final ou deploy |
 | `2026-10-29` | Usuário/Codex | Integração autorizada e realizada na develop | Merge 70d36ba da branch de integração; candidato 9fa6151 aprovado no run 40814716172; sem deploy |
+| `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |

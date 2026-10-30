@@ -72,7 +72,7 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 | Dependências | Parser HTML e serviço de incorporação existentes; cenário BL-0011 |
 | Duplicidades | Lacuna da BL-0020, descoberta após sua publicação; novo defeito corretivo |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar refinamento versionado, correção e integração para liberar UI |
+| Próximo passo | Confirmar aceite final da release para concluir e arquivar a demanda |
 
 ## Acompanhamento até produção
 
@@ -84,12 +84,12 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
   Regressão: 282 passes/5 xfail legados, sem falhas/XPASS; grafo atualizado.
   Cenário UI repetido pela BL-0011 com os mesmos dados sem categoria: aprovado
   na suíte de nove cenários (20,65s), após merge d303c38.
-- Publicação: ainda não publicada.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; aceite final manual ainda não confirmado.
 - Itens relacionados: BL-0011 e BL-0020.
 
 ### Impedimentos
 
-- Aceite UI final e publicação pendentes; integração autorizada pelo usuário.
+- Publicação registrada; confirmação do aceite final da 1.4.0 pendente.
 
 ## Histórico
 
@@ -100,3 +100,4 @@ O caminho sem categoria precisa ser corrigido; não ocultar a falha alterando a 
 | `2026-10-29` | Usuário/Codex | Refinamento e integração aprovados; em_implementacao | Aprovação explícita posterior a e25a531; contratos com duas falhas esperadas e autorização estrangeira preservada |
 | `2026-10-29` | Codex | em_implementacao → em_validacao | 48 testes focais e regressão com 282 passes/5 xfail aprovados; sem migração e sem publicação |
 | `2026-10-29` | Codex | Aceite automatizado UI corretivo aprovado | Nove cenários Chromium aprovados, mantendo o item sem categoria; correção em develop d303c38; publicação 1.4.0 pendente |
+| `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |

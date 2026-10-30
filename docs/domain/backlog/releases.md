@@ -1,6 +1,8 @@
 # Planejamento de releases após a 1.3.0
 
-Base publicada: v1.3.0, commit ff16202, em 2026-10-28.
+Base anterior: v1.3.0, commit ff16202, em 2026-10-28.
+Publicação atual: v1.4.0, commit a1e188e, em 2026-10-29, informada pelo usuário.
+Aceite final manual da 1.4.0 aguarda confirmação; estados operacionais no índice.
 Plano solicitado pelo usuário em 2026-10-28. Versões são alvos sem datas fixas;
 associação não altera prioridade, estado nem substitui aprovação do refinamento.
 O [índice](README.md) e os itens são a fonte dos estados; esta visão não os duplica.
@@ -71,3 +73,13 @@ configurada, sem validação de senha no Tupã, contas fixas, nome de arquivo de
 ambiente obrigatório ou banco marcado. O ambiente sintético dos scripts continua
 isolado e opcional para esse uso manual. Refinamento versionado exige aprovação
 antes de testes/código; não confundir a BL-0026 já implementada com este ajuste.
+
+
+## Registro de publicação da 1.4.0
+
+Tag v1.4.0 conferida em a1e188eecaff68cf1a24d65e7286c595338c7516, merge do
+PR #46. Entregas: BL-0026, BL-0011, BL-0001 e correções BL-0027/BL-0028, mantendo
+os identificadores já existentes. Regressão final: 307 passes/2 xfail FL-08,
+dez cenários Chromium, PostgreSQL 17 e CI aprovados; cobertura 60,02%. Anúncio
+de publicação registrado sem inferir aceite manual. A próxima versão-alvo é 1.5.0;
+este registro não inicia seu refinamento ou implementação.
