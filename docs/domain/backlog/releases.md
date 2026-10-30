@@ -93,3 +93,19 @@ com Python e Chromium em success e dois artifacts. A execução anterior por pus
 BL-0026, BL-0011, BL-0001, BL-0027 e BL-0028 passam a concluido e suas linhas vão
 para a visão arquivada. Registro documental mantido na branch da BL-0026 até
 liberação do usuário; a 1.5.0 permanece somente como próxima versão planejada.
+
+
+## Branch de integração da 1.5.0
+
+Por solicitação explícita do usuário, release/v1.5.0 foi criada da develop após
+integrar os refinamentos 3660568 (BL-0009) e 44842b1 (BL-0007). Esta é a base de
+integração da versão; não altera o fluxo padrão das demais releases.
+
+Usar somente a worktree atual do repositório. As seis worktrees temporárias
+criadas anteriormente foram removidas a pedido do usuário; branches e commits
+foram preservados. As branches das duas tasks devem ser atualizadas com esta base
+antes do código; subtarefas opcionais -nn retornam somente à própria task.
+Integração da task à release e da release à develop/main continua dependendo de
+liberação do usuário. A integração documental não aprova testes ou implementação.
+A tag publicada v1.4.0 permanece em a1e188e; main recebeu apenas o fechamento
+documental da 1.4.0, enquanto os refinamentos da 1.5.0 ficam em develop/release.
