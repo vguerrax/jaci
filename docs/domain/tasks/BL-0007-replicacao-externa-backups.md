@@ -129,7 +129,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Focal por subtarefa: testes de comportamento do processo/artefatos, sintaxe shell
   e lint configurado; não instalar/usar serviços ou credenciais de produção.
 - Final da task: bash scripts/run_tests.sh --coverage, incluindo contratos Node;
-  piso 56,18% preservado. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
+  piso 60% aplicado por solicitação do usuário em 2026-10-30. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
   próprio pode permanecer ao fechar a implementação.
 - PostgreSQL e SSH/SFTP reais somente em containers descartáveis, sem volumes
   do usuário. Gerar chaves efêmeras de teste e removê-las junto dos recursos próprios.

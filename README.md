@@ -478,7 +478,7 @@ ENV_FILE=.env.test bash scripts/run_ui_tests.sh
 ENV_FILE=.env.test bash scripts/run_ui_tests.sh tests/ui/test_purchase_playwright.py -k login
 ```
 
-O piso atual é 56,18% para linhas/branches Python (processo pytest). Relatórios
+O piso atual é 60% para linhas/branches Python de `app` (processo pytest). Relatórios
 em `reports/coverage`; seleções focais podem usar `--cov-fail-under=0` sem baixar
 a baseline versionada. UI/JavaScript não entram nessa porcentagem.
 

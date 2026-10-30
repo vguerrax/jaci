@@ -24,7 +24,8 @@ Documentação de referência: [runbook](backup-encryption.md).
 | Legados abertos inventariados e exceções/decisões de conversão | Pendente; nenhum original alterado |
 | Rotação: chaves antigas necessárias aos conjuntos retidos | Pendente |
 | Integração BL-0007, readback remoto e recuperação da cópia rsync | Pendente de integração/validação autorizadas |
-| Testes automatizados e build | Não executados por restrição explícita do usuário |
+| Testes automatizados | Usuário informou 329 passes/1 skip age real/2 xfail; 60,04% de app em 63,35s. Piso elevado a 60% após a execução; sem repetição pelo Codex |
+| Build | Não executado |
 | Publicação e aceite operacional | Pendentes |
 
 Não anexar dados pessoais, URLs com credenciais, chaves privadas, catálogos com

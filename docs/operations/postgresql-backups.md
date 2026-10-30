@@ -151,5 +151,6 @@ aberto nem remove cópia válida anterior. Legados não são convertidos/apagado
 Configuração de exemplo, guarda/rotação de chave, tratamento de legados e ensaio
 isolado estão no [runbook de criptografia](backup-encryption.md). O
 [registro de ativação](backup-encryption-activation.md) distingue código entregue
-de proteção efetivamente habilitada/verificada. Testes, restauração e conferência
-Oracle não foram executados nesta implementação, por restrição explícita.
+de proteção efetivamente habilitada/verificada. Após a entrega, o usuário informou
+suíte aprovada com 60,04% de cobertura de app; o teste age real foi ignorado.
+Restauração e conferência Oracle continuam sem execução/evidência.

@@ -117,7 +117,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Focal por subtarefa: testes de comportamento do processo/artefatos, sintaxe shell
   e lint configurado; não instalar/usar serviços ou credenciais de produção.
 - Final da task: bash scripts/run_tests.sh --coverage, incluindo contratos Node;
-  piso 56,18% preservado. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
+  piso 60% aplicado por solicitação do usuário em 2026-10-30. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
   próprio pode permanecer ao fechar a implementação.
 - PostgreSQL e SSH/SFTP reais somente em containers descartáveis, sem volumes
   do usuário. Gerar chaves efêmeras de teste e removê-las junto dos recursos próprios.
@@ -137,7 +137,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 
 | Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; testes, Oracle, recuperação, ativação e publicação pendentes |
+| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; suíte informada aprovada; age real, Oracle, recuperação e publicação pendentes |
 
 ## Fechamento documental
 
@@ -214,3 +214,30 @@ Docker/cron recebem age e as duas variáveis permitidas. Nenhum backup executado
 
 Documentos operacionais: [runbook](../../operations/backup-encryption.md) e
 [ficha de ativação](../../operations/backup-encryption-activation.md).
+
+
+## Validação informada pelo usuário e ajuste de piso — 2026-10-30
+
+Após a entrega 0f3f0f7, o usuário forneceu o resultado de
+`./scripts/run_tests.sh --coverage`: 332 itens coletados, **329 passed, 1 skipped,
+2 xfailed e 19 warnings em 63,35s**; cobertura de `app` **60,04%**. O estado local
+conferido para este registro estava limpo no candidato 0f3f0f7. A execução foi do
+usuário; o Codex não repetiu a suíte nem instalou dependências.
+
+- Skip: test_real_age_decryption_rotation_wrong_key_and_corruption, requer age e
+  age-keygen reais. Os demais contratos de criptografia usam executáveis sintéticos.
+- Xfails esperados: dois FL-08, fora desta demanda. Avisos de depreciação de
+  datetime.utcnow são de python-jose; nenhuma falha de teste foi reportada.
+- Cobertura medida com --cov=app e branches; não cobre os scripts operacionais
+  nem representa execução UI. O teste de contratos Node passou via pytest.
+- Na sequência, o usuário pediu explicitamente “Ajuste o mínimo de cobertura para
+  60%”. Atualizados .coveragerc e orientação corrente; CI já consome esse arquivo.
+  A evidência 60,04% atende numericamente ao novo piso, margem de 0,04 p.p.; não
+  constitui uma nova execução após a mudança de configuração.
+- Conferência deste ajuste: leitura estática do INI e diff. Sem novos testes ou
+  alteração de ambiente. Os testes existentes do runner já exercitam aplicação
+  do piso e propagação de falhas, sem valor de 56,18% fixado nos contratos.
+
+Implementação permanece 3/3 e estado em_validacao. Integração BL-0007, ensaio age
+real, PostgreSQL/recuperação cronometrada, evidência do volume OCI, build, ativação
+e publicação continuam pendentes. Sem merge/push ou liberação operacional presumida.

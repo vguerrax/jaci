@@ -78,8 +78,8 @@ substituídos após os contratos da fila real passarem.
 # Cobertura Python — BL-0011
 
 `bash scripts/run_tests.sh --coverage` gera terminal, XML, JSON e HTML em
-`reports/coverage/`. O piso combinado de linhas/branches é 56,18%, medido na
-implementação inicial e versionado em `.coveragerc`. Não reduzir sem revisão.
+`reports/coverage/`. O piso combinado de linhas/branches de `app` é 60%, elevado por solicitação
+do usuário em 2026-10-30 e versionado em `.coveragerc`. Não reduzir sem revisão.
 Para selecionar testes sem exigir o piso da suíte completa:
 `bash scripts/run_tests.sh --coverage --cov-fail-under=0 tests/test_business_rules.py`.
 A métrica não inclui JavaScript, browser ou subprocessos não instrumentados.
@@ -140,11 +140,13 @@ substitui evidência de execução. Dois contratos FL-08 permanecem fora do esco
 
 ## BL-0009 — Criptografia de backups (1.5.0)
 
-Contratos escritos em `tests/test_backup_encryption.py`, **sem execução** por
-instrução do usuário, mantida da BL-0007. O fixture usa executáveis descartáveis
+Contratos escritos em `tests/test_backup_encryption.py`, sem execução durante
+a implementação por instrução do usuário. Após a entrega, o usuário executou a
+suíte com cobertura; o resultado está registrado abaixo. O fixture usa executáveis descartáveis
 para validar supervisão de processos e memória; ciphertext sintético não comprova
 criptografia real. Um contrato separado usa age/age-keygen reais quando instalados,
-com chaves efêmeras e PostgreSQL simulado; ele também não foi executado.
+com chaves efêmeras e PostgreSQL simulado; esse contrato foi ignorado na execução
+informada por exigir age/age-keygen reais.
 
 | Área | Contratos escritos / evidência pendente |
 | --- | --- |
@@ -157,7 +159,7 @@ com chaves efêmeras e PostgreSQL simulado; ele também não foi executado.
 | Chaves | Snapshot público imutável; age real opcional: rotação, chave errada e corrupção |
 | Operação | Build, PostgreSQL real/restauração e conferência de grupos/totais/snapshots/recorrência pendentes |
 
-Quando o usuário liberar execução, validar em ambiente sintético, com serviços
+Para futuras execuções autorizadas, usar ambiente sintético, com serviços
 reais apenas descartáveis e sem volumes/chaves do usuário:
 
 ```bash
@@ -167,5 +169,21 @@ bash scripts/run_tests.sh --coverage
 
 Os contratos legados de `test_postgresql_backup.py` fixam a flag de criptografia
 false para preservar seu cenário. A integração SFTP, build e recuperação real
-seguem a liberação da 1.5.0. Nenhum xfail próprio foi criado e não há resultado de
-cobertura novo. Runbook: [criptografia e recuperação](../docs/operations/backup-encryption.md).
+seguem a liberação da 1.5.0. Nenhum xfail próprio foi criado. Runbook: [criptografia e recuperação](../docs/operations/backup-encryption.md).
+
+
+### Execução informada pelo usuário — 2026-10-30
+
+Comando: `./scripts/run_tests.sh --coverage`. Resultado: **329 passed, 1 skipped,
+2 xfailed, 19 warnings em 63,35s**, de 332 itens coletados. Cobertura combinada
+linhas/branches de `app`: **60,04%**, acima do novo mínimo de **60%** solicitado
+pelo usuário após essa execução (o log original ainda exibia o piso de 56,18%).
+O runner e o CI usam `.coveragerc`; a mudança não altera o escopo da medição.
+
+O skip é `test_real_age_decryption_rotation_wrong_key_and_corruption`, por ausência
+de age/age-keygen reais. Os dois xfails são FL-08 (BL-0003/BL-0004). Os 19 avisos
+são DeprecationWarning de python-jose sobre datetime.utcnow. Os contratos de fila
+Node passaram via pytest; UI não integra essa execução (`--ignore=tests/ui`).
+O percentual não mede os scripts de backup nem comprova criptografia real,
+restauração PostgreSQL, proteção do volume, RPO/RTO ou integração SFTP.
+O Codex registrou o log fornecido, sem repetir testes ou instalar ferramentas.
