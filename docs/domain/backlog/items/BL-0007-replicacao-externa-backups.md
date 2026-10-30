@@ -8,14 +8,14 @@
 | Título | Replicar backups em armazenamento externo |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Limitação futura registrada no README e na decisão de backup PostgreSQL |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-10-29` |
 
 ### Comportamento observado
 
@@ -71,11 +71,12 @@ acesso adequados.
 | Dependências | Rotina local e runbook existentes em `scripts/backup_database.sh` e `docs/operations/postgresql-backups.md`; definição no refinamento de destino externo agnóstico de provedor, credenciais, criptografia, retenção, monitoramento e teste de restauração; [BL-0009](BL-0009-criptografia-repouso.md) é relacionada, mas não bloqueia a proteção obrigatória da cópia externa |
 | Duplicidades | Nenhuma identificada; o backup local legado e a BL-0009 cobrem controles relacionados, mas não criam uma cópia em domínio de falha separado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Refinar destino externo, transferência verificável, criptografia, menor privilégio, retenção, monitoramento de falhas e restaurações periódicas, incluindo RPO e RTO |
+| Próximo passo | Aprovar o refinamento versionado antes de testes executáveis e implementação |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [BL-0007](../../tasks/BL-0007-replicacao-externa-backups.md).
+- Branch: feature/BL-0007-replicacao-externa-backups; três subtarefas planejadas, 0/3 implementadas.
 - Implementação (commits/PRs): ainda não iniciada.
 - Validações: triagem baseada na decisão e no runbook do backup PostgreSQL, na
   configuração de produção e na cobertura automatizada existente; validações de
@@ -87,8 +88,8 @@ acesso adequados.
 
 ### Impedimentos
 
-- Nenhum registrado; provedor, RPO, RTO e retenção externa serão definidos no
-  refinamento sem bloquear a promoção do item.
+- Aprovação pós-versionamento pendente. Dados reais de capacidade, host e chave
+  pública serão fornecidos/conferidos na ativação pelo operador, sem alterar o ambiente.
 
 ## Histórico
 
@@ -98,3 +99,5 @@ acesso adequados.
 | `2026-08-05 22:15 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e direção agnóstica de provedor confirmadas; evidências da rotina local e do domínio único de falha confrontadas |
 | `2026-08-05 22:15 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+
+| `2026-10-29` | Usuário/Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Decisões da 1.5.0 documentadas: máquina local ligada, Caddy por SFTP, age com chave privada do usuário, RPO 24h/RTO 4h/30 dias; aprovação pós-versionamento pendente |
