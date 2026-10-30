@@ -8,8 +8,10 @@ continuam em instâncias Oracle separadas. A chave privada age fica com o usuár
 fora de todos os servidores. O Jaci recebe apenas destinatários públicos.
 
 **Durante a implementação, testes não foram executados por solicitação do usuário.**
-Depois da entrega, o usuário informou suíte aprovada (329 passes/1 skip age real/
-2 xfail); os ensaios reais de criptografia/restauração seguem pendentes. Configuração de
+Depois da entrega, o usuário informou suíte aprovada (329 passes/1 skip/2 xfail)
+e aprovou isoladamente o teste age real antes ignorado (1 passed em 1,08s), com
+chaves efêmeras e PostgreSQL simulado. Os ensaios de restauração PostgreSQL
+seguem pendentes. Configuração de
 ambiente, Oracle, banco, Caddy, discos e backups existentes não foram alterados.
 A ativação depende de validar a recuperação e registrar evidências do volume.
 Não há novo serviço pago, LUKS, migração de hospedagem, criptografia de campos

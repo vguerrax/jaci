@@ -1,6 +1,6 @@
 # Evidência de ativação — BL-0009 / 1.5.0
 
-Estado: **pendente, sem ativação ou ensaios executados**. Registro inicial em
+Estado: **ativação e ensaios de restauração PostgreSQL pendentes**. Registro inicial em
 2026-10-30. Não preencher campos por suposição ou com resultados históricos.
 Documentação de referência: [runbook](backup-encryption.md).
 
@@ -17,14 +17,14 @@ Documentação de referência: [runbook](backup-encryption.md).
 | Duas cópias recuperáveis da identidade, guardadas pelo usuário | Pendente; registrar somente confirmação de guarda |
 | Primeiro conjunto criptografado: ID/data/hash | Pendente |
 | Teste de recuperação com cada cópia de chave | Não executado |
-| Chave incorreta e corrupção em cópias descartáveis | Não executado |
+| Chave incorreta e corrupção em cópias descartáveis | Contrato age real aprovado pelo usuário: 1 passed em 1,08s, com dados/chaves efêmeros e PostgreSQL simulado; ensaio do backup operacional pendente |
 | Restauração PostgreSQL vazia/isolada e revisão Alembic | Não executado |
 | Grupos/autorizações, snapshots, totais e recorrência conferidos | Não executado |
 | RPO <=24h / RTO <=4h, incluindo obtenção da chave/conjunto | Não medido |
 | Legados abertos inventariados e exceções/decisões de conversão | Pendente; nenhum original alterado |
-| Rotação: chaves antigas necessárias aos conjuntos retidos | Pendente |
+| Rotação: chaves antigas necessárias aos conjuntos retidos | Cenário automatizado age real aprovado com duas chaves efêmeras; inventário e guarda operacional pendentes |
 | Integração BL-0007, readback remoto e recuperação da cópia rsync | Pendente de integração/validação autorizadas |
-| Testes automatizados | Usuário informou 329 passes/1 skip age real/2 xfail; 60,04% de app em 63,35s. Piso elevado a 60% após a execução; sem repetição pelo Codex |
+| Testes automatizados | Usuário informou suíte 329 passes/1 skip/2 xfail e 60,04% de app em 63,35s; depois, o contrato age real antes ignorado passou isoladamente em 1,08s. Piso atual 60%; sem repetição pelo Codex |
 | Build | Não executado |
 | Publicação e aceite operacional | Pendentes |
 

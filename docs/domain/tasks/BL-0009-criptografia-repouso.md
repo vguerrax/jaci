@@ -137,7 +137,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 
 | Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; suíte informada aprovada; age real, Oracle, recuperação e publicação pendentes |
+| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; suíte e age real informados aprovados; Oracle, recuperação PostgreSQL e publicação pendentes |
 
 ## Fechamento documental
 
@@ -241,3 +241,25 @@ usuário; o Codex não repetiu a suíte nem instalou dependências.
 Implementação permanece 3/3 e estado em_validacao. Integração BL-0007, ensaio age
 real, PostgreSQL/recuperação cronometrada, evidência do volume OCI, build, ativação
 e publicação continuam pendentes. Sem merge/push ou liberação operacional presumida.
+
+
+## Teste age real informado pelo usuário — 2026-10-30
+
+Comando fornecido:
+
+```bash
+./scripts/run_tests.sh tests/test_backup_encryption.py::test_real_age_decryption_rotation_wrong_key_and_corruption -v
+```
+
+Resultado: **1 passed em 1,08s**. O estado local conferido para este registro
+estava limpo em 008f9a0. Evidência fornecida pelo usuário, sem reexecução pelo
+Codex. O cenário anteriormente ignorado foi aprovado individualmente: age e
+age-keygen reais, criptografia/descriptografia com duas identidades efêmeras,
+rotação de destinatários, recusa de chave incorreta e detecção de corrupção.
+PostgreSQL permanece simulado neste contrato; não foram usadas identidades de
+recuperação do usuário ou dados de produção.
+
+A pendência do contrato age real está resolvida. Esta execução não mede cobertura
+e não comprova restauração PostgreSQL real, RPO/RTO, build, volume OCI,
+integração SFTP/BL-0007, ativação ou publicação. Implementação 3/3, estado em_validacao e branch pai
+preservados; sem merge ou mudança de ambiente pelo Codex.

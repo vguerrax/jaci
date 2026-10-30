@@ -152,5 +152,6 @@ Configuração de exemplo, guarda/rotação de chave, tratamento de legados e en
 isolado estão no [runbook de criptografia](backup-encryption.md). O
 [registro de ativação](backup-encryption-activation.md) distingue código entregue
 de proteção efetivamente habilitada/verificada. Após a entrega, o usuário informou
-suíte aprovada com 60,04% de cobertura de app; o teste age real foi ignorado.
-Restauração e conferência Oracle continuam sem execução/evidência.
+suíte aprovada com 60,04% de cobertura de app; o teste age real, inicialmente
+ignorado, passou depois isoladamente (1 passed em 1,08s), com PostgreSQL simulado.
+Restauração PostgreSQL real e conferência Oracle continuam sem execução/evidência.

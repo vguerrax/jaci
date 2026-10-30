@@ -71,7 +71,7 @@ restringir o acesso aos dados e backups.
 | Dependências | Inventário dos controles reais do ambiente de produção; definição agnóstica de provedor para armazenamento, acesso, rotação e recuperação de chaves; integração com backup e restauração; [BL-0007](BL-0007-replicacao-externa-backups.md) é relacionada, mas não bloqueia esta demanda |
 | Duplicidades | Nenhuma identificada; permissões atuais dos dumps, proteção eventualmente fornecida pela infraestrutura e a BL-0007 são controles ou evoluções relacionados, não substituem a verificação ponta a ponta desta demanda |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Validar age real e integração BL-0007 quando autorizado; operador confere volume/recuperação antes da ativação e publicação |
+| Próximo passo | Validar integração BL-0007 e restauração PostgreSQL quando autorizado; operador confere volume/recuperação antes da ativação e publicação |
 
 ## Acompanhamento até produção
 
@@ -81,16 +81,18 @@ restringir o acesso aos dados e backups.
 - Validações: AST, bash -n, links locais, diff e grafo na implementação. Depois,
   usuário informou ./scripts/run_tests.sh --coverage: 329 passes/1 skip age real/
   2 xfail FL-08, 19 avisos python-jose, 63,35s e cobertura de app 60,04%. Piso
-  elevado a 60% por solicitação explícita, sem nova execução pelo Codex. Ensaios
-  reais, build, RPO/RTO e volume permanecem pendentes.
+  elevado a 60% por solicitação explícita. Depois, usuário informou teste age real
+  isolado: 1 passed em 1,08s (criptografia/descriptografia, rotação, chave errada
+  e corrupção; PostgreSQL simulado). Sem execução pelo Codex. Integração, build,
+  restauração PostgreSQL, RPO/RTO e volume permanecem pendentes.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0007](BL-0007-replicacao-externa-backups.md).
 
 ### Impedimentos
 
 - Sem acesso à Oracle ou ao ambiente real: evidência do volume e recuperação
-  deverão ser fornecidas pelo operador na ativação. Suíte informada aprovada, mas
-  o teste com age real foi ignorado; integração e recuperação real não comprovadas.
+  deverão ser fornecidas pelo operador na ativação. Suíte e teste age real
+  informados como aprovados; integração e restauração PostgreSQL não comprovadas.
 
 ## Histórico
 
@@ -104,3 +106,4 @@ restringir o acesso aos dados e backups.
 | `2026-10-30` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito “Implemente a BL-009 também” após refinamento 3660568; três subtarefas na mesma worktree, sem executar testes ou alterar ambiente/infraestrutura |
 | `2026-10-30` | Codex | em_implementacao → em_validacao | Três subtarefas implementadas; testes não executados; instruções de guarda/recuperação e ficha OCI entregues sem afirmar ativação; integração, volume, restauração e publicação pendentes |
 | `2026-10-30` | Usuário/Codex | Validação reportada e piso elevado a 60%; em_validacao mantido | Log do usuário: 329 passes/1 skip age real/2 xfail FL-08, 60,04% de app; pedido explícito do novo mínimo. Codex não repetiu testes; recuperação, volume, integração e publicação pendentes |
+| `2026-10-30` | Usuário/Codex | Teste age real aprovado; em_validacao mantido | Execução focal informada pelo usuário: 1 passed em 1,08s, com chaves efêmeras e PostgreSQL simulado; sem repetir suíte, alterar ambiente ou assumir aceite de produção |

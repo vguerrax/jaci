@@ -145,8 +145,8 @@ a implementação por instrução do usuário. Após a entrega, o usuário execu
 suíte com cobertura; o resultado está registrado abaixo. O fixture usa executáveis descartáveis
 para validar supervisão de processos e memória; ciphertext sintético não comprova
 criptografia real. Um contrato separado usa age/age-keygen reais quando instalados,
-com chaves efêmeras e PostgreSQL simulado; esse contrato foi ignorado na execução
-informada por exigir age/age-keygen reais.
+com chaves efêmeras e PostgreSQL simulado. Ignorado na primeira execução por
+exigir age/age-keygen reais, passou depois em execução focal informada pelo usuário.
 
 | Área | Contratos escritos / evidência pendente |
 | --- | --- |
@@ -187,3 +187,15 @@ Node passaram via pytest; UI não integra essa execução (`--ignore=tests/ui`).
 O percentual não mede os scripts de backup nem comprova criptografia real,
 restauração PostgreSQL, proteção do volume, RPO/RTO ou integração SFTP.
 O Codex registrou o log fornecido, sem repetir testes ou instalar ferramentas.
+
+
+### Contrato age real aprovado — 2026-10-30
+
+O usuário informou execução focal de
+`./scripts/run_tests.sh tests/test_backup_encryption.py::test_real_age_decryption_rotation_wrong_key_and_corruption -v`:
+**1 passed em 1,08s**. A pendência do skip da execução anterior foi resolvida
+individualmente. O teste usa age/age-keygen reais, duas identidades efêmeras e
+dados sintéticos: confere descriptografia, rotação, chave incorreta e corrupção.
+PostgreSQL é simulado; restauração real e demais ensaios continuam pendentes.
+Este registro não altera a contagem histórica da suíte completa ou a cobertura
+anterior; não houve nova suíte completa nem reexecução pelo Codex.
