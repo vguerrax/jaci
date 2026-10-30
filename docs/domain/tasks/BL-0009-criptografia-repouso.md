@@ -137,7 +137,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 
 | Etapa/ticket | Concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 1/3 | 2 | Contratos/configuração escritos; testes sem execução |
+| 1 — Implementação da task | 2/3 | 1 | Pipeline/configuração implementados; testes sem execução |
 
 ## Fechamento documental
 
@@ -176,3 +176,10 @@ controle de .env.test/.env.production, banco, chaves e instâncias Oracle.
 Subtarefa 01: flags opt-in, destinatários públicos imutáveis, fingerprint do
 conjunto de destinatários e contratos de fluxo/falha/recuperação escritos.
 Conferência AST e diff somente; execução dos contratos permanece pendente.
+
+Subtarefa 01: 83a00d0. Subtarefa 02 implementa pg_dump customizado em stdout,
+tee não bloqueante para pg_restore --list e age, buffers limitados a 1 MiB por
+consumidor, supervisão de todos os códigos e cleanup em falha/sinal. Chave pública
+validada antes do banco, manifesto schema 1 por último, retenção exclusiva de
+pares completos preservando o mais recente. Script legado despacha por flag;
+Docker/cron recebem age e as duas variáveis permitidas. Nenhum backup executado.

@@ -40,6 +40,22 @@ case "$DATABASE_URL" in
         ;;
 esac
 
+# O modo criptografado não passa pela criação/retenção de dumps abertos abaixo.
+normalized_encryption="${BACKUP_ENCRYPTION_ENABLED-false}"
+case "${normalized_encryption,,}" in
+    true | 1 | yes | on)
+        script_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+        cd "$script_root"
+        exec python3 -m scripts.backup_pipeline
+        ;;
+    false | 0 | no | off)
+        ;;
+    *)
+        echo "BACKUP_ENCRYPTION_ENABLED deve ser uma flag válida." >&2
+        exit 2
+        ;;
+esac
+
 if [[ ! "$BACKUP_RETENTION_DAYS" =~ ^[1-9][0-9]*$ ]]; then
     echo "BACKUP_RETENTION_DAYS deve ser um número inteiro positivo." >&2
     exit 1

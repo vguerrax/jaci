@@ -213,3 +213,37 @@ def test_real_age_decryption_rotation_wrong_key_and_corruption(tmp_path, synthet
     recovered[1][0].archive.write_bytes(payload[:-1] + bytes([payload[-1] ^ 1]))
     corrupt = subprocess.run(['age', '--decrypt', '-i', str(recovered[1][1]), str(recovered[1][0].archive)], capture_output=True)
     assert corrupt.returncode != 0
+
+
+def test_shell_dispatches_encrypted_mode_without_plaintext_dump(tmp_path, synthetic_tools):
+    result = subprocess.run(['bash', str(PROJECT_ROOT / 'scripts/backup_database.sh')],
+                            cwd=PROJECT_ROOT, capture_output=True, timeout=20)
+    assert result.returncode == 0
+    assert len(list((tmp_path / 'backups').glob('*.manifest.json'))) == 1
+    assert not list((tmp_path / 'backups').glob('*.dump'))
+    assert b'secret' not in result.stdout + result.stderr
+
+
+def test_no_encrypted_fallback_on_shell_configuration_error(tmp_path, synthetic_tools):
+    synthetic_tools[2].write_text('AGE-SECRET-KEY-1private')
+    result = subprocess.run(['bash', str(PROJECT_ROOT / 'scripts/backup_database.sh')],
+                            cwd=PROJECT_ROOT, capture_output=True, timeout=20)
+    assert result.returncode != 0
+    assert not list((tmp_path / 'backups').glob('*.dump'))
+    assert not (synthetic_tools[0] / 'calls.jsonl').exists()
+
+
+def test_manifest_is_published_only_after_valid_ciphertext(tmp_path, synthetic_tools, monkeypatch):
+    from scripts import backup_pipeline
+    original = backup_pipeline.publish_manifest
+    events = []
+    def publish(path, metadata):
+        assert not path.exists()
+        archive = path.parent / metadata['filename']
+        assert archive.exists() and not list(path.parent.glob('*.part.*'))
+        assert hashlib.sha256(archive.read_bytes()).hexdigest() == metadata['ciphertext_sha256']
+        events.append(metadata['backup_id'])
+        original(path, metadata)
+    monkeypatch.setattr(backup_pipeline, 'publish_manifest', publish)
+    artifact = create_backup(EncryptionSettings.from_environment())
+    assert events == [artifact.backup_id]

@@ -76,8 +76,8 @@ restringir o acesso aos dados e backups.
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0009](../../tasks/BL-0009-criptografia-repouso.md).
-- Branch: feature/BL-0009-criptografia-repouso; três subtarefas aprovadas, 1/3 implementada.
-- Implementação (commits/PRs): subtarefa 01 em versionamento; mesma worktree, sem integrar a BL-0007.
+- Branch: feature/BL-0009-criptografia-repouso; três subtarefas aprovadas, 2/3 implementadas.
+- Implementação (commits/PRs): 83a00d0 (configuração/contratos); pipeline e integração com o script de backup na mesma branch, sem merge da BL-0007.
 - Validações: triagem baseada na Política de Privacidade, na configuração do
   PostgreSQL, no volume e na rotina local de backups e na arquitetura offline;
   validações de implementação ainda não iniciadas.
