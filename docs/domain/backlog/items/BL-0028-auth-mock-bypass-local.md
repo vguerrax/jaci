@@ -8,7 +8,7 @@
 | Título | Usar AUTH_MOCK como bypass do Tupã para usuários locais |
 | Versão-alvo | `1.4.0` |
 | Tipo | `ajuste` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-29` |
@@ -77,7 +77,7 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | Dependências | BL-0026, serviços de autenticação, middleware e suítes BL-0011 |
 | Duplicidades | Complementa e altera o contrato implementado da BL-0026; preservar seu histórico |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Registrar publicação e aceite da 1.4.0; integração executável autorizada e realizada na develop |
+| Próximo passo | Nenhum — versão 1.4.0 publicada, CI e validação offline aprovados |
 
 ## Acompanhamento até produção
 
@@ -85,12 +85,12 @@ o uso solicitado com os usuários da base de desenvolvimento.
 - Branch: feature/BL-0028-auth-mock-bypass-local, criada da develop.
 - Implementação: 2/2 fatias entregues na feature/BL-0028-auth-mock-bypass-local; commits 10931df e 98c788d; PR de revisão https://github.com/vguerrax/jaci/pull/45. Bypass por usuário ativo na conexão ORM configurada, senha ignorada, sem alterar identidade Tupã.
 - Validações: 307 passes/2 xfail FL-08, cobertura 60,02%, dez Chromium aprovados; smoke PostgreSQL 17 com development.env, login sem senha, isolamento, reinício, logout e identidade preservada. CI 40952438864 aprovado nos jobs Python/Chromium em 98c788d.
-- Publicação: pendente; alvo 1.4.0.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; validação offline confirmada pelo usuário; CI final aprovado no commit publicado.
 - Itens relacionados: BL-0026 e BL-0011.
 
 ### Impedimentos
 
-- Publicação e aceite da 1.4.0 pendentes; integração na develop realizada em e7bf602.
+- Nenhum — publicação, validação offline e CI final registrados.
 
 ## Histórico
 
@@ -103,3 +103,5 @@ o uso solicitado com os usuários da base de desenvolvimento.
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | 307 passes/2 xfail, cobertura 60,02%, dez UI e PostgreSQL 17 aprovados; merge executável/publicação pendentes |
 | `2026-10-29` | Codex | CI remoto aprovado | PR 45; candidato 98c788d e run 40952438864 com Python/Chromium success; integração executável aguarda autorização |
 | `2026-10-29` | Usuário/Codex | Integração executável autorizada e realizada na develop | Merge e7bf602 da feature/BL-0028-auth-mock-bypass-local; commit do usuário 00a7bc9 preservado; sem alteração do ambiente ou deploy |
+| `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |
+| `2026-10-29` | Usuário/Codex | em_validacao → concluido | Usuário confirmou validação offline; v1.4.0 publicada em a1e188e; workflow manual 40978823250 aprovado em Python/Chromium, com dois artifacts |
