@@ -8,7 +8,7 @@
 | Título | Completar cobertura e rastreabilidade da operação offline |
 | Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -81,21 +81,21 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | Dependências | Implementação e cobertura atuais em `offline-cache.js`, `offline.py`, `test_offline_cache.py` e `test_sync_center.py`; BL-0011 acompanha futura cobertura ampla em navegador real sem bloquear este item |
 | Duplicidades | Nenhuma identificada; há sobreposição parcial com a [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md), restrita à infraestrutura futura de testes de UI |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Registrar publicação e aceite da 1.4.0; integração autorizada e realizada na develop |
+| Próximo passo | Nenhum — versão 1.4.0 publicada, CI e validação offline aprovados |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0001](../../tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 - Implementação: 2/2 fatias na feature/BL-0001-refinamento-1-4-0; c7cb3ed entrega os sete cenários Node, wrapper Pytest, lockfile e instalação CI. Documentação reconciliada em 990ac0f; PR de revisão https://github.com/vguerrax/jaci/pull/44.
 - Validações: 289 passes/2 xfail FL-08, cobertura 56,18%, sete cenários Node e nove Chromium aprovados; actionlint, migrações no SQLite sintético e links locais aprovados. CI 40816112651 aprovado nos jobs Python/Chromium em 35129bf. Resultados e limitação do sandbox no refinamento.
-- Publicação: ainda não publicada no processo atual.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; validação offline confirmada pelo usuário; CI final aprovado no commit publicado.
 - Itens relacionados: [BL-0011](BL-0011-ampliar-cobertura-testes-ui.md) e
   entregas offline do
   [backlog legado](../../decisions/backlog.md#pwa-operação-offline-e-sincronização).
 
 ### Impedimentos
 
-- Publicação e aceite da 1.4.0 pendentes; integração na develop realizada em f5ac74f.
+- Nenhum — publicação, validação offline e CI final registrados.
 
 ## Histórico
 
@@ -110,3 +110,5 @@ referência técnica, verificando cada operação antes de assumir suporte offli
 | `2026-10-29` | Codex | em_implementacao → em_validacao; 2/2 fatias | Sete Node, 289 passes/2 xfail FL-08, cobertura 56,18% e nove Chromium; sem alterações de produção ou publicação |
 | `2026-10-29` | Codex | Validação remota aprovada | PR 44; candidato 35129bf e run 40816112651 com ambos os jobs success; integração final aguarda autorização |
 | `2026-10-29` | Usuário/Codex | Integração autorizada e realizada na develop | Merge f5ac74f da feature/BL-0001-refinamento-1-4-0, contendo o candidato validado e seu acompanhamento documental; 2/2 fatias, sem deploy |
+| `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |
+| `2026-10-29` | Usuário/Codex | em_validacao → concluido | Usuário confirmou validação offline; v1.4.0 publicada em a1e188e; workflow manual 40978823250 aprovado em Python/Chromium, com dois artifacts |

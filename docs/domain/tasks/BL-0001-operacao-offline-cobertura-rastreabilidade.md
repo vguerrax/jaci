@@ -4,7 +4,7 @@
 
 - Item: [BL-0001](../backlog/items/BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: em_validacao; refinamento versionado aprovado explicitamente pelo usuário.
+- Estado: concluido; refinamento versionado aprovado explicitamente pelo usuário.
 - Branch documental: feature/BL-0001-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0001-operacao-offline-cobertura-rastreabilidade.
 - Depois do merge documental, atualizar esta branch e usá-la para este item isolado.
@@ -200,3 +200,35 @@ A develop passa a conter as quatro entregas da 1.4.0: BL-0026, BL-0011, BL-0001 
 a correção BL-0027 descoberta no aceite UI. Implementação da BL-0001: 2/2 fatias,
 zero pendências próprias. Estado permanece em_validacao até publicação e aceite
 da 1.4.0. Nenhum deploy ou alteração de ambiente de produção nesta integração.
+
+## Publicação 1.4.0 — 2026-10-29
+
+Publicação em produção informada pelo usuário. Tag v1.4.0 em
+a1e188eecaff68cf1a24d65e7286c595338c7516 (PR #46), conferida localmente,
+contendo a correção AUTH_MOCK 98c788d e o commit do usuário 00a7bc9 em run.py.
+Validação final da release já registrada: 307 testes Python aprovados, dois xfail
+FL-08 externos ao escopo, dez Chromium, PostgreSQL 17 e CI aprovados; cobertura
+60,02%. Nenhum novo teste, migração, deploy ou ajuste de ambiente foi executado
+para este registro. Os registros anteriores de publicação pendente são históricos.
+
+Estado em_validacao mantido até confirmação do aceite final da release, sem
+inferir aceite manual do anúncio de publicação. Acompanhamento consolidado na
+branch coordenadora feature/BL-0026-ferramentas-ambiente-testes, preservada até
+a liberação de integração pelo usuário.
+
+## Encerramento da 1.4.0
+
+O usuário confirmou a validação offline após anunciar a publicação. Estado
+concluido em 2026-10-29; tag v1.4.0, commit publicado a1e188eecaff68cf1a24d65e7286c595338c7516.
+
+CI do commit publicado conferido diretamente: [workflow manual 40978823250](https://github.com/vguerrax/jaci/actions/runs/40978823250),
+com Python coverage e Chromium mobile and desktop concluídos com success e dois
+artifacts. O usuário informou duração de 2m42s. A execução inicial por push
+40978445816 falhou no job Chromium; a execução manual posterior passou no mesmo
+commit. A causa daquela falha não foi investigada neste registro.
+
+A confirmação manual registrada é a operação offline; os demais cenários têm a
+cobertura automatizada documentada. Publicação/aceite deixam de ser pendências;
+os registros anteriores de espera ficam preservados como histórico. A linha do
+item foi movida à visão arquivada do índice, mantendo seu arquivo e identificador.
+Nenhum código, ambiente, banco, migração ou implantação foi alterado aqui.

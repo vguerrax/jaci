@@ -1,6 +1,8 @@
 # Planejamento de releases após a 1.3.0
 
-Base publicada: v1.3.0, commit ff16202, em 2026-10-28.
+Base anterior: v1.3.0, commit ff16202, em 2026-10-28.
+Publicação atual: v1.4.0, commit a1e188e, em 2026-10-29, informada pelo usuário.
+Validação offline confirmada pelo usuário; entregas da 1.4.0 concluídas no índice.
 Plano solicitado pelo usuário em 2026-10-28. Versões são alvos sem datas fixas;
 associação não altera prioridade, estado nem substitui aprovação do refinamento.
 O [índice](README.md) e os itens são a fonte dos estados; esta visão não os duplica.
@@ -71,3 +73,23 @@ configurada, sem validação de senha no Tupã, contas fixas, nome de arquivo de
 ambiente obrigatório ou banco marcado. O ambiente sintético dos scripts continua
 isolado e opcional para esse uso manual. Refinamento versionado exige aprovação
 antes de testes/código; não confundir a BL-0026 já implementada com este ajuste.
+
+
+## Registro de publicação da 1.4.0
+
+Tag v1.4.0 conferida em a1e188eecaff68cf1a24d65e7286c595338c7516, merge do
+PR #46. Entregas: BL-0026, BL-0011, BL-0001 e correções BL-0027/BL-0028, mantendo
+os identificadores já existentes. Regressão final: 307 passes/2 xfail FL-08,
+dez cenários Chromium, PostgreSQL 17 e CI aprovados; cobertura 60,02%. Publicação e validação offline confirmadas pelo usuário. A próxima versão-alvo é 1.5.0;
+este registro não inicia seu refinamento ou implementação.
+
+
+## Validação e encerramento da 1.4.0
+
+Usuário confirmou a operação offline. CI final em main/a1e188e aprovado pelo
+[run manual 40978823250](https://github.com/vguerrax/jaci/actions/runs/40978823250),
+com Python e Chromium em success e dois artifacts. A execução anterior por push
+40978445816 havia falhado em Chromium; o rerun manual aprovou o mesmo commit.
+BL-0026, BL-0011, BL-0001, BL-0027 e BL-0028 passam a concluido e suas linhas vão
+para a visão arquivada. Registro documental mantido na branch da BL-0026 até
+liberação do usuário; a 1.5.0 permanece somente como próxima versão planejada.
