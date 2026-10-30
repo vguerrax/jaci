@@ -1,5 +1,6 @@
 """Produtor PostgreSQL -> validação/age em memória; disco recebe só ciphertext."""
 
+import argparse
 import json
 import os
 import re
@@ -88,7 +89,7 @@ def stream_dump(settings: EncryptionSettings, tools: dict[str, str], output) -> 
         if settings.sslmode:
             environment['PGSSLMODE'] = settings.sslmode
         producer = subprocess.Popen(
-            [tools['pg_dump'], '--format=custom', '--no-owner', '--no-acl'],
+            [tools['pg_dump'], '--format=custom', '--no-owner', '--no-acl', '--no-password'],
             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
             bufsize=0, env=environment,
         )
@@ -240,7 +241,13 @@ def main() -> int:
     os.umask(0o077)
     signal.signal(signal.SIGTERM, cancelled)
     signal.signal(signal.SIGINT, cancelled)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verify', type=Path, metavar='MANIFEST', help='Conferir par local, sem gerar backup ou acessar o banco.')
+    args = parser.parse_args()
     try:
+        if args.verify is not None:
+            print(json.dumps(Artifact.load(args.verify).metadata))
+            return 0
         settings = EncryptionSettings.from_environment()
         if not settings.enabled:
             print(json.dumps({'health': 'disabled', 'encrypted': False}))

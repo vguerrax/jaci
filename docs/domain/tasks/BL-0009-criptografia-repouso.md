@@ -3,7 +3,7 @@
 ## Rastreabilidade e objetivo
 
 - Item: [BL-0009](../backlog/items/BL-0009-criptografia-repouso.md).
-- Estado: em_implementacao; responsável: Engenharia Jaci.
+- Estado: em_validacao; responsável: Engenharia Jaci.
 - Branch: feature/BL-0009-criptografia-repouso; base de implementação release/v1.5.0 1cedb61.
 - Refinamento original versionado em 3660568, sobre develop 3377001.
 - Proteger novos backups antes da persistência e verificar a proteção do volume
@@ -135,15 +135,15 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 
 ## Progresso
 
-| Etapa/ticket | Concluídas | Restantes | Estado |
+| Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 2/3 | 1 | Pipeline/configuração implementados; testes sem execução |
+| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; testes, Oracle, recuperação, ativação e publicação pendentes |
 
 ## Fechamento documental
 
-Implementação e testes executáveis não iniciados. Validações desta etapa são
-links locais, escopo e diff documental. Commit e branch identificam a versão
-para aprovação. Nenhuma mudança de ambiente, infraestrutura ou dados reais.
+No fechamento do refinamento original 3660568, implementação e testes ainda
+não haviam começado. A execução autorizada posteriormente está registrada abaixo.
+Nenhuma mudança de ambiente, infraestrutura ou dados reais foi efetuada.
 
 
 ## Base de release definida pelo usuário
@@ -183,3 +183,34 @@ consumidor, supervisão de todos os códigos e cleanup em falha/sinal. Chave pú
 validada antes do banco, manifesto schema 1 por último, retenção exclusiva de
 pares completos preservando o mais recente. Script legado despacha por flag;
 Docker/cron recebem age e as duas variáveis permitidas. Nenhum backup executado.
+
+
+## Entrega das três subtarefas — 2026-10-30
+
+| Subtarefa | Implementação | Validação |
+| --- | --- | --- |
+| 01 | 83a00d0 — flags, destinatários públicos e contratos/schema compartilhado | AST/diff; testes escritos e não executados |
+| 02 | 00d11c7 — pipeline supervisionado, publicação, retenção, Docker e entrypoint | AST/bash -n/diff; sem executar processos de backup |
+| 03 | Verificação CLI, runbook de guarda/rotação/legados, política e ficha de ativação neste registro | Conferência estática; ensaios e evidência de volume pendentes |
+
+- O contrato sem argumentos python -m scripts.backup_pipeline atende ao produtor
+  esperado pelo coordenador BL-0007; --verify confere par local sem banco.
+- A política de privacidade distingue backups opcionais, legados abertos e
+  proteção do volume dependente de verificação, sem afirmar ativação inexistente.
+- Sem acesso à Oracle: identificar volume e confirmar controles OCI é passo
+  manual obrigatório, registrado como pendente na ficha de ativação. A referência
+  técnica pública não constitui evidência do ambiente específico.
+- Runbook cobre duas cópias privadas fora dos servidores, rotação/fingerprints,
+  recuperação isolada cronometrada e conversão manual de legados sem exclusão
+  automática. Backups históricos, chaves e dados do usuário não foram tocados.
+- Validação desta entrega: AST dos seis Python afetados, bash -n dos dois shell,
+  links locais, git diff --check e atualização graphify AST. Nenhum teste, age,
+  PostgreSQL, Docker, migração, SSH, restauração ou build executado.
+- Commits locais com hooks desativados para evitar testes indiretos; sem push/CI
+  ou merge de task/release/develop/main. Mesma worktree, mantida no pai BL-0009.
+- Sem xfail próprio. As 3/3 subtarefas de implementação estão entregues;
+  em_validacao até execução autorizada, integração BL-0007, evidência de volume,
+  recuperação, ativação e publicação. Nenhuma aprovação operacional foi presumida.
+
+Documentos operacionais: [runbook](../../operations/backup-encryption.md) e
+[ficha de ativação](../../operations/backup-encryption-activation.md).

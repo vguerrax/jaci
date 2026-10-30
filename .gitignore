@@ -232,3 +232,11 @@ jaci.*
 reports/
 
 node_modules/
+
+# BL-0009: material operacional fica fora do repositório
+*.agekey
+.backup-keys/
+backups/
+*.dump
+*.dump.age
+*.manifest.json

@@ -62,7 +62,10 @@ class EncryptionSettings:
             if (not path.is_absolute() or path.is_symlink() or not path.is_file()
                     or not 0 < path.stat().st_size <= 65536):
                 raise ValueError()
-            lines = [line.strip() for line in path.read_text(encoding='utf-8').splitlines()]
+            contents = path.read_text(encoding='utf-8')
+            if 'AGE-SECRET-KEY-' in contents or 'PRIVATE KEY' in contents:
+                raise ValueError()
+            lines = [line.strip() for line in contents.splitlines()]
             recipients = tuple(sorted({line for line in lines if line and not line.startswith('#')}))
             # Só destinatários nativos públicos; sem identidades privadas ou plugins.
             # O checksum/curva são validados pelo próprio age antes do pg_dump.

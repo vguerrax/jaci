@@ -136,3 +136,36 @@ usuário sintético criado fora das três contas do seed e senha vazia; comprova
 login normal sem atribuir tupa_user_id. A suíte passa a conter dez cenários.
 Resultados executados ficam no refinamento BL-0028; declaração de cobertura não
 substitui evidência de execução. Dois contratos FL-08 permanecem fora do escopo.
+
+
+## BL-0009 — Criptografia de backups (1.5.0)
+
+Contratos escritos em `tests/test_backup_encryption.py`, **sem execução** por
+instrução do usuário, mantida da BL-0007. O fixture usa executáveis descartáveis
+para validar supervisão de processos e memória; ciphertext sintético não comprova
+criptografia real. Um contrato separado usa age/age-keygen reais quando instalados,
+com chaves efêmeras e PostgreSQL simulado; ele também não foi executado.
+
+| Área | Contratos escritos / evidência pendente |
+| --- | --- |
+| Configuração | Desativado/SQLite sem chave ou ferramentas; chave ausente/inválida/privada recusada; Settings sem dotenv do usuário |
+| Fluxo e publicação | Stream maior que buffers, catálogo terminando cedo, dump falhando tarde, age falhando, manifesto por último e permissões |
+| Supervisão | Timeout/SIGTERM encerram filhos, limpam temporários e preservam conjunto válido anterior |
+| Disco/legado | Falha na publicação não deixa par incompleto; modo criptografado não faz fallback nem apaga legados |
+| Contrato BL-0007 | Manifesto schema 1 conferido por Artifact.load; verificação CLI não inicia geração |
+| Retenção | Somente pares íntegros expirados; preservar mais recente, ignorar links/arquivos alheios |
+| Chaves | Snapshot público imutável; age real opcional: rotação, chave errada e corrupção |
+| Operação | Build, PostgreSQL real/restauração e conferência de grupos/totais/snapshots/recorrência pendentes |
+
+Quando o usuário liberar execução, validar em ambiente sintético, com serviços
+reais apenas descartáveis e sem volumes/chaves do usuário:
+
+```bash
+bash scripts/run_tests.sh tests/test_backup_encryption.py tests/test_postgresql_backup.py
+bash scripts/run_tests.sh --coverage
+```
+
+Os contratos legados de `test_postgresql_backup.py` fixam a flag de criptografia
+false para preservar seu cenário. A integração SFTP, build e recuperação real
+seguem a liberação da 1.5.0. Nenhum xfail próprio foi criado e não há resultado de
+cobertura novo. Runbook: [criptografia e recuperação](../docs/operations/backup-encryption.md).

@@ -84,6 +84,7 @@ def test_large_stream_and_early_catalog_exit_publish_complete_pair(tmp_path, syn
     calls = [json.loads(line) for line in (synthetic_tools[0] / 'calls.jsonl').read_text().splitlines()]
     dump = next(call for call in calls if call[0] == 'pg_dump' and '--version' not in call[1])
     assert not any('--file' in value or 'secret' in value for value in dump[1])
+    assert '--no-password' in dump[1]
     assert dump[2] == 'verify-full'
 
 
@@ -247,3 +248,30 @@ def test_manifest_is_published_only_after_valid_ciphertext(tmp_path, synthetic_t
     monkeypatch.setattr(backup_pipeline, 'publish_manifest', publish)
     artifact = create_backup(EncryptionSettings.from_environment())
     assert events == [artifact.backup_id]
+
+
+def test_private_key_in_recipient_comments_is_rejected(synthetic_tools):
+    synthetic_tools[2].write_text('age1' + 'q' * 58 + '\n# AGE-SECRET-KEY-1private\n')
+    with pytest.raises(EncryptionConfigurationError):
+        EncryptionSettings.from_environment()
+
+
+def test_verify_cli_does_not_generate_backup(tmp_path, synthetic_tools):
+    artifact = create_backup(EncryptionSettings.from_environment())
+    before = (synthetic_tools[0] / 'calls.jsonl').read_bytes()
+    result = subprocess.run([sys.executable, '-m', 'scripts.backup_pipeline', '--verify', str(artifact.manifest)],
+                            cwd=PROJECT_ROOT, capture_output=True, timeout=10)
+    assert result.returncode == 0
+    assert json.loads(result.stdout)['backup_id'] == artifact.backup_id
+    assert (synthetic_tools[0] / 'calls.jsonl').read_bytes() == before
+    artifact.archive.write_bytes(b'corrupted')
+    failed = subprocess.run([sys.executable, '-m', 'scripts.backup_pipeline', '--verify', str(artifact.manifest)],
+                            cwd=PROJECT_ROOT, capture_output=True, timeout=10)
+    assert failed.returncode == 1
+
+
+def test_application_accepts_encryption_settings_without_reading_user_dotenv(synthetic_tools):
+    from app.config import Settings
+    settings = Settings(_env_file=None)
+    assert settings.backup_encryption_enabled is True
+    assert settings.backup_recipients_file == str(synthetic_tools[2])

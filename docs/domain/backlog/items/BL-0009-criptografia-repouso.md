@@ -8,7 +8,7 @@
 | Título | Implementar criptografia de dados em repouso |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `em_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -71,16 +71,17 @@ restringir o acesso aos dados e backups.
 | Dependências | Inventário dos controles reais do ambiente de produção; definição agnóstica de provedor para armazenamento, acesso, rotação e recuperação de chaves; integração com backup e restauração; [BL-0007](BL-0007-replicacao-externa-backups.md) é relacionada, mas não bloqueia esta demanda |
 | Duplicidades | Nenhuma identificada; permissões atuais dos dumps, proteção eventualmente fornecida pela infraestrutura e a BL-0007 são controles ou evoluções relacionados, não substituem a verificação ponta a ponta desta demanda |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Implementar as três subtarefas aprovadas, mantendo a restrição de não executar testes |
+| Próximo passo | Validar contratos e integração BL-0007 quando autorizado; operador confere volume/recuperação antes da ativação e publicação |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0009](../../tasks/BL-0009-criptografia-repouso.md).
-- Branch: feature/BL-0009-criptografia-repouso; três subtarefas aprovadas, 2/3 implementadas.
-- Implementação (commits/PRs): 83a00d0 (configuração/contratos); pipeline e integração com o script de backup na mesma branch, sem merge da BL-0007.
-- Validações: triagem baseada na Política de Privacidade, na configuração do
-  PostgreSQL, no volume e na rotina local de backups e na arquitetura offline;
-  validações de implementação ainda não iniciadas.
+- Branch: feature/BL-0009-criptografia-repouso; três subtarefas aprovadas, 3/3 implementadas; mesma worktree.
+- Implementação (commits/PRs): 83a00d0 (configuração/contratos), 00d11c7 (pipeline/retenção) e commit que versiona este fechamento operacional; sem PR ou merge da BL-0007.
+- Validações: AST, bash -n, links locais, diff e atualização graphify AST.
+  Contratos escritos, nenhum teste executado por restrição do usuário; sem age,
+  PostgreSQL, Docker, migração ou acesso à infraestrutura. Recuperação real,
+  RPO/RTO e conferência do volume permanecem pendentes.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0007](BL-0007-replicacao-externa-backups.md).
 
@@ -99,5 +100,5 @@ restringir o acesso aos dados e backups.
 | `2026-08-05 22:28 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
 | `2026-10-29` | Usuário/Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Decisões da 1.5.0 documentadas: máquina local ligada, Caddy por SFTP, age com chave privada do usuário, RPO 24h/RTO 4h/30 dias; aprovação pós-versionamento pendente |
-
 | `2026-10-30` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito “Implemente a BL-009 também” após refinamento 3660568; três subtarefas na mesma worktree, sem executar testes ou alterar ambiente/infraestrutura |
+| `2026-10-30` | Codex | em_implementacao → em_validacao | Três subtarefas implementadas; testes não executados; instruções de guarda/recuperação e ficha OCI entregues sem afirmar ativação; integração, volume, restauração e publicação pendentes |

@@ -133,3 +133,23 @@ Depois da restauração:
 
 Não há script de restauração automática. Essa decisão mantém explícita a escolha
 do destino e reduz o risco de sobrescrever dados de produção.
+
+
+## Modo criptografado — BL-0009 / 1.5.0
+
+BACKUP_ENCRYPTION_ENABLED=false mantém o fluxo legado descrito neste documento.
+Com true, backup_database.sh despacha exclusivamente para o pipeline age antes
+de criar ou aplicar retenção sobre `.dump`. Exigir destinatários públicos em
+BACKUP_RECIPIENTS_FILE; identidade privada de recuperação fica com o usuário.
+O entrypoint encaminha somente essas duas novas variáveis ao cron.
+
+O produtor envia o dump customizado em memória para validação e criptografia,
+publica `.dump.age` e manifesto schema 1 por último e aplica retenção somente a
+pares íntegros, preservando o mais recente. Falha de geração não produz fallback
+aberto nem remove cópia válida anterior. Legados não são convertidos/apagados.
+
+Configuração de exemplo, guarda/rotação de chave, tratamento de legados e ensaio
+isolado estão no [runbook de criptografia](backup-encryption.md). O
+[registro de ativação](backup-encryption-activation.md) distingue código entregue
+de proteção efetivamente habilitada/verificada. Testes, restauração e conferência
+Oracle não foram executados nesta implementação, por restrição explícita.

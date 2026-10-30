@@ -1,0 +1,9 @@
+# Opt-in: ajustar caminho no host e incluir explicitamente com docker compose -f.
+# Montar apenas destinatários PÚBLICOS. Chave privada age fica fora dos servidores.
+services:
+  jaci:
+    volumes:
+      - type: bind
+        source: /CAMINHO_ESCOLHIDO/jaci-backup-recipients.txt
+        target: /run/secrets/jaci-backup-recipients.txt
+        read_only: true

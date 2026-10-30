@@ -38,3 +38,11 @@ reports/
 .cache/
 
 node_modules/
+
+# BL-0009: chaves de recuperação e artefatos nunca são conteúdo da imagem
+*.agekey
+.backup-keys/
+backups/
+*.dump
+*.dump.age
+*.manifest.json

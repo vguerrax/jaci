@@ -156,6 +156,21 @@ docker compose exec jaci tail -n 100 /var/log/backup.log
 Consulte o procedimento completo, incluindo retenção e restauração segura em
 banco isolado, em
 [docs/operations/postgresql-backups.md](docs/operations/postgresql-backups.md).
+
+A BL-0009 acrescenta criptografia age opcional para novos backups, com chave
+pública no Jaci e chave privada de recuperação sob guarda do usuário fora dos
+servidores. Ative somente após validar recuperação e proteção do volume, seguindo
+o [runbook de criptografia](docs/operations/backup-encryption.md). A configuração
+padrão permanece desativada; arquivos de ambiente e dumps antigos são preservados.
+O manifesto schema 1 é compatível com a cópia externa da BL-0007, cuja integração
+à release ainda depende da liberação do usuário.
+
+Para conferir um conjunto baixado sem gerar outro backup ou acessar o banco:
+
+```bash
+python -m scripts.backup_pipeline --verify /BACKUP/jaci_ID.manifest.json
+```
+
 O volume local é a única cópia automática atual; recomenda-se replicação futura
 para armazenamento externo. Essa evolução é acompanhada no
 [BL-0007](docs/domain/backlog/items/BL-0007-replicacao-externa-backups.md).
