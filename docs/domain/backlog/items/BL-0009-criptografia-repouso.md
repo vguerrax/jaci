@@ -8,14 +8,14 @@
 | Título | Implementar criptografia de dados em repouso |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Limitação de segurança registrada na Política de Privacidade |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-10-29` |
 
 ### Comportamento observado
 
@@ -71,11 +71,12 @@ restringir o acesso aos dados e backups.
 | Dependências | Inventário dos controles reais do ambiente de produção; definição agnóstica de provedor para armazenamento, acesso, rotação e recuperação de chaves; integração com backup e restauração; [BL-0007](BL-0007-replicacao-externa-backups.md) é relacionada, mas não bloqueia esta demanda |
 | Duplicidades | Nenhuma identificada; permissões atuais dos dumps, proteção eventualmente fornecida pela infraestrutura e a BL-0007 são controles ou evoluções relacionados, não substituem a verificação ponta a ponta desta demanda |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Refinar modelo de ameaça, inventário de dados e controles, camadas de proteção, gestão e recuperação de chaves, evidências operacionais, restauração e atualização dos documentos legais |
+| Próximo passo | Aprovar o refinamento versionado antes de testes executáveis e implementação |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [BL-0009](../../tasks/BL-0009-criptografia-repouso.md).
+- Branch: feature/BL-0009-criptografia-repouso; três subtarefas planejadas, 0/3 implementadas.
 - Implementação (commits/PRs): ainda não iniciada.
 - Validações: triagem baseada na Política de Privacidade, na configuração do
   PostgreSQL, no volume e na rotina local de backups e na arquitetura offline;
@@ -85,8 +86,8 @@ restringir o acesso aos dados e backups.
 
 ### Impedimentos
 
-- Nenhum registrado; o provedor e os controles reais de produção serão
-  inventariados no refinamento sem bloquear a promoção do item.
+- Aprovação pós-versionamento pendente. Dados reais de capacidade, host e chave
+  pública serão fornecidos/conferidos na ativação pelo operador, sem alterar o ambiente.
 
 ## Histórico
 
@@ -96,3 +97,5 @@ restringir o acesso aos dados e backups.
 | `2026-08-05 22:28 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e escopo de servidor e backups confirmados; política, configuração do banco, volume, dumps e persistência offline confrontados |
 | `2026-08-05 22:28 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+
+| `2026-10-29` | Usuário/Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Decisões da 1.5.0 documentadas: máquina local ligada, Caddy por SFTP, age com chave privada do usuário, RPO 24h/RTO 4h/30 dias; aprovação pós-versionamento pendente |
