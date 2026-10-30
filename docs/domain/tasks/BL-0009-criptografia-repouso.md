@@ -143,3 +143,15 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 Implementação e testes executáveis não iniciados. Validações desta etapa são
 links locais, escopo e diff documental. Commit e branch identificam a versão
 para aprovação. Nenhuma mudança de ambiente, infraestrutura ou dados reais.
+
+
+## Base de release definida pelo usuário
+
+Após o versionamento deste refinamento, o usuário solicitou sua integração à
+develop e a criação de release/v1.5.0. A base de integração desta versão passa
+a ser release/v1.5.0. Atualizar a branch da task com essa base antes de código;
+subtarefas -nn retornam ao pai, que só retorna à release com liberação do usuário.
+Trabalhar somente na worktree atual e mantê-la na branch correspondente à etapa;
+não criar outras worktrees. A regra anterior de worktrees próprias foi substituída
+por essa instrução explícita. A autorização aqui é de integração documental e
+preparação de branches, não de testes/código.
