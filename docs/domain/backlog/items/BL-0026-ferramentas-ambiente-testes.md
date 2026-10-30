@@ -8,7 +8,7 @@
 | Título | Ferramentas, ambiente de testes e rastreabilidade das releases |
 | Tipo | `melhoria` |
 | Versão-alvo | `1.4.0` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-10-28` |
@@ -70,7 +70,7 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | Dependências | Python 3.12+, Node para contratos JS existentes; Playwright/CI pertencem à BL-0011 |
 | Duplicidades | BL-0011 possui testes UI/cobertura/CI; BL-0001 possui reconciliação offline |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Confirmar aceite final da release para concluir e arquivar a demanda |
+| Próximo passo | Nenhum — versão 1.4.0 publicada, CI e validação offline aprovados |
 
 ## Acompanhamento até produção
 
@@ -81,12 +81,12 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
   aprovados; migrações/seed em SQLite isolado, token/refresh/revogação, autorização
   HTTP/identidade WebSocket, scripts e smoke com servidor local aprovados.
   Sem inspeção visual ou Playwright; pylint ausente.
-- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; aceite final manual ainda não confirmado.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; validação offline confirmada pelo usuário; CI final aprovado no commit publicado.
 - Itens relacionados: BL-0011 e BL-0001, alvos da 1.4.0.
 
 ### Impedimentos
 
-- Publicação registrada; confirmação do aceite final da 1.4.0 pendente.
+- Nenhum — publicação, validação offline e CI final registrados.
 
 ## Histórico
 
@@ -99,3 +99,4 @@ Usar fixtures Python e autenticação Tupã para testes manuais.
 | `2026-10-28 21:44 -03` | Codex | em_implementacao → em_validacao; 3/3 fatias entregues | Regressão com 278 passes/5 xfail; smoke HTTP local aprovado; sem merge na develop ou publicação |
 | `2026-10-29` | Usuário/Codex | Integração autorizada e realizada em b289771 | Fundação disponível na develop e usada pela BL-0011; nove cenários UI e CI remoto aprovados, sem publicação da 1.4.0 |
 | `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |
+| `2026-10-29` | Usuário/Codex | em_validacao → concluido | Usuário confirmou validação offline; v1.4.0 publicada em a1e188e; workflow manual 40978823250 aprovado em Python/Chromium, com dois artifacts |

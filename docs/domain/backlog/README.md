@@ -150,7 +150,6 @@ não muda de caminho nem é apagado.
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado | Responsável | Atualizado em |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-29` |
 | [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
@@ -160,20 +159,21 @@ não muda de caminho nem é apagado.
 | [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-29` |
 | [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-10-28` |
 | [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-28` |
 | [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
 | [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0026](items/BL-0026-ferramentas-ambiente-testes.md) | Ferramentas, ambiente de testes e rastreabilidade das releases | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-29` |
-| [BL-0027](items/BL-0027-incorporar-item-sem-categoria.md) | Incorporar item sem categoria ao finalizar compra | `bug` | `S2` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-29` |
-| [BL-0028](items/BL-0028-auth-mock-bypass-local.md) | Usar AUTH_MOCK como bypass do Tupã para usuários locais | `ajuste` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-10-29` |
 
 ### Itens arquivados
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado terminal | Encerrado em |
 | --- | --- | --- | --- | --- | --- | --- |
+| [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
+| [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
+| [BL-0026](items/BL-0026-ferramentas-ambiente-testes.md) | Ferramentas, ambiente de testes e rastreabilidade das releases | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
+| [BL-0027](items/BL-0027-incorporar-item-sem-categoria.md) | Incorporar item sem categoria ao finalizar compra | `bug` | `S2` | `P1` | `concluido` | `2026-10-29` |
+| [BL-0028](items/BL-0028-auth-mock-bypass-local.md) | Usar AUTH_MOCK como bypass do Tupã para usuários locais | `ajuste` | `N/A` | `P1` | `concluido` | `2026-10-29` |
 | [BL-0012](items/BL-0012-vgx-doc-management.md) | Gestão documental compartilhada dos projetos VGX | `ajuste` | `N/A` | `P2` | `concluido` | `2026-08-01` |
 | [BL-0013](items/BL-0013-filtrar-itens-lista-compra.md) | Buscar itens e padronizar categorias nas telas de Lista e Compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |
 | [BL-0014](items/BL-0014-fixar-orcamento-compra.md) | Fixar resumo de orçamento durante a compra | `melhoria` | `N/A` | `P2` | `concluido` | `2026-08-05` |

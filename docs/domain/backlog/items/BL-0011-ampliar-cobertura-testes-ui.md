@@ -8,7 +8,7 @@
 | Título | Ampliar cobertura automatizada e testes de UI |
 | Versão-alvo | `1.4.0` |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -77,7 +77,7 @@ no navegador antes de cada publicação.
 | Dependências | BL-0026 para ambiente/mock e scripts Python; Chromium e dependências de browser no CI |
 | Duplicidades | BL-0001 reconcilia contratos legados e matriz offline; esta demanda possui infraestrutura UI/CI/cobertura |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Confirmar aceite final da release para concluir e arquivar a demanda |
+| Próximo passo | Nenhum — versão 1.4.0 publicada, CI e validação offline aprovados |
 
 ## Acompanhamento até produção
 
@@ -90,12 +90,12 @@ no navegador antes de cada publicação.
   GitHub Actions 40814194309: Python coverage e Chromium mobile and desktop
   concluíram com success em 78cbfb1. Link:
   https://github.com/vguerrax/jaci/actions/runs/40814194309.
-- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; aceite final manual ainda não confirmado.
+- Publicação: Produção, versão `1.4.0`, tag `v1.4.0`, commit `a1e188eecaff68cf1a24d65e7286c595338c7516`, em `2026-10-29`, informada pelo usuário. Tag conferida localmente; validação offline confirmada pelo usuário; CI final aprovado no commit publicado.
 - Itens relacionados: [BL-0001](BL-0001-operacao-offline-cobertura-rastreabilidade.md).
 
 ### Impedimentos
 
-- Publicação registrada; confirmação do aceite final da 1.4.0 pendente.
+- Nenhum — publicação, validação offline e CI final registrados.
 
 ## Histórico
 
@@ -109,3 +109,4 @@ no navegador antes de cada publicação.
 | `2026-10-29` | Usuário/Codex | em_implementacao → em_validacao; 4/4 fatias entregues | Execução UI autorizada; 288 passes/5 xfail, cobertura 56,18%, nove cenários Chromium e CI remoto aprovados; sem merge final ou deploy |
 | `2026-10-29` | Usuário/Codex | Integração autorizada e realizada na develop | Merge 70d36ba da branch de integração; candidato 9fa6151 aprovado no run 40814716172; sem deploy |
 | `2026-10-29` | Usuário/Codex | Publicação 1.4.0 registrada; em_validacao mantido | Tag v1.4.0 em a1e188e conferida; regressão final 307 passes/2 xfail, dez UI e CI aprovados; confirmação de aceite final pendente |
+| `2026-10-29` | Usuário/Codex | em_validacao → concluido | Usuário confirmou validação offline; v1.4.0 publicada em a1e188e; workflow manual 40978823250 aprovado em Python/Chromium, com dois artifacts |

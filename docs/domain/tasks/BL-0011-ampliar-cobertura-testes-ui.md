@@ -4,7 +4,7 @@
 
 - Item: [BL-0011](../backlog/items/BL-0011-ampliar-cobertura-testes-ui.md).
 - Versão-alvo: 1.4.0; responsável: Engenharia Jaci.
-- Estado: em_validacao; aprovação explícita recebida após versionamento.
+- Estado: concluido; aprovação explícita recebida após versionamento.
 - Branch documental: feature/BL-0011-refinamento-1-4-0, criada da develop.
   Preservar a branch anterior feature/BL-0011-ampliar-cobertura-testes-ui e seus commits.
 - Depois do merge documental, atualizar esta branch pela develop antes do código;
@@ -261,3 +261,20 @@ Estado em_validacao mantido até confirmação do aceite final da release, sem
 inferir aceite manual do anúncio de publicação. Acompanhamento consolidado na
 branch coordenadora feature/BL-0026-ferramentas-ambiente-testes, preservada até
 a liberação de integração pelo usuário.
+
+## Encerramento da 1.4.0
+
+O usuário confirmou a validação offline após anunciar a publicação. Estado
+concluido em 2026-10-29; tag v1.4.0, commit publicado a1e188eecaff68cf1a24d65e7286c595338c7516.
+
+CI do commit publicado conferido diretamente: [workflow manual 40978823250](https://github.com/vguerrax/jaci/actions/runs/40978823250),
+com Python coverage e Chromium mobile and desktop concluídos com success e dois
+artifacts. O usuário informou duração de 2m42s. A execução inicial por push
+40978445816 falhou no job Chromium; a execução manual posterior passou no mesmo
+commit. A causa daquela falha não foi investigada neste registro.
+
+A confirmação manual registrada é a operação offline; os demais cenários têm a
+cobertura automatizada documentada. Publicação/aceite deixam de ser pendências;
+os registros anteriores de espera ficam preservados como histórico. A linha do
+item foi movida à visão arquivada do índice, mantendo seu arquivo e identificador.
+Nenhum código, ambiente, banco, migração ou implantação foi alterado aqui.
