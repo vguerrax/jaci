@@ -3,8 +3,9 @@
 ## Rastreabilidade e objetivo
 
 - Item: [BL-0009](../backlog/items/BL-0009-criptografia-repouso.md).
-- Estado: pronto_para_implementacao; responsável: Engenharia Jaci.
-- Branch: feature/BL-0009-criptografia-repouso; base develop 3377001.
+- Estado: em_implementacao; responsável: Engenharia Jaci.
+- Branch: feature/BL-0009-criptografia-repouso; base de implementação release/v1.5.0 1cedb61.
+- Refinamento original versionado em 3660568, sobre develop 3377001.
 - Proteger novos backups antes da persistência e verificar a proteção do volume
   PostgreSQL. Preparar o artefato criptografado consumido pela BL-0007.
 
@@ -136,7 +137,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 
 | Etapa/ticket | Concluídas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 0/3 | 3 | Aguarda aprovação do refinamento versionado |
+| 1 — Implementação da task | 1/3 | 2 | Contratos/configuração escritos; testes sem execução |
 
 ## Fechamento documental
 
@@ -155,3 +156,23 @@ Trabalhar somente na worktree atual e mantê-la na branch correspondente à etap
 não criar outras worktrees. A regra anterior de worktrees próprias foi substituída
 por essa instrução explícita. A autorização aqui é de integração documental e
 preparação de branches, não de testes/código.
+
+
+## Execução autorizada — 2026-10-30
+
+Pedido pós-versionamento: “Implemente a BL-009 também”, interpretado como BL-0009
+pelo contexto da 1.5.0. Mantida a restrição da implementação anterior: sem executar
+testes. Contratos são escritos antes do pipeline, mas nenhum pytest, age,
+PostgreSQL, Docker ou migração será executado nesta entrega. A branch foi
+avançada por fast-forward até release/v1.5.0 1cedb61, na worktree atual.
+
+O contrato compartilhado scripts/backup_artifacts.py é a mesma versão entregue
+na BL-0007 (e820626). Reutilizado isoladamente como biblioteca de schema/hash,
+sem trazer replicador, agenda SFTP ou commits da outra task. O produtor não depende
+da BL-0007 e mantém a interface python -m scripts.backup_pipeline esperada por ela.
+Não há integração entre branches, release, develop ou main. Usuário mantém
+controle de .env.test/.env.production, banco, chaves e instâncias Oracle.
+
+Subtarefa 01: flags opt-in, destinatários públicos imutáveis, fingerprint do
+conjunto de destinatários e contratos de fluxo/falha/recuperação escritos.
+Conferência AST e diff somente; execução dos contratos permanece pendente.
