@@ -4,7 +4,7 @@
 
 - Backlog: [BL-0019](../backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Coordenação: [versão 1.5.0](release-1.5.0-acesso-conta-sessao.md).
-- Estado: pronto_para_implementacao, aguardando aprovação do refinamento versionado.
+- Estado: em_implementacao; refinamento 75ac29e aprovado pelo pedido subsequente.
 - Responsável: Engenharia Jaci. Triagem e refinamento em 2026-11-10.
 - Branch documental: docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch de implementação: feature/BL-0019-sessao-autenticada-oito-horas-inatividade,
@@ -263,7 +263,7 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 0/3 | 3 | Refinado, aguardando aprovação e D-01 |
+| 1 — Guard/HTTP | 1/3 | 2 | Política/schema implementados; sem execução de testes; D-01 pendente |
 | 2 — WS/fila/aceite | 0/3 | 3 | Refinado, aguardando etapa 1 |
 | Total | 0/6 | 6 | Nenhum código ou teste executável iniciado |
 
@@ -272,3 +272,24 @@ leituras e conferências documentais. Nenhuma duração real foi medida ou alega
 D-01 não foi registrada/implementada no Tupã; seu ID real/publicação devem ser
 associados antes da integração. Aprovação deste documento não autoriza merge,
 edição de ambiente, trabalho externo ou execução de testes previamente restringida.
+
+
+## Implementação autorizada — 2026-11-10
+
+Usuário pediu criar/usar a release e implementar BL-0019. release/v1.5.0 existente
+foi avançada por fast-forward até 75ac29e e a branch pai BL-0019 atualizada com ela,
+na mesma worktree. develop/main e remoto não foram alterados. Mantida restrição
+anterior de não executar testes. Contratos do escopo escritos antes do código.
+
+D-01 continua inexistente no Tupã 4cee88f; implementação local usa seam de provedor
+injetável e permanece opt-in (SESSION_GUARD_ENABLED=false por padrão). O adaptador
+real não chama uma API imaginária e recusa ativação enquanto o contrato não existir.
+Isso permite concluir/revisar componentes locais sem bloquear o ambiente atual ou
+fingir revogação global em produção. Chave e migração são preparadas somente pelo
+operador; nenhum arquivo de ambiente do usuário será editado. Integração real D-01
+e suas evidências não são declaradas implementadas por essa entrega local.
+
+Fatia 1.1 implementada: política/retorno seguro, modelo e migração aditiva,
+repositório com lock e contratos do escopo. Conferência AST/diff somente; nenhuma
+migração ou teste foi executado. cryptography fixada à versão 47.0.0 já presente
+no ambiente, sem instalação de pacote. Integração D-01 permanece pendente.

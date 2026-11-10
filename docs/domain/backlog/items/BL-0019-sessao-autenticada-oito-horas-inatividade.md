@@ -8,7 +8,7 @@
 | Título | Manter sessão autenticada por oito horas de inatividade |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
@@ -120,3 +120,5 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | `2026-11-10` | Usuário/Codex | recebido → em_triagem → pronto_para_refinamento | Lacuna confirmada estaticamente em Jaci 9d6a18c e Tupã 4cee88f; N/A/P1 e riscos definidos; sem medição ou teste em produção |
 | `2026-11-10` | Usuário/Codex | Critério de atividade e encerramento definido | Cada request autenticado conta, inclusive automático; ping WS não; trocar/recuperar senha exige novo login em todos os dispositivos preservando fila |
 | `2026-11-10` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Plano de seis fatias e dependência D-01 documentados; gate de aprovação pós-versionamento preservado; nenhuma implementação iniciada |
+
+| `2026-11-10` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito de criar/usar release e implementar após refinamento 75ac29e; release/v1.5.0 avançada ao refinamento e branch pai atualizada; sem testes, ambientes ou trabalho no Tupã |

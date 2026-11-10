@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     backup_dir: str = "/var/backups/jaci"
     backup_retention_days: int = 30
 
+    # BL-0019: ativação explícita, dependência D-01 do Tupã ainda pendente.
+    session_guard_enabled: bool = False
+    session_token_encryption_key: str = ""
+
     # Auth
     jwt_secret_key: str = "change-me-jwt-secret-key"
     jwt_algorithm: str = "HS256"

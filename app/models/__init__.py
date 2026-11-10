@@ -1,3 +1,4 @@
+from app.models.access_session import AccessSession
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.models.user import User
 from app.models.group import Group, group_members
@@ -9,6 +10,7 @@ from app.models.sync_conflict_audit import SyncConflictAudit
 from app.models.template_learning import TemplateLearningDismissal
 
 __all__ = [
+    "AccessSession",
     "ExecutionStatus",
     "RecurrenceType",
     "User",
