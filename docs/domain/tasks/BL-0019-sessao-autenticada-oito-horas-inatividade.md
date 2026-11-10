@@ -263,7 +263,7 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 1/3 | 2 | Política/schema implementados; sem execução de testes; D-01 pendente |
+| 1 — Guard/HTTP | 1/3 + 1 local | 1 + D-01 | Política e serviço local escritos; integração real pendente |
 | 2 — WS/fila/aceite | 0/3 | 3 | Refinado, aguardando etapa 1 |
 | Total | 0/6 | 6 | Nenhum código ou teste executável iniciado |
 
@@ -293,3 +293,9 @@ Fatia 1.1 implementada: política/retorno seguro, modelo e migração aditiva,
 repositório com lock e contratos do escopo. Conferência AST/diff somente; nenhuma
 migração ou teste foi executado. cryptography fixada à versão 47.0.0 já presente
 no ambiente, sem instalação de pacote. Integração D-01 permanece pendente.
+
+Fatia 1.2 local implementada: serviço de sessão e provedor mock/injetável,
+Fernet, validação temporal antes/depois de refresh, trava de linha, revogação
+local e limpeza técnica. O adaptador Tupã permanece fechado e sem requisição
+a endpoint não confirmado: a integração real D-01 não foi implementada. Não
+confundir componente local entregue com essa dependência resolvida. Sem testes.
