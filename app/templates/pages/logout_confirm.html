@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-jaci p-4 mx-auto" style="max-width:30rem">
+    <h1 class="h4">Sair da conta</h1>
+    <p>Suas alterações pendentes ficam guardadas neste dispositivo para quando você entrar novamente na mesma conta.</p>
+    <form action="/auth/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{ session_csrf(request) }}">
+        <button class="btn btn-primary" type="submit">Confirmar saída</button>
+        <a href="/" class="btn btn-outline-secondary">Voltar</a>
+    </form>
+</div>
+{% endblock %}

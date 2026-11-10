@@ -5,10 +5,10 @@ import hmac
 import json
 import secrets
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from cryptography.fernet import Fernet, InvalidToken
-from sqlalchemy import delete, select, update
+from sqlalchemy import and_, delete, or_, update
 
 from app.config import get_settings
 from app.models.access_session import AccessSession
@@ -64,7 +64,8 @@ def _tokens(value):
 
 def _grant(row, reference):
     csrf = hmac.new(_key(), ('jaci:session-csrf:' + reference).encode(), hashlib.sha256).hexdigest()
-    owner = hashlib.sha256(f'{row.provider}:{row.product_id}:{row.user_id}'.encode()).hexdigest()
+    identity = json.dumps([row.provider, row.product_id, row.user_id, row.subject])
+    owner = hmac.new(_key(), f'jaci:offline-owner:{identity}'.encode(), hashlib.sha256).hexdigest()
     return SessionGrant(reference,row.user_id,row.subject,row.product_id,row.provider,
                         as_utc(row.expires_at),csrf,owner)
 
@@ -76,6 +77,14 @@ def _identity(claims, subject, product, provider):
         raise SessionExpired('invalid_identity')
     if provider == 'mock' and claims.get('iss') != 'jaci-test':
         raise SessionExpired('invalid_identity')
+
+
+def _access_deadline(tokens, issued_at, claims):
+    deadline_from_ttl = issued_at + timedelta(seconds=tokens['expires_in'])
+    exp = claims.get('exp')
+    if type(exp) is int:
+        return min(deadline_from_ttl, datetime.fromtimestamp(exp, tz=timezone.utc))
+    return deadline_from_ttl
 
 
 def issue_session(db, user, tokens, *, now=None):
@@ -93,7 +102,7 @@ def issue_session(db, user, tokens, *, now=None):
     row = AccessSession(id_hash=reference_hash(reference),user_id=user.id,subject=subject,
                         product_id=product,provider=provider.name,authenticated_at=checked,
                         last_activity_at=checked,expires_at=deadline(checked),
-                        access_expires_at=checked+timedelta(seconds=value['expires_in']),
+                        access_expires_at=_access_deadline(value, checked, claims),
                         encrypted_tokens=_cipher().encrypt(json.dumps(value).encode()).decode(),version=1)
     db.add(row)
     db.flush()
@@ -103,11 +112,14 @@ def issue_session(db, user, tokens, *, now=None):
 
 
 def _invalidate(db, row, now, reason):
-    row.revoked_at = row.revoked_at or now
-    row.reason = reason
-    row.encrypted_tokens = ''
-    row.version += 1
-    db.commit()
+    if row.revoked_at is None:
+        row.revoked_at = now
+        row.reason = reason
+        row.encrypted_tokens = ''
+        row.version += 1
+        db.commit()
+    else:
+        db.rollback()
 
 
 def load_session(db, reference, *, touch=True, allow_refresh=True, now=None):
@@ -130,15 +142,17 @@ def load_session(db, reference, *, touch=True, allow_refresh=True, now=None):
         if subject!=row.subject or product!=row.product_id:
             raise SessionExpired('invalid_identity')
         value = _tokens(json.loads(_cipher().decrypt(row.encrypted_tokens.encode()).decode()))
-        if checked>=as_utc(row.access_expires_at):
+        refreshed = checked >= as_utc(row.access_expires_at)
+        if refreshed:
             if not allow_refresh:
                 raise SessionExpired('session_refresh_required')
             started=checked
             value=_tokens(provider.refresh(value['refresh_token']))
-            row.access_expires_at=started+timedelta(seconds=value['expires_in'])
             row.encrypted_tokens=_cipher().encrypt(json.dumps(value).encode()).decode()
         claims=provider.validate(value)
         _identity(claims,row.subject,row.product_id,row.provider)
+        if refreshed:
+            row.access_expires_at = _access_deadline(value, started, claims)
         checked=as_utc(now or utc_now())
         if (not is_active(row.last_activity_at,row.revoked_at,checked)
                 or checked>=as_utc(row.access_expires_at)):
@@ -175,7 +189,7 @@ def revoke_session(db, reference):
     remote=None
     try:
         remote=json.loads(_cipher().decrypt(row.encrypted_tokens.encode()).decode())['access_token']
-    except (InvalidToken,ValueError,KeyError):
+    except (InvalidToken, ValueError, KeyError, SessionUnavailable):
         pass
     provider=provider_for(get_settings())
     _invalidate(db,row,utc_now(),'logout')
@@ -204,6 +218,9 @@ def cookie_grant(db, reference):
 
 def prune_sessions(db, *, now=None):
     cutoff=as_utc(now or utc_now())-timedelta(days=30)
-    result=db.execute(delete(AccessSession).where(AccessSession.expires_at<cutoff))
+    result = db.execute(delete(AccessSession).where(or_(
+        AccessSession.revoked_at < cutoff,
+        and_(AccessSession.revoked_at.is_(None), AccessSession.expires_at < cutoff),
+    )))
     db.commit()
     return result.rowcount

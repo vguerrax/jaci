@@ -20,6 +20,13 @@ async def get_current_user(
     Obtém o usuário autenticado a partir do cookie de sessão.
     Funciona como dependência FastAPI — pode ser usada em qualquer rota.
     """
+    from app.utils.session_http import guard_enabled
+    if guard_enabled():
+        grant = getattr(request.state, "auth_session", None)
+        if not grant:
+            return None
+        return db.scalar(select(User).where(User.id == grant.user_id, User.is_active.is_(True)))
+
     token = request.cookies.get("jaci_session")
     
     if not token:

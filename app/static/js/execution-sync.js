@@ -10,6 +10,7 @@
         executionId: null,
         token: null,
         reconnectTimer: null,
+        pingTimer: null,
         maxReconnectDelay: 10000, // 10 segundos
         reconnectDelay: 1000,      // começa com 1 segundo
         isConnecting: false,
@@ -20,8 +21,8 @@
          * @param {string} token - JWT de sessão
          */
         init: function (executionId, token) {
-            if (!executionId || !token) {
-                console.error('[Jaci WS] executionId e token são obrigatórios');
+            if (!executionId || (!window.JaciSession?.owner && !token)) {
+                console.error('[Jaci WS] Execução e sessão são obrigatórias');
                 return;
             }
             
@@ -35,18 +36,19 @@
          * Conecta ao WebSocket.
          */
         connect: function () {
-            if (this.isConnecting || !this.executionId || !this.token) {
+            if (this.isConnecting || !this.executionId || (!window.JaciSession?.owner && !this.token)) {
                 return;
             }
 
+            if (window.JaciSession && !window.JaciSession.ownsCache()) return;
             this.isConnecting = true;
 
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const host = window.location.host;
-            const url = `${protocol}//${host}/ws/executions/${this.executionId}?token=${encodeURIComponent(this.token)}`;
-
-            console.log(url);
-            console.log(`[Jaci WS] Conectando a ${url}`);
+            const parameters = window.JaciSession
+                ? { owner: window.JaciSession.owner }
+                : { token: this.token };
+            const url = `${protocol}//${host}/ws/executions/${this.executionId}?${new URLSearchParams(parameters)}`;
 
             this.ws = new WebSocket(url);
 
@@ -67,12 +69,14 @@
             };
 
             this.ws.onclose = (event) => {
+                clearTimeout(this.pingTimer);
                 console.log(`[Jaci WS] Desconectado (código: ${event.code})`);
                 this.isConnecting = false;
                 this.ws = null;
 
                 // Reconecta se não foi fechamento intencional
-                if (event.code !== 1000 && event.code !== 1001) {
+                if (![1000, 1001, 4001, 4003].includes(event.code)
+                    && (!window.JaciSession || event.code !== 1006 || !navigator.onLine)) {
                     this._scheduleReconnect();
                 }
             };
@@ -89,8 +93,8 @@
         _sendPing: function () {
             if (this.ws && this.ws.readyState === WebSocket.OPEN) {
                 this.ws.send(JSON.stringify({ event: 'ping' }));
+                this.pingTimer = setTimeout(() => this._sendPing(), 30000);
             }
-            setTimeout(() => this._sendPing(), 30000); // a cada 30s
         },
 
         /**
@@ -256,6 +260,7 @@
          * Desconecta intencionalmente (sem reconectar).
          */
         disconnect: function () {
+            clearTimeout(this.pingTimer);
             if (this.reconnectTimer) {
                 clearTimeout(this.reconnectTimer);
                 this.reconnectTimer = null;

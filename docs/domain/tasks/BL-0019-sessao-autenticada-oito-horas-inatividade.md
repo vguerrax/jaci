@@ -263,12 +263,11 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 1/3 + 1 local | 1 + D-01 | Política e serviço local escritos; integração real pendente |
-| 2 — WS/fila/aceite | 0/3 | 3 | Refinado, aguardando etapa 1 |
-| Total | 0/6 | 6 | Nenhum código ou teste executável iniciado |
+| 1 — Guard/HTTP | 2/3 + 1 local | D-01 | Login, autorização, renovação e logout no Jaci |
+| 2 — WS/fila/aceite | 3/3 locais | Executar aceite | WebSocket, cache por conta e contratos Playwright |
+| Total | 5/6 + parte local da 1.2 | Integração real e validação | Em implementação |
 
-Triagem concluída e refinamento versionado em docs/refinamento-1.5.0. Somente
-leituras e conferências documentais. Nenhuma duração real foi medida ou alegada.
+Triagem concluída e refinamento versionado em docs/refinamento-1.5.0.
 D-01 não foi registrada/implementada no Tupã; seu ID real/publicação devem ser
 associados antes da integração. Aprovação deste documento não autoriza merge,
 edição de ambiente, trabalho externo ou execução de testes previamente restringida.
@@ -299,3 +298,27 @@ Fernet, validação temporal antes/depois de refresh, trava de linha, revogaçã
 local e limpeza técnica. O adaptador Tupã permanece fechado e sem requisição
 a endpoint não confirmado: a integração real D-01 não foi implementada. Não
 confundir componente local entregue com essa dependência resolvida. Sem testes.
+
+
+### Fatias 1.3 e 2.1–2.3 — Implementação local
+
+- Middleware valida a sessão antes das rotas. O login emite cookie opaco, as
+  mutações exigem CSRF e a saída confirmada revoga a sessão local. APIs e HTMX
+  recebem 401 estruturado. A navegação permite retornar por GET a uma página
+  interna após o login.
+- WebSocket usa cookie, Origin e vínculo à execução na abertura. Pings e
+  entregas privadas verificam sessão e grupo sem renovar prazo ou token.
+- IndexedDB separa filas e snapshots por conta. O service worker guarda páginas
+  visitadas por conta com os campos CSRF removidos. Na reconexão, a consulta de
+  snapshot recupera o CSRF da sessão vigente antes do envio. A API verifica a
+  identidade da fila, inclusive em requisições iniciadas em outra aba.
+- Playwright cobre fila offline, expiração, troca de conta e retomada. O runner
+  habilita a sessão persistida somente com opt-in no ambiente sintético.
+- A limpeza técnica após 30 dias está disponível em
+  `python -m scripts.prune_access_sessions`. A execução cabe ao operador no
+  ambiente selecionado. O comando e a migração ainda não foram executados.
+- D-01 permanece pendente. A revogação após alteração ou recuperação de senha
+  exige a integração com o Tupã e os fluxos da BL-0010.
+
+Conferências estáticas registradas na branch da demanda. Aceite executável,
+corrida em PostgreSQL e publicação permanecem pendentes.

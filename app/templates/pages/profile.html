@@ -24,6 +24,7 @@
             {% endif %}
 
             <form method="post" action="/auth/profile">
+                {% include "components/session_csrf.html" %}
                 <div class="mb-3">
                     <label for="profile-name" class="form-label">Nome</label>
                     <input type="text" class="form-control" id="profile-name" name="name"

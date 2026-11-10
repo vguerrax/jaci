@@ -14,12 +14,17 @@
         </div>
 
         <div class="card-jaci p-4">
+            {% if session_guard_enabled() and request.query_params.get("expired") %}
+            <p class="alert alert-warning">Sua sessão terminou. Entre novamente para continuar.</p>
+            {% endif %}
             {% if error %}
             <div class="alert alert-danger alert-jaci mb-3">{{ error }}</div>
             {% endif %}
 
             <h1 class="h5 mb-3">Acesse sua conta</h1>
             <form method="post" action="/auth/password-login">
+                {% include "components/session_csrf.html" %}
+                {% if return_to %}<input type="hidden" name="return_to" value="{{ return_to }}">{% endif %}
                 <div class="mb-3">
                     <label for="login-email" class="form-label">E-mail</label>
                     <input type="email" class="form-control" id="login-email" name="email" placeholder="seu@email.com"

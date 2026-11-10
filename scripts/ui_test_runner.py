@@ -60,6 +60,8 @@ def run(arguments: list[str]) -> int:
     artifacts = PROJECT_ROOT/'reports/playwright'/run_id
     artifacts.mkdir(parents=True)
     environment.update(ENV_FILE=str(directory/'.env.test'))
+    if os.environ.get('JACI_UI_SESSION_GUARD') == '1':
+        environment['SESSION_GUARD_ENABLED'] = 'true'
     environment.setdefault('PLAYWRIGHT_BROWSERS_PATH', str(PROJECT_ROOT/'.cache/playwright'))
     server = tests = None
     previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))

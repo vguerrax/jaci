@@ -1,11 +1,16 @@
 from fastapi.templating import Jinja2Templates
 from app.config import get_settings
+from app.utils.session_http import csrf_value, guard_enabled, offline_owner
 from app.utils.datetime import format_local_datetime, format_local_date
 
 # Create templates instance once
 templates = Jinja2Templates(directory="app/templates")
 
 templates.env.globals["auth_mock_enabled"] = get_settings().auth_mock
+
+templates.env.globals.update(
+    session_guard_enabled=guard_enabled, session_csrf=csrf_value, session_owner=offline_owner,
+)
 
 # Register filters
 def localdatetime_filter(dt, fmt="%d/%m/%Y %H:%M"):

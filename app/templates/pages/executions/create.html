@@ -33,6 +33,7 @@
             {% endif %}
 
             <form method="post" action="/executions/new">
+                {% include "components/session_csrf.html" %}
                 <!-- Template selection -->
                 <div class="mb-3">
                     <label for="template_id" class="form-label">Lista (opcional)</label>

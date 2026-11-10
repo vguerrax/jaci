@@ -448,3 +448,14 @@ Consultar histórico recente ou usar ações rápidas
 * Próxima compra visível sem navegação adicional
 * Problemas relevantes identificáveis rapidamente
 * Estado de conexão sempre visível
+
+
+## Sessão durante a compra (BL-0019)
+
+Quando a sessão persistida está habilitada, cada requisição autenticada renova
+o prazo de oito horas. Pings e mensagens do WebSocket apenas verificam a sessão.
+A compra aberta continua disponível offline. Se o prazo terminar, a próxima
+requisição protegida pede novo login. A fila permanece no navegador e só pode
+ser sincronizada pela mesma conta, com os vínculos de grupo revalidados pela API.
+O login pode retornar à página interna da compra sem repetir a operação recusada.
+A ativação com Tupã depende do contrato D-01.

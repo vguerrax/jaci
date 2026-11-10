@@ -146,3 +146,16 @@ ficam nos commits históricos de cada task. O teste de backup PostgreSQL legado
 continua em tests/test_postgresql_backup.py. Nenhuma suíte executada no cancelamento.
 O piso independente de 60% foi preservado; os 60,04% reportados anteriormente
 pertencem à execução anterior, não são resultado novo do código após o aborto.
+
+## Sessão persistida da BL-0019
+
+Os contratos locais estão em `tests/test_session_policy.py`,
+`tests/test_session_auth_flow.py` e `tests/test_session_websocket.py`.
+Para validar no navegador com o servidor sintético do runner:
+
+```bash
+JACI_UI_SESSION_GUARD=1 ./scripts/run_ui_tests.sh tests/ui/test_access_session_playwright.py
+```
+
+O cenário usa a migração no banco descartável do runner. O aceite de revogação
+real e a concorrência entre workers PostgreSQL dependem da integração D-01.

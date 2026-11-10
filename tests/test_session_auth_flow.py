@@ -5,7 +5,6 @@ from types import SimpleNamespace
 import pytest
 from cryptography.fernet import Fernet
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
@@ -13,7 +12,7 @@ from app.models.access_session import AccessSession
 from app.services import access_session_service as sessions
 from app.services.session_policy import SessionExpired, SessionUnavailable
 from app.services.session_provider import ProviderUnavailable
-from app.utils.session_http import SessionMiddleware, establish_session
+from app.utils.session_http import SessionMiddleware
 
 NOW = datetime(2026, 11, 10, tzinfo=timezone.utc)
 
@@ -150,6 +149,7 @@ def test_http_background_counts_but_expired_post_never_reaches_handler(db, guard
     def factory():
         yield db
     monkeypatch.setattr(session_http, 'get_settings', lambda: guard[1])
+    monkeypatch.setattr(session_http, 'utc_now', lambda: NOW)
     monkeypatch.setattr(session_http, 'session_database', factory)
     app = FastAPI()
     app.add_middleware(SessionMiddleware)
@@ -168,3 +168,36 @@ def test_http_background_counts_but_expired_post_never_reaches_handler(db, guard
         monkeypatch.setattr(sessions, 'utc_now', lambda: NOW+timedelta(hours=8))
         assert client.post('/write', headers={'Accept':'application/json'}).status_code == 401
     assert writes == []
+
+
+def test_offline_requests_require_matching_owner_and_csrf(db, guard, monkeypatch):
+    from contextlib import contextmanager
+    from app.utils import session_http
+
+    @contextmanager
+    def factory():
+        yield db
+
+    monkeypatch.setattr(session_http, 'get_settings', lambda: guard[1])
+    monkeypatch.setattr(session_http, 'utc_now', lambda: NOW)
+    monkeypatch.setattr(session_http, 'session_database', factory)
+    app = FastAPI()
+    app.add_middleware(SessionMiddleware)
+
+    @app.post('/api/offline/operations/write')
+    def write():
+        return {'applied': True}
+
+    grant = issue(db, guard)
+    with TestClient(app) as client:
+        client.cookies.set('jaci_session', grant.session_id)
+        url = '/api/offline/operations/write'
+        stale = client.post(url, headers={'X-Jaci-Offline-Owner': 'old-account'})
+        assert stale.status_code == 403
+        assert stale.json()['detail']['code'] == 'offline_account_changed'
+        assert client.post(url, headers={'X-Jaci-Offline-Owner': grant.owner}).status_code == 403
+        response = client.post(url, headers={
+            'X-Jaci-Offline-Owner': grant.owner,
+            'X-CSRF-Token': grant.csrf_token,
+        })
+        assert response.json() == {'applied': True}

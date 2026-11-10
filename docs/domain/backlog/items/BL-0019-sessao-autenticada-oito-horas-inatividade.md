@@ -122,3 +122,11 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | `2026-11-10` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Plano de seis fatias e dependência D-01 documentados; gate de aprovação pós-versionamento preservado; nenhuma implementação iniciada |
 
 | `2026-11-10` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito de criar/usar release e implementar após refinamento 75ac29e; release/v1.5.0 avançada ao refinamento e branch pai atualizada; sem testes, ambientes ou trabalho no Tupã |
+
+
+## Acompanhamento da implementação
+
+O código local foi preparado na branch `feature/BL-0019-sessao-autenticada-oito-horas-inatividade`,
+a partir de `release/v1.5.0`. Sessão persistida, HTTP, WebSocket e fila por conta
+têm implementação opt-in e contratos de teste. O aceite executável e o contrato
+D-01 do Tupã permanecem pendentes. A demanda segue em `em_implementacao`.

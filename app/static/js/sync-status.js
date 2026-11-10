@@ -11,9 +11,11 @@
     const errors = status.querySelector('.sync-status-errors');
     const manualSync = status.querySelector('[data-sync-now]');
     const LAST_SYNC_KEY = 'jaci_last_sync_at';
-    const PENDING_CHANGES_KEY = 'jaci_pending_changes';
-    const PENDING_ERRORS_KEY = 'jaci_pending_errors';
-    const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
+    const session = window.JaciSession;
+    const partition = session ? `-${session.owner}` : '';
+    const PENDING_CHANGES_KEY = `jaci_pending_changes${partition}`;
+    const PENDING_ERRORS_KEY = `jaci_pending_errors${partition}`;
+    const PENDING_CONFLICTS_KEY = `jaci_pending_conflicts${partition}`;
     const SYNC_TIME_ZONE = 'America/Sao_Paulo';
     const STATES = {
         synced: {

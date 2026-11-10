@@ -23,6 +23,7 @@ from app.routers.offline import router as offline_router
 from app.routers.sync_center import router as sync_center_router
 from app.websocket.handlers import execution_ws_handler
 from app.utils.security import decode_access_token
+from app.utils.session_http import SessionMiddleware, guard_enabled
 from app.services.auth_service import get_user_from_claims
 
 settings = get_settings()
@@ -58,8 +59,10 @@ async def add_unread_count(request: Request, call_next):
     refreshed_tokens = None
     
     token = request.cookies.get("jaci_session")
-    payload = decode_access_token(token) if token else None
-    if not payload:
+    guarded = guard_enabled()
+    grant = getattr(request.state, "auth_session", None) if guarded else None
+    payload = decode_access_token(token) if token and not guarded else None
+    if not payload and not guarded:
         refresh_token = request.cookies.get("jaci_refresh")
         if refresh_token:
             try:
@@ -73,21 +76,18 @@ async def add_unread_count(request: Request, call_next):
             except Exception:
                 payload = None
 
-    if token:
-        if payload:
-            tupa_user_id = payload.get("sub")
-            if tupa_user_id:
-                db = SessionLocal()
-                try:
-                    from app.services.notification_service import get_unread_count
-                    user = get_user_from_claims(db, payload)
-                    if user:
-                        unread_count = get_unread_count(db, user.id)
-                except Exception:
-                    pass
-                finally:
-                    db.close()
-    
+    if grant or payload:
+        db = SessionLocal()
+        try:
+            from app.services.notification_service import get_unread_count
+            user = db.get(User, grant.user_id) if grant else get_user_from_claims(db, payload)
+            if user:
+                unread_count = get_unread_count(db, user.id)
+        except Exception:
+            pass
+        finally:
+            db.close()
+
     request.state.unread_count = unread_count
     
     response = await call_next(request)
@@ -138,7 +138,7 @@ async def websocket_execution(
 ):
     """
     WebSocket para sincronização em tempo real de uma execução.
-    Autenticação via token JWT como query parameter.
+    Autenticação por sessão ou pelo fluxo legado configurado.
     """
     await execution_ws_handler(websocket, execution_id, token)
 
@@ -168,3 +168,7 @@ async def web_app_manifest():
         "app/static/manifest.webmanifest",
         media_type="application/manifest+json",
     )
+
+
+# Registrado por último para carregar o contexto antes das dependências/contadores.
+app.add_middleware(SessionMiddleware)

@@ -489,3 +489,15 @@ segredos Tupã ou de produção. Artifacts são retidos por sete dias; não há 
 Depois que o workflow executar no repositório, configure nas regras de proteção
 da branch os checks `Python coverage` e `Chromium mobile and desktop` como
 obrigatórios. Criar o YAML não altera automaticamente as regras do GitHub.
+
+### Sessão persistida da BL-0019
+
+A sessão persistida está disponível em modo de teste com `APP_ENV=test`,
+`AUTH_MOCK=true` e `SESSION_GUARD_ENABLED=true`, após a migração do banco
+selecionado. Cada requisição autenticada renova oito horas de inatividade.
+Pings e mensagens WebSocket apenas verificam a sessão. Após expiração ou
+logout, alterações offline continuam disponíveis para sincronizar na mesma conta.
+
+A configuração padrão é `SESSION_GUARD_ENABLED=false`. A ativação com Tupã
+depende do contrato de revogação D-01. O procedimento de teste e a preparação
+da ativação estão no [refinamento da BL-0019](docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
