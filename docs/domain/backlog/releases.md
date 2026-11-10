@@ -39,7 +39,9 @@ O [índice](README.md) e os itens são a fonte dos estados; esta visão não os 
   Seus critérios de ativação anteriores não são pendências do roadmap atual.
   A 1.5.0 foi reaproveitada para acesso à conta e continuidade da sessão.
 - 1.5.0 e 1.6.0 confirmam contratos do Tupã; mudanças nele precisam de ID e branch
-  próprios. [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) ainda requer triagem; não assumir aprovação pela versão-alvo.
+  próprios. BL-0019 foi triada/refinada em 2026-11-10; a dependência de revogação
+  D-01 está descrita na coordenação da release e ainda precisa de demanda própria
+  aprovada no Tupã. Não assumir aprovação pela versão-alvo.
 - Unidades precedem comparações de preços e quantidades: [BL-0002](items/BL-0002-unidades-medida.md) → [BL-0003](items/BL-0003-historico-precos.md) e [BL-0005](items/BL-0005-inteligencia-compras.md).
 - [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) não depende tecnicamente do histórico de preços; sua posição é estratégica.
 - Revisar [BL-0021](items/BL-0021-api-integracoes-execucoes.md) depois de unidades e da fundação de testes, incluindo o contrato
@@ -136,10 +138,13 @@ A versão 1.5.0 passa a conter:
 
 - BL-0010: iniciar recuperação/redefinição de senha pela tela de login e troca
   de senha na área logada, com identidade/credenciais sob responsabilidade do Tupã.
-  Estado pronto_para_refinamento; documento técnico ainda precisa ser produzido.
+  Refinada em [BL-0010](../tasks/BL-0010-reset-senha-login-area-logada.md),
+  pronta para aprovação; 0/6 fatias implementadas.
 - BL-0019: manter sessão com atividade e encerrá-la após oito horas de inatividade,
   preservando logout, revogação, troca de senha e recusa de tokens inválidos.
-  Estado recebido; medir a situação atual e triar contratos/riscos antes de refinar.
+  Triada/refinada em [BL-0019](../tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md),
+  pronta para aprovação; 0/6 fatias implementadas. A inspeção é estática, não medição
+  da duração em produção.
 - Piso de cobertura de 60% mantido como ajuste independente já solicitado;
   a suíte anterior apresentou 60,04%, sem nova execução neste replanejamento.
 
@@ -149,3 +154,20 @@ e cópias externas manuais. A branch release/v1.5.0 permanece preservada como ba
 a mudança documental na branch atual não integra código ou documentação nela.
 Refinamentos e aprovação explícita ainda são necessários para começar as tasks
 novas da versão. Não foram criadas branches, worktrees, demandas ou implementações.
+
+
+## Refinamento versionado da nova 1.5.0 — 2026-11-10
+
+[Coordenação e decisões](../tasks/release-1.5.0-acesso-conta-sessao.md):
+BL-0019 (guard/concorrência/HTTP/WS/fila) precede a integração final da BL-0010
+(recuperação/troca/perfil). Cada request HTTP autenticado, inclusive automático,
+atualiza deadline em oito horas; pings/pongs e permanência WS não contam. Nenhum
+novo heartbeat ou polling para sessão. Novo login global após senha, com fila
+preservada e partição por identidade.
+
+Tupã 4cee88f não oferece toda a semântica de revogação exigida. D-01 registra o
+contrato necessário, sem fingir endpoint disponível ou demanda externa já criada.
+A aprovação documental Jaci não autoriza modificar Tupã. Nenhuma nova chamada ou
+execução de teste foi feita; 12 fatias futuras no total, aguardando aprovação.
+Pacote em docs/refinamento-1.5.0, base 9d6a18c; sem merge à develop/release/main,
+que continuam precisando da consolidação documental liberada pelo usuário.

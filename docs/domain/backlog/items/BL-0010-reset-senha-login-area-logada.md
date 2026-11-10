@@ -8,7 +8,7 @@
 | Título | Disponibilizar reset de senha via login e área logada |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `pronto_para_implementacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -72,27 +72,31 @@ diretamente esse acesso.
 | Risco ao histórico financeiro | Baixo — nenhuma compra ou valor é alterado; troca de credencial e eventual encerramento de sessões devem preservar integralmente o histórico associado à conta |
 | Risco à recorrência | Baixo — o fluxo de autenticação não deve criar, cancelar, reagendar ou recalcular execuções recorrentes |
 | Risco à separação template/execução | Baixo — não há mutação de templates ou execuções e nenhum dado deve ser propagado entre esses domínios |
-| Dependências | Contratos existentes do Tupã `POST /auth/forgot-password`, `POST /auth/reset-password` e `POST /auth/change-password`; entrega de e-mail; `base_url` pública do produto Jaci configurada no Tupã; definição no refinamento da política de sessão após troca autenticada; [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md) é relacionada, mas não bloqueia esta demanda |
+| Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 externa para revogação global atômica, validação revogável e vínculo do reset ao produto consumidor, ainda a registrar/refinar/aprovar no Tupã |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Refinar os fluxos público e autenticado, o tratamento seguro do token opaco, mensagens e limites, configuração da URL pública, comportamento das sessões e cobertura automatizada, identificando eventual demanda correspondente no Tupã se o contrato precisar mudar |
+| Próximo passo | Aprovar o refinamento versionado de seis fatias; consolidar guard BL-0019 e confirmar D-01 (revogação global/reset isolado) no Tupã antes da integração real |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
+- Documento refinado: [BL-0010](../../tasks/BL-0010-reset-senha-login-area-logada.md).
+- Coordenação: [versão 1.5.0](../../tasks/release-1.5.0-acesso-conta-sessao.md).
+- Branch documental docs/refinamento-1.5.0; futura implementação feature/BL-0010-reset-senha-login-area-logada, somente na worktree atual.
 - Implementação (commits/PRs): ainda não iniciada.
-- Validações: triagem baseada nas páginas e rotas atuais do Jaci e nos contratos,
-  esquemas e testes existentes do Tupã; validações de implementação ainda não
-  iniciadas.
+- Validações: inspeção estática Jaci 9d6a18c e Tupã 4cee88f, contratos existentes,
+  links/estados e escopo documental. Nenhum teste, migração, e-mail ou serviço real
+  executado. Plano futuro 0/6 fatias; cenários definidos sem testes executáveis.
 - Publicação: ainda não publicada.
 - Itens relacionados:
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 
 ### Impedimentos
 
-- Nenhum registrado; a configuração efetiva da `base_url` pública e a política
-  de revogação após troca autenticada serão confirmadas no refinamento sem
-  bloquear a promoção do item.
+- Aprovação do refinamento pendente. Tupã atual não revoga access imediatamente
+  e a troca autenticada não revoga refresh; reset não recebe product_id do
+  consumidor. D-01 precisa ser versionada no próprio Tupã e validada antes da
+  integração. URL pública, e-mail e redaction de logs reais ficam para ativação
+  autorizada, sem editar configurações nesta etapa.
 
 ## Histórico
 
@@ -103,3 +107,5 @@ diretamente esse acesso.
 | `2026-08-05 22:38 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.6.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
 | `2026-11-10` | Usuário/Codex | Versão-alvo 1.6.0 → 1.5.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |
+| `2026-11-10` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Seis fatias de recuperação/perfil, token opaco, cache/logs, CSRF e dependências BL-0019/D-01 refinadas; nenhuma implementação/teste iniciado |
+| `2026-11-10` | Usuário/Codex | Política pós-senha definida | Novo login em todos os dispositivos, preservando fila; exigência depende de revogação atômica no Tupã e guard Jaci |
