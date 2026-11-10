@@ -6,7 +6,7 @@
 | --- | --- |
 | ID | `BL-0019` |
 | Título | Manter sessão autenticada por oito horas de inatividade |
-| Versão-alvo | `1.6.0` |
+| Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
 | Estado | `recebido` |
 | Severidade | `a_triar` |
@@ -15,7 +15,7 @@
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` em `2026-08-05` |
 | Responsável | `a_definir` |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -97,3 +97,4 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | --- | --- | --- | --- |
 | `2026-08-05 15:27 -03` | Usuário/Codex | Item criado em `recebido` | Solicitação para manter a sessão por oito horas de inatividade |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.6.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-11-10` | Usuário/Codex | Versão-alvo 1.6.0 → 1.5.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |

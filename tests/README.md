@@ -138,64 +138,11 @@ Resultados executados ficam no refinamento BL-0028; declaração de cobertura n�
 substitui evidência de execução. Dois contratos FL-08 permanecem fora do escopo.
 
 
-## BL-0009 — Criptografia de backups (1.5.0)
+## Demandas de backups abortadas — 2026-11-10
 
-Contratos escritos em `tests/test_backup_encryption.py`, sem execução durante
-a implementação por instrução do usuário. Após a entrega, o usuário executou a
-suíte com cobertura; o resultado está registrado abaixo. O fixture usa executáveis descartáveis
-para validar supervisão de processos e memória; ciphertext sintético não comprova
-criptografia real. Um contrato separado usa age/age-keygen reais quando instalados,
-com chaves efêmeras e PostgreSQL simulado. Ignorado na primeira execução por
-exigir age/age-keygen reais, passou depois em execução focal informada pelo usuário.
-
-| Área | Contratos escritos / evidência pendente |
-| --- | --- |
-| Configuração | Desativado/SQLite sem chave ou ferramentas; chave ausente/inválida/privada recusada; Settings sem dotenv do usuário |
-| Fluxo e publicação | Stream maior que buffers, catálogo terminando cedo, dump falhando tarde, age falhando, manifesto por último e permissões |
-| Supervisão | Timeout/SIGTERM encerram filhos, limpam temporários e preservam conjunto válido anterior |
-| Disco/legado | Falha na publicação não deixa par incompleto; modo criptografado não faz fallback nem apaga legados |
-| Contrato BL-0007 | Manifesto schema 1 conferido por Artifact.load; verificação CLI não inicia geração |
-| Retenção | Somente pares íntegros expirados; preservar mais recente, ignorar links/arquivos alheios |
-| Chaves | Snapshot público imutável; age real opcional: rotação, chave errada e corrupção |
-| Operação | Build, PostgreSQL real/restauração e conferência de grupos/totais/snapshots/recorrência pendentes |
-
-Para futuras execuções autorizadas, usar ambiente sintético, com serviços
-reais apenas descartáveis e sem volumes/chaves do usuário:
-
-```bash
-bash scripts/run_tests.sh tests/test_backup_encryption.py tests/test_postgresql_backup.py
-bash scripts/run_tests.sh --coverage
-```
-
-Os contratos legados de `test_postgresql_backup.py` fixam a flag de criptografia
-false para preservar seu cenário. A integração SFTP, build e recuperação real
-seguem a liberação da 1.5.0. Nenhum xfail próprio foi criado. Runbook: [criptografia e recuperação](../docs/operations/backup-encryption.md).
-
-
-### Execução informada pelo usuário — 2026-10-30
-
-Comando: `./scripts/run_tests.sh --coverage`. Resultado: **329 passed, 1 skipped,
-2 xfailed, 19 warnings em 63,35s**, de 332 itens coletados. Cobertura combinada
-linhas/branches de `app`: **60,04%**, acima do novo mínimo de **60%** solicitado
-pelo usuário após essa execução (o log original ainda exibia o piso de 56,18%).
-O runner e o CI usam `.coveragerc`; a mudança não altera o escopo da medição.
-
-O skip é `test_real_age_decryption_rotation_wrong_key_and_corruption`, por ausência
-de age/age-keygen reais. Os dois xfails são FL-08 (BL-0003/BL-0004). Os 19 avisos
-são DeprecationWarning de python-jose sobre datetime.utcnow. Os contratos de fila
-Node passaram via pytest; UI não integra essa execução (`--ignore=tests/ui`).
-O percentual não mede os scripts de backup nem comprova criptografia real,
-restauração PostgreSQL, proteção do volume, RPO/RTO ou integração SFTP.
-O Codex registrou o log fornecido, sem repetir testes ou instalar ferramentas.
-
-
-### Contrato age real aprovado — 2026-10-30
-
-O usuário informou execução focal de
-`./scripts/run_tests.sh tests/test_backup_encryption.py::test_real_age_decryption_rotation_wrong_key_and_corruption -v`:
-**1 passed em 1,08s**. A pendência do skip da execução anterior foi resolvida
-individualmente. O teste usa age/age-keygen reais, duas identidades efêmeras e
-dados sintéticos: confere descriptografia, rotação, chave incorreta e corrupção.
-PostgreSQL é simulado; restauração real e demais ensaios continuam pendentes.
-Este registro não altera a contagem histórica da suíte completa ou a cobertura
-anterior; não houve nova suíte completa nem reexecução pelo Codex.
+BL-0007 e BL-0009 foram abortadas antes de publicação. Testes específicos de
+criptografia/replicação não integram a entrega corrente; seus contratos e resultados
+ficam nos commits históricos de cada task. O teste de backup PostgreSQL legado
+continua em tests/test_postgresql_backup.py. Nenhuma suíte executada no cancelamento.
+O piso independente de 60% foi preservado; os 60,04% reportados anteriormente
+pertencem à execução anterior, não são resultado novo do código após o aborto.

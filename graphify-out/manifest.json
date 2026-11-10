@@ -10,8 +10,8 @@
     "semantic_hash": ""
   },
   "app/config.py": {
-    "mtime": 1793341141.4692676,
-    "ast_hash": "2122086c7ae73a4fd6699431dfc623e4",
+    "mtime": 1794344347.45488,
+    "ast_hash": "ad5241f2f12c5fa912d2ce569ae2197f",
     "semantic_hash": ""
   },
   "app/database.py": {
@@ -315,8 +315,8 @@
     "semantic_hash": "3d0de48ba9deb3f77710d57c3023002c"
   },
   "scripts/backup_database.sh": {
-    "mtime": 1793341314.586695,
-    "ast_hash": "293181cc90f5409f70869e4a6ddfe333",
+    "mtime": 1794344347.4603918,
+    "ast_hash": "7fdfe5451a63e5f5e3849cb659706d5d",
     "semantic_hash": ""
   },
   "scripts/create_database.py": {
@@ -325,8 +325,8 @@
     "semantic_hash": "de34d022963daaee5c2e1b94bcfa7766"
   },
   "scripts/docker-entrypoint.sh": {
-    "mtime": 1793341314.5876415,
-    "ast_hash": "fe07bdc8c3ad0e5f89b960faef8d05ce",
+    "mtime": 1794344347.4627378,
+    "ast_hash": "9191259de3ec776658a2bb7e7c5f8b9d",
     "semantic_hash": ""
   },
   "scripts/migrate_auth_to_tupa.py": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "tests/test_postgresql_backup.py": {
-    "mtime": 1793341314.5885088,
-    "ast_hash": "11bc8d06714f02c7299e00e265bbd5b0",
+    "mtime": 1794344347.4650416,
+    "ast_hash": "ed90fc9103091a7e87f45b1033fe8371",
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
@@ -450,13 +450,13 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1793319350.0508354,
-    "ast_hash": "fddd42397d59ec1ad30b582fe0714749",
+    "mtime": 1794344419.3463209,
+    "ast_hash": "eea66b5d787e753a50730b38fd01f70a",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1793341843.1030052,
-    "ast_hash": "c207b0f093491233b4d2664442877f40",
+    "mtime": 1794344347.4939888,
+    "ast_hash": "f28ea0c9457cdd1f3b0fbd62858a885c",
     "semantic_hash": ""
   },
   "app/static/offline.html": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/legal/privacy.html": {
-    "mtime": 1793342072.098046,
-    "ast_hash": "f703a3889ccfd9f71fcf9e7d52708374",
+    "mtime": 1794344347.4578269,
+    "ast_hash": "9d7a95ccf2a26d4c8d7e955c6f06c04b",
     "semantic_hash": ""
   },
   "app/templates/pages/legal/terms.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1793341843.1231875,
-    "ast_hash": "bfb0d3e567bf8068c854daa8e694b38c",
+    "mtime": 1794344419.345249,
+    "ast_hash": "acaacefd5749f4dac21a0d00b4b19542",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -685,48 +685,48 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0002-unidades-medida.md": {
-    "mtime": 1793319350.0548353,
-    "ast_hash": "c40485c6efdeff131cd68f0fa6c554c2",
+    "mtime": 1794344419.3344467,
+    "ast_hash": "3645ebd8b5590478e0d59228c379f179",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0003-historico-precos.md": {
-    "mtime": 1793319350.0548353,
-    "ast_hash": "bbb8dd97e812a445f58021c2eede298a",
+    "mtime": 1794344419.3353634,
+    "ast_hash": "cec995657f42ed33db5b882558cd8998",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0004-analise-gastos-dashboard-financeiro.md": {
-    "mtime": 1793319350.0548353,
-    "ast_hash": "5305745df4391664343bcd628fdbdb6d",
+    "mtime": 1794344419.336138,
+    "ast_hash": "58fe2832c2a8a6829b9817b88248f18d",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0005-inteligencia-compras.md": {
-    "mtime": 1793319350.0548353,
-    "ast_hash": "9c19fedb0c1a5229b0c9a07aad59091e",
+    "mtime": 1794344419.3367944,
+    "ast_hash": "7c24e7acee4f7a53431b9bcc8f9fc16c",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0006-integracoes-externas.md": {
-    "mtime": 1793319350.0558355,
-    "ast_hash": "43acf9c4d8a808853f8ecb6958c2c69e",
+    "mtime": 1794344419.3374143,
+    "ast_hash": "8ab521f67c1d16ab9aa9490219b78c5f",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0007-replicacao-externa-backups.md": {
-    "mtime": 1793340832.1274538,
-    "ast_hash": "1bb08050124051ed5abb90fa9d8abf29",
+    "mtime": 1794344347.4842286,
+    "ast_hash": "dc29d36bd3ef6b29a6654d3ce62b1043",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0008-autoexclusao-anonimizacao-conta.md": {
-    "mtime": 1793319350.0558355,
-    "ast_hash": "12c4164dc27de0d79eac9f70d21d0535",
+    "mtime": 1794344419.3381326,
+    "ast_hash": "be613b0accad3c547af7dd461380708e",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0009-criptografia-repouso.md": {
-    "mtime": 1793342072.3250113,
-    "ast_hash": "46c6c422b82f21ca0ec1de55b7e3879c",
+    "mtime": 1794344347.4907415,
+    "ast_hash": "415aeae0ca97f68d749f22ea67ed1f97",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1793319350.0558355,
-    "ast_hash": "54571c41271d0098dc06a8f62e165f13",
+    "mtime": 1794344419.3389158,
+    "ast_hash": "997d3d9c9db510ec62f3270368940b78",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0011-ampliar-cobertura-testes-ui.md": {
@@ -810,8 +810,8 @@
     "semantic_hash": ""
   },
   "docs/operations/postgresql-backups.md": {
-    "mtime": 1793341843.1047852,
-    "ast_hash": "761fd2d065f40b84ea89a6ba83456bdf",
+    "mtime": 1794344347.4943902,
+    "ast_hash": "2cbf9288898a267f0ccb2d20ac2c66f9",
     "semantic_hash": ""
   },
   "requirements-dev.txt": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1793341843.1206107,
-    "ast_hash": "9954c02f958ade610a9ea3910b04fd60",
+    "mtime": 1794344347.494243,
+    "ast_hash": "1104b68d4a5c366660de8dcefad422c6",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1793319350.0568354,
-    "ast_hash": "775cfa39bf915bf370643cd04d940757",
+    "mtime": 1794344419.339674,
+    "ast_hash": "15811eaa006e93da175fa5846ef2cabe",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
@@ -960,23 +960,23 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0021-api-integracoes-execucoes.md": {
-    "mtime": 1793319350.0568354,
-    "ast_hash": "2bfc94f878aaf15ae1e62800613eac64",
+    "mtime": 1794344419.3403854,
+    "ast_hash": "56f74b65837be251a0165dc6a017e914",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0022-unificar-lista-categorias.md": {
-    "mtime": 1793319350.0568354,
-    "ast_hash": "067010c7193c3a540e53e701a6a0e06a",
+    "mtime": 1794344419.34095,
+    "ast_hash": "5a70184dd56fe021659cd1602b309018",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0023-priorizar-compras-status-data.md": {
-    "mtime": 1793319350.0568354,
-    "ast_hash": "79c1a2d1891425c3363e10a771e7d99e",
+    "mtime": 1794344419.341664,
+    "ast_hash": "ab0dc05bbb56f074c162781cb5c3f76a",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0024-autocomplete-itens-historico.md": {
-    "mtime": 1793319350.0568354,
-    "ast_hash": "b16ffe02dab31f322579c40a4dd7bc59",
+    "mtime": 1794344419.3423946,
+    "ast_hash": "a7bf454023e824ea7d0e1a3c802bf042",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0025-release-1-3-0.md": {
@@ -1030,8 +1030,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/releases.md": {
-    "mtime": 1793340832.1294537,
-    "ast_hash": "2d1fbf275686bb777fbf001717792881",
+    "mtime": 1794344419.3460126,
+    "ast_hash": "f033883c03af9796aa85a8856817b7a2",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md": {
@@ -1199,49 +1199,24 @@
     "ast_hash": "9800f4e8d18b27ef9eea724f340bd58b",
     "semantic_hash": ""
   },
-  "scripts/backup_artifacts.py": {
-    "mtime": 1793341141.4322815,
-    "ast_hash": "05c5505d6c33996e4feb244757c9bff5",
-    "semantic_hash": ""
-  },
-  "scripts/backup_encryption.py": {
-    "mtime": 1793341677.7427926,
-    "ast_hash": "151167ba9ed259617d69efbb6d21bb72",
-    "semantic_hash": ""
-  },
-  "scripts/backup_pipeline.py": {
-    "mtime": 1793341997.502044,
-    "ast_hash": "1d698662ae60fe1bbc1777648c300886",
-    "semantic_hash": ""
-  },
-  "tests/test_backup_encryption.py": {
-    "mtime": 1793341997.5570447,
-    "ast_hash": "93a6ef189f5823891d4aec6637c4f16c",
-    "semantic_hash": ""
-  },
-  "deploy/compose.backup-encryption.example.yml": {
-    "mtime": 1793341678.0077965,
-    "ast_hash": "4f49baa7d4d947cb30c26263439b68e9",
-    "semantic_hash": ""
-  },
   "docs/domain/tasks/BL-0007-replicacao-externa-backups.md": {
-    "mtime": 1793340832.1334538,
-    "ast_hash": "f5f1059c9793521a42f28504247d8d27",
+    "mtime": 1794344419.3475296,
+    "ast_hash": "f1822b6ca15d21407f9f68a1de1d6458",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0009-criptografia-repouso.md": {
-    "mtime": 1793341843.1217158,
-    "ast_hash": "7b719689d959b416ea5c4ed9da2be085",
+    "mtime": 1794344419.3479526,
+    "ast_hash": "89cde4ad9e6f6bcb1a64f5d3cdc2c941",
     "semantic_hash": ""
   },
   "docs/operations/backup-encryption-activation.md": {
-    "mtime": 1793341678.0297968,
-    "ast_hash": "c07a6433d619ee0b76e21d507088f78c",
+    "mtime": 1794344347.4957297,
+    "ast_hash": "d3a2452fb07b97c8c66a05cc7f5c88fb",
     "semantic_hash": ""
   },
   "docs/operations/backup-encryption.md": {
-    "mtime": 1793342072.3245373,
-    "ast_hash": "33add2ed71f3091acfff2d216e58ba10",
+    "mtime": 1794344419.3484085,
+    "ast_hash": "20254cb00ca90d8cf890a09ef95ed0b1",
     "semantic_hash": ""
   }
 }

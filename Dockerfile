@@ -9,7 +9,6 @@ ENV TZ=America/Sao_Paulo
 # Instala dependências do sistema
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     cron \
-    age \
     gcc \
     postgresql-client \
     tzdata \

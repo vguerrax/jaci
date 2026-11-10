@@ -1,5 +1,11 @@
 # Criptografia de backups e proteção do volume — BL-0009
 
+> **ARQUIVADO — BL-0009 abortada pelo usuário em 2026-11-10.** Este conteúdo
+> descreve o trabalho descartado e não deve ser usado para ativação. Mantidos
+> dumps diários sem criptografia, retenção padrão de 30 dias e cópias manuais.
+> Ensaios/ativação abaixo não são mais trabalho pendente. Código e exemplo de
+> implantação foram retirados da worktree; consulte os commits históricos.
+
 ## Entrega e limites
 
 A implementação 1.5.0 acrescenta criptografia age opcional para novos backups
@@ -60,7 +66,7 @@ BACKUP_RECIPIENTS_FILE=/run/secrets/jaci-backup-recipients.txt
 ```
 
 Usar o [.env.example](../../.env.example) e o
-[override opt-in](../../deploy/compose.backup-encryption.example.yml), ajustados
+override histórico (`git show 0f3f0f7:deploy/compose.backup-encryption.example.yml`), ajustados
 pelo operador. O arquivo de destinatários deve ser absoluto, regular, não vazio,
 sem link e conter somente material público. Montá-lo somente para leitura. Não
 montar a identidade de recuperação no Jaci.

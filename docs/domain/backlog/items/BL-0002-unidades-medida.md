@@ -6,7 +6,7 @@
 | --- | --- |
 | ID | `BL-0002` |
 | Título | Adicionar unidades de medida |
-| Versão-alvo | `1.9.0` |
+| Versão-alvo | `1.8.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -15,7 +15,7 @@
 | Origem | Item 3 da ordem de prioridade do roadmap em `AGENTS.md` |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -103,3 +103,4 @@ inconsistência e retrabalho.
 | `2026-08-05 15:11 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Catálogo sem conversões, compatibilidade histórica e prioridade definidos com o usuário |
 | `2026-08-05 15:11 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Confirmação, riscos, dependências, duplicidades e próximo passo documentados |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.9.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-11-10` | Usuário/Codex | Versão-alvo 1.9.0 → 1.8.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |

@@ -1,9 +1,15 @@
 # Refinamento — BL-0009 — Criptografia em repouso — 1.5.0
 
+> **Abortada pelo usuário em 2026-11-10.** O estado terminal do processo é
+> `rejeitado`. As implementações e validações abaixo são histórico, sem entrega
+> em produção. Mantido o dump PostgreSQL diário existente, sem criptografia,
+> com retenção de 30 dias por padrão. Cópias externas são manuais, sob controle
+> do usuário. O código das tasks não deve ser integrado à release.
+
 ## Rastreabilidade e objetivo
 
 - Item: [BL-0009](../backlog/items/BL-0009-criptografia-repouso.md).
-- Estado: em_validacao; responsável: Engenharia Jaci.
+- Estado: rejeitado; responsável: Engenharia Jaci.
 - Branch: feature/BL-0009-criptografia-repouso; base de implementação release/v1.5.0 1cedb61.
 - Refinamento original versionado em 3660568, sobre develop 3377001.
 - Proteger novos backups antes da persistência e verificar a proteção do volume
@@ -133,7 +139,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Concluir somente após validação operacional, ativação e publicação registradas;
   registrar evidência sanitizada da infraestrutura e resultado da recuperação.
 
-## Progresso
+## Progresso histórico anterior ao aborto
 
 | Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
@@ -263,3 +269,24 @@ A pendência do contrato age real está resolvida. Esta execução não mede cob
 e não comprova restauração PostgreSQL real, RPO/RTO, build, volume OCI,
 integração SFTP/BL-0007, ativação ou publicação. Implementação 3/3, estado em_validacao e branch pai
 preservados; sem merge ou mudança de ambiente pelo Codex.
+
+
+## Aborto solicitado pelo usuário — 2026-11-10
+
+O usuário encerrou a demanda: backups sem criptografia e cópias externas manuais.
+As três subtarefas haviam sido implementadas, mas não foram publicadas; o código
+não deve ser integrado. Evidências anteriores permanecem históricas. As pendências
+de teste, integração, volume Oracle, recuperação e ativação deixam de ser trabalho
+ativo destas demandas. Estado terminal rejeitado, sem reutilizar identificador.
+
+Código atual de backup restaurado à base release/v1.5.0 1cedb61 na worktree
+corrente, sem reescrever commits, apagar branches ou modificar ambientes, banco,
+dumps e chaves. A alteração independente de cobertura mínima de 60% é mantida.
+Nenhum teste ou job de backup executado. Conferência estática do script, agenda,
+volume versionado e diff. A base já conserva dump customizado diário 02h30,
+retenção padrão de 30 dias e volume /opt/jaci/backups:/var/backups/jaci.
+
+A release 1.5.0 perde o escopo de criptografia/replicação. No pedido seguinte,
+o usuário solicitou o roadmap refeito: acesso à conta/sessão passa à 1.5.0,
+e versões seguintes são antecipadas uma posição. Não há autorização implícita
+de merge, deploy ou implementação das próximas tasks.

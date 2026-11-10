@@ -86,7 +86,6 @@ def _backup_environment(
             "CALLS_DIR": str(calls_dir),
             "DATABASE_URL": "postgresql://user:secret@db.example.com:5432/jaci",
             "BACKUP_ENABLED": "true",
-            "BACKUP_ENCRYPTION_ENABLED": "false",
             "BACKUP_DIR": str(tmp_path / "backups"),
             "BACKUP_RETENTION_DAYS": "30",
             "DATABASE_SSL_MODE": "require",
@@ -304,7 +303,6 @@ def test_entrypoint_starts_cron_only_for_the_server_and_limits_cron_environment(
                 "postgresql+psycopg://user:p@ss@db.example.com:5432/jaci"
             ),
             "BACKUP_ENABLED": "true",
-            "BACKUP_ENCRYPTION_ENABLED": "false",
             "BACKUP_DIR": "/var/backups/jaci",
             "BACKUP_RETENTION_DAYS": "30",
             "DATABASE_SSL_MODE": "verify-full",

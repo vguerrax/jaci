@@ -202,11 +202,8 @@
                 <li>>Bloqueio otimista com versionamento (evita perda de edição simultânea).</li>
                 <li>>HTTPS obrigatório em produção (recomendamos e configuraremos).</li>
                 <li>>Backup diário do banco de dados PostgreSQL, com retenção operacional de 30 dias.</li>
-                <li><b>Proteção dos backups:</b> a aplicação oferece criptografia assimétrica opcional.
-                    Sua ativação depende de validação operacional e ensaio de recuperação. Backups legados podem permanecer
-                    sem criptografia até sua conversão e conferência.</li>
-                <li><b>Proteção do banco em repouso:</b> depende dos controles do volume e da infraestrutura
-                    que armazena o PostgreSQL, sujeitos à verificação operacional.</li>
+                <li><b>Criptografia em repouso:</b> não implementada no MVP (o arquivo do banco de dados depende da
+                    criptografia do sistema de arquivos do servidor).</li>
             </ul>
             <p><b>Em caso de violação de dados (incidente de segurança):</b> notificaremos os usuários afetados e a ANPD
                 dentro

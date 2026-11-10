@@ -135,23 +135,15 @@ Não há script de restauração automática. Essa decisão mantém explícita a
 do destino e reduz o risco de sobrescrever dados de produção.
 
 
-## Modo criptografado — BL-0009 / 1.5.0
+## Política mantida pelo usuário — 2026-11-10
 
-BACKUP_ENCRYPTION_ENABLED=false mantém o fluxo legado descrito neste documento.
-Com true, backup_database.sh despacha exclusivamente para o pipeline age antes
-de criar ou aplicar retenção sobre `.dump`. Exigir destinatários públicos em
-BACKUP_RECIPIENTS_FILE; identidade privada de recuperação fica com o usuário.
-O entrypoint encaminha somente essas duas novas variáveis ao cron.
+Manter a rotina automática existente: dump customizado PostgreSQL diário às
+02h30 America/Sao_Paulo, validação do catálogo antes da publicação e retenção
+padrão de 30 dias. A limpeza usa find -mtime +30 e só é feita depois de novo
+backup válido, portanto não antecipa a exclusão antes de 30 dias. A execução
+depende de BACKUP_ENABLED, banco PostgreSQL e container servidor ativo; estes
+valores reais não foram inspecionados no cancelamento.
 
-O produtor envia o dump customizado em memória para validação e criptografia,
-publica `.dump.age` e manifesto schema 1 por último e aplica retenção somente a
-pares íntegros, preservando o mais recente. Falha de geração não produz fallback
-aberto nem remove cópia válida anterior. Legados não são convertidos/apagados.
-
-Configuração de exemplo, guarda/rotação de chave, tratamento de legados e ensaio
-isolado estão no [runbook de criptografia](backup-encryption.md). O
-[registro de ativação](backup-encryption-activation.md) distingue código entregue
-de proteção efetivamente habilitada/verificada. Após a entrega, o usuário informou
-suíte aprovada com 60,04% de cobertura de app; o teste age real, inicialmente
-ignorado, passou depois isoladamente (1 passed em 1,08s), com PostgreSQL simulado.
-Restauração PostgreSQL real e conferência Oracle continuam sem execução/evidência.
+As cópias externas são manuais, sob controle do usuário. BL-0007 e BL-0009 foram
+abortadas e arquivadas: sem criptografia age ou replicação automática na entrega.
+Nenhum backup, ambiente, chave ou serviço foi modificado por essa decisão documental.

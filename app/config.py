@@ -22,8 +22,6 @@ class Settings(BaseSettings):
     backup_enabled: bool = True
     backup_dir: str = "/var/backups/jaci"
     backup_retention_days: int = 30
-    backup_encryption_enabled: bool = False
-    backup_recipients_file: str = ""
 
     # Auth
     jwt_secret_key: str = "change-me-jwt-secret-key"

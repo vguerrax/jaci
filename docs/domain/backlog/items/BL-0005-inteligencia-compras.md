@@ -6,7 +6,7 @@
 | --- | --- |
 | ID | `BL-0005` |
 | Título | Evoluir inteligência de compras |
-| Versão-alvo | `1.11.0` |
+| Versão-alvo | `1.10.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -15,7 +15,7 @@
 | Origem | Item 6 da ordem de prioridade do roadmap em `AGENTS.md` |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -109,3 +109,4 @@ o histórico do template antes de iniciar a próxima compra.
 | `2026-08-05 19:59 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Planejamento preditivo anterior à compra, escopo de itens e quantidades, aplicação somente na execução e prioridade definidos com o usuário |
 | `2026-08-05 19:59 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Fontes atuais, riscos, dependências, duplicidades e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.11.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-11-10` | Usuário/Codex | Versão-alvo 1.11.0 → 1.10.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |

@@ -1,5 +1,11 @@
 # Evidência de ativação — BL-0009 / 1.5.0
 
+> **ARQUIVADO — BL-0009 abortada pelo usuário em 2026-11-10.** Este conteúdo
+> descreve o trabalho descartado e não deve ser usado para ativação. Mantidos
+> dumps diários sem criptografia, retenção padrão de 30 dias e cópias manuais.
+> Ensaios/ativação abaixo não são mais trabalho pendente. Código e exemplo de
+> implantação foram retirados da worktree; consulte os commits históricos.
+
 Estado: **ativação e ensaios de restauração PostgreSQL pendentes**. Registro inicial em
 2026-10-30. Não preencher campos por suposição ou com resultados históricos.
 Documentação de referência: [runbook](backup-encryption.md).
