@@ -8,14 +8,14 @@
 | Título | Disponibilizar reset de senha via login e área logada |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-11-10` |
+| Atualizado em | `2026-11-11` |
 
 ### Comportamento observado
 
@@ -75,26 +75,27 @@ diretamente esse acesso.
 | Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar a implementação do refinamento de seis fatias; usar o guard validado da BL-0019 e o contrato publicado no Tupã 1.1.0 |
+| Próximo passo | Aceite manual da recuperação/perfil, conferência de e-mail/base_url/logs pelo operador e liberação da integração/publicação da 1.5.0 |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0010](../../tasks/BL-0010-reset-senha-login-area-logada.md).
 - Coordenação: [versão 1.5.0](../../tasks/release-1.5.0-acesso-conta-sessao.md).
 - Branch documental docs/refinamento-1.5.0; futura implementação feature/BL-0010-reset-senha-login-area-logada, somente na worktree atual.
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: inspeção estática Jaci 9d6a18c e Tupã 4cee88f, contratos existentes,
-  links/estados e escopo documental. Nenhum teste, migração, e-mail ou serviço real
-  executado. Plano futuro 0/6 fatias; cenários definidos sem testes executáveis.
+- Implementação: 2721091 (núcleo/contratos), a559476 (fluxos HTTP/perfil/PWA);
+  fatia 2.3 e evidências no commit que acompanha este documento.
+- Validações: seis fatias implementadas e contratos automatizados aprovados;
+  resultados finais e cenários rastreados no refinamento. Nenhum e-mail, serviço
+  ou banco real foi usado para a regressão da BL-0010.
 - Publicação: ainda não publicada.
 - Itens relacionados:
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 
 ### Impedimentos
 
-- Aprovação da implementação e guard da BL-0019 pendentes. O contrato
-  externo foi publicado no Tupã 1.1.0 em 2026-11-11. URL pública, e-mail e
-  tratamento dos logs serão conferidos na integração do consumidor.
+- Sem bloqueio de código. Aceite manual da BL-0019 confirmado. Pendente aceite
+  da BL-0010, entrega real de e-mail, base_url, origem confiável/logs no proxy e
+  liberação de integração/publicação do Jaci. Tupã 1.1.0 já publicado.
 
 ## Histórico
 
@@ -116,3 +117,18 @@ oferecer consulta de validade e revogação global da conta no produto.
 O reset é vinculado ao produto quando o consumidor envia `X-Service-Token`.
 A implementação da BL-0010 continua dependente de seu aceite de refinamento
 e do guard da BL-0019.
+
+
+## Implementação autorizada — 2026-11-11
+
+Após aprovar o aceite manual da BL-0019, o usuário solicitou implementar a
+BL-0010. A branch existente foi avançada por fast-forward para bfd31dc, base
+validada da sessão, na mesma worktree. A integração à release segue pendente.
+
+
+### Implementação entregue para validação — 2026-11-11
+
+Seis fatias implementadas na branch pai, sem integração automática à release,
+develop ou main. Recuperação genérica, limitação compartilhada, contexto protegido,
+reset, perfil, revogação global e continuidade offline cobertos. Estado passa de
+em_implementacao para em_validacao; publicação Jaci ainda não ocorreu.

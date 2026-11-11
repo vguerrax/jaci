@@ -7,8 +7,8 @@
   e [BL-0019](../backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Refinamentos: [BL-0010](BL-0010-reset-senha-login-area-logada.md) e
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
-- Data: 2026-11-10. Estado documental: pronto_para_implementacao, aguardando
-  aprovação explícita destes documentos versionados; nenhuma execução liberada.
+- Refinamento: 2026-11-10; atualizado em 2026-11-11. Implementações autorizadas,
+  duas tasks em validação. BL-0019 tem aceite manual aprovado; publicação pendente.
 - Branch documental: docs/refinamento-1.5.0, criada na worktree atual a partir de
   9d6a18c, que registra o aborto/replanejamento. Mantidos o backup legado e piso
   de cobertura de 60%. Não criar outras worktrees.
@@ -180,9 +180,9 @@ por este pedido de triagem/refinamento.
 
 | Escopo | Implementado | Restante | Estado |
 | --- | --- | --- | --- |
-| BL-0019 | 6/6 fatias | Aceite manual/publicação | Em validação; integração real e automática aprovadas |
-| BL-0010 | 0/6 fatias | 6 | Refinamento pronto; aprovação de implementação pendente |
-| Release | 0/2 tasks concluídas | 2 | Publicação do provedor confirmada; integração Jaci em andamento |
+| BL-0019 | 6/6 fatias | Integração/publicação | Em validação; aceite manual aprovado |
+| BL-0010 | 6/6 fatias | Aceite manual/ativação/publicação | Em validação; regressão e UI aprovadas |
+| Release | 12/12 fatias; 0/2 tasks publicadas | Integração, aceite BL-0010 e publicação | Provedor publicado; Jaci ainda não publicado |
 
 ## Fechamento desta etapa documental
 
@@ -207,3 +207,21 @@ recusou o token sintético inválido com `200 {"active":false}` e
 A integração da BL-0019 foi validada com a instância informada, com
 regressão, Playwright e PostgreSQL descartáveis. O provedor foi publicado e
 a BL-0019 está em validação. A BL-0010 conserva seu gate próprio.
+
+
+## Implementação e aceite — 2026-11-11
+
+O usuário aprovou a validação manual da BL-0019 e autorizou implementar BL-0010.
+A branch pai feature/BL-0010-reset-senha-login-area-logada foi avançada para
+bfd31dc e contém as seis novas fatias, commits 2721091 e a559476 e fechamento
+UI/documental no commit deste registro. Permanecemos na mesma worktree, nessa
+branch, sem integrar código à release/develop/main nem reativar backups abortados.
+
+A BL-0010 usa Tupã 1.1.0, recupera por link de e-mail e troca no perfil; toda
+mudança válida exige novo login e preserva a fila. UI sintética cobre mobile,
+duas sessões/fila e desktop sem JavaScript. A migração 0007 e limitação compartilhada
+foram validadas em PostgreSQL descartável. Comandos/resultados finais no refinamento.
+
+Próximos critérios: aceite manual da BL-0010, entrega de e-mail/base_url do produto,
+HTTPS e redaction de logs/origem no Caddy, liberação de integração e publicação Jaci.
+Nenhum ambiente real ou configuração de proxy foi alterado nessa implementação.

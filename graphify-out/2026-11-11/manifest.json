@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1794369986.0188556,
-    "ast_hash": "16a5b713f8a096de6a138596323ce07e",
+    "mtime": 1794370730.5474367,
+    "ast_hash": "dfb3f65b08fe020081cefc82319de509",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0011-ampliar-cobertura-testes-ui.md": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794370652.8987443,
-    "ast_hash": "838a46a5e4774c6e5e98638405acd50e",
+    "mtime": 1794407052.747968,
+    "ast_hash": "953d42b6abf0086e309d7c05d5de5071",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "app/utils/session_http.py": {
-    "mtime": 1794369702.1208315,
-    "ast_hash": "27620f9b11fdb87d52d2c918db148347",
+    "mtime": 1794406973.1059813,
+    "ast_hash": "22fce1838ed5d5a2f17d039a8928ba0b",
     "semantic_hash": ""
   },
   "migrations/versions/20261110_0006_access_sessions.py": {
@@ -1285,8 +1285,8 @@
     "semantic_hash": ""
   },
   "tests/ui/test_access_session_playwright.py": {
-    "mtime": 1794349130.3616376,
-    "ast_hash": "aa7c67b4a4b35d8baf6851d76fbf2eb7",
+    "mtime": 1794406973.067901,
+    "ast_hash": "764e2c261dfb97567be3d4d9b6335e5f",
     "semantic_hash": ""
   },
   "app/templates/components/session_csrf.html": {
@@ -1305,8 +1305,8 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794370652.900524,
-    "ast_hash": "2b33e3d58c96f906bd5db59f8bb94e2e",
+    "mtime": 1794407052.743968,
+    "ast_hash": "4a1e076b4be3669ef279bee57fe9cc5c",
     "semantic_hash": ""
   },
   "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md": {
@@ -1315,8 +1315,8 @@
     "semantic_hash": ""
   },
   "tests/test_guarded_login_flow.py": {
-    "mtime": 1794370109.704732,
-    "ast_hash": "6f0e7a2b17f4388bc4c929f4bb44a072",
+    "mtime": 1794406973.0629008,
+    "ast_hash": "e6eb0a323d8f807256eb625da871b4f3",
     "semantic_hash": ""
   },
   "tests/test_tupa_session_provider.py": {

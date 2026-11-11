@@ -88,26 +88,27 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | Dependências | BL-0010 para fluxos de senha; D-01 publicada no Tupã 1.1.0 e confirmada em 2026-11-11; concluir o adaptador e validar a integração do guard com o provedor |
 | Duplicidades | Nenhuma; BL-0010 expõe recuperação/troca, enquanto esta task controla validade, concorrência e preservação da fila |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Realizar aceite manual, liberar a integração da branch e preparar a publicação da 1.5.0 com a BL-0010 |
+| Próximo passo | Aceite manual aprovado; liberar a integração da branch e preparar a publicação da 1.5.0 com a BL-0010 |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0019](../../tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Coordenação: [versão 1.5.0](../../tasks/release-1.5.0-acesso-conta-sessao.md).
 - Branch documental docs/refinamento-1.5.0; futura implementação feature/BL-0019-sessao-autenticada-oito-horas-inatividade, somente na worktree atual.
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: inspeção estática Jaci/Tupã/Potira, links, matriz de riscos, estados
-  e plano. Nenhum teste/migração/login remoto, medição de produção ou alteração
-  de ambiente/repositório externo. Implementação futura: 0/6 fatias.
+- Implementação: 37f0a09, b4ed3ee, cced2c4, fa438ae e bfd31dc; seis fatias
+  implementadas, integração real e correção de primeiro acesso validadas.
+- Validações: regressão/cobertura, UI, PostgreSQL concorrente e integração real
+  com Tupã 1.1.0 aprovadas; resultados no refinamento. Aceite manual confirmado
+  pelo usuário em 2026-11-11; publicação Jaci pendente.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0010](BL-0010-reset-senha-login-area-logada.md); D-01
-  externa especificada na coordenação, ainda sem ID próprio no Tupã.
+  externa publicada no Tupã 1.1.0.
 
 ### Impedimentos
 
 - O adaptador e a validação automatizada estão concluídos. A ativação da
-  sessão real exige chave e produto configurados pelo operador, além do
-  aceite manual e da publicação do Jaci.
+  sessão real usa chave/produto configurados. Aceite manual já aprovado;
+  integração e publicação do Jaci dependem de liberação.
 
 ## Histórico
 
@@ -154,3 +155,9 @@ Aceite manual e publicação do Jaci permanecem pendentes.
 Ajustado o primeiro acesso pela raiz para abrir o login sem aviso de
 expiração quando o navegador não apresenta sessão anterior. Correção
 tratada na própria BL-0019 e na sua branch pai, com contratos HTTP e UI.
+
+
+### Aceite manual — 2026-11-11
+
+O usuário confirmou a validação manual da BL-0019 e aprovou o resultado.
+A publicação do Jaci e a integração das branches seguem pendentes.

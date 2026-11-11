@@ -5,7 +5,7 @@
 - Backlog: [BL-0010](../backlog/items/BL-0010-reset-senha-login-area-logada.md).
 - Coordenação: [1.5.0 — acesso e sessão](release-1.5.0-acesso-conta-sessao.md).
 - Relacionada: [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
-- Estado: em_implementacao; aprovação do usuário em 2026-11-11.
+- Estado: em_validacao; implementação aprovada pelo usuário em 2026-11-11.
 - Responsável: Engenharia Jaci, 2026-11-10.
 - Branch documental docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch pai feature/BL-0010-reset-senha-login-area-logada, avançada para
@@ -163,8 +163,8 @@ Tupã sintético. Não exigir rede/contas reais para regressão.
 - BL-0019: guard de sessão, contexto de token servidor, CSRF, revogação e fila.
 - D-01: revogação global atômica/introspecção, reset isolado por produto, resposta
   inequívoca quando notificação falha e contrato de abuso/enumeração conferido.
-  Necessita demanda própria registrada/refinada/aprovada no Tupã; ID ainda não
-  atribuído. Nenhum arquivo do Tupã é alterado neste pedido.
+  Implementado e publicado no Tupã 1.1.0 (e30b639), com aprovação própria.
+  Nenhum arquivo do Tupã é alterado nesta implementação do consumidor.
 - Configuração de Product.base_url do Jaci e e-mail no Tupã, consultada/ativada
   pelo operador quando autorizado. Não remover fallback global de outros produtos.
 - Hashes de senha, emissão/expiração de reset, entrega de e-mail e políticas de
@@ -225,9 +225,9 @@ Cada fatia atualiza progresso e commita no pai/filho -nn; nenhuma fatia vai dire
 13. Nova senha autentica com provedor sintético e a antiga falha; autorização de
     grupo e snapshots não mudam. Nenhuma alteração de ciclo recorrente/financeiro.
 
-Sem contratos de migração/refatoração futuros a marcar agora: esta é documentação,
-não existem testes executáveis/xfail desta demanda. Quando aprovados, futuros
-contratos por fatia podem usar xfail(strict=True), sem pendência no fechamento.
+Os cenários acima foram transformados em contratos executáveis após aprovação.
+Não há xfail desta demanda. Os dois xfail FL-08 da regressão são preexistentes,
+referentes ao histórico de preços/análise de gastos e fora desta versão.
 
 ## Estratégia de validação
 
@@ -252,14 +252,12 @@ O histórico 60,04% não é validação desta implementação futura.
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
 | 1 — Contrato/recuperação | 3/3 | 0 | Wrappers, recuperação pública e contexto seguro validados |
-| 2 — Perfil/sessão/aceite | 2/3 | 1 | Reset e perfil validados; fechamento UI/documentação pendente |
-| Total | 5/6 | 1 | Adaptadores e contratos HTTP validados |
+| 2 — Perfil/sessão/aceite | 3/3 | 0 | Reset/perfil/UI/documentação validados; aceite real/publicação pendentes |
+| Total | 6/6 | 0 | Implementação encerrada; em validação até aceite e publicação |
 
-Links/escopo/estado conferidos documentalmente; não houve teste, mudança de banco,
-asset ou ambiente, login remoto, acesso à Oracle, envio de e-mail ou alteração no
-Tupã/Potira. Branch documental mantida na worktree atual. A disponibilidade deste
-refinamento versionado precede a aprovação; publicação/aceite dependem das duas
-tasks e evidências externas da coordenação.
+O refinamento original de 2026-11-10 foi exclusivamente documental, antes da
+aprovação. Os registros abaixo substituem o progresso anterior e descrevem a
+implementação autorizada em 2026-11-11. Nenhuma publicação Jaci foi registrada.
 
 
 ## Dependência publicada — 2026-11-11
@@ -267,8 +265,8 @@ tasks e evidências externas da coordenação.
 A publicação Tupã 1.1.0 foi confirmada pelo usuário. O endpoint de consulta
 é `POST /auth/session/validate` com credencial de serviço. O reset fica
 vinculado ao produto ao enviar `X-Service-Token`. A integração do guard
-continua na BL-0019. A aprovação específica para implementar a BL-0010
-permanece pendente.
+continua na BL-0019. Esse registro precedeu a aprovação específica da BL-0010,
+concedida pelo usuário no início da implementação descrito a seguir.
 
 
 ## Início da implementação — 2026-11-11
@@ -323,3 +321,50 @@ Focais: 28 aprovados, incluindo privacidade/worker Node. Regressão: 378 aprovad
 os quatro contratos adicionais aprovados depois dessa regressão. UI nova: três
 cenários aprovados, incluindo desktop sem JavaScript; sessão anterior: dois;
 compras anteriores: dez. Fixtures e evidência final seguem na fatia 2.3.
+
+
+## Fatia 2.3 — UI, documentação e entrega — 2026-11-11
+
+Page Objects e fixtures seguem vgx-ui-tests. Provedor sintético expõe JWKS,
+contratos de senha/sessão e caixa de saída local; não existe em rotas do Jaci
+nem usa contas/e-mails reais. Runner prepara banco e servidor descartáveis,
+completa o fluxo sem AUTH_MOCK e encerra ambos os servidores ao terminar.
+O arquivo de entrada `.env.test` é somente lido para confirmar APP_ENV=test;
+banco/credenciais existentes não são usados nem reescritos nesse modo.
+
+| Validação executada | Resultado |
+| --- | --- |
+| ./scripts/run_tests.sh --coverage -q -o faulthandler_timeout=30 | 382 aprovados, 2 xfailed FL-08; 67,07% acima de 60%; 71,47s |
+| Focais password_recovery/password_http/password_privacy | 28 aprovados; 5,14s |
+| JACI_UI_PASSWORD_FLOWS=1 ./scripts/run_ui_tests.sh -q --tb=short | 3 aprovados; 9,27s |
+| JACI_UI_SESSION_GUARD=1 ./scripts/run_ui_tests.sh tests/ui/test_access_session_playwright.py | 2 aprovados; 7,34s |
+| Suíte UI habitual de compras, no modo mock isolado | 10 aprovados; cenários de senha/guard separados; 20,28s |
+| PostgreSQL 15 descartável | Migração desde zero, downgrade 0007/0006 e upgrade; 24 UPSERTs em oito conexões, janela/limpeza aprovadas |
+| SQLite legado e novo | Adoção conserva usuário e cria metadados; bancos novos preparados pelo runner/Alembic |
+| Privacidade e PWA | Redaction Uvicorn/cliente, cookie/CSRF, no-store/no-referrer, bypass e limpeza seletiva aprovados |
+
+Artifacts UI sintéticos: reports/playwright/0c8a46b1e915439c85a1f60582548a9e
+(senha), 16ff9ee5673b4466a923c240edec192d (guard),
+f06abf93a9774b3a9e7485c8c35ed6ab (compras). Sem tracing/vídeo e sem envio de
+mensagens reais. Os 57 warnings da regressão são a depreciação utcnow do python-jose.
+
+README, fluxos/regras, matriz de testes, índice, item e coordenação atualizados.
+O grafo foi atualizado com venv/bin/graphify update . (AST, sem LLM/rede).
+A migração não foi aplicada ao banco do usuário; run.py a aplica na próxima
+inicialização autorizada. `.env.test`, `.env.production`, infraestrutura Caddy,
+Tupã existente e dados de compra foram preservados.
+
+### Critérios restantes de ativação/publicação
+
+Aceite manual da BL-0010 pelo usuário: receber e-mail real no endereço correto,
+abrir link de teste/produção conforme Product.base_url e concluir recuperação e
+perfil com dois dispositivos; verificar retomada da fila e atualização PWA.
+Operador deve conferir redaction de query no Caddy/coletor, HTTPS/cookies e origem
+real percebida pelo Uvicorn para o limite compartilhado. Esses pontos não são
+comprovados pelo stub ou pelo filtro da aplicação e não foram alterados por nós.
+
+BL-0019 já tem aceite manual aprovado. Manter a worktree no pai
+feature/BL-0010-reset-senha-login-area-logada, com 2721091 e a559476 e commit de
+UI/evidência que acompanha este registro. Integração à release/develop/main e
+publicação dependem da liberação do usuário; nenhum novo gate de implementação
+ou nova demanda de correção foi criado.

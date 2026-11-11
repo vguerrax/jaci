@@ -459,3 +459,18 @@ requisição protegida pede novo login. A fila permanece no navegador e só pode
 ser sincronizada pela mesma conta, com os vínculos de grupo revalidados pela API.
 O login pode retornar à página interna da compra sem repetir a operação recusada.
 A ativação com Tupã depende do contrato D-01.
+
+
+## Recuperar e trocar senha (BL-0010)
+
+Na tela de login, **Esqueci minha senha** solicita o e-mail e retorna confirmação
+genérica. O Tupã envia um link temporário para contas conhecidas. Abrir o link
+leva a uma URL limpa; a pessoa informa e confirma a nova senha. Link inválido,
+expirado ou usado oferece nova solicitação. A confirmação exige novo login;
+não cria conta nem autentica automaticamente.
+
+No perfil, informar senha atual, nova senha e confirmação. Senha atual incorreta
+mantém a sessão e permite corrigir. Após alteração válida, todos os dispositivos
+precisam entrar novamente. Compras e pendências da mesma conta são preservadas;
+outra identidade não recebe a fila. Recuperação e troca exigem conexão e nunca
+guardam senhas na fila offline. AUTH_MOCK apresenta a indisponibilidade da operação.

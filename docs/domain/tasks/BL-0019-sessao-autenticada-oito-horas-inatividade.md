@@ -4,7 +4,7 @@
 
 - Backlog: [BL-0019](../backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Coordenação: [versão 1.5.0](release-1.5.0-acesso-conta-sessao.md).
-- Estado: em_implementacao; refinamento 75ac29e aprovado pelo pedido subsequente.
+- Estado: em_validacao; refinamento 75ac29e aprovado e aceite manual confirmado em 2026-11-11.
 - Responsável: Engenharia Jaci. Triagem e refinamento em 2026-11-10.
 - Branch documental: docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch de implementação: feature/BL-0019-sessao-autenticada-oito-horas-inatividade,
@@ -263,9 +263,9 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 3/3 | Aceite manual/publicação | Adaptador Tupã integrado e validado |
-| 2 — WS/fila/aceite | 3/3 | Aceite manual/publicação | WebSocket e cenário Playwright aprovados |
-| Total | 6/6 | Aceite manual/publicação | Em validação |
+| 1 — Guard/HTTP | 3/3 | Integração/publicação | Adaptador validado; aceite manual aprovado |
+| 2 — WS/fila/aceite | 3/3 | Integração/publicação | WebSocket, UI e aceite manual aprovados |
+| Total | 6/6 | Integração/publicação | Em validação; aceite manual aprovado |
 
 Triagem concluída e refinamento versionado em docs/refinamento-1.5.0.
 D-01 não foi registrada/implementada no Tupã; seu ID real/publicação devem ser
@@ -384,3 +384,11 @@ cenários Playwright aprovados. O cenário de primeiro acesso cobre navegador
 sem cookies e formulário anônimo prévio. Sessão recusada e identificação
 persistida continuam exibindo a expiração. Artefatos de navegador em
 `reports/playwright/bb7e52fae25b404c9ea376686c3e5476`.
+
+
+## Aceite manual aprovado — 2026-11-11
+
+O usuário confirmou a validação manual e aprovou o resultado da BL-0019,
+autorizando em seguida a implementação da BL-0010 na mesma worktree.
+O progresso acima reflete esse aceite. Permanecem liberação de integração e
+publicação do Jaci 1.5.0; a demanda segue em_validacao até o registro da publicação.

@@ -10,8 +10,8 @@
     "semantic_hash": ""
   },
   "app/config.py": {
-    "mtime": 1794369702.1239967,
-    "ast_hash": "9ec4cefe746f1c8299190114c57e97a8",
+    "mtime": 1794410329.7318776,
+    "ast_hash": "8cdac4d3609c615857f344029d51cbc2",
     "semantic_hash": ""
   },
   "app/database.py": {
@@ -25,13 +25,13 @@
     "semantic_hash": ""
   },
   "app/main.py": {
-    "mtime": 1794349130.3559444,
-    "ast_hash": "a831eb0891c8f392c27428a576a05353",
+    "mtime": 1794410114.8550265,
+    "ast_hash": "e157855d307c92a7c07727acaed7232b",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
-    "mtime": 1794347059.1594844,
-    "ast_hash": "144f071caff76984a1ae7959b0abde89",
+    "mtime": 1794409910.3164694,
+    "ast_hash": "7c130a399eb55f6364234bf2119e5fdd",
     "semantic_hash": ""
   },
   "app/models/category.py": {
@@ -90,8 +90,8 @@
     "semantic_hash": "e5a4ca90f9b3671a250dd86e68de090c"
   },
   "app/routers/auth.py": {
-    "mtime": 1794348858.8910341,
-    "ast_hash": "e144db1fdc7e7ea0bb300a47e18754a7",
+    "mtime": 1794410190.397722,
+    "ast_hash": "5850a56d93afb612118cfec7e0c5a944",
     "semantic_hash": ""
   },
   "app/routers/categories.py": {
@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "app/services/tupa_auth_service.py": {
-    "mtime": 1794346798.3003645,
-    "ast_hash": "16a92654204fb96a2b30623eabf70fd6",
+    "mtime": 1794409910.3203254,
+    "ast_hash": "1f85260086b19ff2dc9d65bd87942c06",
     "semantic_hash": ""
   },
   "app/static/js/execution-sync.js": {
@@ -220,8 +220,8 @@
     "semantic_hash": "2fb77115c7a3a790c8e9f6953992e051"
   },
   "app/static/js/service-worker.js": {
-    "mtime": 1794349130.3564785,
-    "ast_hash": "ec5dcedb0182686949baab95840521cb",
+    "mtime": 1794410190.4040375,
+    "ast_hash": "9546abfcd303d60fc2ef606ee03a5edf",
     "semantic_hash": ""
   },
   "app/static/js/sync-status.js": {
@@ -310,9 +310,9 @@
     "semantic_hash": ""
   },
   "scripts/apply_migrations.py": {
-    "mtime": 1784832781.1496587,
-    "ast_hash": "3d0de48ba9deb3f77710d57c3023002c",
-    "semantic_hash": "3d0de48ba9deb3f77710d57c3023002c"
+    "mtime": 1794411030.7920618,
+    "ast_hash": "60f7485e0f4cb3c57146a3bc99fb6f18",
+    "semantic_hash": ""
   },
   "scripts/backup_database.sh": {
     "mtime": 1794344347.4603918,
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "tests/test_pwa.py": {
-    "mtime": 1794348994.96063,
-    "ast_hash": "f47cdaf6c0ab7349a96def7c7c348cab",
+    "mtime": 1794410190.4079669,
+    "ast_hash": "3ea9efab428691009936f3af2349b260",
     "semantic_hash": ""
   },
   "tests/test_scheduled_execution_editing.py": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/legal/privacy.html": {
-    "mtime": 1794349304.6126277,
-    "ast_hash": "1ae0aea0689e472785ca5137e3b92129",
+    "mtime": 1794411518.011998,
+    "ast_hash": "b0f5325942d3b520d7788f50fab0b068",
     "semantic_hash": ""
   },
   "app/templates/pages/legal/terms.html": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/login.html": {
-    "mtime": 1794348858.9285789,
-    "ast_hash": "1c2b76efb459a948cc161e61b34d05f6",
+    "mtime": 1794410190.3985884,
+    "ast_hash": "2d323291ca7afe181f0648645c5c1449",
     "semantic_hash": ""
   },
   "app/templates/pages/login_error.html": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/profile.html": {
-    "mtime": 1794348858.8990462,
-    "ast_hash": "fc1d9e97bb6d367364113ae898b5306e",
+    "mtime": 1794410115.2528532,
+    "ast_hash": "32063eab2e205a890efe05dce52ca0e8",
     "semantic_hash": ""
   },
   "app/templates/pages/register.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1794370652.8998923,
-    "ast_hash": "6e0c3399d94c8bf0fbfe867cd754359c",
+    "mtime": 1794409539.8067713,
+    "ast_hash": "95ad2e082729a1f7354932ae25e73f7b",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1794370730.5474367,
-    "ast_hash": "dfb3f65b08fe020081cefc82319de509",
+    "mtime": 1794409539.7991366,
+    "ast_hash": "a5319477fe134dbdbbe2124f0b0aedd4",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0011-ampliar-cobertura-testes-ui.md": {
@@ -865,8 +865,8 @@
     "semantic_hash": "cd46d40e22988cd8f66cd6d571328d25"
   },
   "tests/test_sticky_budget.py": {
-    "mtime": 1794370283.0056098,
-    "ast_hash": "3d4e0da5897956ab8f0b034068587612",
+    "mtime": 1794410190.4110377,
+    "ast_hash": "0acb616d72763a49c5955d19c8faf1ec",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0014-fixar-orcamento-compra.md": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794407052.747968,
-    "ast_hash": "953d42b6abf0086e309d7c05d5de5071",
+    "mtime": 1794409539.793398,
+    "ast_hash": "77c8f764298026acf6f09f85771fa805",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
@@ -1015,8 +1015,8 @@
     "semantic_hash": ""
   },
   "scripts/test_environment.py": {
-    "mtime": 1794346798.429366,
-    "ast_hash": "b219ca6ae530d39dec9b97b8e3ce963c",
+    "mtime": 1794410370.857638,
+    "ast_hash": "521aeea17b390bb4f2009a82f85eba5a",
     "semantic_hash": ""
   },
   "tests/test_test_environment.py": {
@@ -1085,8 +1085,8 @@
     "semantic_hash": ""
   },
   "scripts/ui_test_runner.py": {
-    "mtime": 1794349130.355247,
-    "ast_hash": "884f932864839b6cce1bb6b3041cdcbd",
+    "mtime": 1794410370.856904,
+    "ast_hash": "a5d4d8b8d97c278e0c92438d7ee51119",
     "semantic_hash": ""
   },
   "tests/__init__.py": {
@@ -1115,8 +1115,8 @@
     "semantic_hash": ""
   },
   "tests/ui/conftest.py": {
-    "mtime": 1794346798.4423664,
-    "ast_hash": "88e89db162f6f51917b35e22a3b69277",
+    "mtime": 1794410370.8603847,
+    "ast_hash": "ffd9ee72c4213541a3c09796757e08e1",
     "semantic_hash": ""
   },
   "tests/ui/factories/__init__.py": {
@@ -1155,8 +1155,8 @@
     "semantic_hash": ""
   },
   "tests/ui/pages/shopping.py": {
-    "mtime": 1794346798.4463663,
-    "ast_hash": "00a9376ba129255aaafaa3adf1d2f42c",
+    "mtime": 1794410370.86312,
+    "ast_hash": "841f807ab304eb53744b144f2a043089",
     "semantic_hash": ""
   },
   "tests/ui/test_purchase_playwright.py": {
@@ -1235,8 +1235,8 @@
     "semantic_hash": ""
   },
   "app/services/access_session_service.py": {
-    "mtime": 1794369702.1184328,
-    "ast_hash": "db95895004d900052cb24e64cd1bcb33",
+    "mtime": 1794410114.8378735,
+    "ast_hash": "5e63f62b6066e35cda335ba17bcd8c1f",
     "semantic_hash": ""
   },
   "app/services/session_policy.py": {
@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "app/utils/session_http.py": {
-    "mtime": 1794406973.1059813,
-    "ast_hash": "22fce1838ed5d5a2f17d039a8928ba0b",
+    "mtime": 1794410838.6041224,
+    "ast_hash": "6fa9fa0528304864d3ee203ffc820b22",
     "semantic_hash": ""
   },
   "migrations/versions/20261110_0006_access_sessions.py": {
@@ -1290,8 +1290,8 @@
     "semantic_hash": ""
   },
   "app/templates/components/session_csrf.html": {
-    "mtime": 1794348858.9284487,
-    "ast_hash": "77dcfa2b62c0beb3c91202a22fc96649",
+    "mtime": 1794410114.900941,
+    "ast_hash": "369a519659204c6b9f301d37876552c1",
     "semantic_hash": ""
   },
   "app/templates/pages/logout_confirm.html": {
@@ -1300,13 +1300,13 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1794369986.0304027,
-    "ast_hash": "707646453eee4d61a0cbaf4ec120eee0",
+    "mtime": 1794411518.01562,
+    "ast_hash": "9aef409be7879bab2ad59087bb5ed961",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794407052.743968,
-    "ast_hash": "4a1e076b4be3669ef279bee57fe9cc5c",
+    "mtime": 1794407109.065611,
+    "ast_hash": "2de6c9857a81608c7b872b4e81f2303b",
     "semantic_hash": ""
   },
   "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md": {
@@ -1322,6 +1322,81 @@
   "tests/test_tupa_session_provider.py": {
     "mtime": 1794369608.2212296,
     "ast_hash": "f8cb9f05ad4236e8a8c91375b8e6bab8",
+    "semantic_hash": ""
+  },
+  "app/models/auth_rate_limit.py": {
+    "mtime": 1794409910.220324,
+    "ast_hash": "871fab090b257eb77329c703aa78f9bc",
+    "semantic_hash": ""
+  },
+  "app/repositories/auth_rate_limit_repository.py": {
+    "mtime": 1794409910.229324,
+    "ast_hash": "8cb8d028eba3b97d3e0cc77686a2e728",
+    "semantic_hash": ""
+  },
+  "app/routers/passwords.py": {
+    "mtime": 1794411518.0151837,
+    "ast_hash": "0d11096b061e746f454e180e68866a5a",
+    "semantic_hash": ""
+  },
+  "app/services/password_service.py": {
+    "mtime": 1794411030.7990124,
+    "ast_hash": "93054a33bdf0d0741f5c7f434a985a8e",
+    "semantic_hash": ""
+  },
+  "app/utils/password_privacy.py": {
+    "mtime": 1794410114.3950307,
+    "ast_hash": "82eec1e63925338149615dac1835bf16",
+    "semantic_hash": ""
+  },
+  "migrations/versions/20261111_0007_auth_rate_limits.py": {
+    "mtime": 1794409910.2253242,
+    "ast_hash": "4b86ee2921e3641542f5b429905aa443",
+    "semantic_hash": ""
+  },
+  "tests/helpers/tupa_password_stub.py": {
+    "mtime": 1794410838.6125426,
+    "ast_hash": "8eacb90f5bf93c4be43c5f4f9d17acd4",
+    "semantic_hash": ""
+  },
+  "tests/js/password_cache.test.cjs": {
+    "mtime": 1794411270.040338,
+    "ast_hash": "421ad8b4d49015c6354ec0c6966cd1ff",
+    "semantic_hash": ""
+  },
+  "tests/test_password_http.py": {
+    "mtime": 1794411374.3069658,
+    "ast_hash": "9956e1603c4e45e52dc8b2082167314c",
+    "semantic_hash": ""
+  },
+  "tests/test_password_privacy.py": {
+    "mtime": 1794409673.6886926,
+    "ast_hash": "3b17007cbef64381fe3b9eb24b4a4135",
+    "semantic_hash": ""
+  },
+  "tests/test_password_recovery.py": {
+    "mtime": 1794411374.308966,
+    "ast_hash": "546d5e828c98f1f4b00e8cfb486d7024",
+    "semantic_hash": ""
+  },
+  "tests/ui/fixtures/passwords.py": {
+    "mtime": 1794409810.5240006,
+    "ast_hash": "0a79cd468f75aea4eeb658a25b0a59fb",
+    "semantic_hash": ""
+  },
+  "tests/ui/helpers/password_server.py": {
+    "mtime": 1794409810.5230005,
+    "ast_hash": "a4dccfc7b65c658245cead2961c5a31b",
+    "semantic_hash": ""
+  },
+  "tests/ui/pages/passwords.py": {
+    "mtime": 1794409810.5260007,
+    "ast_hash": "09877365aac401395af5e7dff5f34c9d",
+    "semantic_hash": ""
+  },
+  "tests/ui/test_password_recovery_playwright.py": {
+    "mtime": 1794411374.310966,
+    "ast_hash": "c18a88e6d71182f8242a012a86f45032",
     "semantic_hash": ""
   }
 }

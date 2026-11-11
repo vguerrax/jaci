@@ -389,6 +389,7 @@ runner isolado já foram entregues na BL-0011; veja a seção de testes de naveg
 - Senhas armazenadas exclusivamente pelo Tupã
 - JWT do Tupã validado via JWKS e armazenado em cookie httpOnly
 - Renovação de sessão com refresh token
+- Recuperação pelo login e troca de senha pelo perfil, com novo login em todos os dispositivos
 - Isolamento de dados por grupo
 - Bloqueio otimista em edições simultâneas
 
@@ -503,3 +504,59 @@ Tupã, use a versão 1.1.0 ou posterior e configure produto, credencial de
 serviço e chave de proteção da sessão. `TUPA_JWT_ISSUER` tem padrão `tupa`.
 A consulta de validade é autenticada por produto e distingue revogação de
 indisponibilidade. O procedimento de teste e a preparação da ativação estão no [refinamento da BL-0019](docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
+
+
+### Recuperação e troca de senha — BL-0010
+
+O login oferece **Esqueci minha senha**. O Tupã envia o link; depois de escolher
+uma nova senha, entre novamente. No perfil, informe a senha atual e confirme a
+nova. A alteração encerra as sessões em todos os dispositivos. Compras pendentes
+continuam na fila da mesma conta e retomam após autenticação e autorização.
+As operações de senha precisam de conexão e não são enfileiradas.
+
+A integração usa Tupã 1.1.0 ou posterior, `AUTH_MOCK=false`,
+`SESSION_GUARD_ENABLED=true`, `SESSION_TOKEN_ENCRYPTION_KEY`, `TUPA_URL`,
+`TUPA_PRODUCT_ID` e `TUPA_SERVICE_TOKEN`. A chave Fernet protege o contexto de
+reset e os tokens de sessão; mantenha a mesma chave privada em todos os workers.
+O bypass `AUTH_MOCK=true` continua autenticando usuários locais ativos sem
+validar senha; operações de recuperação/troca ficam indisponíveis nesse modo.
+
+A migração `20261111_0007` cria apenas `auth_rate_limits`. `run.py` aplica as
+migrações antes de iniciar o servidor; atualizar um processo já aberto requer
+reiniciá-lo. Nenhum arquivo de ambiente é reescrito por essa implementação.
+
+Limites padrão em janela de 15 minutos: cinco envios por e-mail/produto e vinte
+solicitações por origem. Exceder o limite por e-mail mantém a confirmação genérica;
+exceder o limite de origem retorna 429. Configurações e unidades:
+
+```dotenv
+PASSWORD_RECOVERY_EMAIL_LIMIT=5
+PASSWORD_RECOVERY_ORIGIN_LIMIT=20
+PASSWORD_RECOVERY_WINDOW_SECONDS=900
+PASSWORD_RECOVERY_MIN_RESPONSE_SECONDS=0.5
+```
+
+Os contadores compartilham o banco e guardam HMAC, número de tentativas e
+vencimento. Registros vencidos são removidos na próxima solicitação. A duração
+mínima reduz diferenças locais de resposta; não garante tempo constante da rede.
+O PWA v34 exclui as rotas de senha do cache sem apagar a fila offline.
+
+Antes de publicar, o operador precisa conferir `Product.base_url` do Jaci no
+Tupã, o envio real de e-mail e HTTPS/cookies seguros. O link emitido deve chegar
+à raiz `/reset-password?token=...` do Jaci correto. Validar que Caddy e qualquer
+coletor não registram a query dessas rotas. O servidor usa a origem fornecida
+pelo Uvicorn para o limite: atrás de proxy, conferir os proxies confiáveis e a
+origem percebida, sem confiar em `X-Forwarded-For` enviado diretamente pelo cliente.
+A aplicação filtra seus logs; isso não configura os logs do proxy.
+
+Para os testes completos e os cenários novos de navegador:
+
+```bash
+./scripts/run_tests.sh --coverage
+JACI_UI_PASSWORD_FLOWS=1 ./scripts/run_ui_tests.sh
+```
+
+No segundo comando, o runner lê apenas o seletor de ambiente de `.env.test`,
+cria banco/servidor/provedor e e-mails sintéticos em recursos descartáveis, e
+ignora as credenciais e o banco configurados nesse arquivo. Não envia e-mail real,
+não usa o Tupã existente e não modifica `.env.test`.

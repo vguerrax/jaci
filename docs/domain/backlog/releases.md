@@ -178,3 +178,13 @@ que continuam precisando da consolidação documental liberada pelo usuário.
 Tupã 1.1.0 publicado pelo usuário. A dependência externa D-01 está disponível
 para a integração da release Jaci 1.5.0. BL-0019 está em validação após integração real, regressão e cenário de
 navegador. BL-0010 aguarda sua aprovação específica.
+
+
+## Implementação da nova 1.5.0 — 2026-11-11
+
+BL-0019 teve aceite manual aprovado pelo usuário. BL-0010 foi autorizada e suas
+seis fatias estão implementadas e em validação na branch pai, baseada em bfd31dc,
+com recuperação pelo login, troca no perfil e revogação global via Tupã 1.1.0.
+A [coordenação](../tasks/release-1.5.0-acesso-conta-sessao.md) registra progresso,
+evidências e o aceite/publicação pendentes. A integração das tasks à release e
+à develop/main depende da liberação do usuário; não houve publicação Jaci nova.
