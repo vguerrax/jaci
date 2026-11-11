@@ -368,3 +368,16 @@ feature/BL-0010-reset-senha-login-area-logada, com 2721091 e a559476 e commit de
 UI/evidência que acompanha este registro. Integração à release/develop/main e
 publicação dependem da liberação do usuário; nenhum novo gate de implementação
 ou nova demanda de correção foi criado.
+
+## Ajuste visual após revisão — 2026-11-11
+
+Subtarefa da BL-0010, solicitada pelo usuário na validação: links de recuperação
+e retorno ao login passam a seguir o padrão já usado em criar/acessar conta.
+Pergunta seguida de link verde, texto menor e centralizado, reutilizando
+text-help/text-night/fw-medium. No login, recuperação fica na linha acima de
+criar conta. O mesmo padrão se aplica ao retorno e novo link na redefinição.
+
+Validação focal: 16 testes auth_pages/password_http aprovados e três cenários
+Chromium de senha aprovados (14,26s), incluindo desktop sem JavaScript.
+Templates Jinja e git diff --check válidos; grafo atualizado por AST.
+Ajuste mantido na branch pai; escopo principal continua 6/6, em_validacao.
