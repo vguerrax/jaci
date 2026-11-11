@@ -65,3 +65,10 @@ def test_expired_session_preserves_purchase_for_original_account(page, context, 
     with ui_db_session() as db:
         item = db.get(ExecutionItem, ui_purchase["item"])
         assert item.is_completed and item.version == 2
+
+
+def test_first_visit_opens_login_without_expiration_warning(page):
+    LoginPage(page).goto_path("/")
+    expect(page.locator('form[action="/auth/password-login"]')).to_be_visible()
+    expect(page.get_by_text("Sua sessão terminou. Entre novamente para continuar.", exact=True)).to_have_count(0)
+    assert "expired=" not in page.url

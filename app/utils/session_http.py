@@ -113,7 +113,10 @@ def failure_response(request, code, status=401):
     path = request.url.path
     query = request.url.query
     return_to = internal_return_url(f'{path}?{query}' if query else path)
-    target = '/auth/login?' + urlencode({'expired': '1', 'return_to': return_to})
+    parameters = {'return_to': return_to}
+    if code != 'authentication_required':
+        parameters['expired'] = '1'
+    target = '/auth/login?' + urlencode(parameters)
     if status == 503:
         response = JSONResponse({
             'detail': {'code': 'session_unavailable', 'message': 'Autenticação temporariamente indisponível.'},
@@ -125,7 +128,10 @@ def failure_response(request, code, status=401):
         or request.method not in {'GET', 'HEAD'}
     ):
         response = JSONResponse({
-            'detail': {'code': code, 'message': 'Entre novamente para continuar.'},
+            'detail': {
+                'code': code,
+                'message': 'Entre para continuar.' if code == 'authentication_required' else 'Entre novamente para continuar.',
+            },
         }, status_code=status)
         response.headers['X-Session-Login'] = target
     else:
@@ -154,7 +160,10 @@ class SessionMiddleware(BaseHTTPMiddleware):
                 if not _public(request.url.path):
                     return failure_response(request,'session_unavailable',503)
         if not _public(request.url.path) and request.state.auth_session is None:
-            return failure_response(request,failed or 'session_expired')
+            reason = failed or (
+                'session_expired' if request.cookies.get('jaci_offline_owner') else 'authentication_required'
+            )
+            return failure_response(request, reason)
         grant = request.state.auth_session
         supplied_owner = request.headers.get('x-jaci-offline-owner')
         needs_owner = request.url.path.startswith('/api/offline/')

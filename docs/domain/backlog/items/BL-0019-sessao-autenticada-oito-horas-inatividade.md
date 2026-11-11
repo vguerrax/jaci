@@ -148,3 +148,9 @@ de WebSocket. PostgreSQL descartável confirmou um único refresh para duas
 conexões concorrentes. A integração com Tupã de testes passou com conta
 temporária removida ao final. Transição `em_implementacao -> em_validacao`.
 Aceite manual e publicação do Jaci permanecem pendentes.
+
+### Correção durante validação — 2026-11-11
+
+Ajustado o primeiro acesso pela raiz para abrir o login sem aviso de
+expiração quando o navegador não apresenta sessão anterior. Correção
+tratada na própria BL-0019 e na sua branch pai, com contratos HTTP e UI.

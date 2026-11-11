@@ -76,3 +76,46 @@ def test_guarded_login_uses_normal_route_and_logout_revokes_opaque_cookie(
         assert db.get(type(user), user.id).name != "changed"
     finally:
         main.app.dependency_overrides.pop(database.get_db, None)
+
+
+def test_first_access_and_expiration_have_distinct_login_messages(monkeypatch):
+    from urllib.parse import parse_qs, urlsplit
+
+    from app import main
+    from app.services.session_policy import SessionExpired
+    from app.utils import session_http
+
+    settings = Settings(
+        _env_file=None, app_env="test", session_guard_enabled=True, database_url="sqlite://",
+        smtp_user="synthetic@example.com", smtp_password="synthetic",
+    )
+    monkeypatch.setattr(session_http, "get_settings", lambda: settings)
+
+    def expired(_reference, touch=True):
+        raise SessionExpired()
+
+    monkeypatch.setattr(session_http, "_load", expired)
+    cases = [
+        ({}, False),
+        ({"jaci_login_csrf": "anonymous-form"}, False),
+        ({"jaci_session": "expired-reference"}, True),
+        ({"jaci_offline_owner": "a" * 64}, True),
+    ]
+    for cookies, should_warn in cases:
+        with TestClient(main.app) as client:
+            client.cookies.update(cookies)
+            redirect = client.get("/", follow_redirects=False)
+            assert redirect.status_code == 303
+            target = redirect.headers["location"]
+            query = parse_qs(urlsplit(target).query)
+            assert query["return_to"] == ["/"]
+            assert ("expired" in query) is should_warn
+            page = client.get(target)
+            assert page.status_code == 200
+            assert ("Sua sessão terminou." in page.text) is should_warn
+
+            response = client.get("/api/offline/snapshot")
+            assert response.status_code == 401
+            expected = "session_expired" if should_warn else "authentication_required"
+            assert response.json()["detail"]["code"] == expected
+            assert ("expired" in parse_qs(urlsplit(response.headers["X-Session-Login"]).query)) is should_warn

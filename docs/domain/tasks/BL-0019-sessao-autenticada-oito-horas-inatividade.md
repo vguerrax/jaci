@@ -366,3 +366,21 @@ As referências anteriores à ausência de D-01 descrevem a situação de
 Ativação operacional exige `SESSION_GUARD_ENABLED=true`, chave privada de
 sessão e credenciais do produto configuradas pelo operador. A demanda está
 em `em_validacao`, com aceite manual e publicação do Jaci pendentes.
+
+## Correção de primeiro acesso — 2026-11-11
+
+O usuário encontrou aviso de sessão encerrada ao abrir a raiz em navegador
+sem cookies. O middleware identificava a ausência de autenticação como
+expiração e incluía `expired=1` em todo redirecionamento ao login.
+
+A correção da mesma BL-0019 usa `authentication_required` para acesso
+anônimo. A mensagem de expiração fica vinculada à sessão recusada ou à
+identificação persistida de uma conta anteriormente autenticada. Cookies
+de formulário anônimo não indicam sessão anterior. O retorno interno ao
+destino protegido e as respostas 401 de API continuam cobertos.
+
+Validação da correção: 19 testes HTTP/política/sessão aprovados e dois
+cenários Playwright aprovados. O cenário de primeiro acesso cobre navegador
+sem cookies e formulário anônimo prévio. Sessão recusada e identificação
+persistida continuam exibindo a expiração. Artefatos de navegador em
+`reports/playwright/bb7e52fae25b404c9ea376686c3e5476`.
