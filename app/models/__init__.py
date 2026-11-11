@@ -1,4 +1,5 @@
 from app.models.access_session import AccessSession
+from app.models.auth_rate_limit import AuthRateLimit
 from app.models.enums import ExecutionStatus, RecurrenceType
 from app.models.user import User
 from app.models.group import Group, group_members
@@ -11,6 +12,7 @@ from app.models.template_learning import TemplateLearningDismissal
 
 __all__ = [
     "AccessSession",
+    "AuthRateLimit",
     "ExecutionStatus",
     "RecurrenceType",
     "User",

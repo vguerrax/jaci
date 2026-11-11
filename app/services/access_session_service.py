@@ -195,7 +195,7 @@ def load_session(db, reference, *, touch=True, allow_refresh=True, now=None):
         raise SessionUnavailable('Sessão temporariamente indisponível.') from None
 
 
-def revoke_session(db, reference):
+def revoke_session(db, reference, *, propagate=True, reason="logout"):
     row=lock_session(db,reference)
     if row is None:
         db.rollback()
@@ -206,8 +206,8 @@ def revoke_session(db, reference):
     except (InvalidToken, ValueError, KeyError, SessionUnavailable):
         pass
     provider=provider_for(get_settings())
-    _invalidate(db,row,utc_now(),'logout')
-    if remote:
+    _invalidate(db,row,utc_now(),reason)
+    if remote and propagate:
         try: provider.logout(remote)
         except Exception: pass  # Local já confirmado, sem reemitir cookie.
 
@@ -238,3 +238,19 @@ def prune_sessions(db, *, now=None):
     )))
     db.commit()
     return result.rowcount
+
+
+def access_token_for_user(db, reference, user_id: int) -> str:
+    row = lock_session(db, reference)
+    checked = utc_now()
+    if (row is None or row.user_id != user_id or row.provider != "tupa"
+            or not is_active(row.last_activity_at, row.revoked_at, checked)):
+        db.rollback()
+        raise SessionExpired()
+    try:
+        token = _tokens(json.loads(_cipher().decrypt(row.encrypted_tokens.encode()).decode()))["access_token"]
+    except (InvalidToken, ValueError, TypeError, KeyError):
+        _invalidate(db, row, checked, "invalid_session_state")
+        raise SessionExpired() from None
+    db.commit()
+    return token

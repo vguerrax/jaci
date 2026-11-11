@@ -5,11 +5,11 @@
 - Backlog: [BL-0010](../backlog/items/BL-0010-reset-senha-login-area-logada.md).
 - Coordenação: [1.5.0 — acesso e sessão](release-1.5.0-acesso-conta-sessao.md).
 - Relacionada: [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
-- Estado: pronto_para_implementacao; refinamento aguarda aprovação versionada.
+- Estado: em_implementacao; aprovação do usuário em 2026-11-11.
 - Responsável: Engenharia Jaci, 2026-11-10.
 - Branch documental docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
-- Branch futura feature/BL-0010-reset-senha-login-area-logada, atualizada com a
-  base consolidada da release antes de código. Filhos opcionais -nn voltam só ao pai.
+- Branch pai feature/BL-0010-reset-senha-login-area-logada, avançada para
+  bfd31dc antes do código. Sem branches filhas ou novas worktrees.
 
 ## Objetivo e critérios de sucesso
 
@@ -251,9 +251,9 @@ O histórico 60,04% não é validação desta implementação futura.
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Contrato/recuperação | 0/3 | 3 | Refinado; aprovação e guard pendentes; Tupã 1.1.0 publicado |
-| 2 — Perfil/sessão/aceite | 0/3 | 3 | Refinado; BL-0019 e etapa 1 pendentes |
-| Total | 0/6 | 6 | Sem implementação ou teste executável |
+| 1 — Contrato/recuperação | 1/3 | 2 | Núcleo/contratos validados; adaptadores HTTP na próxima fatia |
+| 2 — Perfil/sessão/aceite | 0/3 | 3 | Núcleo preparado; adaptadores e UI pendentes de commit |
+| Total | 1/6 | 5 | Implementação em andamento na branch pai |
 
 Links/escopo/estado conferidos documentalmente; não houve teste, mudança de banco,
 asset ou ambiente, login remoto, acesso à Oracle, envio de e-mail ou alteração no
@@ -269,3 +269,26 @@ A publicação Tupã 1.1.0 foi confirmada pelo usuário. O endpoint de consulta
 vinculado ao produto ao enviar `X-Service-Token`. A integração do guard
 continua na BL-0019. A aprovação específica para implementar a BL-0010
 permanece pendente.
+
+
+## Início da implementação — 2026-11-11
+
+Refinamento aprovado pelo pedido de implementação após aceite da BL-0019.
+Branch pai feature/BL-0010-reset-senha-login-area-logada, baseada em bfd31dc
+na worktree atual. Os contratos do Tupã 1.1.0 estão publicados.
+
+
+## Fatia 1.1 — Núcleo e contratos validados — 2026-11-11
+
+Wrappers reais de forgot/reset/change, política de senha/normalização, contexto
+Fernet por produto e limitador persistido por HMAC. Migração aditiva
+20261111_0007 cria apenas auth_rate_limits; adoção SQLite legada também cria
+as tabelas técnicas de sessão/limite sem perder usuários. Contador usa UPSERT
+atômico, compartilhado por conexões/processos. Contexto dura uma hora e não
+persiste token ou senha no banco Jaci.
+
+Contratos unitários e HTTP focais: 28 aprovados, incluindo falha remota, expiração,
+CSRF, produto estrangeiro e revogação. PostgreSQL 15 descartável: cadeia de
+migrações completa, downgrade 0007 → 0006 → upgrade, 24 tentativas em oito
+conexões concorrentes com contagem exata, reabertura da janela e limpeza vencida.
+Nenhum serviço, conta, e-mail ou banco real usado nessa validação.
