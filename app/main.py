@@ -12,6 +12,7 @@ from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
 from app.models.group import Group
 from app.routers.auth import router as auth_router
+from app.routers.passwords import router as passwords_router
 from app.routers.groups import router as groups_router
 from app.routers.categories import router as categories_router
 from app.routers.templates import router as templates_router
@@ -39,6 +40,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Routers
 app.include_router(auth_router)
+app.include_router(passwords_router)
 app.include_router(groups_router)
 app.include_router(categories_router)
 app.include_router(templates_router)
@@ -172,3 +174,9 @@ async def web_app_manifest():
 
 # Registrado por último para carregar o contexto antes das dependências/contadores.
 app.add_middleware(SessionMiddleware)
+
+
+from app.utils.password_privacy import PasswordPrivacyMiddleware, install_password_log_filters
+
+install_password_log_filters()
+app.add_middleware(PasswordPrivacyMiddleware)

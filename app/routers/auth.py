@@ -46,6 +46,7 @@ async def login_page(request: Request):
             "user": None,
             "active_page": "login",
             "return_to": internal_return_url(request.query_params.get("return_to")),
+            "password_changed": request.query_params.get("password_changed") == "1",
         },
     )
 
@@ -437,53 +438,6 @@ async def handle_update_profile(
         },
     )
     return response
-
-
-@router.post("/profile/password")
-async def handle_change_password(
-    request: Request,
-    current_password: str = Form(...),
-    new_password: str = Form(...),
-    new_password_confirm: str = Form(...),
-    db: Session = Depends(get_db),
-    user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
-):
-    """Altera a senha do usuário."""
-    from app.main import templates
-
-    if not user:
-        return RedirectResponse(url="/auth/login", status_code=303)
-
-    context = {
-        "request": request,
-        "user": user,
-        "active_group": active_group,
-        "active_page": "profile",
-    }
-
-    if len(new_password) < 6:
-        return templates.TemplateResponse(
-            request,
-            "pages/profile.html",
-            {**context, "password_error": "A nova senha deve ter pelo menos 6 caracteres."},
-            status_code=400,
-        )
-
-    if new_password != new_password_confirm:
-        return templates.TemplateResponse(
-            request,
-            "pages/profile.html",
-            {**context, "password_error": "As novas senhas não conferem."},
-            status_code=400,
-        )
-
-    return templates.TemplateResponse(
-        request,
-        "pages/profile.html",
-        {**context, "password_error": "A alteração de senha deve ser feita no serviço de autenticação."},
-        status_code=501,
-    )
 
 
 @router.get("/logout")

@@ -251,9 +251,9 @@ O histórico 60,04% não é validação desta implementação futura.
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Contrato/recuperação | 1/3 | 2 | Núcleo/contratos validados; adaptadores HTTP na próxima fatia |
-| 2 — Perfil/sessão/aceite | 0/3 | 3 | Núcleo preparado; adaptadores e UI pendentes de commit |
-| Total | 1/6 | 5 | Implementação em andamento na branch pai |
+| 1 — Contrato/recuperação | 3/3 | 0 | Wrappers, recuperação pública e contexto seguro validados |
+| 2 — Perfil/sessão/aceite | 2/3 | 1 | Reset e perfil validados; fechamento UI/documentação pendente |
+| Total | 5/6 | 1 | Adaptadores e contratos HTTP validados |
 
 Links/escopo/estado conferidos documentalmente; não houve teste, mudança de banco,
 asset ou ambiente, login remoto, acesso à Oracle, envio de e-mail ou alteração no
@@ -292,3 +292,34 @@ CSRF, produto estrangeiro e revogação. PostgreSQL 15 descartável: cadeia de
 migrações completa, downgrade 0007 → 0006 → upgrade, 24 tentativas em oito
 conexões concorrentes com contagem exata, reabertura da janela e limpeza vencida.
 Nenhum serviço, conta, e-mail ou banco real usado nessa validação.
+
+
+## Fatias 1.2/1.3/2.1/2.2 — Fluxos HTTP e sessão — 2026-11-11
+
+Núcleo versionado em 2721091. Login oferece recuperação; perfil oferece senha
+atual/nova/confirmação. Alias de e-mail move o opaco para contexto HttpOnly e
+redireciona 303 à URL limpa. Contexto é dividido em até quatro cookies de 3500
+caracteres para suportar token de até 4096 bytes sem ultrapassar o limite por
+cookie; não há token em hidden, HTML, web storage ou banco Jaci.
+
+CSRF/Origin são obrigatórios, inclusive sem guard no fluxo de senha. O formulário
+público usa HMAC de nonce HttpOnly. Formulários com no-referrer podem emitir
+Origin:null no Chromium; esse caso só é aceito nessas rotas com CSRF assinado
+válido. Origem estrangeira, nonce forjado e campo ausente são recusados.
+
+Reset/troca exigem novo login via revogação atômica do Tupã 1.1.0. Erro de senha
+atual é separado de Bearer revogado por consulta autenticada. Após confirmação
+remota, falha de limpeza local não volta a alegar que a senha não mudou. Reset
+não propaga logout global de uma conta diferente eventualmente aberta no browser.
+A fila de compras não é apagada nem credenciais são enfileiradas.
+
+Worker v34 ignora as quatro rotas sensíveis e limpa suas entradas em caches
+retidos durante a ativação, sem tocar IndexedDB. Logs uvicorn/httpx redigem as
+queries preservando o formato exigido pelo AccessFormatter. Respostas sensíveis
+incluem no-store/no-referrer; detalhes do provedor nunca voltam ao formulário.
+
+Focais: 28 aprovados, incluindo privacidade/worker Node. Regressão: 378 aprovados,
+2 xfailed preexistentes FL-08, cobertura 66,93% (piso 60%). A rodada final incluirá
+os quatro contratos adicionais aprovados depois dessa regressão. UI nova: três
+cenários aprovados, incluindo desktop sem JavaScript; sessão anterior: dois;
+compras anteriores: dez. Fixtures e evidência final seguem na fatia 2.3.

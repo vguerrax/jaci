@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'jaci-';
-const CACHE_VERSION = 'v33';
+const CACHE_VERSION = 'v34';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -60,6 +60,7 @@ self.addEventListener('activate', function (event) {
                         })
                 );
             })
+            .then(purgeSensitiveAuthCaches)
             .then(function () {
                 return self.clients.claim();
             })
@@ -67,6 +68,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    if (isSensitiveAuthRequest(event.request)) return;
     if (event.request.method !== 'GET') {
         const url = new URL(event.request.url);
         if (event.request.mode === 'navigate' && url.origin === self.location.origin
@@ -98,6 +100,24 @@ self.addEventListener('fetch', function (event) {
 
     event.respondWith(networkFirstPage(event.request));
 });
+
+function isSensitiveAuthRequest(request) {
+    const url = new URL(request.url);
+    const path = url.pathname.replace(/\/+$/, '');
+    return url.origin === self.location.origin && [
+        '/reset-password', '/auth/reset-password',
+        '/auth/forgot-password', '/auth/profile/password',
+    ].includes(path);
+}
+
+async function purgeSensitiveAuthCaches() {
+    for (const name of await caches.keys()) {
+        const cache = await caches.open(name);
+        for (const request of await cache.keys()) {
+            if (isSensitiveAuthRequest(request)) await cache.delete(request);
+        }
+    }
+}
 
 function isApiRequest(request) {
     const url = new URL(request.url);

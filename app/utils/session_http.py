@@ -35,7 +35,16 @@ def csrf_value(request):
     grant=session_grant(request)
     if grant and request.url.path not in _ANONYMOUS_FORMS:
         return grant.csrf_token
-    return getattr(request.state, 'login_csrf', '')
+    nonce = getattr(request.state, 'login_csrf', '')
+    if nonce and request.url.path in _SIGNED_CSRF_PATHS:
+        try:
+            key = sessions._key()
+        except SessionUnavailable:
+            if request.url.path == '/auth/profile':
+                return ''
+            raise
+        return hmac.new(key, ('jaci:password-csrf:'+nonce).encode(), 'sha256').hexdigest()
+    return nonce
 
 
 def offline_owner(request):
@@ -47,6 +56,10 @@ def same_origin(request):
     origin = request.headers.get('origin') or request.headers.get('referer')
     if not origin:
         return True  # O CSRF continua obrigatório em formulários sem Referer.
+    if origin == 'null' and request.url.path in _PASSWORD_PATHS:
+        # O no-referrer pode produzir Origin:null em formulário HTML.
+        # Essas rotas exigem CSRF assinado antes de executar a ação.
+        return True
     try:
         source = urlsplit(origin)
         allowed = (urlsplit(str(request.base_url)), urlsplit(get_settings().app_url))
@@ -62,6 +75,14 @@ _ANONYMOUS_FORMS = {
     '/auth/login', '/auth/password-login', '/auth/register',
     '/auth/forgot-password', '/auth/reset-password', '/reset-password',
 }
+
+
+_PASSWORD_PATHS = {
+    '/auth/forgot-password', '/auth/reset-password', '/reset-password',
+    '/auth/profile/password',
+}
+_FORM_COOKIE_PATHS = _ANONYMOUS_FORMS | {'/auth/profile', '/auth/profile/password'}
+_SIGNED_CSRF_PATHS = _PASSWORD_PATHS | {'/auth/profile'}
 
 
 def require_login_provider():
@@ -143,13 +164,17 @@ def failure_response(request, code, status=401):
 
 class SessionMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
-        if not guard_enabled():
+        guarded = guard_enabled()
+        password_form = request.url.path in _PASSWORD_PATHS or (
+            request.url.path == '/auth/profile' and request.method in {'GET', 'HEAD'}
+        )
+        if not guarded and not password_form:
             return await call_next(request)
         request.state.auth_session=None
-        if request.url.path in _ANONYMOUS_FORMS:
+        if request.url.path in _FORM_COOKIE_PATHS:
             request.state.login_csrf = request.cookies.get('jaci_login_csrf') or secrets.token_urlsafe(32)
         request.state.session_terminal=False
-        reference=request.cookies.get('jaci_session')
+        reference=request.cookies.get('jaci_session') if guarded else None
         failed=None
         if reference:
             try:
@@ -159,7 +184,7 @@ class SessionMiddleware(BaseHTTPMiddleware):
             except (SessionUnavailable,SQLAlchemyError):
                 if not _public(request.url.path):
                     return failure_response(request,'session_unavailable',503)
-        if not _public(request.url.path) and request.state.auth_session is None:
+        if guarded and not _public(request.url.path) and request.state.auth_session is None:
             reason = failed or (
                 'session_expired' if request.cookies.get('jaci_offline_owner') else 'authentication_required'
             )
@@ -213,7 +238,8 @@ class SessionMiddleware(BaseHTTPMiddleware):
             from app.utils.security import clear_auth_cookies
             clear_auth_cookies(response)
             response.delete_cookie('jaci_offline_owner', path='/', secure=_secure_cookie())
-        if request.url.path in _ANONYMOUS_FORMS and not getattr(request.state, 'issued_session', None):
+        if (request.url.path in _FORM_COOKIE_PATHS and not getattr(request.state, 'issued_session', None)
+                and (request.url.path in _ANONYMOUS_FORMS or not grant)):
             response.set_cookie('jaci_login_csrf',request.state.login_csrf,httponly=True,
                                 secure=_secure_cookie(),samesite='lax',path='/',max_age=3600)
             response.headers['Cache-Control']='no-store'
