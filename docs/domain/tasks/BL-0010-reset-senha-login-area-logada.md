@@ -5,7 +5,7 @@
 - Backlog: [BL-0010](../backlog/items/BL-0010-reset-senha-login-area-logada.md).
 - Coordenação: [1.5.0 — acesso e sessão](release-1.5.0-acesso-conta-sessao.md).
 - Relacionada: [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
-- Estado: em_validacao; implementação aprovada pelo usuário em 2026-11-11.
+- Estado: em_validacao; implementação e aceite manual aprovados em 2026-11-11; publicação pendente.
 - Responsável: Engenharia Jaci, 2026-11-10.
 - Branch documental docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch pai feature/BL-0010-reset-senha-login-area-logada, avançada para
@@ -252,8 +252,8 @@ O histórico 60,04% não é validação desta implementação futura.
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
 | 1 — Contrato/recuperação | 3/3 | 0 | Wrappers, recuperação pública e contexto seguro validados |
-| 2 — Perfil/sessão/aceite | 3/3 | 0 | Reset/perfil/UI/documentação validados; aceite real/publicação pendentes |
-| Total | 6/6 | 0 | Implementação encerrada; em validação até aceite e publicação |
+| 2 — Perfil/sessão/aceite | 3/3 | 0 | Reset/perfil/UI/documentação e aceite manual aprovados |
+| Total | 6/6 | 0 | Implementação e aceite aprovados; integração/publicação pendentes |
 
 O refinamento original de 2026-11-10 foi exclusivamente documental, antes da
 aprovação. Os registros abaixo substituem o progresso anterior e descrevem a
@@ -381,3 +381,17 @@ Validação focal: 16 testes auth_pages/password_http aprovados e três cenário
 Chromium de senha aprovados (14,26s), incluindo desktop sem JavaScript.
 Templates Jinja e git diff --check válidos; grafo atualizado por AST.
 Ajuste mantido na branch pai; escopo principal continua 6/6, em_validacao.
+
+
+## Aceite manual aprovado — 2026-11-11
+
+Após a implementação e o ajuste visual 080a571, o usuário confirmou que a
+validação manual da BL-0010 foi finalizada e aprovada. Etapa 1: 3/3; etapa 2:
+3/3; nenhuma fatia de implementação ou aceite manual restante.
+
+BL-0010 e BL-0019 têm aceite manual aprovado. Este registro não comprova por
+si só configuração de logs/origem do Caddy ou de produção: as conferências
+operacionais da publicação permanecem com o operador. A versão 1.5.0 aguarda
+liberação de integração e publicação; manter a worktree na branch pai da BL-0010.
+Estado em_validacao preservado até registrar a publicação exigida pelo projeto.
+Somente documentação atualizada neste aceite; testes anteriores não foram repetidos.

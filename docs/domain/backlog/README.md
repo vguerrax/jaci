@@ -234,3 +234,10 @@ BL-0019 tem aceite manual aprovado. BL-0010 passa a em_validacao após autoriza�
 seis fatias implementadas, 382 testes aprovados/2 xfail FL-08, cobertura 67,07%,
 três cenários UI de senha e regressão de sessão/compras. Evidências nos refinamentos.
 Ambas aguardam publicação Jaci; integração depende da liberação do usuário.
+
+
+### Aceite manual da BL-0010 — 2026-11-11
+
+Usuário confirmou a validação como finalizada e aprovada, após o ajuste visual
+080a571. BL-0010 e BL-0019 têm aceite manual aprovado e permanecem em_validacao
+até publicação da 1.5.0. Integração e publicação aguardam liberação do usuário.

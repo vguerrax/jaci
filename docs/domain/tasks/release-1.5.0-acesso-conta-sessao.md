@@ -8,7 +8,7 @@
 - Refinamentos: [BL-0010](BL-0010-reset-senha-login-area-logada.md) e
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Refinamento: 2026-11-10; atualizado em 2026-11-11. Implementações autorizadas,
-  duas tasks em validação. BL-0019 tem aceite manual aprovado; publicação pendente.
+  duas tasks em validação, ambas com aceite manual aprovado; publicação pendente.
 - Branch documental: docs/refinamento-1.5.0, criada na worktree atual a partir de
   9d6a18c, que registra o aborto/replanejamento. Mantidos o backup legado e piso
   de cobertura de 60%. Não criar outras worktrees.
@@ -181,8 +181,8 @@ por este pedido de triagem/refinamento.
 | Escopo | Implementado | Restante | Estado |
 | --- | --- | --- | --- |
 | BL-0019 | 6/6 fatias | Integração/publicação | Em validação; aceite manual aprovado |
-| BL-0010 | 6/6 fatias | Aceite manual/ativação/publicação | Em validação; regressão e UI aprovadas |
-| Release | 12/12 fatias; 0/2 tasks publicadas | Integração, aceite BL-0010 e publicação | Provedor publicado; Jaci ainda não publicado |
+| BL-0010 | 6/6 fatias | Preparação operacional/integração/publicação | Em validação; aceite manual aprovado |
+| Release | 12/12 fatias; 0/2 tasks publicadas | Integração e publicação | Dois aceites manuais aprovados; Jaci ainda não publicado |
 
 ## Fechamento desta etapa documental
 
@@ -225,3 +225,12 @@ foram validadas em PostgreSQL descartável. Comandos/resultados finais no refina
 Próximos critérios: aceite manual da BL-0010, entrega de e-mail/base_url do produto,
 HTTPS e redaction de logs/origem no Caddy, liberação de integração e publicação Jaci.
 Nenhum ambiente real ou configuração de proxy foi alterado nessa implementação.
+
+
+## Aceite das duas demandas — 2026-11-11
+
+Usuário confirmou a validação manual da BL-0010 como finalizada e aprovada,
+complementando o aceite da BL-0019. As 12 fatias estão implementadas e os dois
+aceites registrados. Restam liberação de integração e publicação da 1.5.0,
+com as conferências operacionais de produção. Nenhum merge, deploy ou mudança
+de ambiente foi realizado neste registro; worktree mantida na branch da BL-0010.

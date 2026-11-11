@@ -188,3 +188,11 @@ com recuperação pelo login, troca no perfil e revogação global via Tupã 1.1
 A [coordenação](../tasks/release-1.5.0-acesso-conta-sessao.md) registra progresso,
 evidências e o aceite/publicação pendentes. A integração das tasks à release e
 à develop/main depende da liberação do usuário; não houve publicação Jaci nova.
+
+
+## Aceites manuais da 1.5.0 aprovados — 2026-11-11
+
+BL-0010 aprovada pelo usuário após a revisão visual, somando-se ao aceite da
+BL-0019. Escopo implementado: 12/12 fatias, dois aceites manuais aprovados.
+A próxima etapa é a integração e publicação da 1.5.0, mediante liberação, com
+conferências operacionais de produção; as demandas ainda não estão publicadas.

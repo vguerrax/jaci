@@ -75,7 +75,7 @@ diretamente esse acesso.
 | Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aceite manual da recuperação/perfil, conferência de e-mail/base_url/logs pelo operador e liberação da integração/publicação da 1.5.0 |
+| Próximo passo | Aceite manual aprovado; liberação da integração e preparação operacional/publicação da 1.5.0 |
 
 ## Acompanhamento até produção
 
@@ -83,7 +83,7 @@ diretamente esse acesso.
 - Coordenação: [versão 1.5.0](../../tasks/release-1.5.0-acesso-conta-sessao.md).
 - Branch documental docs/refinamento-1.5.0; futura implementação feature/BL-0010-reset-senha-login-area-logada, somente na worktree atual.
 - Implementação: 2721091 (núcleo/contratos), a559476 (fluxos HTTP/perfil/PWA);
-  fatia 2.3 e evidências no commit que acompanha este documento.
+  4fd91bf (UI/evidências) e 080a571 (padronização visual dos links).
 - Validações: seis fatias implementadas e contratos automatizados aprovados;
   resultados finais e cenários rastreados no refinamento. Nenhum e-mail, serviço
   ou banco real foi usado para a regressão da BL-0010.
@@ -93,9 +93,9 @@ diretamente esse acesso.
 
 ### Impedimentos
 
-- Sem bloqueio de código. Aceite manual da BL-0019 confirmado. Pendente aceite
-  da BL-0010, entrega real de e-mail, base_url, origem confiável/logs no proxy e
-  liberação de integração/publicação do Jaci. Tupã 1.1.0 já publicado.
+- Sem bloqueio de código ou aceite manual: BL-0010 e BL-0019 aprovadas pelo
+  usuário. Permanecem liberação de integração e publicação do Jaci, com as
+  conferências operacionais de produção descritas no refinamento. Tupã 1.1.0 já publicado.
 
 ## Histórico
 
@@ -132,3 +132,11 @@ Seis fatias implementadas na branch pai, sem integração automática à release
 develop ou main. Recuperação genérica, limitação compartilhada, contexto protegido,
 reset, perfil, revogação global e continuidade offline cobertos. Estado passa de
 em_implementacao para em_validacao; publicação Jaci ainda não ocorreu.
+
+
+### Aceite manual aprovado — 2026-11-11
+
+O usuário informou: “Validação manual da BL-0010 finalizada, aprovada”.
+Aceite registrado após o ajuste visual 080a571, na branch pai da BL-0010.
+As seis fatias e a revisão visual estão aprovadas. A demanda permanece
+em_validacao até publicação; este aceite não executa integração ou deploy.
