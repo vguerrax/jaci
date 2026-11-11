@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     backup_dir: str = "/var/backups/jaci"
     backup_retention_days: int = 30
 
-    # BL-0019: ativação explícita, dependência D-01 do Tupã ainda pendente.
+    # BL-0019: ativação explícita da sessão persistida, com Tupã 1.1.0+.
     session_guard_enabled: bool = False
     session_token_encryption_key: str = ""
 
@@ -36,6 +36,7 @@ class Settings(BaseSettings):
     magic_link_resend_seconds: int = 60
     tupa_url: str = "http://localhost:8001"
     tupa_product_id: str = ""
+    tupa_jwt_issuer: str = "tupa"
     tupa_service_token: str | None = None
     tupa_timeout_seconds: float = 10.0
 

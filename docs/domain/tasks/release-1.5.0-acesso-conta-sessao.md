@@ -75,43 +75,33 @@ não são o contrato aprovado pelo usuário para o Jaci e não serão copiados.
 
 ## Dependência externa D-01 — Revogação no Tupã
 
-Esta é uma especificação de dependência, não uma demanda já registrada nem uma
-API existente. Não alterar o repositório Tupã nesta etapa. Antes da fatia de
-integração, registrar/refinar/aprovar a demanda no próprio Tupã, com seu ID real,
-branch e evidência de publicação; ligar esse ID a BL-0010/BL-0019, sem inventá-lo.
+Contrato publicado no Tupã 1.1.0, confirmado pelo usuário em 2026-11-11.
+Implementação em `e30b639`, publicador em `47b262f` e integração à main do
+Tupã em `78244b6`. O repositório Tupã registra a entrega em
+`docs/release-1.1.0.md` e `docs/consumer-api.md`. A instância de testes foi
+informada na porta 8005.
 
-Contrato a negociar/validar no Tupã:
+- Reset, troca autenticada e logout invalidam os access e refresh tokens
+  anteriores da conta no produto. Mudança de senha e revogação compartilham
+  transação e trava de usuário com emissão e refresh.
+- `POST /auth/session/validate` exige `X-Service-Token` e recebe
+  `{"access_token":"…"}`. A resposta ativa contém `active/sub/product_id/exp`.
+  Token inválido, vencido ou de outro produto retorna `200 {"active":false}`.
+  Credencial de produto inválida retorna `401`. Indisponibilidade retorna
+  `503`. A consulta não rotaciona tokens nem registra atividade.
+- O Jaci deve conferir essa validade antes de autorizar HTTP, handshake e
+  entregas WS protegidas. O prazo local de oito horas é rechecado antes de
+  refresh e após chamadas lentas.
+- `POST /auth/reset-password` mantém o token opaco. O envio da credencial de
+  serviço vincula o reset ao produto consumidor. O Jaci deve enviar essa
+  credencial e preservar o token fora de logs e cache.
+- Conteúdo e operações já guardados no dispositivo continuam sob o controle
+  offline do consumidor. A integração não reaplica uma mutação recusada como
+  efeito do novo login.
 
-- Reset, troca autenticada, logout e revogação invalidam todas as sessões do
-  usuário do produto, incluindo access tokens emitidos antes da operação.
-  Troca/reset e revogação são atômicos, mesmo com refresh concorrente. Falha na
-  notificação após commit não pode produzir resposta ambígua de senha não alterada;
-  confirmar semântica de commit/erro e tratamento de retry no contrato.
-- Consulta de validade revogável para o consumidor, autenticada e isolada por
-  product_id, sem rotação e sem renovar atividade no provedor. Proposta de rota
-  nova: POST /auth/session/validate, X-Service-Token do produto e token de access
-  no corpo, com resposta active/sub/product_id/exp só quando active. A rota e
-  schema finais precisam ser confirmados/versionados no Tupã antes do adaptador.
-- Jaci consulta a validade antes de cada autorização HTTP/handshake/envio WS
-  protegido; não usar cache positivo para prometer revogação imediata. JWT
-  localmente válido sozinho não demonstra que continua ativo. Access vencido
-  só é renovado se sessão local ainda válida e refresh aceito pelo provedor.
-- Reset opaco deve ser vinculado ao produto consumidor no backend/provedor,
-  por extensão compatível do contrato que hoje recebe apenas token/new_password.
-  Conferir resposta genérica, proteção de abuso e tratamento de emissão de e-mail
-  para não revelar conta; não presumir que limitador de login cobre forgot/reset.
-- Token desconhecido/revogado de outro produto nunca dá acesso. Indisponibilidade
-  é erro temporário 503 e não autorização, logout fingido ou extensão de prazo.
-- Invalidação em todos os dispositivos significa negar o próximo request/frame
-  protegido após o commit; não apagar conteúdo já exibido em uma tela offline,
-  nem desfazer uma mutação validamente autorizada antes do commit.
-
-Alternativa de revogação por eventos/callbacks exigiria contrato durável que
-cubra entrega perdida e reconciliação. Não adotar WebSocket, blacklist em memória
-ou um cache com atraso como substituto da dependência. Não há introspecção
-existente identificada na cópia local do Tupã. Sem D-01, não declarar revogação
-global imediata ou liberar a publicação da 1.5.0. A aprovação dos refinamentos
-Jaci não autoriza trabalho em outro repositório.
+A publicação da D-01 libera o adaptador real da BL-0019 já autorizada.
+O aceite de integração do Jaci e os fluxos da BL-0010 continuam a ser
+acompanhados nesta release.
 
 ## Política comum de senha e sessão
 
@@ -190,9 +180,9 @@ por este pedido de triagem/refinamento.
 
 | Escopo | Implementado | Restante | Estado |
 | --- | --- | --- | --- |
-| BL-0019 | 0/6 fatias | 6 | Refinamento pronto, aprovação e D-01 pendentes |
-| BL-0010 | 0/6 fatias | 6 | Refinamento pronto, aprovação e contratos pendentes |
-| Release | 0/2 tasks | 2 | Nenhum código/teste iniciado |
+| BL-0019 | 6/6 fatias | Aceite manual/publicação | Em validação; integração real e automática aprovadas |
+| BL-0010 | 0/6 fatias | 6 | Refinamento pronto; aprovação de implementação pendente |
+| Release | 0/2 tasks concluídas | 2 | Publicação do provedor confirmada; integração Jaci em andamento |
 
 ## Fechamento desta etapa documental
 
@@ -204,3 +194,16 @@ A aprovação do refinamento versionado é o próximo gate, mantendo D-01 explí
 Referências técnicas consultadas: [sessões OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 e [recuperação de senha OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html).
 As decisões de atividade e oito horas são do usuário, não desses guias.
+
+
+## Atualização da dependência externa — 2026-11-11
+
+Publicação Tupã 1.1.0 confirmada pelo usuário. A instância de testes na porta
+8005 respondeu ao health e ao OpenAPI. A consulta autenticada pelo produto
+recusou o token sintético inválido com `200 {"active":false}` e
+`Cache-Control: no-store`. A evidência é de consulta, sem alteração de contas.
+
+
+A integração da BL-0019 foi validada com a instância informada, com
+regressão, Playwright e PostgreSQL descartáveis. O provedor foi publicado e
+a BL-0019 está em validação. A BL-0010 conserva seu gate próprio.

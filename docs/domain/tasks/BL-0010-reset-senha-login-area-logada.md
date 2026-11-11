@@ -251,7 +251,7 @@ O histórico 60,04% não é validação desta implementação futura.
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Contrato/recuperação | 0/3 | 3 | Refinado; aprovação e D-01 pendentes |
+| 1 — Contrato/recuperação | 0/3 | 3 | Refinado; aprovação e guard pendentes; Tupã 1.1.0 publicado |
 | 2 — Perfil/sessão/aceite | 0/3 | 3 | Refinado; BL-0019 e etapa 1 pendentes |
 | Total | 0/6 | 6 | Sem implementação ou teste executável |
 
@@ -260,3 +260,12 @@ asset ou ambiente, login remoto, acesso à Oracle, envio de e-mail ou alteraçã
 Tupã/Potira. Branch documental mantida na worktree atual. A disponibilidade deste
 refinamento versionado precede a aprovação; publicação/aceite dependem das duas
 tasks e evidências externas da coordenação.
+
+
+## Dependência publicada — 2026-11-11
+
+A publicação Tupã 1.1.0 foi confirmada pelo usuário. O endpoint de consulta
+é `POST /auth/session/validate` com credencial de serviço. O reset fica
+vinculado ao produto ao enviar `X-Service-Token`. A integração do guard
+continua na BL-0019. A aprovação específica para implementar a BL-0010
+permanece pendente.

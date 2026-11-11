@@ -498,6 +498,8 @@ selecionado. Cada requisição autenticada renova oito horas de inatividade.
 Pings e mensagens WebSocket apenas verificam a sessão. Após expiração ou
 logout, alterações offline continuam disponíveis para sincronizar na mesma conta.
 
-A configuração padrão é `SESSION_GUARD_ENABLED=false`. A ativação com Tupã
-depende do contrato de revogação D-01. O procedimento de teste e a preparação
-da ativação estão no [refinamento da BL-0019](docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
+A configuração padrão é `SESSION_GUARD_ENABLED=false`. Para integrar o
+Tupã, use a versão 1.1.0 ou posterior e configure produto, credencial de
+serviço e chave de proteção da sessão. `TUPA_JWT_ISSUER` tem padrão `tupa`.
+A consulta de validade é autenticada por produto e distingue revogação de
+indisponibilidade. O procedimento de teste e a preparação da ativação estão no [refinamento da BL-0019](docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md).

@@ -8,14 +8,14 @@
 | Título | Manter sessão autenticada por oito horas de inatividade |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `em_implementacao` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-08-05` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` em `2026-08-05` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-11-10` |
+| Atualizado em | `2026-11-11` |
 
 ### Comportamento observado
 
@@ -85,10 +85,10 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | Risco ao histórico financeiro | Baixo na regra de sessão, alto se retomada incorreta; não sobrescrever itens/totais/snapshots nem repetir comandos de compra como efeito do login |
 | Risco à recorrência | Baixo — relogar/renovar não cria, reagenda ou recalcula execuções |
 | Risco à separação template/execução | Baixo — nenhum efeito retroativo entre template e execução; preservar snapshots e observações |
-| Dependências | BL-0010 para fluxos de senha; D-01 documentada na coordenação 1.5.0 exige demanda própria no Tupã para revogação global atômica e validação revogável; migrar guard compartilhado e confirmar contrato antes da integração real |
+| Dependências | BL-0010 para fluxos de senha; D-01 publicada no Tupã 1.1.0 e confirmada em 2026-11-11; concluir o adaptador e validar a integração do guard com o provedor |
 | Duplicidades | Nenhuma; BL-0010 expõe recuperação/troca, enquanto esta task controla validade, concorrência e preservação da fila |
-| Responsável pela próxima etapa | Engenharia Jaci; responsável Tupã ainda deve ser associado ao ID externo quando autorizado |
-| Próximo passo | Aprovar o refinamento versionado; registrar/refinar/aprovar D-01 no Tupã antes da fatia dependente. Não iniciar código/testes por este pedido documental |
+| Responsável pela próxima etapa | Engenharia Jaci |
+| Próximo passo | Realizar aceite manual, liberar a integração da branch e preparar a publicação da 1.5.0 com a BL-0010 |
 
 ## Acompanhamento até produção
 
@@ -105,10 +105,9 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 
 ### Impedimentos
 
-- Aprovação do refinamento versionado pendente. A próxima integração depende
-  de contrato Tupã revogável/global, ainda não existente na cópia local; registrar
-  ID externo e sua evidência antes da fatia dependente. Não assumir que JWT válido
-  indica ausência de revogação, nem alterar outro repositório sem autorização.
+- O adaptador e a validação automatizada estão concluídos. A ativação da
+  sessão real exige chave e produto configurados pelo operador, além do
+  aceite manual e da publicação do Jaci.
 
 ## Histórico
 
@@ -128,5 +127,24 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 
 O código local foi preparado na branch `feature/BL-0019-sessao-autenticada-oito-horas-inatividade`,
 a partir de `release/v1.5.0`. Sessão persistida, HTTP, WebSocket e fila por conta
-têm implementação opt-in e contratos de teste. O aceite executável e o contrato
-D-01 do Tupã permanecem pendentes. A demanda segue em `em_implementacao`.
+têm implementação opt-in e contratos de teste. O contrato D-01 foi publicado no Tupã 1.1.0. O aceite executável e a
+integração do adaptador são acompanhados na branch. A demanda segue em `em_validacao` após as verificações registradas em 2026-11-11.
+
+
+### Evidência externa — 2026-11-11
+
+O usuário confirmou a publicação do Tupã 1.1.0 e informou a instância de
+testes na porta 8005. A consulta do contrato com token sintético inválido
+retornou `active=false` e `no-store`. Referência externa Tupã:
+`docs/release-1.1.0.md`, integração main `78244b6`.
+
+
+### Integração e validação — 2026-11-11
+
+Adaptador real da D-01 implementado. A última regressão completa executada
+teve 351 testes aprovados, dois xfails previstos e cobertura de 63,27%.
+O cenário Playwright da sessão/fila passou, assim como os três testes focais
+de WebSocket. PostgreSQL descartável confirmou um único refresh para duas
+conexões concorrentes. A integração com Tupã de testes passou com conta
+temporária removida ao final. Transição `em_implementacao -> em_validacao`.
+Aceite manual e publicação do Jaci permanecem pendentes.

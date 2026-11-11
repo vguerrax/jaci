@@ -124,7 +124,7 @@ def test_legacy_jwt_cannot_bootstrap_guard_session(db, guard):
     assert db.scalar(select(AccessSession)) is None
 
 
-def test_real_adapter_is_closed_until_confirmed_external_contract(monkeypatch):
+def test_real_adapter_requires_configuration_before_network(monkeypatch):
     from app.services.session_provider import TupaSessionProvider
     monkeypatch.setattr('httpx.Client', lambda *_args, **_kwargs: pytest.fail('invented remote API'))
     with pytest.raises(ProviderUnavailable):
@@ -201,3 +201,38 @@ def test_offline_requests_require_matching_owner_and_csrf(db, guard, monkeypatch
             'X-CSRF-Token': grant.csrf_token,
         })
         assert response.json() == {'applied': True}
+
+
+def test_access_expiring_during_validation_refreshes_once_without_ending_session(db, guard, monkeypatch):
+    from app.services.session_policy import AccessTokenExpired
+
+    grant = issue(db, guard)
+    original = guard[2].validate
+    calls = []
+
+    def validate(tokens):
+        calls.append(tokens["access_token"])
+        if len(calls) == 1:
+            raise AccessTokenExpired()
+        return original(tokens)
+
+    monkeypatch.setattr(guard[2], "validate", validate)
+    renewed = sessions.load_session(db, grant.session_id, now=NOW + timedelta(seconds=1))
+    assert renewed.session_id == grant.session_id
+    assert guard[2].rotations == 2
+    assert db.scalar(select(AccessSession)).revoked_at is None
+
+
+def test_websocket_expired_access_waits_for_http_without_rotating_or_revoking(db, guard, monkeypatch):
+    from app.services.session_policy import AccessTokenExpired
+
+    grant = issue(db, guard)
+
+    def expired(_tokens):
+        raise AccessTokenExpired()
+
+    monkeypatch.setattr(guard[2], "validate", expired)
+    with pytest.raises(SessionExpired, match="Autenticação"):
+        sessions.load_session(db, grant.session_id, touch=False, allow_refresh=False)
+    assert guard[2].rotations == 1
+    assert db.scalar(select(AccessSession)).revoked_at is None

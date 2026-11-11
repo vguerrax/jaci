@@ -12,7 +12,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.config import get_settings
 from app.services import access_session_service as sessions
-from app.services.session_provider import ProviderUnavailable, TupaSessionProvider, provider_for
+from app.services.session_provider import TupaSessionProvider, provider_for
 from app.services.session_policy import SessionExpired, SessionUnavailable, internal_return_url, utc_now
 
 
@@ -65,8 +65,11 @@ _ANONYMOUS_FORMS = {
 
 
 def require_login_provider():
-    if guard_enabled() and isinstance(provider_for(), TupaSessionProvider):
-        raise ProviderUnavailable()
+    if guard_enabled():
+        provider = provider_for()
+        if isinstance(provider, TupaSessionProvider):
+            provider.check_configuration()
+        sessions._key()
 
 
 def prepare_login(request, user, tokens, db):

@@ -14,7 +14,7 @@ from app.config import get_settings
 from app.models.access_session import AccessSession
 from app.models.user import User
 from app.repositories.access_session_repository import lock_session, reference_hash
-from app.services.session_policy import SessionExpired, SessionUnavailable, as_utc, deadline, is_active, utc_now
+from app.services.session_policy import AccessTokenExpired, SessionExpired, SessionUnavailable, as_utc, deadline, is_active, utc_now
 from app.services.session_provider import provider_for
 
 
@@ -149,7 +149,21 @@ def load_session(db, reference, *, touch=True, allow_refresh=True, now=None):
             started=checked
             value=_tokens(provider.refresh(value['refresh_token']))
             row.encrypted_tokens=_cipher().encrypt(json.dumps(value).encode()).decode()
-        claims=provider.validate(value)
+        try:
+            claims = provider.validate(value)
+        except AccessTokenExpired:
+            if not allow_refresh:
+                raise
+            checked = as_utc(now or utc_now())
+            if not is_active(row.last_activity_at, row.revoked_at, checked):
+                raise SessionExpired()
+            if refreshed:
+                raise SessionUnavailable('O Tupã retornou um access já vencido.') from None
+            started = checked
+            value = _tokens(provider.refresh(value['refresh_token']))
+            row.encrypted_tokens = _cipher().encrypt(json.dumps(value).encode()).decode()
+            refreshed = True
+            claims = provider.validate(value)
         _identity(claims,row.subject,row.product_id,row.provider)
         if refreshed:
             row.access_expires_at = _access_deadline(value, started, claims)

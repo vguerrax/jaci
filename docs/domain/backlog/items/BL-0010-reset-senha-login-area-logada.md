@@ -72,10 +72,10 @@ diretamente esse acesso.
 | Risco ao histórico financeiro | Baixo — nenhuma compra ou valor é alterado; troca de credencial e eventual encerramento de sessões devem preservar integralmente o histórico associado à conta |
 | Risco à recorrência | Baixo — o fluxo de autenticação não deve criar, cancelar, reagendar ou recalcular execuções recorrentes |
 | Risco à separação template/execução | Baixo — não há mutação de templates ou execuções e nenhum dado deve ser propagado entre esses domínios |
-| Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 externa para revogação global atômica, validação revogável e vínculo do reset ao produto consumidor, ainda a registrar/refinar/aprovar no Tupã |
+| Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar o refinamento versionado de seis fatias; consolidar guard BL-0019 e confirmar D-01 (revogação global/reset isolado) no Tupã antes da integração real |
+| Próximo passo | Aprovar a implementação do refinamento de seis fatias; usar o guard validado da BL-0019 e o contrato publicado no Tupã 1.1.0 |
 
 ## Acompanhamento até produção
 
@@ -92,11 +92,9 @@ diretamente esse acesso.
 
 ### Impedimentos
 
-- Aprovação do refinamento pendente. Tupã atual não revoga access imediatamente
-  e a troca autenticada não revoga refresh; reset não recebe product_id do
-  consumidor. D-01 precisa ser versionada no próprio Tupã e validada antes da
-  integração. URL pública, e-mail e redaction de logs reais ficam para ativação
-  autorizada, sem editar configurações nesta etapa.
+- Aprovação da implementação e guard da BL-0019 pendentes. O contrato
+  externo foi publicado no Tupã 1.1.0 em 2026-11-11. URL pública, e-mail e
+  tratamento dos logs serão conferidos na integração do consumidor.
 
 ## Histórico
 
@@ -109,3 +107,12 @@ diretamente esse acesso.
 | `2026-11-10` | Usuário/Codex | Versão-alvo 1.6.0 → 1.5.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |
 | `2026-11-10` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Seis fatias de recuperação/perfil, token opaco, cache/logs, CSRF e dependências BL-0019/D-01 refinadas; nenhuma implementação/teste iniciado |
 | `2026-11-10` | Usuário/Codex | Política pós-senha definida | Novo login em todos os dispositivos, preservando fila; exigência depende de revogação atômica no Tupã e guard Jaci |
+
+
+### Publicação da dependência — 2026-11-11
+
+Tupã 1.1.0 publicado, conforme confirmação do usuário. A D-01 passou a
+oferecer consulta de validade e revogação global da conta no produto.
+O reset é vinculado ao produto quando o consumidor envia `X-Service-Token`.
+A implementação da BL-0010 continua dependente de seu aceite de refinamento
+e do guard da BL-0019.

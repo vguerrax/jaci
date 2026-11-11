@@ -263,9 +263,9 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 2/3 + 1 local | D-01 | Login, autorização, renovação e logout no Jaci |
-| 2 — WS/fila/aceite | 3/3 locais | Executar aceite | WebSocket, cache por conta e contratos Playwright |
-| Total | 5/6 + parte local da 1.2 | Integração real e validação | Em implementação |
+| 1 — Guard/HTTP | 3/3 | Aceite manual/publicação | Adaptador Tupã integrado e validado |
+| 2 — WS/fila/aceite | 3/3 | Aceite manual/publicação | WebSocket e cenário Playwright aprovados |
+| Total | 6/6 | Aceite manual/publicação | Em validação |
 
 Triagem concluída e refinamento versionado em docs/refinamento-1.5.0.
 D-01 não foi registrada/implementada no Tupã; seu ID real/publicação devem ser
@@ -322,3 +322,47 @@ confundir componente local entregue com essa dependência resolvida. Sem testes.
 
 Conferências estáticas registradas na branch da demanda. Aceite executável,
 corrida em PostgreSQL e publicação permanecem pendentes.
+
+
+## Provedor publicado — 2026-11-11
+
+O Tupã 1.1.0 foi publicado e a instância de testes foi disponibilizada na
+porta 8005. A consulta autenticada com token sintético confirmou o contrato
+de validade. A integração real da fatia 1.2 passa a usar esse contrato.
+As referências anteriores à ausência de D-01 descrevem a situação de
+2026-11-10. O trabalho segue na branch pai da BL-0019.
+
+
+## Integração real e evidências — 2026-11-11
+
+- Adaptador `TupaSessionProvider` usa o contrato publicado, com credencial
+  de serviço na consulta e Bearer na saída. A consulta autenticada prova
+  assinatura e revogação do token. A identidade, tipo, issuer e expiração
+  locais devem coincidir com o resultado. Falha na credencial de produto
+  ou no provedor preserva a distinção de indisponibilidade.
+- Access vencido durante uma consulta pode fazer um único refresh, se a
+  sessão local continuar válida. Esse caminho mantém a rechecagem de idle
+  e a regra de não renovar pelo WebSocket.
+- `./scripts/run_tests.sh --coverage -q`: 351 aprovados, dois xfails
+  documentados, 63,27% de cobertura. As correções dos testes existentes
+  completaram o scope ASGI sintético e atualizaram a versão esperada do cache.
+- Três testes focais WebSocket aprovados, incluindo handshake por cookie,
+  ping sem toque, recusa de origem e fechamento depois da revogação.
+- Playwright: um cenário aprovado em 8,62 segundos, cobrindo operação
+  offline, recarga, expiração, troca de conta e retomada da pendência.
+  Servidor e banco foram descartáveis, com arquivo de origem temporário
+  fornecido ao runner. Artefatos em
+  `reports/playwright/96e8539054fc4759abe19e6ae18bba82`.
+- Tupã de testes na porta 8005: login, refresh, revogação de duas sessões
+  e novo login com a mesma identidade de fila aprovados. Foi usada uma
+  conta sintética exclusiva, removida ao final, e banco Jaci em memória.
+- PostgreSQL 15 descartável: cadeia de migrações aplicada até
+  `20261110_0006`; duas conexões concorrentes executaram um único refresh
+  e persistiram a versão três da sessão após dois requests.
+- O bloqueio do TestClient observado dentro do sandbox foi resolvido
+  executando o runner isolado fora dessa restrição. O runtime do usuário
+  foi preservado.
+
+Ativação operacional exige `SESSION_GUARD_ENABLED=true`, chave privada de
+sessão e credenciais do produto configuradas pelo operador. A demanda está
+em `em_validacao`, com aceite manual e publicação do Jaci pendentes.

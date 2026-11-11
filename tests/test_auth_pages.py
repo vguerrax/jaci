@@ -6,7 +6,7 @@ from app.routers import auth
 
 
 def make_request(path: str) -> Request:
-    return Request({"type": "http", "method": "GET", "path": path})
+    return Request({"type": "http", "method": "GET", "path": path, "query_string": b""})
 
 
 def test_login_page_only_contains_login_form_and_registration_link():

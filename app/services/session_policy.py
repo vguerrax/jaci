@@ -11,6 +11,11 @@ class SessionExpired(Exception):
         super().__init__('Autenticação necessária.')
 
 
+class AccessTokenExpired(SessionExpired):
+    def __init__(self):
+        super().__init__('session_refresh_required')
+
+
 class SessionUnavailable(Exception):
     """Falha temporária: não equivale a revogação nem renova atividade."""
 

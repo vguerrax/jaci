@@ -40,8 +40,8 @@ O [índice](README.md) e os itens são a fonte dos estados; esta visão não os 
   A 1.5.0 foi reaproveitada para acesso à conta e continuidade da sessão.
 - 1.5.0 e 1.6.0 confirmam contratos do Tupã; mudanças nele precisam de ID e branch
   próprios. BL-0019 foi triada/refinada em 2026-11-10; a dependência de revogação
-  D-01 está descrita na coordenação da release e ainda precisa de demanda própria
-  aprovada no Tupã. Não assumir aprovação pela versão-alvo.
+  D-01 foi publicada no Tupã 1.1.0, conforme confirmação de 2026-11-11.
+  A integração e o aceite do consumidor são acompanhados na BL-0019 e BL-0010.
 - Unidades precedem comparações de preços e quantidades: [BL-0002](items/BL-0002-unidades-medida.md) → [BL-0003](items/BL-0003-historico-precos.md) e [BL-0005](items/BL-0005-inteligencia-compras.md).
 - [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) não depende tecnicamente do histórico de preços; sua posição é estratégica.
 - Revisar [BL-0021](items/BL-0021-api-integracoes-execucoes.md) depois de unidades e da fundação de testes, incluindo o contrato
@@ -171,3 +171,10 @@ A aprovação documental Jaci não autoriza modificar Tupã. Nenhuma nova chamad
 execução de teste foi feita; 12 fatias futuras no total, aguardando aprovação.
 Pacote em docs/refinamento-1.5.0, base 9d6a18c; sem merge à develop/release/main,
 que continuam precisando da consolidação documental liberada pelo usuário.
+
+
+## Provedor de sessões publicado — 2026-11-11
+
+Tupã 1.1.0 publicado pelo usuário. A dependência externa D-01 está disponível
+para a integração da release Jaci 1.5.0. BL-0019 está em validação após integração real, regressão e cenário de
+navegador. BL-0010 aguarda sua aprovação específica.

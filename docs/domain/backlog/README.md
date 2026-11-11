@@ -157,7 +157,7 @@ não muda de caminho nem é apagado.
 | [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-11-10` |
-| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `N/A` | `P1` | `em_implementacao` | Engenharia Jaci | `2026-11-10` |
+| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-11-11` |
 | [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-11-10` |
 | [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
@@ -214,3 +214,15 @@ seis fatias por task e a dependência externa D-01, ainda sem registro/ID no Tup
 Cada HTTP autenticado renova a janela de oito horas, inclusive automáticos; ping
 WS não conta. Troca/reset exige novo login em todos os dispositivos, sem perder
 fila. Nenhum código, migration, teste executável ou ambiente alterado nesta etapa.
+
+
+## Dependência externa publicada — 2026-11-11
+
+O usuário confirmou a publicação do Tupã 1.1.0 e disponibilizou testes na
+porta 8005. A D-01 está disponível para integrar a BL-0019. A publicação do
+provedor e seu contrato estão registrados na coordenação da release 1.5.0.
+
+
+BL-0019 em `em_validacao` após integração real, regressão com cobertura,
+cenário Playwright e concorrência PostgreSQL. O aceite manual e a publicação
+seguem registrados na demanda.

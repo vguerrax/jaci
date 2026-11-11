@@ -157,5 +157,7 @@ Para validar no navegador com o servidor sintético do runner:
 JACI_UI_SESSION_GUARD=1 ./scripts/run_ui_tests.sh tests/ui/test_access_session_playwright.py
 ```
 
-O cenário usa a migração no banco descartável do runner. O aceite de revogação
-real e a concorrência entre workers PostgreSQL dependem da integração D-01.
+O cenário usa a migração no banco descartável do runner. O adaptador do
+Tupã 1.1.0 é coberto por `test_tupa_session_provider.py`; o fluxo HTTP normal,
+por `test_guarded_login_flow.py`. Revogação real e concorrência PostgreSQL
+foram conferidas em 2026-11-11, conforme o refinamento da BL-0019.
