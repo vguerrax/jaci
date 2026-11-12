@@ -30,3 +30,6 @@ websockets==13.1
 
 # Pytz
 pytz==2023.3
+
+# Proteção de tokens da sessão no servidor (BL-0019)
+cryptography==47.0.0

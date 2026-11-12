@@ -6,7 +6,7 @@
 | --- | --- |
 | ID | `BL-0023` |
 | Título | Priorizar compras abertas por status e data |
-| Versão-alvo | `1.8.0` |
+| Versão-alvo | `1.7.0` |
 | Tipo | `melhoria` |
 | Estado | `pronto_para_refinamento` |
 | Severidade | `N/A` |
@@ -15,7 +15,7 @@
 | Origem | Solicitação do usuário para destacar compras abertas e atrasadas |
 | Ambiente/versão | Estado de `develop` (`29e00ed`) em `2026-09-17` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -123,3 +123,4 @@ localizar compras atrasadas antes de iniciar a próxima.
 | `2026-09-17 16:37 -03` | Codex | `recebido` → `em_triagem` | Ordenações atuais da listagem e da Home confirmadas por inspeção |
 | `2026-09-17 16:37 -03` | Usuário/Codex | `em_triagem` → `pronto_para_refinamento` | Precedência de andamento, atrasadas e futuras, prioridade P1 e riscos definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.8.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-11-10` | Usuário/Codex | Versão-alvo 1.8.0 → 1.7.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |

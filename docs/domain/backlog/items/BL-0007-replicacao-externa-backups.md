@@ -1,5 +1,11 @@
 # BL-0007 — Replicar backups em armazenamento externo
 
+> **Abortada pelo usuário em 2026-11-10.** O estado terminal do processo é
+> `rejeitado`. As implementações e validações abaixo são histórico, sem entrega
+> em produção. Mantido o dump PostgreSQL diário existente, sem criptografia,
+> com retenção de 30 dias por padrão. Cópias externas são manuais, sob controle
+> do usuário. O código das tasks não deve ser integrado à release.
+
 ## Identificação e entrada
 
 | Campo | Valor |
@@ -8,14 +14,14 @@
 | Título | Replicar backups em armazenamento externo |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `rejeitado` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Limitação futura registrada no README e na decisão de backup PostgreSQL |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -68,27 +74,37 @@ acesso adequados.
 | Risco ao histórico financeiro | Alto — a cópia deve preservar valores e registros históricos integralmente, e a restauração precisa detectar ausência, corrupção ou versão incompatível |
 | Risco à recorrência | Baixo — a replicação não recalcula ciclos; uma restauração deve conservar datas, estados e vínculos que determinam as próximas execuções |
 | Risco à separação template/execução | Baixo — não há alteração funcional, mas a restauração deve manter os registros e vínculos sem propagação retroativa entre templates e execuções |
-| Dependências | Rotina local e runbook existentes em `scripts/backup_database.sh` e `docs/operations/postgresql-backups.md`; definição no refinamento de destino externo agnóstico de provedor, credenciais, criptografia, retenção, monitoramento e teste de restauração; [BL-0009](BL-0009-criptografia-repouso.md) é relacionada, mas não bloqueia a proteção obrigatória da cópia externa |
+| Dependências | Rotina local e runbook existentes em `scripts/backup_database.sh` e `docs/operations/postgresql-backups.md`; definição no refinamento de destino externo agnóstico de provedor, credenciais, criptografia, retenção, monitoramento e teste de restauração; [BL-0009](BL-0009-criptografia-repouso.md) fornece o produtor age obrigatório para ativação da cópia externa |
 | Duplicidades | Nenhuma identificada; o backup local legado e a BL-0009 cobrem controles relacionados, mas não criam uma cópia em domínio de falha separado |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Refinar destino externo, transferência verificável, criptografia, menor privilégio, retenção, monitoramento de falhas e restaurações periódicas, incluindo RPO e RTO |
+| Próximo passo | Nenhuma execução ou integração; demanda abortada pelo usuário |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: triagem baseada na decisão e no runbook do backup PostgreSQL, na
-  configuração de produção e na cobertura automatizada existente; validações de
-  implementação ainda não iniciadas.
+- Documento refinado: [BL-0007](../../tasks/BL-0007-replicacao-externa-backups.md).
+- Branch: feature/BL-0007-replicacao-externa-backups; três subtarefas aprovadas, 3/3 implementadas; mesma worktree.
+- Implementação (commits/PRs): 66cae92 (contratos/configuração), e4576c1 (SFTP, agenda e retenção) e commit que versiona este fechamento de implementação/runbook; sem PR ou integração.
+- Validações: inspeção AST, bash -n, diff e atualização graphify AST. Contratos
+  escritos, porém nenhum teste executado por pedido explícito; sem build, SSH,
+  backup, restauração ou acesso à infraestrutura. Integração BL-0009, RPO/RTO e
+  validação funcional permanecem pendentes.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0009](BL-0009-criptografia-repouso.md) e backup local
   concluído nas
   [entregas legadas sem BL](../../decisions/backlog.md#entregas-concluídas-sem-identificador-bl-legado).
 
-### Impedimentos
+### Decisão de encerramento
 
-- Nenhum registrado; provedor, RPO, RTO e retenção externa serão definidos no
-  refinamento sem bloquear a promoção do item.
+- Aborto explícito em 2026-11-10: manter o backup automático em dump e retenção
+  de pelo menos 30 dias; não criptografar nem automatizar cópia externa.
+- A configuração versionada existente tem BACKUP_ENABLED=true e retenção de
+  30 dias por padrão, cron 02h30 America/Sao_Paulo e volume persistente no host.
+  Não houve inspeção da configuração real ou execução do container.
+- Os commits da implementação permanecem nas branches como histórico; não foram
+  publicados ou integrados à release/develop/main. A worktree corrente volta ao
+  código de backup existente na base 1cedb61. O piso independente de 60% permanece.
+- Validações operacionais anteriores deixam de ser pendências dessas demandas.
+  Arquivamento em rejeitado não equivale a publicação ou aceite de produção.
 
 ## Histórico
 
@@ -98,3 +114,7 @@ acesso adequados.
 | `2026-08-05 22:15 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e direção agnóstica de provedor confirmadas; evidências da rotina local e do domínio único de falha confrontadas |
 | `2026-08-05 22:15 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-10-29` | Usuário/Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Decisões da 1.5.0 documentadas: máquina local ligada, Caddy por SFTP, age com chave privada do usuário, RPO 24h/RTO 4h/30 dias; aprovação pós-versionamento pendente |
+| `2026-10-29` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito: “Implemente BL-0007, todas as etapas e sem execução de testes”; base release/v1.5.0, mesma worktree; sem ativação ou alteração de ambiente |
+| `2026-10-29` | Codex | em_implementacao → em_validacao | Três subtarefas implementadas na branch pai; testes não executados por pedido explícito; BL-0009, integração, ativação, recuperação e publicação pendentes |
+| `2026-11-10` | Usuário/Codex | em_validacao → rejeitado; abortada e arquivada | Usuário optou por dump diário existente, retenção de pelo menos 30 dias e cópia manual; sem criptografia, envio automático ou integração do código não publicado |

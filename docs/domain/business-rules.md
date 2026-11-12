@@ -80,3 +80,17 @@ orçamento ultrapassado, compra em andamento e compra nas próximas 24 horas.
 
 O histórico recente da Home exibe no máximo as três execuções finalizadas mais
 recentes do grupo ativo.
+
+
+### Autenticação — recuperação e troca de senha (BL-0010)
+
+Credenciais são alteradas exclusivamente pelo Tupã. Recuperação pública retorna
+confirmação genérica sem revelar contas; troca no perfil exige senha atual e a
+identidade autenticada. Reset deve pertencer ao produto Jaci e só é consumido
+no POST válido, nunca pela abertura do link. Senha nova exige confirmação,
+8..128 caracteres e no máximo 72 bytes UTF-8.
+
+Toda alteração válida revoga as sessões de todos os dispositivos no provedor e
+exige novo login, mantendo compras e fila da conta. Credenciais não são operações
+offline; indisponibilidade não autoriza repetição automática de alteração incerta.
+O bypass AUTH_MOCK não altera senhas nem chama esses contratos remotos.

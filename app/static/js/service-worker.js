@@ -1,10 +1,16 @@
 const CACHE_PREFIX = 'jaci-';
-const CACHE_VERSION = 'v32';
+const CACHE_VERSION = 'v34';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
 const API_CACHE = `${CACHE_PREFIX}api-${CACHE_VERSION}`;
-const ACTIVE_CACHES = [SHELL_CACHE, STATIC_CACHE, PAGE_CACHE, API_CACHE];
+const SESSION_STATE_CACHE = `${CACHE_PREFIX}session-state`;
+const OWNER_PAGE_PREFIX = `${PAGE_CACHE}-owner-`;
+const OWNER_MARKER = '/__jaci_offline_owner';
+let lastNavigation = 0;
+let navigationUpdate = Promise.resolve();
+const GUARD_MARKER = '/__jaci_session_guard';
+const ACTIVE_CACHES = [SHELL_CACHE, STATIC_CACHE, PAGE_CACHE, API_CACHE, SESSION_STATE_CACHE];
 const OFFLINE_PAGE = '/static/offline.html';
 const SHELL_ASSETS = [
     '/manifest.webmanifest',
@@ -19,6 +25,7 @@ const SHELL_ASSETS = [
     '/static/js/offline-cache.js',
     '/static/js/pwa-install.js',
     '/static/js/sync-status.js',
+    '/static/js/session-client.js',
     '/static/img/jaci-2.png',
     '/static/img/icon-192.png',
     '/static/img/icon-512.png',
@@ -45,13 +52,15 @@ self.addEventListener('activate', function (event) {
                     keys
                         .filter(function (key) {
                             return key.startsWith(CACHE_PREFIX)
-                                && !ACTIVE_CACHES.includes(key);
+                                && !ACTIVE_CACHES.includes(key)
+                                && !key.startsWith(OWNER_PAGE_PREFIX);
                         })
                         .map(function (key) {
                             return caches.delete(key);
                         })
                 );
             })
+            .then(purgeSensitiveAuthCaches)
             .then(function () {
                 return self.clients.claim();
             })
@@ -59,7 +68,15 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    if (event.request.method !== 'GET') return;
+    if (isSensitiveAuthRequest(event.request)) return;
+    if (event.request.method !== 'GET') {
+        const url = new URL(event.request.url);
+        if (event.request.mode === 'navigate' && url.origin === self.location.origin
+            && ['/auth/password-login', '/auth/register', '/auth/logout'].includes(url.pathname)) {
+            event.respondWith(networkFirstPage(event.request));
+        }
+        return;
+    }
 
     if (isApiRequest(event.request)) {
         event.respondWith(networkFirstApi(event.request));
@@ -83,6 +100,24 @@ self.addEventListener('fetch', function (event) {
 
     event.respondWith(networkFirstPage(event.request));
 });
+
+function isSensitiveAuthRequest(request) {
+    const url = new URL(request.url);
+    const path = url.pathname.replace(/\/+$/, '');
+    return url.origin === self.location.origin && [
+        '/reset-password', '/auth/reset-password',
+        '/auth/forgot-password', '/auth/profile/password',
+    ].includes(path);
+}
+
+async function purgeSensitiveAuthCaches() {
+    for (const name of await caches.keys()) {
+        const cache = await caches.open(name);
+        for (const request of await cache.keys()) {
+            if (isSensitiveAuthRequest(request)) await cache.delete(request);
+        }
+    }
+}
 
 function isApiRequest(request) {
     const url = new URL(request.url);
@@ -109,30 +144,96 @@ function isStaticAsset(request) {
         );
 }
 
-async function networkFirstPage(request) {
-    try {
-        const response = await fetch(request);
-        if (response.ok) {
-            const cache = await caches.open(PAGE_CACHE);
-            await cache.put(request, response.clone());
+async function guardObserved(response) {
+    if (response.headers.get('X-Jaci-Session-Guard') !== '1') return false;
+    const state = await caches.open(SESSION_STATE_CACHE);
+    await state.put(GUARD_MARKER, new Response('1'));
+    return true;
+}
+
+async function legacyCache(name) {
+    const state = await caches.open(SESSION_STATE_CACHE);
+    return await state.match(GUARD_MARKER) ? null : caches.open(name);
+}
+
+function updateNavigation(sequence, owner) {
+    navigationUpdate = navigationUpdate.catch(() => {}).then(async () => {
+        if (sequence !== lastNavigation) return;
+        const state = await caches.open(SESSION_STATE_CACHE);
+        if (owner) {
+            await state.put(OWNER_MARKER, new Response(owner));
+        } else {
+            await state.delete(OWNER_MARKER);
         }
-        return response;
+    });
+    return navigationUpdate;
+}
+
+async function cacheOwnerPage(request, response, owner) {
+    // O HTML offline pode mostrar a interface, mas só uma página nova recebe CSRF.
+    const html = (await response.clone().text())
+        .replace(/<meta name="jaci-csrf" content="[^"]*">/g, '<meta name="jaci-offline-page" content="1">')
+        .replace(/<input type="hidden" name="_csrf" value="[^"]*">/g, '');
+    const cache = await caches.open(OWNER_PAGE_PREFIX + owner);
+    await cache.put(request, new Response(html, {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    }));
+}
+
+async function networkFirstPage(request) {
+    const url = new URL(request.url);
+    const navigation = request.mode === 'navigate' && url.origin === self.location.origin;
+    const sequence = navigation ? ++lastNavigation : null;
+    const authPath = url.pathname.startsWith('/auth/');
+    let response;
+    try {
+        response = await fetch(request);
     } catch (error) {
-        return (await caches.match(request))
-            || caches.match(OFFLINE_PAGE);
+        const cache = await legacyCache(PAGE_CACHE);
+        if (navigation && !cache && !authPath && request.method === 'GET') {
+            await navigationUpdate.catch(() => {});
+            const state = await caches.open(SESSION_STATE_CACHE);
+            const owner = await (await state.match(OWNER_MARKER))?.text();
+            if (owner) {
+                const ownerCache = await caches.open(OWNER_PAGE_PREFIX + owner);
+                const page = await ownerCache.match(request);
+                if (page) return page;
+            }
+        }
+        return (await cache?.match(request)) || caches.match(OFFLINE_PAGE);
     }
+
+    try {
+        const guarded = await guardObserved(response);
+        if (guarded && navigation) {
+            const owner = response.headers.get('X-Jaci-Offline-Owner') || '';
+            await updateNavigation(sequence, owner);
+            if (owner && response.ok && !response.redirected && !authPath && request.method === 'GET'
+                && response.headers.get('Content-Type')?.includes('text/html')) {
+                await cacheOwnerPage(request, response, owner);
+            }
+        } else if (!guarded && response.ok && !authPath && request.method === 'GET') {
+            const cache = await legacyCache(PAGE_CACHE);
+            if (cache) await cache.put(request, response.clone());
+        }
+    } catch (error) {
+        // Falha de armazenamento local não impede a resposta de rede.
+    }
+    return response;
 }
 
 async function networkFirstApi(request) {
     try {
         const response = await fetch(request);
-        if (response.ok) {
-            const cache = await caches.open(API_CACHE);
-            await cache.put(request, response.clone());
+        const guarded = await guardObserved(response);
+        if (response.ok && !guarded) {
+            const cache = await legacyCache(API_CACHE);
+            if (cache) await cache.put(request, response.clone());
         }
         return response;
     } catch (error) {
-        return (await caches.match(request)) || new Response(
+        const cache = await legacyCache(API_CACHE);
+        return (await cache?.match(request)) || new Response(
             JSON.stringify({ error: 'offline', detail: 'Dados indisponíveis offline.' }),
             {
                 status: 503,

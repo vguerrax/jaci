@@ -20,6 +20,7 @@
             {% endif %}
 
             <form method="post" action="/categories/{{ category.id }}/edit">
+                {% include "components/session_csrf.html" %}
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>
                     <input type="text" class="form-control form-control-lg" id="name" name="name"
@@ -51,6 +52,7 @@
 
             <!-- Delete section -->
             <form method="post" action="/categories/{{ category.id }}/delete">
+                {% include "components/session_csrf.html" %}
                 <button type="submit" class="btn btn-outline-danger btn-sm text-danger w-100">
                     <i class="bi bi-trash"></i>
                     Excluir categoria

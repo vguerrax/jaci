@@ -56,6 +56,7 @@
 
             <form method="post" action="/executions/{{ execution.id }}/close"
                 data-offline-finalize-execution data-execution-id="{{ execution.id }}">
+                {% include "components/session_csrf.html" %}
                 {% if learning_suggestions or (history_suggestions and not history_suggestions.is_empty()) %}
                 <div class="mb-4">
                     <h2 class="h6 mb-2">Sugestões para a lista</h2>

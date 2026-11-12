@@ -11,13 +11,16 @@ class BasePage:
 
 
 class LoginPage(BasePage):
-    def login(self,email='owner@example.com',password='jaci-test-only'):
+    def submit(self,email='owner@example.com',password='jaci-test-only'):
         self.goto_path('/auth/login')
         self.page.locator('form[action="/auth/password-login"] [name=email]').fill(email)
         self.page.locator('form[action="/auth/password-login"] [name=password]').fill(password)
         self.page.locator('form[action="/auth/password-login"] button[type=submit]').click()
+    def login(self,email='owner@example.com',password='jaci-test-only'):
+        self.submit(email, password)
         self.page.wait_for_url(os.environ['PLAYWRIGHT_BASE_URL']+'/')
-        expect(self.page.get_by_text('Ambiente de testes — Autenticação simulada')).to_be_visible()
+        if os.environ.get('JACI_UI_PASSWORD_FLOWS') != '1':
+            expect(self.page.get_by_text('Ambiente de testes — Autenticação simulada')).to_be_visible()
 
 
 class PurchasePage(BasePage):

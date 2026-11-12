@@ -15,6 +15,11 @@ from app.services.auth_service import (
 )
 from app.services.group_service import add_member_to_group
 
+from starlette.concurrency import run_in_threadpool
+
+from app.services.access_session_service import revoke_session
+from app.services.session_policy import internal_return_url
+from app.utils.session_http import guard_enabled, prepare_login, require_login_provider, session_database
 from app.utils.security import set_auth_cookies, clear_auth_cookies
 from app.services.tupa_auth_service import TupaError, logout as tupa_logout
 
@@ -40,6 +45,8 @@ async def login_page(request: Request):
             "request": request,
             "user": None,
             "active_page": "login",
+            "return_to": internal_return_url(request.query_params.get("return_to")),
+            "password_changed": request.query_params.get("password_changed") == "1",
         },
     )
 
@@ -171,6 +178,7 @@ async def password_login(
     """Login com e-mail e senha."""
     from app.main import templates
 
+    require_login_provider()
     if not settings.auth_mock and not password:
         raise HTTPException(status_code=422, detail="Senha obrigatória.")
 
@@ -195,34 +203,37 @@ async def password_login(
                 "user": None,
                 "error": "E-mail ou senha incorretos.",
                 "show_password_option": True,
+                "return_to": getattr(request.state, "login_return", "/"),
             },
             status_code=400,
         )
         
     user, tokens = result
+    prepare_login(request, user, tokens, db)
     group_id = user.groups[0].id if user.groups else None
 
-    if not user.is_profile_complete:
+    if guard_enabled():
+        target = getattr(request.state, "login_return", "/") if user.is_profile_complete else "/auth/setup"
+        response = RedirectResponse(target, status_code=303)
+    elif not user.is_profile_complete:
         response = RedirectResponse(url="/auth/setup", status_code=303)
         set_auth_cookies(response, **tokens)
         return response
+    else:
+        response = templates.TemplateResponse(
+            request,
+            "pages/auth_verify.html",
+            {
+                "request": request,
+                "user": None,
+                "redirect_url": "/",
+                "user_id": user.id,
+                "email": user.email,
+                "group_id": group_id,
+            },
+        )
+        set_auth_cookies(response, **tokens)
 
-    response = templates.TemplateResponse(
-        request,
-        "pages/auth_verify.html",
-        {
-            "request": request,
-            "user": None,
-            "redirect_url": "/",
-            "user_id": user.id,
-            "email": user.email,
-            "group_id": group_id,
-        },
-    )
-    
-    # Set cookies on the response
-    set_auth_cookies(response, **tokens)
-    
     if group_id is not None:
         response.set_cookie(
             key="jaci_active_group",
@@ -272,6 +283,7 @@ async def register(
             status_code=400,
         )
 
+    require_login_provider()
     try:
         user, tokens = await register_with_password(db, name, email, password)
     except TupaError as exc:
@@ -288,8 +300,10 @@ async def register(
             status_code=exc.status_code if exc.status_code < 500 else 502,
         )
 
+    prepare_login(request, user, tokens, db)
     response = RedirectResponse(url="/", status_code=303)
-    set_auth_cookies(response, **tokens)
+    if not guard_enabled():
+        set_auth_cookies(response, **tokens)
     response.set_cookie(
         key="jaci_active_group",
         value=str(user.groups[0].id),
@@ -426,57 +440,17 @@ async def handle_update_profile(
     return response
 
 
-@router.post("/profile/password")
-async def handle_change_password(
-    request: Request,
-    current_password: str = Form(...),
-    new_password: str = Form(...),
-    new_password_confirm: str = Form(...),
-    db: Session = Depends(get_db),
-    user: User | None = Depends(get_current_user),
-    active_group=Depends(get_active_group),
-):
-    """Altera a senha do usuário."""
-    from app.main import templates
-
-    if not user:
-        return RedirectResponse(url="/auth/login", status_code=303)
-
-    context = {
-        "request": request,
-        "user": user,
-        "active_group": active_group,
-        "active_page": "profile",
-    }
-
-    if len(new_password) < 6:
-        return templates.TemplateResponse(
-            request,
-            "pages/profile.html",
-            {**context, "password_error": "A nova senha deve ter pelo menos 6 caracteres."},
-            status_code=400,
-        )
-
-    if new_password != new_password_confirm:
-        return templates.TemplateResponse(
-            request,
-            "pages/profile.html",
-            {**context, "password_error": "As novas senhas não conferem."},
-            status_code=400,
-        )
-
-    return templates.TemplateResponse(
-        request,
-        "pages/profile.html",
-        {**context, "password_error": "A alteração de senha deve ser feita no serviço de autenticação."},
-        status_code=501,
-    )
-
-
 @router.get("/logout")
 async def logout(request: Request):
     """Clear session and redirect to home."""
     from app.main import templates
+
+    if guard_enabled():
+        if not getattr(request.state, "auth_session", None):
+            return RedirectResponse("/auth/login", status_code=303)
+        return templates.TemplateResponse(
+            request, "pages/logout_confirm.html", {"user": None},
+        )
 
     response = templates.TemplateResponse(
         request,
@@ -501,4 +475,22 @@ async def logout(request: Request):
         secure=settings.secure_cookie,
         samesite="lax",
     )
+    return response
+
+
+def _revoke_reference(reference):
+    with session_database() as db:
+        revoke_session(db, reference)
+
+
+@router.post("/logout", include_in_schema=False)
+async def confirm_logout(request: Request):
+    if not guard_enabled():
+        return await logout(request)
+    grant = getattr(request.state, "auth_session", None)
+    if grant:
+        await run_in_threadpool(_revoke_reference, grant.session_id)
+    request.state.session_terminal = True
+    response = RedirectResponse("/auth/login", status_code=303)
+    response.delete_cookie("jaci_active_group", path="/")
     return response

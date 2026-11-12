@@ -6,6 +6,7 @@ from sqlalchemy import select, func
 
 from app.websocket.manager import manager
 from app.utils.datetime import now_local, parse_local_date
+from app.utils.session_http import guard_enabled
 from app.database import get_db
 from app.dependencies import get_current_user, get_active_group
 from app.models.user import User
@@ -289,7 +290,7 @@ async def execution_detail(
     if execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    jwt_token = request.cookies.get("jaci_session")
+    jwt_token = None if guard_enabled() else request.cookies.get("jaci_session")
     messages = []
     if request.query_params.get("updated") == "1":
         messages.append(("success", "Compra atualizada e sincronizada."))
@@ -1197,7 +1198,7 @@ async def _get_items_fragment(
     if execution and execution.budget and execution.budget > 0:
         alerts = check_budget_alerts(totals["total_spent"], execution.budget)
 
-    jwt_token = request.cookies.get("jaci_session")
+    jwt_token = None if guard_enabled() else request.cookies.get("jaci_session")
     collapse_state = request.headers.get("X-Collapse-State", "")
     expanded_ids = set(collapse_state.split(",") if collapse_state else [])
 

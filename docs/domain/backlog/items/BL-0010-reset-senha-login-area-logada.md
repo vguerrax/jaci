@@ -6,16 +6,16 @@
 | --- | --- |
 | ID | `BL-0010` |
 | Título | Disponibilizar reset de senha via login e área logada |
-| Versão-alvo | `1.6.0` |
+| Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_refinamento` |
+| Estado | `em_validacao` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Solicitação do usuário |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-28` |
+| Atualizado em | `2026-11-11` |
 
 ### Comportamento observado
 
@@ -72,27 +72,30 @@ diretamente esse acesso.
 | Risco ao histórico financeiro | Baixo — nenhuma compra ou valor é alterado; troca de credencial e eventual encerramento de sessões devem preservar integralmente o histórico associado à conta |
 | Risco à recorrência | Baixo — o fluxo de autenticação não deve criar, cancelar, reagendar ou recalcular execuções recorrentes |
 | Risco à separação template/execução | Baixo — não há mutação de templates ou execuções e nenhum dado deve ser propagado entre esses domínios |
-| Dependências | Contratos existentes do Tupã `POST /auth/forgot-password`, `POST /auth/reset-password` e `POST /auth/change-password`; entrega de e-mail; `base_url` pública do produto Jaci configurada no Tupã; definição no refinamento da política de sessão após troca autenticada; [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md) é relacionada, mas não bloqueia esta demanda |
+| Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Refinar os fluxos público e autenticado, o tratamento seguro do token opaco, mensagens e limites, configuração da URL pública, comportamento das sessões e cobertura automatizada, identificando eventual demanda correspondente no Tupã se o contrato precisar mudar |
+| Próximo passo | Aceite manual aprovado; liberação da integração e preparação operacional/publicação da 1.5.0 |
 
 ## Acompanhamento até produção
 
-- Documento refinado: ainda não criado.
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: triagem baseada nas páginas e rotas atuais do Jaci e nos contratos,
-  esquemas e testes existentes do Tupã; validações de implementação ainda não
-  iniciadas.
+- Documento refinado: [BL-0010](../../tasks/BL-0010-reset-senha-login-area-logada.md).
+- Coordenação: [versão 1.5.0](../../tasks/release-1.5.0-acesso-conta-sessao.md).
+- Branch documental docs/refinamento-1.5.0; futura implementação feature/BL-0010-reset-senha-login-area-logada, somente na worktree atual.
+- Implementação: 2721091 (núcleo/contratos), a559476 (fluxos HTTP/perfil/PWA);
+  4fd91bf (UI/evidências) e 080a571 (padronização visual dos links).
+- Validações: seis fatias implementadas e contratos automatizados aprovados;
+  resultados finais e cenários rastreados no refinamento. Nenhum e-mail, serviço
+  ou banco real foi usado para a regressão da BL-0010.
 - Publicação: ainda não publicada.
 - Itens relacionados:
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 
 ### Impedimentos
 
-- Nenhum registrado; a configuração efetiva da `base_url` pública e a política
-  de revogação após troca autenticada serão confirmadas no refinamento sem
-  bloquear a promoção do item.
+- Sem bloqueio de código ou aceite manual: BL-0010 e BL-0019 aprovadas pelo
+  usuário. Permanecem liberação de integração e publicação do Jaci, com as
+  conferências operacionais de produção descritas no refinamento. Tupã 1.1.0 já publicado.
 
 ## Histórico
 
@@ -102,3 +105,38 @@ diretamente esse acesso.
 | `2026-08-05 22:38 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e responsável Engenharia Jaci confirmados; interface atual e contratos públicos e autenticados do Tupã confrontados |
 | `2026-08-05 22:38 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.6.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
+| `2026-11-10` | Usuário/Codex | Versão-alvo 1.6.0 → 1.5.0 | Roadmap refeito após aborto da BL-0007/BL-0009; escopo remanescente antecipado em uma versão, estados e gates preservados |
+| `2026-11-10` | Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Seis fatias de recuperação/perfil, token opaco, cache/logs, CSRF e dependências BL-0019/D-01 refinadas; nenhuma implementação/teste iniciado |
+| `2026-11-10` | Usuário/Codex | Política pós-senha definida | Novo login em todos os dispositivos, preservando fila; exigência depende de revogação atômica no Tupã e guard Jaci |
+
+
+### Publicação da dependência — 2026-11-11
+
+Tupã 1.1.0 publicado, conforme confirmação do usuário. A D-01 passou a
+oferecer consulta de validade e revogação global da conta no produto.
+O reset é vinculado ao produto quando o consumidor envia `X-Service-Token`.
+A implementação da BL-0010 continua dependente de seu aceite de refinamento
+e do guard da BL-0019.
+
+
+## Implementação autorizada — 2026-11-11
+
+Após aprovar o aceite manual da BL-0019, o usuário solicitou implementar a
+BL-0010. A branch existente foi avançada por fast-forward para bfd31dc, base
+validada da sessão, na mesma worktree. A integração à release segue pendente.
+
+
+### Implementação entregue para validação — 2026-11-11
+
+Seis fatias implementadas na branch pai, sem integração automática à release,
+develop ou main. Recuperação genérica, limitação compartilhada, contexto protegido,
+reset, perfil, revogação global e continuidade offline cobertos. Estado passa de
+em_implementacao para em_validacao; publicação Jaci ainda não ocorreu.
+
+
+### Aceite manual aprovado — 2026-11-11
+
+O usuário informou: “Validação manual da BL-0010 finalizada, aprovada”.
+Aceite registrado após o ajuste visual 080a571, na branch pai da BL-0010.
+As seis fatias e a revisão visual estão aprovadas. A demanda permanece
+em_validacao até publicação; este aceite não executa integração ou deploy.

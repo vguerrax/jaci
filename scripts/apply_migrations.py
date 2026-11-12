@@ -20,6 +20,9 @@ def apply_migrations() -> None:
                 "Valide o schema antes de marcá-lo como migrado."
             )
         ensure_schema_compatibility()
+        from app.models import AccessSession, AuthRateLimit
+        for table in (AccessSession.__table__, AuthRateLimit.__table__):
+            table.create(engine, checkfirst=True)
         command.stamp(config, "head")
         return
 

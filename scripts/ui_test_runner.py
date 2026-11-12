@@ -27,6 +27,21 @@ def _stop(process):
             process.wait()
 
 
+def _wait_for_server(process, base_url, name):
+    deadline = time.monotonic()+30
+    with httpx.Client(trust_env=False, timeout=1) as client:
+        while time.monotonic()<deadline:
+            if process.poll() is not None:
+                raise RuntimeError(name+' encerrou antes de health.')
+            try:
+                if client.get(base_url+'/health').status_code == 200:
+                    return
+            except httpx.HTTPError:
+                pass
+            time.sleep(.1)
+    raise RuntimeError('Timeout aguardando health de '+name+'.')
+
+
 def write_result(artifacts: Path, run_id: str, status: str) -> None:
     # Playwright remove o output vazio em execuções aprovadas.
     artifacts.mkdir(parents=True, exist_ok=True)
@@ -43,9 +58,13 @@ def run(arguments: list[str]) -> int:
     if source.name != '.env.test' or not source.is_file():
         raise ValueError('Arquivo de ambiente de testes ausente; execute setup_test_env.sh.')
     values = dotenv_values(source)
-    if values.get('APP_ENV') != 'test' or values.get('AUTH_MOCK','').lower() != 'true':
-        raise ValueError('Arquivo de ambiente deve habilitar APP_ENV=test e AUTH_MOCK=true.')
-    validate_database(values.get('DATABASE_URL',''))
+    password_flows = os.environ.get('JACI_UI_PASSWORD_FLOWS') == '1'
+    if values.get('APP_ENV') != 'test':
+        raise ValueError('Arquivo de ambiente deve habilitar APP_ENV=test.')
+    if not password_flows:
+        if values.get('AUTH_MOCK','').lower() != 'true':
+            raise ValueError('Arquivo de ambiente deve habilitar AUTH_MOCK=true.')
+        validate_database(values.get('DATABASE_URL',''))
     from scripts.setup_ui_assets import CACHE, MANIFEST
     import hashlib
     for asset in json.loads(MANIFEST.read_text()):
@@ -60,8 +79,10 @@ def run(arguments: list[str]) -> int:
     artifacts = PROJECT_ROOT/'reports/playwright'/run_id
     artifacts.mkdir(parents=True)
     environment.update(ENV_FILE=str(directory/'.env.test'))
+    if os.environ.get('JACI_UI_SESSION_GUARD') == '1':
+        environment['SESSION_GUARD_ENABLED'] = 'true'
     environment.setdefault('PLAYWRIGHT_BROWSERS_PATH', str(PROJECT_ROOT/'.cache/playwright'))
-    server = tests = None
+    server = tests = provider = None
     previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
     status = 'interrupted'
     try:
@@ -72,31 +93,42 @@ def run(arguments: list[str]) -> int:
         with socket.socket() as probe:
             probe.bind(('127.0.0.1',0))
             port = probe.getsockname()[1]
+            if password_flows:
+                with socket.socket() as provider_probe:
+                    provider_probe.bind(('127.0.0.1', 0))
+                    provider_port = provider_probe.getsockname()[1]
         base_url = f'http://127.0.0.1:{port}'
         environment.update(JACI_RUN_PLAYWRIGHT='1', JACI_UI_RUN_ID=run_id,
                            PLAYWRIGHT_BASE_URL=base_url)
+        if password_flows:
+            from cryptography.fernet import Fernet
+            from tests.helpers.tupa_password_stub import PRODUCT_ID, SERVICE_TOKEN
+            provider_url = f'http://127.0.0.1:{provider_port}'
+            environment.update(
+                AUTH_MOCK='false', SESSION_GUARD_ENABLED='true',
+                SESSION_TOKEN_ENCRYPTION_KEY=Fernet.generate_key().decode(),
+                TUPA_URL=provider_url, TUPA_PRODUCT_ID=PRODUCT_ID,
+                TUPA_SERVICE_TOKEN=SERVICE_TOKEN, TUPA_JWT_ISSUER='tupa',
+                APP_URL=base_url, JACI_PASSWORD_STUB_URL=provider_url,
+                PASSWORD_RECOVERY_MIN_RESPONSE_SECONDS='0',
+            )
+            provider = subprocess.Popen(
+                [sys.executable, '-m', 'uvicorn', 'tests.ui.helpers.password_server:app',
+                 '--host', '127.0.0.1', '--port', str(provider_port), '--no-access-log'],
+                cwd=PROJECT_ROOT, env=environment, start_new_session=True,
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            )
+            _wait_for_server(provider, provider_url, 'Provedor sintético')
         server = subprocess.Popen(
             [sys.executable,'-m','scripts.test_environment','--serve',
              '--env-file',str(directory/'.env.test'),'--port',str(port)],
             cwd=PROJECT_ROOT,env=environment,start_new_session=True,
             stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-        deadline = time.monotonic()+30
-        with httpx.Client(trust_env=False,timeout=1) as client:
-            while time.monotonic()<deadline:
-                if server.poll() is not None:
-                    raise RuntimeError('Servidor de testes encerrou antes de health.')
-                try:
-                    response=client.get(base_url+'/health')
-                    if response.status_code==200:
-                        break
-                except httpx.HTTPError:
-                    pass
-                time.sleep(.1)
-            else:
-                raise RuntimeError('Timeout aguardando health do servidor de testes.')
+        _wait_for_server(server, base_url, 'Servidor de testes')
         paths = [arg.split('::',1)[0] for arg in arguments
                  if arg.startswith('tests/ui') or arg.startswith(str(PROJECT_ROOT/'tests/ui'))]
-        selected = arguments if paths else ['tests/ui',*arguments]
+        default_path = 'tests/ui/test_password_recovery_playwright.py' if password_flows else 'tests/ui'
+        selected = arguments if paths else [default_path, *arguments]
         tests = subprocess.Popen([sys.executable,'-m','pytest',*selected,
             '--browser=chromium',f'--output={artifacts}',
             '--screenshot=only-on-failure','--video=off','--tracing=off'],
@@ -107,6 +139,7 @@ def run(arguments: list[str]) -> int:
     finally:
         _stop(tests)
         _stop(server)
+        _stop(provider)
         signal.signal(signal.SIGTERM,previous)
         try:
             write_result(artifacts, run_id, status)

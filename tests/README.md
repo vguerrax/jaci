@@ -78,8 +78,8 @@ substituídos após os contratos da fila real passarem.
 # Cobertura Python — BL-0011
 
 `bash scripts/run_tests.sh --coverage` gera terminal, XML, JSON e HTML em
-`reports/coverage/`. O piso combinado de linhas/branches é 56,18%, medido na
-implementação inicial e versionado em `.coveragerc`. Não reduzir sem revisão.
+`reports/coverage/`. O piso combinado de linhas/branches de `app` é 60%, elevado por solicitação
+do usuário em 2026-10-30 e versionado em `.coveragerc`. Não reduzir sem revisão.
 Para selecionar testes sem exigir o piso da suíte completa:
 `bash scripts/run_tests.sh --coverage --cov-fail-under=0 tests/test_business_rules.py`.
 A métrica não inclui JavaScript, browser ou subprocessos não instrumentados.
@@ -136,3 +136,59 @@ usuário sintético criado fora das três contas do seed e senha vazia; comprova
 login normal sem atribuir tupa_user_id. A suíte passa a conter dez cenários.
 Resultados executados ficam no refinamento BL-0028; declaração de cobertura não
 substitui evidência de execução. Dois contratos FL-08 permanecem fora do escopo.
+
+
+## Demandas de backups abortadas — 2026-11-10
+
+BL-0007 e BL-0009 foram abortadas antes de publicação. Testes específicos de
+criptografia/replicação não integram a entrega corrente; seus contratos e resultados
+ficam nos commits históricos de cada task. O teste de backup PostgreSQL legado
+continua em tests/test_postgresql_backup.py. Nenhuma suíte executada no cancelamento.
+O piso independente de 60% foi preservado; os 60,04% reportados anteriormente
+pertencem à execução anterior, não são resultado novo do código após o aborto.
+
+## Sessão persistida da BL-0019
+
+Os contratos locais estão em `tests/test_session_policy.py`,
+`tests/test_session_auth_flow.py` e `tests/test_session_websocket.py`.
+Para validar no navegador com o servidor sintético do runner:
+
+```bash
+JACI_UI_SESSION_GUARD=1 ./scripts/run_ui_tests.sh tests/ui/test_access_session_playwright.py
+```
+
+O cenário usa a migração no banco descartável do runner. O adaptador do
+Tupã 1.1.0 é coberto por `test_tupa_session_provider.py`; o fluxo HTTP normal,
+por `test_guarded_login_flow.py`. Revogação real e concorrência PostgreSQL
+foram conferidas em 2026-11-11, conforme o refinamento da BL-0019.
+
+
+## Recuperação e troca de senha — BL-0010
+
+Contratos: `test_password_recovery.py` (política, wrappers, HMAC, expiração,
+redaction/AccessFormatter, adoção SQLite), `test_password_http.py` (CSRF,
+contexto limpo, conta/produto, falhas, perfil e revogação) e
+`test_password_privacy.py` com `js/password_cache.test.cjs` (bypass e limpeza
+seletiva de caches na ativação). Não há novos xfail desta demanda.
+
+```bash
+./scripts/run_tests.sh tests/test_password_recovery.py tests/test_password_http.py tests/test_password_privacy.py
+JACI_UI_PASSWORD_FLOWS=1 ./scripts/run_ui_tests.sh
+```
+
+O modo UI cria um provedor local com JWKS/RS256, resets e caixa de saída em
+memória. O `.env.test` de entrada precisa de APP_ENV=test; seu banco, chaves e
+credenciais não são usados nem reescritos. O runner prepara outro `.env.test`,
+banco e servidor isolados, desliga AUTH_MOCK apenas nesse processo e encerra
+os três processos ao terminar. AUTH_MOCK continua sendo bypass, não provedor
+de senha. O modo UI habitual mantém as guardas anteriores e a suíte de compras.
+
+| Cenário implementado | Evidência |
+| --- | --- |
+| Recuperar pelo e-mail sintético; senha antiga falha e nova autentica | `test_recover_account_from_synthetic_email_and_login_with_new_password` |
+| Senha atual errada preserva sessão; troca válida encerra outro dispositivo e retoma fila da mesma conta | `test_change_password_ends_second_device_and_preserves_offline_queue` |
+| Recuperar no desktop sem JavaScript, com formulários nativos | `test_desktop_password_recovery_works_without_javascript` |
+
+Resultados, migração PostgreSQL/concorrência e pendências de aceite/publicação
+ficam no [refinamento da BL-0010](../docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md).
+A entrega real de e-mail, base_url e redaction do Caddy são verificações do operador.

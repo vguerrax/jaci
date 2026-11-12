@@ -138,10 +138,35 @@
                     <tbody>
                         <tr>
                             <td scope="row" class="w-20">jaci_session</td>
+                            {% if session_guard_enabled() %}
+                            <td class="w-30">Referência da sessão autenticada</td>
+                            <td class="w-25">8 horas desde a última requisição autenticada</td>
+                            {% else %}
                             <td class="w-30">Autenticação (JWT) – mantém o usuário logado</td>
                             <td class="w-25">1 hora</td>
+                            {% endif %}
                             <td class="w-25">httpOnly, SameSite=Lax</td>
                         </tr>
+                        <tr>
+                            <td scope="row">jaci_login_csrf</td>
+                            <td>Protege formulários de autenticação</td>
+                            <td>1 hora</td>
+                            <td>httpOnly, SameSite=Lax</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">jaci_password_reset_0 a jaci_password_reset_3</td>
+                            <td>Contexto protegido do link de recuperação, restrito ao formulário de redefinição</td>
+                            <td>Até 1 hora; removido após concluir ou invalidar o contexto</td>
+                            <td>httpOnly, SameSite=Lax</td>
+                        </tr>
+                        {% if session_guard_enabled() %}
+                        <tr>
+                            <td scope="row">jaci_offline_owner</td>
+                            <td>Seleciona o armazenamento offline da conta neste navegador</td>
+                            <td>30 dias</td>
+                            <td>SameSite=Lax</td>
+                        </tr>
+                        {% endif %}
                         <tr>
                             <td scope="row" class="w-20">jaci_active_group</td>
                             <td class="w-30">Armazena o ID do último grupo acessado pelo usuário</td>
@@ -151,8 +176,15 @@
                     </tbody>
                 </table>
             </div>
-            <p><b>Não utilizamos:</b> localStorage, sessionStorage, fingerprinting, pixels, beacons ou qualquer forma de
-                rastreamento entre sessões.</p>
+            {% if session_guard_enabled() %}
+            <p>O navegador guarda páginas visitadas, dados de compras e alterações pendentes por conta para uso offline.
+                A fila pode ser retomada pela mesma conta após sair ou quando a sessão termina.</p>
+            {% else %}
+            <p>O navegador guarda dados de compras e alterações pendentes para uso offline.</p>
+            {% endif %}
+            <p>A recuperação usa contadores temporários por e-mail e origem, identificados por hash com segredo.
+                O controle não guarda e-mail ou IP em texto legível. A janela padrão é de 15 minutos;
+                registros vencidos são removidos na próxima solicitação de recuperação.</p>
             <h5>6. Retenção e exclusão de dados</h5>
             <p>6.1. <b>Regra geral:</b> mantemos seus dados enquanto sua conta estiver ativa e os grupos que você
                 participa existirem.</p>
@@ -196,7 +228,11 @@
             <p>Adotamos as seguintes medidas técnicas e organizacionais:</p>
             <ul>
                 <li>>Senhas armazenadas exclusivamente pelo serviço de autenticação Tupã.</li>
+                {% if session_guard_enabled() %}
+                <li>A sessão usa cookie httpOnly com uma referência aleatória. Tokens ficam protegidos no servidor.</li>
+                {% else %}
                 <li>>JWT do Tupã validado via JWKS e armazenado em cookies httpOnly.</li>
+                {% endif %}
                 <li>>Tokens de convite com validade curta (15 min).</li>
                 <li>>Isolamento de dados por grupo (usuário só acessa grupos onde é membro).</li>
                 <li>>Bloqueio otimista com versionamento (evita perda de edição simultânea).</li>
