@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
     # Application
     app_name: str = "Jaci"
-    app_version: str = "1.3.0"
+    app_version: str = "1.5.0"
     debug: bool = True
 
     # Database

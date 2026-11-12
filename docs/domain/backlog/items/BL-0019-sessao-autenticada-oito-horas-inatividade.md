@@ -88,7 +88,7 @@ Autenticar-se novamente quando a sessão deixar de ser reconhecida.
 | Dependências | BL-0010 para fluxos de senha; D-01 publicada no Tupã 1.1.0 e confirmada em 2026-11-11; concluir o adaptador e validar a integração do guard com o provedor |
 | Duplicidades | Nenhuma; BL-0010 expõe recuperação/troca, enquanto esta task controla validade, concorrência e preservação da fila |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aceite manual aprovado; liberar a integração da branch e preparar a publicação da 1.5.0 com a BL-0010 |
+| Próximo passo | Código integrado e aceite aprovado; ativação operacional e publicação da 1.5.0, incluindo integração da preparação |
 
 ## Acompanhamento até produção
 
@@ -161,3 +161,13 @@ tratada na própria BL-0019 e na sua branch pai, com contratos HTTP e UI.
 
 O usuário confirmou a validação manual da BL-0019 e aprovou o resultado.
 A publicação do Jaci e a integração das branches seguem pendentes.
+
+
+### Integração e preparação da 1.5.0 — 2026-11-11
+
+Código integrado à release/v1.5.0 (b3ef2d5) e develop (5e9d777, PR #48),
+confirmado pelo usuário e pelo histórico local. As notas e o roteiro de
+publicação estão em docs/releases/1.5.0.md e docs/releases/1.5.0-publicacao.md.
+Preparação com metadados 1.5.0 validada na release; sua integração, ativação do
+guard/chave em produção e publicação ainda estão pendentes. Aceite manual
+preservado e estado em_validacao até publicação; ambiente real intocado.
