@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794370283.0085454,
-    "ast_hash": "752050b8f98b81a553f18e70cbf18f9a",
+    "mtime": 1794411637.5865111,
+    "ast_hash": "a39f0f1e18cb37241531e59613222eb8",
     "semantic_hash": ""
   },
   "app/static/offline.html": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "app/templates/pages/login.html": {
-    "mtime": 1794410190.3985884,
-    "ast_hash": "2d323291ca7afe181f0648645c5c1449",
+    "mtime": 1794421287.536831,
+    "ast_hash": "8cbfcc75501e1abe54536680fc687db9",
     "semantic_hash": ""
   },
   "app/templates/pages/login_error.html": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/README.md": {
-    "mtime": 1794409539.8067713,
-    "ast_hash": "95ad2e082729a1f7354932ae25e73f7b",
+    "mtime": 1794411729.2477808,
+    "ast_hash": "268f46de641ec9c97a41bb2093008efe",
     "semantic_hash": ""
   },
   "docs/domain/backlog/TEMPLATE.md": {
@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1794409539.7991366,
-    "ast_hash": "a5319477fe134dbdbbe2124f0b0aedd4",
+    "mtime": 1794411637.5984607,
+    "ast_hash": "0cae14465464566325700f0da7c89727",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0011-ampliar-cobertura-testes-ui.md": {
@@ -745,8 +745,8 @@
     "semantic_hash": ""
   },
   "docs/domain/business-rules.md": {
-    "mtime": 1781556843.1690154,
-    "ast_hash": "035ce22b00c95917f4edf5d19d2866dd",
+    "mtime": 1794411637.595512,
+    "ast_hash": "50a5831fbff001ff3b187d5b8b5f2bce",
     "semantic_hash": ""
   },
   "docs/domain/database.md": {
@@ -805,8 +805,8 @@
     "semantic_hash": ""
   },
   "docs/domain/user-flows.md": {
-    "mtime": 1794349304.6126277,
-    "ast_hash": "f42e234dc7ccc61eb1567b0c9c8587eb",
+    "mtime": 1794411637.5927675,
+    "ast_hash": "688aa4cb91a759874f53d18b90a7cb06",
     "semantic_hash": ""
   },
   "docs/operations/postgresql-backups.md": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "tests/README.md": {
-    "mtime": 1794370652.9049299,
-    "ast_hash": "3d50dbce6e3fe96350e0c5db08167c1a",
+    "mtime": 1794411637.5901008,
+    "ast_hash": "157b584e723adb7685851ef511db91f5",
     "semantic_hash": ""
   },
   "app/static/img/apple-touch-icon.png": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794409539.793398,
-    "ast_hash": "77c8f764298026acf6f09f85771fa805",
+    "mtime": 1794411729.2471423,
+    "ast_hash": "3215882c682a68adfd62216ba2ca0d26",
     "semantic_hash": ""
   },
   "docs/domain/backlog/items/BL-0020-bloquear-renomeacao-item-vinculado.md": {
@@ -1030,8 +1030,8 @@
     "semantic_hash": ""
   },
   "docs/domain/backlog/releases.md": {
-    "mtime": 1794370652.9015331,
-    "ast_hash": "963561459c4d8660374522efdc6930d8",
+    "mtime": 1794411637.6034625,
+    "ast_hash": "a50e0765655443c2123bc51c9690cf12",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0001-operacao-offline-cobertura-rastreabilidade.md": {
@@ -1300,18 +1300,18 @@
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md": {
-    "mtime": 1794411518.01562,
-    "ast_hash": "9aef409be7879bab2ad59087bb5ed961",
+    "mtime": 1794411808.9000432,
+    "ast_hash": "82ae7775cf9c6ad3cf83a5f378dcc50e",
     "semantic_hash": ""
   },
   "docs/domain/tasks/BL-0019-sessao-autenticada-oito-horas-inatividade.md": {
-    "mtime": 1794407109.065611,
-    "ast_hash": "2de6c9857a81608c7b872b4e81f2303b",
+    "mtime": 1794411808.899599,
+    "ast_hash": "f0efe9068dee6760f8f8b70d82ead69c",
     "semantic_hash": ""
   },
   "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md": {
-    "mtime": 1794370652.9009802,
-    "ast_hash": "e23ee65200e5dc470013e11083aca82a",
+    "mtime": 1794411637.602625,
+    "ast_hash": "64191ed783c8ace1d674a249f52b355c",
     "semantic_hash": ""
   },
   "tests/test_guarded_login_flow.py": {

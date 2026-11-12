@@ -32,8 +32,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_config",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "config.py"
     },
     {
@@ -175,8 +175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_database",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "database.py"
     },
     {
@@ -186,8 +186,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_database_create_database_engine",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "create_database_engine()"
     },
     {
@@ -197,8 +197,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "engine",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "engine"
     },
     {
@@ -208,8 +208,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "listens_for",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "listens_for"
     },
     {
@@ -219,8 +219,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_database_set_sqlite_pragma",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "set_sqlite_pragma()"
     },
     {
@@ -231,7 +231,7 @@
       "_origin": "ast",
       "id": "app_database_base",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "base"
     },
     {
@@ -242,7 +242,7 @@
       "_origin": "ast",
       "id": "declarativebase",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "declarativebase"
     },
     {
@@ -253,7 +253,7 @@
       "_origin": "ast",
       "id": "app_database_ensure_schema_compatibility",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "ensure_schema_compatibility()"
     },
     {
@@ -274,8 +274,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_database_rationale_11",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "cria engine com ajustes especificos para sqlite ou postgresql."
     },
     {
@@ -286,7 +286,7 @@
       "_origin": "ast",
       "id": "app_database_rationale_46",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "compatibilidade temporaria para bancos sqlite anteriores ao alembic."
     },
     {
@@ -351,8 +351,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "app_dependencies_require_user",
-      "community": 133,
-      "community_name": "main.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "require_user()"
     },
     {
@@ -417,8 +417,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_dependencies_rationale_86",
-      "community": 133,
-      "community_name": "main.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "dependencia que exige usuario autenticado. levanta excecao se nao autenticado."
     },
     {
@@ -494,8 +494,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_main_py_get",
-      "community": 5,
-      "community_name": "test_pwa.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "get"
     },
     {
@@ -538,8 +538,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_main_health_check",
-      "community": 5,
-      "community_name": "test_pwa.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "health_check()"
     },
     {
@@ -627,7 +627,7 @@
       "_origin": "ast",
       "id": "app_models_init",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "models/__init__.py"
     },
     {
@@ -638,7 +638,7 @@
       "_origin": "ast",
       "id": "app_models_access_session",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "access_session.py"
     },
     {
@@ -649,7 +649,7 @@
       "_origin": "ast",
       "id": "app_models_access_session_accesssession",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "accesssession"
     },
     {
@@ -660,7 +660,7 @@
       "_origin": "ast",
       "id": "app_models_access_session_rationale_1",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "sessao do navegador, sem senha nem token em claro."
     },
     {
@@ -671,7 +671,7 @@
       "_origin": "ast",
       "id": "app_models_auth_rate_limit",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "auth_rate_limit.py"
     },
     {
@@ -682,7 +682,7 @@
       "_origin": "ast",
       "id": "app_models_auth_rate_limit_authratelimit",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "authratelimit"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_category",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "category.py"
     },
     {
@@ -769,8 +769,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_execution",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "execution.py"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_group",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "group.py"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_notification",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 129,
+      "community_name": "notification_service.py",
       "norm_label": "notification.py"
     },
     {
@@ -923,8 +923,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_sync_conflict_audit",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 24,
+      "community_name": "User",
       "norm_label": "sync_conflict_audit.py"
     },
     {
@@ -946,7 +946,7 @@
       "_origin": "ast",
       "id": "app_models_template",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "template.py"
     },
     {
@@ -978,8 +978,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_models_template_templateitem",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 6,
+      "community_name": "template_service.py",
       "norm_label": "templateitem"
     },
     {
@@ -989,8 +989,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "app_models_template_templateitem_repr",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 6,
+      "community_name": "template_service.py",
       "norm_label": ".__repr__()"
     },
     {
@@ -1001,7 +1001,7 @@
       "_origin": "ast",
       "id": "app_models_template_learning",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "template_learning.py"
     },
     {
@@ -1012,7 +1012,7 @@
       "_origin": "ast",
       "id": "app_models_template_learning_templatelearningdismissal",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "templatelearningdismissal"
     },
     {
@@ -1187,8 +1187,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_agenda",
-      "community": 133,
-      "community_name": "main.py",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "agenda.py"
     },
     {
@@ -1198,8 +1198,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_get",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "get"
     },
     {
@@ -1209,8 +1209,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_calendar",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "agenda_calendar()"
     },
     {
@@ -1220,8 +1220,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_request",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "request"
     },
     {
@@ -1231,8 +1231,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_session",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "session"
     },
     {
@@ -1242,8 +1242,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_list",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "agenda_list()"
     },
     {
@@ -1253,8 +1253,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "app_routers_agenda_agenda_day",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "agenda_day()"
     },
     {
@@ -1264,8 +1264,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_agenda_py_post",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "post"
     },
     {
@@ -1275,8 +1275,8 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "app_routers_agenda_handle_reschedule",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "handle_reschedule()"
     },
     {
@@ -1286,8 +1286,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_62",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "visualizacao da agenda em calendario mensal."
     },
     {
@@ -1297,8 +1297,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_137",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "visualizacao da agenda em lista cronologica."
     },
     {
@@ -1308,8 +1308,8 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_215",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "redireciona para a lista filtrada por uma data especifica."
     },
     {
@@ -1319,8 +1319,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "app_routers_agenda_rationale_232",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "adianta ou adia uma execucao."
     },
     {
@@ -3189,8 +3189,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_routers_passwords",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "routers/passwords.py"
     },
     {
@@ -3200,8 +3200,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_routers_passwords_secure_cookie",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "_secure_cookie()"
     },
     {
@@ -3211,8 +3211,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_routers_passwords_context",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "_context()"
     },
     {
@@ -3222,8 +3222,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_routers_passwords_set_context",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "_set_context()"
     },
     {
@@ -3233,8 +3233,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_routers_passwords_page",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "_page()"
     },
     {
@@ -3244,8 +3244,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_passwords_py_get",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "get"
     },
     {
@@ -3255,8 +3255,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_routers_passwords_forgot_page",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "forgot_page()"
     },
     {
@@ -3266,8 +3266,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_passwords_py_request",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "request"
     },
     {
@@ -3277,8 +3277,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_passwords_py_post",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "post"
     },
     {
@@ -3288,8 +3288,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_routers_passwords_forgot_password",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "forgot_password()"
     },
     {
@@ -3299,8 +3299,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_routers_passwords_py_session",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "session"
     },
     {
@@ -3310,8 +3310,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "app_routers_passwords_reset_link",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "reset_link()"
     },
     {
@@ -3321,8 +3321,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "app_routers_passwords_reset_page",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "reset_page()"
     },
     {
@@ -3332,8 +3332,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "app_routers_passwords_password_success",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "_password_success()"
     },
     {
@@ -3343,8 +3343,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_routers_passwords_reset_password",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "reset_password()"
     },
     {
@@ -3354,8 +3354,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "app_routers_passwords_change_password",
-      "community": 117,
-      "community_name": "test_password_http.py",
+      "community": 137,
+      "community_name": "routers/passwords.py",
       "norm_label": "change_password()"
     },
     {
@@ -3948,8 +3948,8 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "app_services_access_session_service_prune_sessions",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "prune_sessions()"
     },
     {
@@ -3982,7 +3982,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "agenda_service.py"
     },
     {
@@ -3993,7 +3993,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_month",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "get_executions_for_month()"
     },
     {
@@ -4004,7 +4004,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_session",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "session"
     },
     {
@@ -4015,7 +4015,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_executions_for_date",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "get_executions_for_date()"
     },
     {
@@ -4026,7 +4026,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_datetime",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "datetime"
     },
     {
@@ -4037,7 +4037,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_build_calendar_data",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "build_calendar_data()"
     },
     {
@@ -4048,7 +4048,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_py_date",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "date"
     },
     {
@@ -4059,7 +4059,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_get_list_executions",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "get_list_executions()"
     },
     {
@@ -4081,7 +4081,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_reschedule_execution",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "reschedule_execution()"
     },
     {
@@ -4103,7 +4103,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_38",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "retorna todas as execucoes de um mes para o grupo."
     },
     {
@@ -4114,7 +4114,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_65",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "retorna execucoes de uma data especifica."
     },
     {
@@ -4125,7 +4125,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_92",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "constroi os dados para o calendario mensal. retorna semanas com dias e..."
     },
     {
@@ -4136,7 +4136,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_186",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "retorna execucoes para visualizacao em lista cronologica. filtros: status,..."
     },
     {
@@ -4158,7 +4158,7 @@
       "_origin": "ast",
       "id": "app_services_agenda_service_rationale_262",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "adianta ou adia uma execucao. nao altera o ciclo do template."
     },
     {
@@ -4179,8 +4179,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_auth_service",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 133,
+      "community_name": "main.py",
       "norm_label": "auth_service.py"
     },
     {
@@ -4201,8 +4201,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_auth_service_py_session",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "session"
     },
     {
@@ -4212,8 +4212,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_services_auth_service_get_or_create_tupa_user",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "get_or_create_tupa_user()"
     },
     {
@@ -4223,8 +4223,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "app_services_auth_service_authenticate_with_password",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "authenticate_with_password()"
     },
     {
@@ -4234,8 +4234,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "app_services_auth_service_register_with_password",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "register_with_password()"
     },
     {
@@ -4245,8 +4245,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "app_services_auth_service_setup_profile",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "setup_profile()"
     },
     {
@@ -4256,8 +4256,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "app_services_auth_service_update_profile",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "update_profile()"
     },
     {
@@ -4278,8 +4278,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_37",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "associa uma identidade tupa ao perfil local do jaci."
     },
     {
@@ -4289,8 +4289,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_81",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "autentica pelo adaptador selecionado e carrega o perfil local."
     },
     {
@@ -4300,8 +4300,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_101",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "cria a identidade no tupa e o perfil local no jaci."
     },
     {
@@ -4311,8 +4311,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_113",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "completa os dados locais do perfil."
     },
     {
@@ -4322,8 +4322,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_services_auth_service_rationale_123",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "atualiza os dados pessoais do usuario."
     },
     {
@@ -4674,8 +4674,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "app_services_execution_service_update_scheduled_execution",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 142,
+      "community_name": "execution_service.py",
       "norm_label": "update_scheduled_execution()"
     },
     {
@@ -4740,8 +4740,8 @@
       "source_location": "L381",
       "_origin": "ast",
       "id": "app_services_execution_service_update_execution_item",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "update_execution_item()"
     },
     {
@@ -4916,8 +4916,8 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "app_services_execution_service_rationale_233",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 142,
+      "community_name": "execution_service.py",
       "norm_label": "edita somente dados proprios de uma execucao agendada."
     },
     {
@@ -5026,8 +5026,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_group_service",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "group_service.py"
     },
     {
@@ -5037,8 +5037,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_services_group_service_create_group",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "create_group()"
     },
     {
@@ -5048,8 +5048,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_group_service_py_session",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "session"
     },
     {
@@ -5059,8 +5059,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_services_group_service_get_user_groups",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "get_user_groups()"
     },
     {
@@ -5103,8 +5103,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "app_services_group_service_update_group_settings",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "update_group_settings()"
     },
     {
@@ -5114,8 +5114,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "app_services_group_service_update_group_name",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "update_group_name()"
     },
     {
@@ -5125,8 +5125,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "app_services_group_service_invite_member",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "invite_member()"
     },
     {
@@ -5169,8 +5169,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_18",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "cria um novo grupo e adiciona o owner como membro."
     },
     {
@@ -5180,8 +5180,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_49",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "retorna todos os grupos do usuario."
     },
     {
@@ -5224,8 +5224,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_104",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "atualiza configuracoes do grupo quando solicitado pelo criador."
     },
     {
@@ -5235,8 +5235,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_132",
-      "community": 24,
-      "community_name": "User",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "atualiza o nome do grupo quando solicitado pelo criador."
     },
     {
@@ -5246,8 +5246,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "app_services_group_service_rationale_145",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "convida um novo membro para o grupo via magic link. retorna dict com success,..."
     },
     {
@@ -5521,8 +5521,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "app_services_notification_service_notify_execution_updated",
-      "community": 129,
-      "community_name": "notification_service.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "notify_execution_updated()"
     },
     {
@@ -5620,8 +5620,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "app_services_notification_service_rationale_116",
-      "community": 129,
-      "community_name": "notification_service.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "notifica membros que uma compra agendada foi alterada."
     },
     {
@@ -5675,8 +5675,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_offline_cache_service",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "offline_cache_service.py"
     },
     {
@@ -5686,8 +5686,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_iso",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "_iso()"
     },
     {
@@ -5697,8 +5697,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_datetime",
-      "community": 9,
-      "community_name": "datetime.py",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "datetime"
     },
     {
@@ -5708,8 +5708,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_enum_value",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "_enum_value()"
     },
     {
@@ -5719,8 +5719,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_any",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "any"
     },
     {
@@ -5730,8 +5730,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_build_offline_snapshot",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "build_offline_snapshot()"
     },
     {
@@ -5741,8 +5741,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_py_session",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "session"
     },
     {
@@ -5752,8 +5752,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_services_offline_cache_service_rationale_27",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 102,
+      "community_name": "Execution",
       "norm_label": "monta dados essenciais somente leitura para consulta offline."
     },
     {
@@ -5972,8 +5972,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_session_policy",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "session_policy.py"
     },
     {
@@ -6093,8 +6093,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_services_session_policy_internal_return_url",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "internal_return_url()"
     },
     {
@@ -6104,8 +6104,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_session_policy_rationale_1",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "politica local de inatividade. identidade e revogacao pertencem ao provedor."
     },
     {
@@ -6159,8 +6159,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_services_session_provider_tupasessionprovider_init",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 106,
+      "community_name": "get_settings",
       "norm_label": ".__init__()"
     },
     {
@@ -6885,8 +6885,8 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "app_services_template_service_update_template_item",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 6,
+      "community_name": "template_service.py",
       "norm_label": "update_template_item()"
     },
     {
@@ -7061,8 +7061,8 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "app_services_template_service_rationale_315",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 6,
+      "community_name": "template_service.py",
       "norm_label": "atualiza um item do template."
     },
     {
@@ -9734,8 +9734,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_templating_localdate_filter",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "localdate_filter()"
     },
     {
@@ -9822,8 +9822,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_init",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "utils/__init__.py"
     },
     {
@@ -9833,7 +9833,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_datetime",
-      "community": 9,
+      "community": 78,
       "community_name": "datetime.py",
       "norm_label": "datetime.py"
     },
@@ -9855,8 +9855,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_datetime_py_datetime",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 65,
+      "community_name": "get_execution_totals",
       "norm_label": "datetime"
     },
     {
@@ -9866,8 +9866,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_utils_datetime_format_local_date",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "format_local_date()"
     },
     {
@@ -9877,8 +9877,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_datetime_py_date",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "date"
     },
     {
@@ -9888,8 +9888,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_utils_datetime_now_local",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "now_local()"
     },
     {
@@ -9910,8 +9910,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_utils_datetime_to_local",
-      "community": 48,
-      "community_name": "agenda_service.py",
+      "community": 65,
+      "community_name": "get_execution_totals",
       "norm_label": "to_local()"
     },
     {
@@ -9922,7 +9922,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_parse_local_date",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "parse_local_date()"
     },
     {
@@ -9943,8 +9943,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_34",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "convert utc datetime to local date only"
     },
     {
@@ -9954,8 +9954,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_49",
-      "community": 157,
-      "community_name": "agenda_list",
+      "community": 48,
+      "community_name": "agenda.py",
       "norm_label": "get current datetime in local timezone"
     },
     {
@@ -9976,8 +9976,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_61",
-      "community": 48,
-      "community_name": "agenda_service.py",
+      "community": 65,
+      "community_name": "get_execution_totals",
       "norm_label": "convert utc datetime to local"
     },
     {
@@ -9988,7 +9988,7 @@
       "_origin": "ast",
       "id": "app_utils_datetime_rationale_73",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "parse a date string from form and convert to utc for storage."
     },
     {
@@ -9998,8 +9998,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_email",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "email.py"
     },
     {
@@ -10009,8 +10009,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_utils_email_build_magic_link",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "_build_magic_link()"
     },
     {
@@ -10020,8 +10020,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_utils_email_send_magic_link",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "send_magic_link()"
     },
     {
@@ -10031,8 +10031,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "app_utils_email_build_login_email",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "_build_login_email()"
     },
     {
@@ -10042,8 +10042,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "app_utils_email_build_invite_email",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "_build_invite_email()"
     },
     {
@@ -10053,8 +10053,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_utils_email_rationale_26",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "monta a url completa do magic link."
     },
     {
@@ -10064,8 +10064,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_utils_email_rationale_31",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "envia e-mail com magic link. se smtp nao configurado, faz log do link (modo..."
     },
     {
@@ -10075,8 +10075,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "app_utils_email_rationale_77",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "template html para e-mail de login."
     },
     {
@@ -10086,8 +10086,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "app_utils_email_rationale_122",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "template html para e-mail de convite para grupo."
     },
     {
@@ -10097,8 +10097,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_password_privacy",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "password_privacy.py"
     },
     {
@@ -10108,8 +10108,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_utils_password_privacy_redact",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "_redact()"
     },
     {
@@ -10119,8 +10119,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_utils_password_privacy_passwordlogfilter",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "passwordlogfilter"
     },
     {
@@ -10130,8 +10130,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_utils_password_privacy_passwordlogfilter_filter",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": ".filter()"
     },
     {
@@ -10141,8 +10141,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_utils_password_privacy_install_password_log_filters",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "install_password_log_filters()"
     },
     {
@@ -10152,8 +10152,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_utils_password_privacy_passwordprivacymiddleware",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "passwordprivacymiddleware"
     },
     {
@@ -10163,8 +10163,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_password_privacy_py_basehttpmiddleware",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "basehttpmiddleware"
     },
     {
@@ -10174,8 +10174,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_utils_password_privacy_passwordprivacymiddleware_dispatch",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": ".dispatch()"
     },
     {
@@ -10185,8 +10185,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_password_privacy_rationale_1",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "cabecalhos de recuperacao e remocao de queries sensiveis dos logs."
     },
     {
@@ -10196,8 +10196,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_utils_security",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "security.py"
     },
     {
@@ -10207,8 +10207,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_utils_security_create_magic_token",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "create_magic_token()"
     },
     {
@@ -10218,8 +10218,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_utils_security_decode_magic_token",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "decode_magic_token()"
     },
     {
@@ -10262,8 +10262,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_utils_security_rationale_12",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "cria token para magic link (15 minutos)."
     },
     {
@@ -10273,8 +10273,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_utils_security_rationale_23",
-      "community": 91,
-      "community_name": "auth.py",
+      "community": 78,
+      "community_name": "datetime.py",
       "norm_label": "decodifica magic token. retorna o e-mail se valido, none caso contrario."
     },
     {
@@ -10471,8 +10471,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "app_utils_session_http_sessionmiddleware",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 87,
+      "community_name": "session_http.py",
       "norm_label": "sessionmiddleware"
     },
     {
@@ -10482,8 +10482,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_utils_session_http_py_basehttpmiddleware",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 87,
+      "community_name": "session_http.py",
       "norm_label": "basehttpmiddleware"
     },
     {
@@ -10559,8 +10559,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "app_websocket_handlers_guarded_identity",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 111,
+      "community_name": "access_session_service.py",
       "norm_label": "_guarded_identity()"
     },
     {
@@ -10768,8 +10768,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "migrations_env",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "env.py"
     },
     {
@@ -10779,8 +10779,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "migrations_env_run_migrations_offline",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "run_migrations_offline()"
     },
     {
@@ -10790,8 +10790,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "migrations_env_run_migrations_online",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "run_migrations_online()"
     },
     {
@@ -11228,7 +11228,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "apply_migrations.py"
     },
     {
@@ -11239,7 +11239,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations_apply_migrations",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "apply_migrations()"
     },
     {
@@ -11250,7 +11250,7 @@
       "_origin": "ast",
       "id": "scripts_apply_migrations_rationale_1",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "aplica migracoes alembic e adota bancos sqlite legados."
     },
     {
@@ -11305,8 +11305,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_create_database",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "create_database.py"
     },
     {
@@ -11316,8 +11316,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "scripts_create_database_create_database_if_missing",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "create_database_if_missing()"
     },
     {
@@ -11327,8 +11327,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_create_database_rationale_1",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "cria o banco configurado em database_url quando ele ainda nao existe."
     },
     {
@@ -11552,8 +11552,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_prune_access_sessions",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "prune_access_sessions.py"
     },
     {
@@ -11563,8 +11563,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "scripts_prune_access_sessions_main",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "main()"
     },
     {
@@ -11574,8 +11574,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_prune_access_sessions_rationale_1",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 146,
+      "community_name": "config.py",
       "norm_label": "remove registros de sessao alem da retencao tecnica, no ambiente selecionado."
     },
     {
@@ -11870,8 +11870,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "scripts_ui_test_runner_write_result",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "write_result()"
     },
     {
@@ -11881,8 +11881,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "scripts_ui_test_runner_py_path",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "path"
     },
     {
@@ -11926,7 +11926,7 @@
       "_origin": "ast",
       "id": "tests_conftest",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "tests/conftest.py"
     },
     {
@@ -11991,8 +11991,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "tests_conftest_make_category",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "make_category()"
     },
     {
@@ -12377,7 +12377,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "test_agenda_and_budget_flow.py"
     },
     {
@@ -12388,7 +12388,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_lists_group_executions_and_prioritizes_in_progress_status",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "test_calendar_lists_group_executions_and_prioritizes_in_progress_status()"
     },
     {
@@ -12399,7 +12399,7 @@
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_calendar_groups_executions_by_local_scheduled_date",
       "community": 48,
-      "community_name": "agenda_service.py",
+      "community_name": "agenda.py",
       "norm_label": "test_calendar_groups_executions_by_local_scheduled_date()"
     },
     {
@@ -12409,8 +12409,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_py_parametrize",
-      "community": 48,
-      "community_name": "agenda_service.py",
+      "community": 159,
+      "community_name": "test_budget_alert_thresholds",
       "norm_label": "parametrize"
     },
     {
@@ -12420,8 +12420,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_test_agenda_and_budget_flow_test_budget_alert_thresholds",
-      "community": 48,
-      "community_name": "agenda_service.py",
+      "community": 159,
+      "community_name": "test_budget_alert_thresholds",
       "norm_label": "test_budget_alert_thresholds()"
     },
     {
@@ -12596,8 +12596,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_auth_pages",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_auth_pages.py"
     },
     {
@@ -12607,8 +12607,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_test_auth_pages_make_request",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "make_request()"
     },
     {
@@ -12618,8 +12618,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_auth_pages_py_request",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "request"
     },
     {
@@ -12629,8 +12629,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_login_page_only_contains_login_form_and_registration_link",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_login_page_only_contains_login_form_and_registration_link()"
     },
     {
@@ -12640,8 +12640,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_register_page_contains_registration_form_and_login_link",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_register_page_contains_registration_form_and_login_link()"
     },
     {
@@ -12651,8 +12651,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_auth_pages_test_invalid_registration_renders_register_page_and_preserves_identity_fields",
-      "community": 154,
-      "community_name": "test_auth_pages.py",
+      "community": 91,
+      "community_name": "auth.py",
       "norm_label": "test_invalid_registration_renders_register_page_and_preserves_identity_fields()"
     },
     {
@@ -12662,8 +12662,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_business_rules",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_business_rules.py"
     },
     {
@@ -12673,8 +12673,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_business_rules_make_completed_execution",
-      "community": 4,
-      "community_name": "create_template",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "make_completed_execution()"
     },
     {
@@ -12684,8 +12684,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_business_rules_py_parametrize",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "parametrize"
     },
     {
@@ -12695,8 +12695,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn02_completed_execution_is_immutable",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_rn02_completed_execution_is_immutable()"
     },
     {
@@ -12706,8 +12706,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn03_recurrence_is_only_generated_after_completion",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_rn03_recurrence_is_only_generated_after_completion()"
     },
     {
@@ -12717,8 +12717,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn08_execution_edits_never_modify_template_items",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_rn08_execution_edits_never_modify_template_items()"
     },
     {
@@ -12728,8 +12728,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_linked_execution_item_rejects_rename_without_partial_update",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_linked_execution_item_rejects_rename_without_partial_update()"
     },
     {
@@ -12739,8 +12739,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_linked_execution_item_updates_other_fields_with_current_name",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_linked_execution_item_updates_other_fields_with_current_name()"
     },
     {
@@ -12750,8 +12750,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_unlinked_execution_item_remains_renameable",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_unlinked_execution_item_remains_renameable()"
     },
     {
@@ -12761,8 +12761,8 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn09_foreign_category_is_rejected_when_items_are_edited",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 153,
+      "community_name": "test_business_rules.py",
       "norm_label": "test_rn09_foreign_category_is_rejected_when_items_are_edited()"
     },
     {
@@ -12772,8 +12772,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "tests_test_business_rules_test_rn12_websocket_failure_does_not_undo_persisted_api_mutation",
-      "community": 4,
-      "community_name": "create_template",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_rn12_websocket_failure_does_not_undo_persisted_api_mutation()"
     },
     {
@@ -12794,8 +12794,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "tests_test_collaboration_and_isolation_flow_test_group_data_is_only_visible_to_members",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_group_data_is_only_visible_to_members()"
     },
     {
@@ -12882,8 +12882,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_test_completion_and_recurrence_flow_test_discarded_pending_items_remain_as_soft_deleted_history",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_discarded_pending_items_remain_as_soft_deleted_history()"
     },
     {
@@ -12992,8 +12992,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_database_operations",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_database_operations.py"
     },
     {
@@ -13003,8 +13003,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_database_engine_uses_sqlite_specific_connection_options",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_database_engine_uses_sqlite_specific_connection_options()"
     },
     {
@@ -13036,8 +13036,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_production_environment_keeps_secure_cookies",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_production_environment_keeps_secure_cookies()"
     },
     {
@@ -13058,8 +13058,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_create_database_is_idempotent_for_sqlite",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_create_database_is_idempotent_for_sqlite()"
     },
     {
@@ -13069,8 +13069,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_migrations_create_schema_in_empty_sqlite_database",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_migrations_create_schema_in_empty_sqlite_database()"
     },
     {
@@ -13080,8 +13080,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_initial_migration_matches_current_models",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_initial_migration_matches_current_models()"
     },
     {
@@ -13091,8 +13091,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_run_command_documents_port_restart_and_environment_options",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_run_command_documents_port_restart_and_environment_options()"
     },
     {
@@ -13124,8 +13124,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_sqlite_to_postgres_migrator_loads_target_from_env_file",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_sqlite_to_postgres_migrator_loads_target_from_env_file()"
     },
     {
@@ -13135,8 +13135,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "tests_test_database_operations_test_sqlite_to_postgres_migrator_accepts_psycopg_target",
-      "community": 94,
-      "community_name": "Settings",
+      "community": 144,
+      "community_name": "test_database_operations.py",
       "norm_label": "test_sqlite_to_postgres_migrator_accepts_psycopg_target()"
     },
     {
@@ -13212,8 +13212,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "tests_test_execution_totals_regression_test_execution_add_item_htmx_error_stays_in_modal_without_mutation",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_execution_add_item_htmx_error_stays_in_modal_without_mutation()"
     },
     {
@@ -13223,8 +13223,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_first_access_flow",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "test_first_access_flow.py"
     },
     {
@@ -13234,8 +13234,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_first_access_creates_default_home_and_categories",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "test_first_access_creates_default_home_and_categories()"
     },
     {
@@ -13245,8 +13245,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_first_access_flow_test_repeated_login_does_not_duplicate_default_home",
-      "community": 137,
-      "community_name": "auth_service.py",
+      "community": 7,
+      "community_name": "categories.py",
       "norm_label": "test_repeated_login_does_not_duplicate_default_home()"
     },
     {
@@ -13300,8 +13300,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "future_flow",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "future_flow"
     },
     {
@@ -13322,8 +13322,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "tests_test_future_user_flows_test_fl08_spending_analysis_uses_completed_executions_only",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_fl08_spending_analysis_uses_completed_executions_only()"
     },
     {
@@ -13345,7 +13345,7 @@
       "_origin": "ast",
       "id": "tests_test_guarded_login_flow",
       "community": 9,
-      "community_name": "datetime.py",
+      "community_name": "Base",
       "norm_label": "test_guarded_login_flow.py"
     },
     {
@@ -13355,8 +13355,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_test_guarded_login_flow_test_guarded_login_uses_normal_route_and_logout_revokes_opaque_cookie",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_guarded_login_uses_normal_route_and_logout_revokes_opaque_cookie()"
     },
     {
@@ -13861,8 +13861,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_offline_cache_test_offline_snapshot_contains_essential_read_only_data",
-      "community": 102,
-      "community_name": "Execution",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_offline_snapshot_contains_essential_read_only_data()"
     },
     {
@@ -13872,8 +13872,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "tests_test_offline_cache_test_offline_snapshot_is_scoped_to_user_groups",
-      "community": 153,
-      "community_name": "build_offline_snapshot",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_offline_snapshot_is_scoped_to_user_groups()"
     },
     {
@@ -14686,8 +14686,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "tests_test_password_recovery_test_password_urls_are_redacted_from_access_and_client_logs",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "test_password_urls_are_redacted_from_access_and_client_logs()"
     },
     {
@@ -14719,8 +14719,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "tests_test_password_recovery_test_uvicorn_access_formatter_preserves_status_and_removes_reset_secret",
-      "community": 139,
-      "community_name": "test_password_recovery.py",
+      "community": 145,
+      "community_name": "password_privacy.py",
       "norm_label": "test_uvicorn_access_formatter_preserves_status_and_removes_reset_secret()"
     },
     {
@@ -15434,8 +15434,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_session_auth_flow.py"
     },
     {
@@ -15500,8 +15500,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_py_fixture",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "fixture"
     },
     {
@@ -15511,8 +15511,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_guard",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "guard()"
     },
     {
@@ -15522,8 +15522,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_issue",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "issue()"
     },
     {
@@ -15533,8 +15533,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_cookie_reference_is_random_and_tokens_are_not_persisted_open",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_cookie_reference_is_random_and_tokens_are_not_persisted_open()"
     },
     {
@@ -15544,8 +15544,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_each_request_touches_even_automatic_and_under_one_minute",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_each_request_touches_even_automatic_and_under_one_minute()"
     },
     {
@@ -15555,8 +15555,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_expired_local_session_never_refreshes_or_resurrects",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_expired_local_session_never_refreshes_or_resurrects()"
     },
     {
@@ -15566,8 +15566,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_refresh_only_after_access_expiry_and_ping_does_not_touch",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_refresh_only_after_access_expiry_and_ping_does_not_touch()"
     },
     {
@@ -15577,8 +15577,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_unavailable_provider_does_not_extend_or_revoke",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_unavailable_provider_does_not_extend_or_revoke()"
     },
     {
@@ -15588,8 +15588,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_revoked_provider_denies_still_unexpired_access",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_revoked_provider_denies_still_unexpired_access()"
     },
     {
@@ -15599,8 +15599,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_logout_all_local_sessions_and_inactive_user",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_logout_all_local_sessions_and_inactive_user()"
     },
     {
@@ -15610,8 +15610,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_legacy_jwt_cannot_bootstrap_guard_session",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_legacy_jwt_cannot_bootstrap_guard_session()"
     },
     {
@@ -15632,8 +15632,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_idle_is_rechecked_after_slow_refresh",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_idle_is_rechecked_after_slow_refresh()"
     },
     {
@@ -15643,8 +15643,8 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_http_background_counts_but_expired_post_never_reaches_handler",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_http_background_counts_but_expired_post_never_reaches_handler()"
     },
     {
@@ -15654,8 +15654,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_offline_requests_require_matching_owner_and_csrf",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_offline_requests_require_matching_owner_and_csrf()"
     },
     {
@@ -15665,8 +15665,8 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_access_expiring_during_validation_refreshes_once_without_ending_session",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_access_expiring_during_validation_refreshes_once_without_ending_session()"
     },
     {
@@ -15676,8 +15676,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_test_websocket_expired_access_waits_for_http_without_rotating_or_revoking",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "test_websocket_expired_access_waits_for_http_without_rotating_or_revoking()"
     },
     {
@@ -15687,8 +15687,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_session_auth_flow_rationale_1",
-      "community": 77,
-      "community_name": "SessionExpired",
+      "community": 132,
+      "community_name": "test_session_auth_flow.py",
       "norm_label": "bl-0019: persistencia, rotacao e http. nao executar sem liberacao."
     },
     {
@@ -15698,8 +15698,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_session_policy",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "test_session_policy.py"
     },
     {
@@ -15720,8 +15720,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_test_session_policy_py_parametrize",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "parametrize"
     },
     {
@@ -15731,8 +15731,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "tests_test_session_policy_test_return_rejects_external_auth_technical_or_command",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "test_return_rejects_external_auth_technical_or_command()"
     },
     {
@@ -15742,8 +15742,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "tests_test_session_policy_test_return_preserves_safe_page_query_and_removes_fragment",
-      "community": 87,
-      "community_name": "session_http.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "test_return_preserves_safe_page_query_and_removes_fragment()"
     },
     {
@@ -15753,8 +15753,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_session_policy_rationale_1",
-      "community": 111,
-      "community_name": "access_session_service.py",
+      "community": 154,
+      "community_name": "session_policy.py",
       "norm_label": "bl-0019: contratos escritos antes do guard; nao executados pelo agente."
     },
     {
@@ -16149,8 +16149,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_unlinked_execution_item_edit_form_keeps_name_editable",
-      "community": 4,
-      "community_name": "create_template",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_unlinked_execution_item_edit_form_keeps_name_editable()"
     },
     {
@@ -16204,8 +16204,8 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_purchased_template_item_rejects_rename_without_partial_update",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_purchased_template_item_rejects_rename_without_partial_update()"
     },
     {
@@ -16215,8 +16215,8 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_purchased_template_item_keeps_other_fields_editable",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_purchased_template_item_keeps_other_fields_editable()"
     },
     {
@@ -16226,8 +16226,8 @@
       "source_location": "L360",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_template_item_without_purchase_history_remains_renamable",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_template_item_without_purchase_history_remains_renamable()"
     },
     {
@@ -16248,8 +16248,8 @@
       "source_location": "L420",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_execution_is_a_snapshot_and_template_changes_only_affect_future_runs()"
     },
     {
@@ -16270,8 +16270,8 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "tests_test_template_execution_flow_test_execution_budget_can_override_template_budget",
-      "community": 4,
-      "community_name": "create_template",
+      "community": 83,
+      "community_name": "make_user",
       "norm_label": "test_execution_budget_can_override_template_budget()"
     },
     {
@@ -17018,8 +17018,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_ui_runner",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "test_ui_runner.py"
     },
     {
@@ -17029,8 +17029,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_test_ui_runner_test_ui_runner_refuses_production_environment",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "test_ui_runner_refuses_production_environment()"
     },
     {
@@ -17040,8 +17040,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "tests_test_ui_runner_test_ui_runner_refuses_parallel_workers_without_starting_server",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "test_ui_runner_refuses_parallel_workers_without_starting_server()"
     },
     {
@@ -17051,8 +17051,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_test_ui_runner_test_ui_summary_is_written_when_playwright_removes_empty_output",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "test_ui_summary_is_written_when_playwright_removes_empty_output()"
     },
     {
@@ -17062,8 +17062,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_ui_runner_rationale_1",
-      "community": 79,
-      "community_name": "run",
+      "community": 157,
+      "community_name": "write_result",
       "norm_label": "contratos futuros bl-0011 para guardas do runner de navegador."
     },
     {
@@ -17084,8 +17084,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl02_template_is_active_and_items_are_grouped_with_notes",
-      "community": 83,
-      "community_name": "make_user",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_fl02_template_is_active_and_items_are_grouped_with_notes()"
     },
     {
@@ -17095,8 +17095,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "tests_test_user_flows_test_fl03_manual_and_automatic_executions_are_available_in_agenda",
-      "community": 142,
-      "community_name": "execution_service.py",
+      "community": 4,
+      "community_name": "create_template",
       "norm_label": "test_fl03_manual_and_automatic_executions_are_available_in_agenda()"
     },
     {
@@ -17162,7 +17162,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "ui/conftest.py"
     },
     {
@@ -17173,7 +17173,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_pytest_collection_modifyitems",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "pytest_collection_modifyitems()"
     },
     {
@@ -17184,7 +17184,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_py_fixture",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "fixture"
     },
     {
@@ -17195,7 +17195,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_browser_context_args",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "browser_context_args()"
     },
     {
@@ -17206,7 +17206,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_only_synthetic_environment",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "only_synthetic_environment()"
     },
     {
@@ -17217,7 +17217,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_ui_purchase",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "ui_purchase()"
     },
     {
@@ -17228,7 +17228,7 @@
       "_origin": "ast",
       "id": "tests_ui_conftest_pinned_browser_assets",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "pinned_browser_assets()"
     },
     {
@@ -17260,7 +17260,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tests_ui_factories_shopping_create_purchase",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "create_purchase()"
     },
@@ -17271,7 +17271,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "tests_ui_factories_shopping_create_local_account",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "create_local_account()"
     },
@@ -17282,8 +17282,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_fixtures_passwords",
-      "community": 150,
-      "community_name": "PasswordProvider",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "fixtures/passwords.py"
     },
     {
@@ -17293,8 +17293,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_ui_fixtures_passwords_py_fixture",
-      "community": 150,
-      "community_name": "PasswordProvider",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "fixture"
     },
     {
@@ -17304,8 +17304,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_ui_fixtures_passwords_password_account",
-      "community": 150,
-      "community_name": "PasswordProvider",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "password_account()"
     },
     {
@@ -17327,7 +17327,7 @@
       "_origin": "ast",
       "id": "tests_ui_helpers_assets",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "assets.py"
     },
     {
@@ -17338,7 +17338,7 @@
       "_origin": "ast",
       "id": "tests_ui_helpers_assets_install_assets",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "install_assets()"
     },
     {
@@ -17349,7 +17349,7 @@
       "_origin": "ast",
       "id": "tests_ui_helpers_assets_rationale_1",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "dependencias reais em cache e bloqueio de recursos externos opcionais."
     },
     {
@@ -17359,7 +17359,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_helpers_data",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "data.py"
     },
@@ -17370,7 +17370,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "tests_ui_helpers_data_unique_ui_name",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "unique_ui_name()"
     },
@@ -17381,7 +17381,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tests_ui_helpers_data_ui_db_session",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "ui_db_session()"
     },
@@ -17502,8 +17502,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_helpers_playwright",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "playwright.py"
     },
     {
@@ -17524,8 +17524,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_pages_passwords",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "pages/passwords.py"
     },
     {
@@ -17536,7 +17536,7 @@
       "_origin": "ast",
       "id": "tests_ui_pages_passwords_passwordpage",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "passwordpage"
     },
     {
@@ -17547,7 +17547,7 @@
       "_origin": "ast",
       "id": "tests_ui_pages_passwords_passwordpage_request_link",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".request_link()"
     },
     {
@@ -17558,7 +17558,7 @@
       "_origin": "ast",
       "id": "tests_ui_pages_passwords_passwordpage_open_link",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".open_link()"
     },
     {
@@ -17569,7 +17569,7 @@
       "_origin": "ast",
       "id": "tests_ui_pages_passwords_passwordpage_reset_password",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".reset_password()"
     },
     {
@@ -17580,7 +17580,7 @@
       "_origin": "ast",
       "id": "tests_ui_pages_passwords_passwordpage_change_password",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".change_password()"
     },
     {
@@ -17590,8 +17590,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "pages/shopping.py"
     },
     {
@@ -17601,8 +17601,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_basepage",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "basepage"
     },
     {
@@ -17612,8 +17612,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_basepage_init",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".__init__()"
     },
     {
@@ -17623,8 +17623,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_basepage_goto_path",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".goto_path()"
     },
     {
@@ -17634,7 +17634,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_loginpage",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "loginpage"
     },
@@ -17645,7 +17645,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_loginpage_submit",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": ".submit()"
     },
@@ -17656,7 +17656,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_loginpage_login",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": ".login()"
     },
@@ -17667,8 +17667,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_purchasepage",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "purchasepage"
     },
     {
@@ -17678,8 +17678,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_purchasepage_open",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".open()"
     },
     {
@@ -17689,8 +17689,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_purchasepage_complete",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".complete()"
     },
     {
@@ -17700,8 +17700,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_purchasepage_expect_linked_name_read_only",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".expect_linked_name_read_only()"
     },
     {
@@ -17711,8 +17711,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_templatepage",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "templatepage"
     },
     {
@@ -17722,8 +17722,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_templatepage_create",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".create()"
     },
     {
@@ -17733,8 +17733,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_templatepage_add_item",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".add_item()"
     },
     {
@@ -17744,8 +17744,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "tests_ui_pages_shopping_templatepage_create_execution",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": ".create_execution()"
     },
     {
@@ -17755,8 +17755,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_test_access_session_playwright",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_access_session_playwright.py"
     },
     {
@@ -17766,8 +17766,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_ui_test_access_session_playwright_test_expired_session_preserves_purchase_for_original_account",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_expired_session_preserves_purchase_for_original_account()"
     },
     {
@@ -17777,8 +17777,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "tests_ui_test_access_session_playwright_test_first_visit_opens_login_without_expiration_warning",
-      "community": 146,
-      "community_name": "PurchasePage",
+      "community": 88,
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_first_visit_opens_login_without_expiration_warning()"
     },
     {
@@ -17789,7 +17789,7 @@
       "_origin": "ast",
       "id": "tests_ui_test_password_recovery_playwright",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_password_recovery_playwright.py"
     },
     {
@@ -17800,7 +17800,7 @@
       "_origin": "ast",
       "id": "tests_ui_test_password_recovery_playwright_test_recover_account_from_synthetic_email_and_login_with_new_password",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_recover_account_from_synthetic_email_and_login_with_new_password()"
     },
     {
@@ -17811,7 +17811,7 @@
       "_origin": "ast",
       "id": "tests_ui_test_password_recovery_playwright_test_change_password_ends_second_device_and_preserves_offline_queue",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_change_password_ends_second_device_and_preserves_offline_queue()"
     },
     {
@@ -17822,7 +17822,7 @@
       "_origin": "ast",
       "id": "tests_ui_test_password_recovery_playwright_test_desktop_password_recovery_works_without_javascript",
       "community": 88,
-      "community_name": "test_password_recovery_playwright.py",
+      "community_name": "test_purchase_playwright.py",
       "norm_label": "test_desktop_password_recovery_works_without_javascript()"
     },
     {
@@ -17832,7 +17832,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_purchase_playwright.py"
     },
@@ -17843,7 +17843,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_login_logout_mobile",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_login_logout_mobile()"
     },
@@ -17854,7 +17854,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_purchase_protects_linked_name_and_persists_total",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_purchase_protects_linked_name_and_persists_total()"
     },
@@ -17865,7 +17865,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_outsider_cannot_open_other_group_purchase",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_outsider_cannot_open_other_group_purchase()"
     },
@@ -17876,7 +17876,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_desktop_navigation",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_desktop_navigation()"
     },
@@ -17887,7 +17887,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_create_template_execution_snapshot",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_create_template_execution_snapshot()"
     },
@@ -17898,7 +17898,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_standalone_item_remains_renameable",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_standalone_item_remains_renameable()"
     },
@@ -17909,7 +17909,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_finishing_purchase_incorporates_only_selected_item",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_finishing_purchase_incorporates_only_selected_item()"
     },
@@ -17920,7 +17920,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_offline_queue_survives_reload_and_reconnects_once",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_offline_queue_survives_reload_and_reconnects_once()"
     },
@@ -17931,7 +17931,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_concurrent_purchase_requires_explicit_conflict_resolution",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_concurrent_purchase_requires_explicit_conflict_resolution()"
     },
@@ -17942,7 +17942,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "tests_ui_test_purchase_playwright_test_mock_login_accepts_local_user_without_tupa_or_password",
-      "community": 145,
+      "community": 88,
       "community_name": "test_purchase_playwright.py",
       "norm_label": "test_mock_login_accepts_local_user_without_tupa_or_password()"
     },
@@ -18404,8 +18404,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "readme",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "readme.md"
     },
     {
@@ -18783,6 +18783,17 @@
       "norm_label": "recuperacao e troca de senha \u2014 bl-0010"
     },
     {
+      "label": "Publica\u00e7\u00e3o da 1.5.0",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L565",
+      "_origin": "ast",
+      "id": "readme_publica\u00e7\u00e3o_da_1_5_0",
+      "community": 25,
+      "community_name": "\ud83c\udf19 Jaci",
+      "norm_label": "publicacao da 1.5.0"
+    },
+    {
       "label": "0001-datas-e-timezone.md",
       "file_type": "document",
       "source_file": "docs/decisions/0001-datas-e-timezone.md",
@@ -18878,7 +18889,7 @@
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "0002-backup-postgresql.md"
     },
     {
@@ -18888,7 +18899,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_0002_backup_autom\u00e1tico_do_postgresql",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "0002 - backup automatico do postgresql"
     },
@@ -18899,7 +18910,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_status",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "status"
     },
@@ -18910,7 +18921,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_contexto",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "contexto"
     },
@@ -18921,7 +18932,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_decis\u00e3o",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "decisao"
     },
@@ -18932,7 +18943,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_plano_refinado",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "plano refinado"
     },
@@ -18943,7 +18954,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_progresso",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "progresso"
     },
@@ -18954,7 +18965,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_valida\u00e7\u00e3o",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "validacao"
     },
@@ -18965,7 +18976,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "docs_decisions_0002_backup_postgresql_consequ\u00eancias",
-      "community": 114,
+      "community": 156,
       "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
       "norm_label": "consequencias"
     },
@@ -19188,6 +19199,17 @@
       "community": 50,
       "community_name": "Backlog de produ\u00e7\u00e3o",
       "norm_label": "entrega para validacao da bl-0010 \u2014 2026-11-11"
+    },
+    {
+      "label": "Aceite manual da BL-0010 \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/README.md",
+      "source_location": "L239",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_readme_aceite_manual_da_bl_0010_2026_11_11",
+      "community": 50,
+      "community_name": "Backlog de produ\u00e7\u00e3o",
+      "norm_label": "aceite manual da bl-0010 \u2014 2026-11-11"
     },
     {
       "label": "backlog/TEMPLATE.md",
@@ -20198,7 +20220,7 @@
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0007_replicacao_externa_backups",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "items/bl-0007-replicacao-externa-backups.md"
     },
     {
@@ -20484,7 +20506,7 @@
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0009_criptografia_repouso",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "items/bl-0009-criptografia-repouso.md"
     },
     {
@@ -20626,8 +20648,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada",
-      "community": 45,
-      "community_name": "tests/README.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "items/bl-0010-reset-senha-login-area-logada.md"
     },
     {
@@ -20794,6 +20816,17 @@
       "community": 51,
       "community_name": "Identifica\u00e7\u00e3o e entrada",
       "norm_label": "implementacao entregue para validacao \u2014 2026-11-11"
+    },
+    {
+      "label": "Aceite manual aprovado \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L137",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada_aceite_manual_aprovado_2026_11_11",
+      "community": 51,
+      "community_name": "Identifica\u00e7\u00e3o e entrada",
+      "norm_label": "aceite manual aprovado \u2014 2026-11-11"
     },
     {
       "label": "items/BL-0011-ampliar-cobertura-testes-ui.md",
@@ -21660,8 +21693,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0017_nome_execucao_avulsa",
-      "community": 16,
-      "community_name": "backlog/README.md",
+      "community": 45,
+      "community_name": "tests/README.md",
       "norm_label": "items/bl-0017-nome-execucao-avulsa.md"
     },
     {
@@ -21946,8 +21979,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_backlog_items_bl_0019_sessao_autenticada_oito_horas_inatividade",
-      "community": 45,
-      "community_name": "tests/README.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "items/bl-0019-sessao-autenticada-oito-horas-inatividade.md"
     },
     {
@@ -23590,6 +23623,17 @@
       "norm_label": "implementacao da nova 1.5.0 \u2014 2026-11-11"
     },
     {
+      "label": "Aceites manuais da 1.5.0 aprovados \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/backlog/releases.md",
+      "source_location": "L193",
+      "_origin": "ast",
+      "id": "docs_domain_backlog_releases_aceites_manuais_da_1_5_0_aprovados_2026_11_11",
+      "community": 118,
+      "community_name": "Planejamento de releases ap\u00f3s a 1.3.0",
+      "norm_label": "aceites manuais da 1.5.0 aprovados \u2014 2026-11-11"
+    },
+    {
       "label": "business-rules.md",
       "file_type": "document",
       "source_file": "docs/domain/business-rules.md",
@@ -23828,7 +23872,7 @@
       "_origin": "ast",
       "id": "docs_domain_database",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "database.md"
     },
     {
@@ -23839,7 +23883,7 @@
       "_origin": "ast",
       "id": "docs_domain_database_estrat\u00e9gia_de_banco_de_dados",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "estrategia de banco de dados"
     },
     {
@@ -23850,7 +23894,7 @@
       "_origin": "ast",
       "id": "docs_domain_database_ambientes",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "ambientes"
     },
     {
@@ -23861,7 +23905,7 @@
       "_origin": "ast",
       "id": "docs_domain_database_backups_de_produ\u00e7\u00e3o",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "backups de producao"
     },
     {
@@ -23872,7 +23916,7 @@
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00f5es",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "migracoes"
     },
     {
@@ -23883,7 +23927,7 @@
       "_origin": "ast",
       "id": "docs_domain_database_migra\u00e7\u00e3o_de_dados",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "migracao de dados"
     },
     {
@@ -24069,8 +24113,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_home_dashboard",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "home-dashboard.md"
     },
     {
@@ -24157,8 +24201,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_overview",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "overview.md"
     },
     {
@@ -24168,8 +24212,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_overview_jaci",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "jaci"
     },
     {
@@ -24179,8 +24223,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_domain_overview_qual_problema_o_produto_resolve",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "qual problema o produto resolve?"
     },
     {
@@ -24190,8 +24234,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "docs_domain_overview_opera\u00e7\u00e3o_com_conex\u00e3o_inst\u00e1vel",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "operacao com conexao instavel"
     },
     {
@@ -24201,8 +24245,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_pwa_offline_foundation",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "pwa-offline-foundation.md"
     },
     {
@@ -25125,8 +25169,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada",
-      "community": 45,
-      "community_name": "tests/README.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "tasks/bl-0010-reset-senha-login-area-logada.md"
     },
     {
@@ -25370,6 +25414,28 @@
       "community": 135,
       "community_name": "Refinamento \u2014 BL-0010 \u2014 Recupera\u00e7\u00e3o e troca de senha \u2014 1.5.0",
       "norm_label": "criterios restantes de ativacao/publicacao"
+    },
+    {
+      "label": "Ajuste visual ap\u00f3s revis\u00e3o \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L372",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_ajuste_visual_ap\u00f3s_revis\u00e3o_2026_11_11",
+      "community": 135,
+      "community_name": "Refinamento \u2014 BL-0010 \u2014 Recupera\u00e7\u00e3o e troca de senha \u2014 1.5.0",
+      "norm_label": "ajuste visual apos revisao \u2014 2026-11-11"
+    },
+    {
+      "label": "Aceite manual aprovado \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L386",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_aceite_manual_aprovado_2026_11_11",
+      "community": 135,
+      "community_name": "Refinamento \u2014 BL-0010 \u2014 Recupera\u00e7\u00e3o e troca de senha \u2014 1.5.0",
+      "norm_label": "aceite manual aprovado \u2014 2026-11-11"
     },
     {
       "label": "tasks/BL-0011-ampliar-cobertura-testes-ui.md",
@@ -27479,8 +27545,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_bl_0019_sessao_autenticada_oito_horas_inatividade",
-      "community": 45,
-      "community_name": "tests/README.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "tasks/bl-0019-sessao-autenticada-oito-horas-inatividade.md"
     },
     {
@@ -29657,8 +29723,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao",
-      "community": 45,
-      "community_name": "tests/README.md",
+      "community": 115,
+      "community_name": "README.md",
       "norm_label": "release-1.5.0-acesso-conta-sessao.md"
     },
     {
@@ -29803,6 +29869,28 @@
       "community": 136,
       "community_name": "Refinamento da vers\u00e3o 1.5.0 \u2014 Acesso \u00e0 conta e continuidade da sess\u00e3o",
       "norm_label": "implementacao e aceite \u2014 2026-11-11"
+    },
+    {
+      "label": "Aceite das duas demandas \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_aceite_das_duas_demandas_2026_11_11",
+      "community": 136,
+      "community_name": "Refinamento da vers\u00e3o 1.5.0 \u2014 Acesso \u00e0 conta e continuidade da sess\u00e3o",
+      "norm_label": "aceite das duas demandas \u2014 2026-11-11"
+    },
+    {
+      "label": "Prepara\u00e7\u00e3o para publica\u00e7\u00e3o autorizada \u2014 2026-11-11",
+      "file_type": "document",
+      "source_file": "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md",
+      "source_location": "L239",
+      "_origin": "ast",
+      "id": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_prepara\u00e7\u00e3o_para_publica\u00e7\u00e3o_autorizada_2026_11_11",
+      "community": 136,
+      "community_name": "Refinamento da vers\u00e3o 1.5.0 \u2014 Acesso \u00e0 conta e continuidade da sess\u00e3o",
+      "norm_label": "preparacao para publicacao autorizada \u2014 2026-11-11"
     },
     {
       "label": "template-learning.md",
@@ -30020,8 +30108,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_02_cria\u00e7\u00e3o_de_template",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 158,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "fl-02 \u2014 criacao de template"
     },
     {
@@ -30031,8 +30119,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_65",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 158,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "objetivo"
     },
     {
@@ -30042,8 +30130,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_69",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 158,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "atores"
     },
     {
@@ -30053,8 +30141,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_73",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 158,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "fluxo principal"
     },
     {
@@ -30064,8 +30152,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_97",
-      "community": 86,
-      "community_name": "user-flows.md",
+      "community": 158,
+      "community_name": "FL-02 \u2014 Cria\u00e7\u00e3o de Template",
       "norm_label": "resultado esperado"
     },
     {
@@ -30207,8 +30295,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_05_compra_colaborativa",
-      "community": 78,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fl-05 \u2014 compra colaborativa"
     },
     {
@@ -30218,8 +30306,8 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_200",
-      "community": 78,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -30229,8 +30317,8 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "docs_domain_user_flows_atores_204",
-      "community": 78,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "atores"
     },
     {
@@ -30240,8 +30328,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_209",
-      "community": 78,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -30251,8 +30339,8 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_227",
-      "community": 78,
-      "community_name": "FL-05 \u2014 Compra Colaborativa",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -30262,8 +30350,8 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_06_aprendizado_do_template",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fl-06 \u2014 aprendizado do template"
     },
     {
@@ -30273,8 +30361,8 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_237",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -30284,8 +30372,8 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "docs_domain_user_flows_pr\u00e9_condi\u00e7\u00f5es",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "pre-condicoes"
     },
     {
@@ -30295,8 +30383,8 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_246",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -30306,8 +30394,8 @@
       "source_location": "L262",
       "_origin": "ast",
       "id": "docs_domain_user_flows_tipos_de_sugest\u00e3o",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "tipos de sugestao"
     },
     {
@@ -30317,8 +30405,8 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_268",
-      "community": 132,
-      "community_name": "FL-06 \u2014 Aprendizado do Template",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -30526,8 +30614,8 @@
       "source_location": "L425",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fl_10_home_operacional",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fl-10 \u2014 home operacional"
     },
     {
@@ -30537,8 +30625,8 @@
       "source_location": "L427",
       "_origin": "ast",
       "id": "docs_domain_user_flows_objetivo_427",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "objetivo"
     },
     {
@@ -30548,8 +30636,8 @@
       "source_location": "L431",
       "_origin": "ast",
       "id": "docs_domain_user_flows_fluxo_principal_431",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "fluxo principal"
     },
     {
@@ -30559,8 +30647,8 @@
       "source_location": "L445",
       "_origin": "ast",
       "id": "docs_domain_user_flows_resultado_esperado_445",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "resultado esperado"
     },
     {
@@ -30570,8 +30658,8 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "docs_domain_user_flows_sess\u00e3o_durante_a_compra_bl_0019",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "sessao durante a compra (bl-0019)"
     },
     {
@@ -30581,8 +30669,8 @@
       "source_location": "L464",
       "_origin": "ast",
       "id": "docs_domain_user_flows_recuperar_e_trocar_senha_bl_0010",
-      "community": 144,
-      "community_name": "FL-10 \u2014 Home Operacional",
+      "community": 86,
+      "community_name": "user-flows.md",
       "norm_label": "recuperar e trocar senha (bl-0010)"
     },
     {
@@ -30725,7 +30813,7 @@
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups",
       "community": 114,
-      "community_name": "0002 - Backup autom\u00e1tico do PostgreSQL",
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "postgresql-backups.md"
     },
     {
@@ -30735,8 +30823,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_backups_do_postgresql",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "backups do postgresql"
     },
     {
@@ -30746,8 +30834,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_vis\u00e3o_geral",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "visao geral"
     },
     {
@@ -30757,8 +30845,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_configura\u00e7\u00e3o",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "configuracao"
     },
     {
@@ -30768,8 +30856,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_execu\u00e7\u00e3o_manual",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "execucao manual"
     },
     {
@@ -30779,8 +30867,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_agenda_e_logs",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "agenda e logs"
     },
     {
@@ -30790,8 +30878,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_reten\u00e7\u00e3o",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "retencao"
     },
     {
@@ -30801,8 +30889,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_restaura\u00e7\u00e3o_manual_em_banco_isolado",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "restauracao manual em banco isolado"
     },
     {
@@ -30812,9 +30900,141 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "docs_operations_postgresql_backups_pol\u00edtica_mantida_pelo_usu\u00e1rio_2026_11_10",
-      "community": 115,
-      "community_name": "Backups do PostgreSQL",
+      "community": 114,
+      "community_name": "items/BL-0007-replicacao-externa-backups.md",
       "norm_label": "politica mantida pelo usuario \u2014 2026-11-10"
+    },
+    {
+      "label": "1.5.0-publicacao.md",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "1.5.0-publicacao.md"
+    },
+    {
+      "label": "Publica\u00e7\u00e3o do Jaci 1.5.0",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "publicacao do jaci 1.5.0"
+    },
+    {
+      "label": "Escopo e base",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_escopo_e_base",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "escopo e base"
+    },
+    {
+      "label": "Configura\u00e7\u00e3o antes da publica\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_configura\u00e7\u00e3o_antes_da_publica\u00e7\u00e3o",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "configuracao antes da publicacao"
+    },
+    {
+      "label": "Migra\u00e7\u00f5es e persist\u00eancia",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_migra\u00e7\u00f5es_e_persist\u00eancia",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "migracoes e persistencia"
+    },
+    {
+      "label": "Procedimento de publica\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_procedimento_de_publica\u00e7\u00e3o",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "procedimento de publicacao"
+    },
+    {
+      "label": "Confer\u00eancia ap\u00f3s publicar",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_publicacao_confer\u00eancia_ap\u00f3s_publicar",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "conferencia apos publicar"
+    },
+    {
+      "label": "1.5.0.md",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "1.5.0.md"
+    },
+    {
+      "label": "Jaci 1.5.0",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_jaci_1_5_0",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "jaci 1.5.0"
+    },
+    {
+      "label": "Acesso \u00e0 conta",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_acesso_\u00e0_conta",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "acesso a conta"
+    },
+    {
+      "label": "Continuidade da sess\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_continuidade_da_sess\u00e3o",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "continuidade da sessao"
+    },
+    {
+      "label": "Atualiza\u00e7\u00e3o do PWA",
+      "file_type": "document",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "docs_releases_1_5_0_atualiza\u00e7\u00e3o_do_pwa",
+      "community": 115,
+      "community_name": "README.md",
+      "norm_label": "atualizacao do pwa"
     },
     {
       "label": "tests/README.md",
@@ -92214,6 +92434,28 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L567",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme",
+      "target": "docs_releases_1_5_0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L568",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme",
+      "target": "docs_releases_1_5_0_publicacao",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
@@ -92574,6 +92816,17 @@
       "_origin": "ast",
       "source": "readme_sobre_o_nome",
       "target": "readme_cobertura_e_testes_de_navegador_bl_0011",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L565",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_sobre_o_nome",
+      "target": "readme_publica\u00e7\u00e3o_da_1_5_0",
       "confidence_score": 1.0
     },
     {
@@ -93377,6 +93630,17 @@
       "_origin": "ast",
       "source": "docs_domain_backlog_readme_manuten\u00e7\u00e3o_das_vis\u00f5es",
       "target": "docs_domain_backlog_readme_itens_ativos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/README.md",
+      "source_location": "L239",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_readme_depend\u00eancia_externa_publicada_2026_11_11",
+      "target": "docs_domain_backlog_readme_aceite_manual_da_bl_0010_2026_11_11",
       "confidence_score": 1.0
     },
     {
@@ -95478,6 +95742,17 @@
       "_origin": "ast",
       "source": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada_hist\u00f3rico",
       "target": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada_publica\u00e7\u00e3o_da_depend\u00eancia_2026_11_11",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/items/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L137",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada_implementa\u00e7\u00e3o_autorizada_2026_11_11",
+      "target": "docs_domain_backlog_items_bl_0010_reset_senha_login_area_logada_aceite_manual_aprovado_2026_11_11",
       "confidence_score": 1.0
     },
     {
@@ -98476,6 +98751,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/backlog/releases.md",
+      "source_location": "L193",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_backlog_releases_planejamento_de_releases_ap\u00f3s_a_1_3_0",
+      "target": "docs_domain_backlog_releases_aceites_manuais_da_1_5_0_aprovados_2026_11_11",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/backlog/releases.md",
       "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
@@ -100197,6 +100483,28 @@
       "_origin": "ast",
       "source": "tests_readme",
       "target": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L386",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_refinamento_bl_0010_recupera\u00e7\u00e3o_e_troca_de_senha_1_5_0",
+      "target": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_aceite_manual_aprovado_2026_11_11",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/BL-0010-reset-senha-login-area-logada.md",
+      "source_location": "L372",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_refinamento_bl_0010_recupera\u00e7\u00e3o_e_troca_de_senha_1_5_0",
+      "target": "docs_domain_tasks_bl_0010_reset_senha_login_area_logada_ajuste_visual_ap\u00f3s_revis\u00e3o_2026_11_11",
       "confidence_score": 1.0
     },
     {
@@ -104567,6 +104875,28 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao",
+      "target": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md",
+      "source_location": "L230",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_refinamento_da_vers\u00e3o_1_5_0_acesso_\u00e0_conta_e_continuidade_da_sess\u00e3o",
+      "target": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_aceite_das_duas_demandas_2026_11_11",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md",
@@ -104652,6 +104982,17 @@
       "_origin": "ast",
       "source": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_refinamento_da_vers\u00e3o_1_5_0_acesso_\u00e0_conta_e_continuidade_da_sess\u00e3o",
       "target": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_pol\u00edtica_comum_de_senha_e_sess\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/domain/tasks/release-1.5.0-acesso-conta-sessao.md",
+      "source_location": "L239",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_refinamento_da_vers\u00e3o_1_5_0_acesso_\u00e0_conta_e_continuidade_da_sess\u00e3o",
+      "target": "docs_domain_tasks_release_1_5_0_acesso_conta_sessao_prepara\u00e7\u00e3o_para_publica\u00e7\u00e3o_autorizada_2026_11_11",
       "confidence_score": 1.0
     },
     {
@@ -105667,6 +106008,127 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao",
+      "target": "docs_releases_1_5_0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao",
+      "target": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_publicacao_confer\u00eancia_ap\u00f3s_publicar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_publicacao_configura\u00e7\u00e3o_antes_da_publica\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_publicacao_escopo_e_base",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_publicacao_migra\u00e7\u00f5es_e_persist\u00eancia",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0-publicacao.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_publicacao_publica\u00e7\u00e3o_do_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_publicacao_procedimento_de_publica\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0",
+      "target": "docs_releases_1_5_0_jaci_1_5_0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_acesso_\u00e0_conta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_atualiza\u00e7\u00e3o_do_pwa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/releases/1.5.0.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_releases_1_5_0_jaci_1_5_0",
+      "target": "docs_releases_1_5_0_continuidade_da_sess\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "tests/README.md",
@@ -105789,5 +106251,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4fd91bfd3a7d5825c728d3f18ece09cd11a5124f"
+  "built_at_commit": "b3ef2d50641ab3958e413d3ffb7da572eca06b9f"
 }
