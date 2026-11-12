@@ -196,3 +196,12 @@ BL-0010 aprovada pelo usuário após a revisão visual, somando-se ao aceite da
 BL-0019. Escopo implementado: 12/12 fatias, dois aceites manuais aprovados.
 A próxima etapa é a integração e publicação da 1.5.0, mediante liberação, com
 conferências operacionais de produção; as demandas ainda não estão publicadas.
+
+
+## Preparação da publicação 1.5.0 — 2026-11-11
+
+Integração confirmada no PR #48, develop 5e9d777. A release/v1.5.0 recebe
+[notas](../../releases/1.5.0.md), [roteiro](../../releases/1.5.0-publicacao.md)
+e metadados 1.5.0. Candidato local validado com regressão/cobertura, UI e build
+Docker isolado. O roteiro registra a ativação do guard/chave ainda necessária em
+produção; arquivos reais de ambiente preservados. Jaci 1.5.0 ainda não publicado.

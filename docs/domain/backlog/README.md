@@ -241,3 +241,12 @@ Ambas aguardam publicação Jaci; integração depende da liberação do usuári
 Usuário confirmou a validação como finalizada e aprovada, após o ajuste visual
 080a571. BL-0010 e BL-0019 têm aceite manual aprovado e permanecem em_validacao
 até publicação da 1.5.0. Integração e publicação aguardam liberação do usuário.
+
+
+### Candidata 1.5.0 preparada — 2026-11-11
+
+Código BL-0010/BL-0019 integrado à release e à develop pelo PR #48 (5e9d777),
+com aceite manual aprovado. Notas e roteiro em docs/releases/; metadados 1.5.0
+na release, regressão de 382 aprovados/2 xfail, cobertura 67,07%, UI e imagem
+Docker candidatas validadas. Publicação, ativação guard/chave e integração dessa
+preparação pendentes; ambas as demandas continuam em_validacao.

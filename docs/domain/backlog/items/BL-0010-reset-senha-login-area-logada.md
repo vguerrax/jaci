@@ -75,7 +75,7 @@ diretamente esse acesso.
 | Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aceite manual aprovado; liberação da integração e preparação operacional/publicação da 1.5.0 |
+| Próximo passo | Código integrado e aceite aprovado; ativação operacional e publicação da 1.5.0, incluindo integração da preparação |
 
 ## Acompanhamento até produção
 
@@ -94,7 +94,7 @@ diretamente esse acesso.
 ### Impedimentos
 
 - Sem bloqueio de código ou aceite manual: BL-0010 e BL-0019 aprovadas pelo
-  usuário. Permanecem liberação de integração e publicação do Jaci, com as
+  usuário. O código está integrado; permanecem ativação e publicação, com as
   conferências operacionais de produção descritas no refinamento. Tupã 1.1.0 já publicado.
 
 ## Histórico
@@ -140,3 +140,13 @@ O usuário informou: “Validação manual da BL-0010 finalizada, aprovada”.
 Aceite registrado após o ajuste visual 080a571, na branch pai da BL-0010.
 As seis fatias e a revisão visual estão aprovadas. A demanda permanece
 em_validacao até publicação; este aceite não executa integração ou deploy.
+
+
+### Integração e preparação da 1.5.0 — 2026-11-11
+
+Código integrado à release/v1.5.0 (b3ef2d5) e develop (5e9d777, PR #48),
+confirmado pelo usuário e pelo histórico local. As notas e o roteiro de
+publicação estão em docs/releases/1.5.0.md e docs/releases/1.5.0-publicacao.md.
+Preparação com metadados 1.5.0 validada na release; sua integração, ativação do
+guard/chave em produção e publicação ainda estão pendentes. Aceite manual
+preservado e estado em_validacao até publicação; ambiente real intocado.

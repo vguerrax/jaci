@@ -180,9 +180,9 @@ por este pedido de triagem/refinamento.
 
 | Escopo | Implementado | Restante | Estado |
 | --- | --- | --- | --- |
-| BL-0019 | 6/6 fatias | Integração/publicação | Em validação; aceite manual aprovado |
-| BL-0010 | 6/6 fatias | Preparação operacional/integração/publicação | Em validação; aceite manual aprovado |
-| Release | 12/12 fatias; 0/2 tasks publicadas | Integração e publicação | Dois aceites manuais aprovados; Jaci ainda não publicado |
+| BL-0019 | 6/6 fatias | Publicação | Código integrado; aceite manual aprovado |
+| BL-0010 | 6/6 fatias | Preparação operacional/publicação | Código integrado; aceite manual aprovado |
+| Release | 12/12 fatias; 0/2 tasks publicadas | Preparação/publicação | Integrada na develop pelo PR #48; Jaci ainda não publicado |
 
 ## Fechamento desta etapa documental
 
@@ -234,3 +234,48 @@ complementando o aceite da BL-0019. As 12 fatias estão implementadas e os dois
 aceites registrados. Restam liberação de integração e publicação da 1.5.0,
 com as conferências operacionais de produção. Nenhum merge, deploy ou mudança
 de ambiente foi realizado neste registro; worktree mantida na branch da BL-0010.
+
+
+## Preparação para publicação autorizada — 2026-11-11
+
+Usuário confirmou integração à release/develop e solicitou documentação e
+preparação da 1.5.0. Conferido localmente: release/v1.5.0 em b3ef2d5;
+develop em 5e9d777, merge do PR #48, com árvores idênticas. Mesma worktree,
+checkout na release existente; nenhum merge adicional ou deploy nessa preparação.
+
+Escopo da preparação: notas públicas e roteiro operacional da 1.5.0, versões
+internas/Settings/exemplo em 1.5.0, links de documentação e registro de integração.
+Validar metadados e override APP_VERSION, regressão/cobertura, UI focal e build
+Docker isolado, sem usar banco ou ambiente reais. O publicador existente recebe
+1.5.0 e só deve modificar o arquivo real na publicação executada pelo operador.
+Não criar novos contratos que apenas repitam o literal da versão.
+
+Consulta somente leitura do ambiente local de produção encontrou guard e chave
+sem configuração explícita. Documentar SESSION_GUARD_ENABLED=true e uma chave
+Fernet privada persistente, mantendo os arquivos reais intocados. Essa ativação
+é necessária à continuidade/revogação prometida pela 1.5.0; não confundir build
+pronto com configuração de produção concluída. Userland, banco, Caddy e Tupã
+existentes não são alterados nessa preparação.
+
+
+## Candidato preparado — 2026-11-11
+
+[Notas públicas](../../releases/1.5.0.md) e
+[roteiro operacional/evidências](../../releases/1.5.0-publicacao.md) criados.
+Pacote, Settings e exemplo passam a 1.5.0; APP_VERSION mantém precedência.
+Regressão do candidato: 382 aprovados, dois xfail FL-08 preexistentes, cobertura
+67,07%; Chromium: três cenários aprovados. Imagem local candidata construída e
+conferida sem rede/volumes, com health/OpenAPI e migrações SQLite até 0007.
+Sintaxe do publicador e metadados/override conferidos; grafo atualizado por AST.
+
+| Preparação | Concluído | Restante |
+| --- | --- | --- |
+| Notas, roteiro, metadados e integração documentada | 1/1 | 0 |
+| Regressão, UI e empacotamento isolados | 1/1 | 0 |
+| Ativação operacional, integração da preparação e publicação | 0/1 | 1 |
+
+A worktree permanece em release/v1.5.0. O código aprovado já está na develop
+5e9d777; essa preparação ainda precisa de integração. Estado das duas demandas
+continua em_validacao até publicação. Configurar guard/chave na produção é uma
+pendência identificada, mantida para o operador em respeito à preservação do
+ambiente. Nenhuma tag/push/deploy ou mudança em .env.production/.env.test ocorreu.

@@ -119,9 +119,9 @@ Ele atualiza `APP_VERSION` nesse arquivo antes de criar o banco quando necessár
 aplicar migrações e publicar o container. Requer Python 3 e Docker Compose no host.
 
 ```bash
-./publish.sh 1.3.0
-./publish.sh v1.3.0 .env.production
-./publish.sh 1.3.0 /caminho/ambiente.env
+./publish.sh 1.5.0
+./publish.sh v1.5.0 .env.production
+./publish.sh 1.5.0 /caminho/ambiente.env
 ```
 
 O arquivo de ambiente deve existir e permitir escrita. As demais configurações
@@ -236,7 +236,7 @@ Os fluxos implementados e os contratos futuros são guiados por
   templates e operação offline de execuções com fila local, sincronização e
   resolução explícita de conflitos.
 - Em evolução: histórico de preços e análise de gastos. A cobertura offline da
-  1.4.0 está em validação, conforme o backlog.
+  1.4.0 foi publicada e validada, conforme o backlog.
 
 O [backlog ativo](docs/domain/backlog/README.md) é a fonte de verdade para o
 estado das demandas. Contratos futuros usam `xfail(strict=True)` até a
@@ -560,3 +560,12 @@ No segundo comando, o runner lê apenas o seletor de ambiente de `.env.test`,
 cria banco/servidor/provedor e e-mails sintéticos em recursos descartáveis, e
 ignora as credenciais e o banco configurados nesse arquivo. Não envia e-mail real,
 não usa o Tupã existente e não modifica `.env.test`.
+
+
+### Publicação da 1.5.0
+
+[Notas da release](docs/releases/1.5.0.md) e
+[roteiro de publicação](docs/releases/1.5.0-publicacao.md).
+O código de BL-0010/BL-0019 foi integrado à develop pelo PR #48 e teve aceite
+manual aprovado. Antes de publicar, preparar a ativação do guard e a chave de
+sessão em produção conforme o roteiro; o padrão permanece desativado.
