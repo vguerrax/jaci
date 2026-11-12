@@ -8,7 +8,7 @@
 - Refinamentos: [BL-0010](BL-0010-reset-senha-login-area-logada.md) e
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Refinamento: 2026-11-10; atualizado em 2026-11-11. Implementações autorizadas,
-  duas tasks em validação, ambas com aceite manual aprovado; publicação pendente.
+  ambas as tasks concluídas; aceite manual aprovado e publicação confirmada em 2026-11-11.
 - Branch documental: docs/refinamento-1.5.0, criada na worktree atual a partir de
   9d6a18c, que registra o aborto/replanejamento. Mantidos o backup legado e piso
   de cobertura de 60%. Não criar outras worktrees.
@@ -180,9 +180,9 @@ por este pedido de triagem/refinamento.
 
 | Escopo | Implementado | Restante | Estado |
 | --- | --- | --- | --- |
-| BL-0019 | 6/6 fatias | Publicação | Código integrado; aceite manual aprovado |
-| BL-0010 | 6/6 fatias | Preparação operacional/publicação | Código integrado; aceite manual aprovado |
-| Release | 12/12 fatias; 0/2 tasks publicadas | Preparação/publicação | Integrada na develop pelo PR #48; Jaci ainda não publicado |
+| BL-0019 | 6/6 fatias | 0 | Concluída; publicação confirmada |
+| BL-0010 | 6/6 fatias | 0 | Concluída; publicação confirmada |
+| Release | 12/12 fatias; 2/2 tasks publicadas | Rastreabilidade da tag | Publicação informada pelo usuário; divergência de tag documentada |
 
 ## Fechamento desta etapa documental
 
@@ -279,3 +279,22 @@ A worktree permanece em release/v1.5.0. O código aprovado já está na develop
 continua em_validacao até publicação. Configurar guard/chave na produção é uma
 pendência identificada, mantida para o operador em respeito à preservação do
 ambiente. Nenhuma tag/push/deploy ou mudança em .env.production/.env.test ocorreu.
+
+
+## Publicação confirmada — 2026-11-11
+
+Usuário confirmou a publicação do Jaci 1.5.0. Aceite manual e validações da
+implementação já aprovados; demanda passa de em_validacao para concluido.
+Registro baseado no relato de publicação, sem executar novo deploy, migração,
+consulta à produção ou teste. Nenhuma configuração real foi alterada.
+
+Referências locais conferidas: main 903cb1b, develop 4315e76 e tag v1.5.0 em
+d959aff. A preparação 98ece73 está na main/develop, mas não está na tag atual.
+O commit efetivamente implantado não foi informado; não atribuir o relato do
+deploy ao hash da tag por inferência. Preservar a tag, sem movê-la ou recriá-la.
+A divergência de rastreabilidade fica registrada no roteiro da release.
+
+
+Próxima versão planejada: 1.6.0, BL-0008 (exclusão e anonimização de conta),
+prioridade P1, pronta para refinamento. Esta publicação não inicia seu código
+nem substitui o refinamento e a aprovação específicos.

@@ -1,8 +1,11 @@
 # Planejamento de releases após a 1.3.0
 
 Base anterior: v1.3.0, commit ff16202, em 2026-10-28.
-Publicação atual: v1.4.0, commit a1e188e, em 2026-10-29, informada pelo usuário.
-Validação offline confirmada pelo usuário; entregas da 1.4.0 concluídas no índice.
+Publicação atual: 1.5.0, confirmada pelo usuário em 2026-11-11; BL-0010 e
+BL-0019 concluídas no índice. Commit implantado não informado; tag observada
+v1.5.0 em d959aff antecede a preparação 98ece73, já presente na main 903cb1b.
+A divergência está registrada no roteiro da release. A 1.4.0 foi publicada
+em a1e188e, com validação offline aprovada.
 Plano solicitado pelo usuário em 2026-10-28. Versões são alvos sem datas fixas;
 associação não altera prioridade, estado nem substitui aprovação do refinamento.
 O [índice](README.md) e os itens são a fonte dos estados; esta visão não os duplica.
@@ -205,3 +208,13 @@ Integração confirmada no PR #48, develop 5e9d777. A release/v1.5.0 recebe
 e metadados 1.5.0. Candidato local validado com regressão/cobertura, UI e build
 Docker isolado. O roteiro registra a ativação do guard/chave ainda necessária em
 produção; arquivos reais de ambiente preservados. Jaci 1.5.0 ainda não publicado.
+
+
+## Publicação 1.5.0 confirmada — 2026-11-11
+
+Usuário confirmou publicação; BL-0010 e BL-0019 concluídas com seus aceites
+manuais aprovados. Ver [registro e ressalva de rastreabilidade](../../releases/1.5.0-publicacao.md#registro-de-publicação--2026-11-11).
+A 1.6.0 permanece planejada exclusivamente para BL-0008: solicitação,
+acompanhamento e cancelamento de exclusão de conta, integração com Tupã e
+anonimização local preservando histórico e grupos. Ainda exige refinamento;
+nenhuma nova implementação foi autorizada por esta consulta.
