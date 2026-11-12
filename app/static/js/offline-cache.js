@@ -1,7 +1,10 @@
 (function () {
     'use strict';
 
-    const DB_NAME = 'jaci-offline-cache';
+    const session = window.JaciSession;
+    if (session && !session.ownsCache()) return;
+    const partition = session ? `-${session.owner}` : '';
+    const DB_NAME = `jaci-offline-cache${partition}`;
     const DB_VERSION = 10;
     const SNAPSHOT_URL = '/api/offline/snapshot';
     const START_EXECUTION_SYNC_URL = '/api/offline/operations/start-execution';
@@ -11,9 +14,9 @@
     const REMOVE_EXECUTION_ITEM_SYNC_URL = '/api/offline/operations/remove-execution-item';
     const FINALIZE_EXECUTION_SYNC_URL = '/api/offline/operations/finalize-execution';
     const SYNC_CONFLICTS_URL = '/api/offline/conflicts';
-    const PENDING_CHANGES_KEY = 'jaci_pending_changes';
-    const PENDING_ERRORS_KEY = 'jaci_pending_errors';
-    const PENDING_CONFLICTS_KEY = 'jaci_pending_conflicts';
+    const PENDING_CHANGES_KEY = `jaci_pending_changes${partition}`;
+    const PENDING_ERRORS_KEY = `jaci_pending_errors${partition}`;
+    const PENDING_CONFLICTS_KEY = `jaci_pending_conflicts${partition}`;
     const SYNC_RETRY_BASE_DELAY_MS = 5000;
     const SYNC_RETRY_MAX_DELAY_MS = 120000;
     const STORE_NAMES = [
@@ -59,6 +62,7 @@
     offlineCompleteClickBound = true;
 
     function openDatabase() {
+        if (session && !session.ownsCache()) return Promise.reject(new Error('Conta offline indisponível.'));
         return new Promise(function (resolve, reject) {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
 
@@ -566,7 +570,7 @@
             await recordSyncAttempt(operation, false);
             throw new SyncFailure('Falha temporária de rede.', false);
         }
-        if (response.status === 401) return false;
+        if (response.status === 401 || (session && !session.canSync())) return false;
         if (!response.ok) {
             let detail = null;
             try {
@@ -609,6 +613,7 @@
         window.dispatchEvent(new CustomEvent('jaci:sync-start'));
         const appliedOperations = [];
         for (const operation of operations) {
+            if (session && !session.canSync()) break;
             if (operation.requires_manual_intervention || isConflictOperation(operation)) {
                 continue;
             }
@@ -630,7 +635,7 @@
     }
 
     async function refreshSnapshot() {
-        if (!navigator.onLine) return;
+        if (!navigator.onLine || (session && !session.canSync())) return;
         window.dispatchEvent(new CustomEvent('jaci:sync-start'));
         const response = await fetch(SNAPSHOT_URL, {
             headers: { Accept: 'application/json' },
@@ -660,7 +665,7 @@
     }
 
     function scheduleAutomaticRetry(delay) {
-        if (!navigator.onLine) return;
+        if (!navigator.onLine || (session && !session.canSync())) return;
         if (retryTimer) window.clearTimeout(retryTimer);
         retryTimer = window.setTimeout(function () {
             retryTimer = null;
@@ -669,7 +674,7 @@
     }
 
     async function runAutomaticSync(options) {
-        if (!navigator.onLine || syncInFlight) return;
+        if (!navigator.onLine || syncInFlight || (session && !session.canSync())) return;
         syncInFlight = true;
         if (retryTimer) {
             window.clearTimeout(retryTimer);
@@ -677,6 +682,10 @@
         }
 
         try {
+            if (session && !session.canMutate()) {
+                await refreshSnapshot();
+                if (!session.canSync() || !session.canMutate()) return;
+            }
             await syncPendingOperations();
             await refreshSnapshot();
         } catch (error) {
@@ -684,7 +693,7 @@
                 window.dispatchEvent(new CustomEvent('jaci:sync-error'));
             } else {
                 window.dispatchEvent(new CustomEvent('jaci:sync-retry-scheduled'));
-                getNextRetryDelay().then(scheduleAutomaticRetry);
+                getNextRetryDelay().then(scheduleAutomaticRetry).catch(function () {});
             }
         } finally {
             syncInFlight = false;
@@ -2227,11 +2236,15 @@
         clear: clearLocalCache,
     };
 
-    if (window.location.pathname === '/auth/logout') {
+    if (!session && window.location.pathname === '/auth/logout') {
         clearLocalCache();
         return;
     }
 
+    window.addEventListener('jaci:session-required', function () {
+        if (retryTimer) window.clearTimeout(retryTimer);
+        retryTimer = null;
+    });
     window.addEventListener('online', runAutomaticSync);
     window.addEventListener('online', function () {
         setOfflineCompleteBootstrapTriggersEnabled(true);

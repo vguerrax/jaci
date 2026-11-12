@@ -109,8 +109,14 @@ def serve_environment(env_file: str, port: int) -> None:
     os.environ['ENV_FILE'] = str(target)
     from app.config import get_settings
     settings = get_settings()
-    if settings.app_env != 'test' or not settings.auth_mock:
-        raise ValueError('Servidor exige ambiente test com AUTH_MOCK explícito.')
+    from urllib.parse import urlsplit
+    synthetic_passwords = (
+        os.environ.get('JACI_RUN_PLAYWRIGHT') == '1'
+        and os.environ.get('JACI_UI_PASSWORD_FLOWS') == '1'
+        and urlsplit(settings.tupa_url).hostname in {'127.0.0.1', 'localhost'}
+    )
+    if settings.app_env != 'test' or (not settings.auth_mock and not synthetic_passwords):
+        raise ValueError('Servidor exige ambiente test com AUTH_MOCK ou provedor UI sintético.')
     from app.testing_environment import validate_database
     database = validate_database(settings.database_url)
     if not database.is_file() or not (database.parent/'auth-secret').is_file():

@@ -19,6 +19,7 @@
 
             <h1 class="h5 mb-3">Criar conta</h1>
             <form method="post" action="/auth/register">
+                {% include "components/session_csrf.html" %}
                 <div class="mb-3">
                     <label for="register-name" class="form-label">Nome</label>
                     <input type="text" class="form-control" id="register-name" name="name"

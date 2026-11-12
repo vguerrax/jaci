@@ -100,7 +100,7 @@ Durante a triagem, um item pode ir para `aguardando_informacao` e retornar a
 | `em_validacao` | Implementação encerrada no escopo e submetida às validações previstas. |
 | `concluido` | Validações obrigatórias passaram e a publicação foi registrada. |
 | `duplicado` | Demanda coberta por outro item, que deve ser referenciado. |
-| `rejeitado` | Demanda não será executada, com justificativa registrada. |
+| `rejeitado` | Demanda recusada ou abortada pelo usuário, inclusive após implementação não publicada, com justificativa e histórico preservados. |
 | `nao_reproduzido` | Tentativas registradas não confirmaram o comportamento. |
 
 `concluido`, `duplicado`, `rejeitado` e `nao_reproduzido` são terminais.
@@ -150,25 +150,25 @@ não muda de caminho nem é apagado.
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado | Responsável | Atualizado em |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-29` |
-| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-29` |
-| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `a_triar` | `a_definir` | `recebido` | `a_definir` | `2026-10-28` |
-| [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-10-28` |
-| [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
-| [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-10-28` |
+| [BL-0002](items/BL-0002-unidades-medida.md) | Adicionar unidades de medida | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0003](items/BL-0003-historico-precos.md) | Disponibilizar histórico de preços por grupo e item | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0004](items/BL-0004-analise-gastos-dashboard-financeiro.md) | Disponibilizar análise de gastos e dashboard financeiro | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-11-11` |
+| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-11-11` |
+| [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-11-10` |
+| [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
+| [BL-0024](items/BL-0024-autocomplete-itens-historico.md) | Autocompletar nomes de itens pelo histórico do grupo | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 
 ### Itens arquivados
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado terminal | Encerrado em |
 | --- | --- | --- | --- | --- | --- | --- |
+| [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `rejeitado` | `2026-11-10` |
+| [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `rejeitado` | `2026-11-10` |
 | [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
 | [BL-0011](items/BL-0011-ampliar-cobertura-testes-ui.md) | Ampliar cobertura automatizada e testes de UI | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
 | [BL-0026](items/BL-0026-ferramentas-ambiente-testes.md) | Ferramentas, ambiente de testes e rastreabilidade das releases | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
@@ -194,3 +194,50 @@ não muda de caminho nem é apagado.
 5. Commits, resultados focados e impedimentos são ligados antes da validação.
 6. Depois das validações e da publicação, o item muda para `concluido` e sua
    linha vai para a visão arquivada.
+
+
+## Decisão operacional de backups — 2026-11-10
+
+BL-0007 e BL-0009 abortadas pelo usuário e arquivadas em rejeitado. Manter dump
+PostgreSQL diário existente, com retenção de 30 dias por padrão e cópia externa
+manual pelo usuário. Não integrar criptografia age, replicador SFTP ou seus testes.
+Código e evidências das implementações ficam no histórico das branches, sem
+reutilizar IDs. A elevação independente do piso de cobertura para 60% permanece.
+
+
+## Refinamento de acesso e sessão — 1.5.0 / 2026-11-10
+
+BL-0019 triada (N/A/P1) e ambas BL-0019/BL-0010 em pronto_para_implementacao,
+aguardando aprovação explícita dos refinamentos versionados. A
+[coordenação da release](../tasks/release-1.5.0-acesso-conta-sessao.md) descreve
+seis fatias por task e a dependência externa D-01, ainda sem registro/ID no Tupã.
+Cada HTTP autenticado renova a janela de oito horas, inclusive automáticos; ping
+WS não conta. Troca/reset exige novo login em todos os dispositivos, sem perder
+fila. Nenhum código, migration, teste executável ou ambiente alterado nesta etapa.
+
+
+## Dependência externa publicada — 2026-11-11
+
+O usuário confirmou a publicação do Tupã 1.1.0 e disponibilizou testes na
+porta 8005. A D-01 está disponível para integrar a BL-0019. A publicação do
+provedor e seu contrato estão registrados na coordenação da release 1.5.0.
+
+
+BL-0019 em `em_validacao` após integração real, regressão com cobertura,
+cenário Playwright e concorrência PostgreSQL. O aceite manual e a publicação
+seguem registrados na demanda.
+
+
+### Entrega para validação da BL-0010 — 2026-11-11
+
+BL-0019 tem aceite manual aprovado. BL-0010 passa a em_validacao após autorização,
+seis fatias implementadas, 382 testes aprovados/2 xfail FL-08, cobertura 67,07%,
+três cenários UI de senha e regressão de sessão/compras. Evidências nos refinamentos.
+Ambas aguardam publicação Jaci; integração depende da liberação do usuário.
+
+
+### Aceite manual da BL-0010 — 2026-11-11
+
+Usuário confirmou a validação como finalizada e aprovada, após o ajuste visual
+080a571. BL-0010 e BL-0019 têm aceite manual aprovado e permanecem em_validacao
+até publicação da 1.5.0. Integração e publicação aguardam liberação do usuário.

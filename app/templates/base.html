@@ -30,7 +30,12 @@
     <!-- Jaci Theme -->
     <link href="/static/css/jaci-theme.css" rel="stylesheet">
 
-    {% if jwt_token %}
+    {% if session_guard_enabled() %}
+    <meta name="jaci-session-guard" content="1">
+    <meta name="jaci-offline-owner" content="{{ session_owner(request) }}">
+    <meta name="jaci-csrf" content="{{ session_csrf(request) }}">
+    <script src="/static/js/session-client.js"></script>
+    {% elif jwt_token %}
     <meta name="jwt-token" content="{{ jwt_token }}">
     {% endif %}
 
@@ -75,6 +80,10 @@
     </aside>
 
     <!-- Navbar -->
+    {% if session_guard_enabled() and session_owner(request) %}
+    <a id="session-login-required" class="alert alert-warning text-center"
+       href="/auth/login" hidden>Entre novamente para sincronizar suas alterações.</a>
+    {% endif %}
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-jaci sticky-top">
         <div class="container">

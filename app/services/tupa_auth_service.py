@@ -153,3 +153,42 @@ def decode_access_token(access_token: str) -> dict[str, Any] | None:
         )
     except (JWTError, KeyError, TupaError):
         return None
+
+
+async def _password_request(path: str, **kwargs) -> None:
+    if settings.auth_mock:
+        raise TupaError("Operação indisponível na autenticação simulada.", 501)
+    try:
+        result = await _request("POST", path, **kwargs)
+        if not isinstance(result, dict) or not isinstance(result.get("detail"), str):
+            raise ValueError()
+    except (ValueError, TypeError):
+        raise TupaError("Resposta inválida do serviço de autenticação.") from None
+
+
+async def forgot_password(email: str) -> None:
+    if settings.auth_mock:
+        raise TupaError("Operação indisponível na autenticação simulada.", 501)
+    if not settings.tupa_product_id:
+        raise TupaError("Produto não configurado.", 503)
+    await _password_request("/auth/forgot-password", json={
+        "product_id": settings.tupa_product_id, "email": email.strip().lower(),
+    })
+
+
+async def reset_password(reset_token: str, new_password: str) -> None:
+    if settings.auth_mock:
+        raise TupaError("Operação indisponível na autenticação simulada.", 501)
+    if not settings.tupa_service_token:
+        raise TupaError("Credencial do produto não configurada.", 503)
+    await _password_request(
+        "/auth/reset-password", headers=_service_headers(),
+        json={"token": reset_token, "new_password": new_password},
+    )
+
+
+async def change_password(access_token: str, current_password: str, new_password: str) -> None:
+    await _password_request(
+        "/auth/change-password", headers={"Authorization": f"Bearer {access_token}"},
+        json={"current_password": current_password, "new_password": new_password},
+    )

@@ -1,5 +1,11 @@
 # BL-0009 — Implementar criptografia de dados em repouso
 
+> **Abortada pelo usuário em 2026-11-10.** O estado terminal do processo é
+> `rejeitado`. As implementações e validações abaixo são histórico, sem entrega
+> em produção. Mantido o dump PostgreSQL diário existente, sem criptografia,
+> com retenção de 30 dias por padrão. Cópias externas são manuais, sob controle
+> do usuário. O código das tasks não deve ser integrado à release.
+
 ## Identificação e entrada
 
 | Campo | Valor |
@@ -8,14 +14,14 @@
 | Título | Implementar criptografia de dados em repouso |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `pronto_para_implementacao` |
+| Estado | `rejeitado` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
 | Origem | Limitação de segurança registrada na Política de Privacidade |
 | Ambiente/versão | Estado de `develop` em `2026-07-24` |
 | Responsável | Engenharia Jaci |
-| Atualizado em | `2026-10-29` |
+| Atualizado em | `2026-11-10` |
 
 ### Comportamento observado
 
@@ -71,23 +77,35 @@ restringir o acesso aos dados e backups.
 | Dependências | Inventário dos controles reais do ambiente de produção; definição agnóstica de provedor para armazenamento, acesso, rotação e recuperação de chaves; integração com backup e restauração; [BL-0007](BL-0007-replicacao-externa-backups.md) é relacionada, mas não bloqueia esta demanda |
 | Duplicidades | Nenhuma identificada; permissões atuais dos dumps, proteção eventualmente fornecida pela infraestrutura e a BL-0007 são controles ou evoluções relacionados, não substituem a verificação ponta a ponta desta demanda |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Aprovar o refinamento versionado antes de testes executáveis e implementação |
+| Próximo passo | Nenhuma execução ou integração; demanda abortada pelo usuário |
 
 ## Acompanhamento até produção
 
 - Documento refinado: [BL-0009](../../tasks/BL-0009-criptografia-repouso.md).
-- Branch: feature/BL-0009-criptografia-repouso; três subtarefas planejadas, 0/3 implementadas.
-- Implementação (commits/PRs): ainda não iniciada.
-- Validações: triagem baseada na Política de Privacidade, na configuração do
-  PostgreSQL, no volume e na rotina local de backups e na arquitetura offline;
-  validações de implementação ainda não iniciadas.
+- Branch: feature/BL-0009-criptografia-repouso; três subtarefas aprovadas, 3/3 implementadas; mesma worktree.
+- Implementação (commits/PRs): 83a00d0 (configuração/contratos), 00d11c7 (pipeline/retenção), 0f3f0f7 (fechamento operacional) e registro posterior da validação; sem PR ou merge da BL-0007.
+- Validações: AST, bash -n, links locais, diff e grafo na implementação. Depois,
+  usuário informou ./scripts/run_tests.sh --coverage: 329 passes/1 skip age real/
+  2 xfail FL-08, 19 avisos python-jose, 63,35s e cobertura de app 60,04%. Piso
+  elevado a 60% por solicitação explícita. Depois, usuário informou teste age real
+  isolado: 1 passed em 1,08s (criptografia/descriptografia, rotação, chave errada
+  e corrupção; PostgreSQL simulado). Sem execução pelo Codex. Integração, build,
+  restauração PostgreSQL, RPO/RTO e volume permanecem pendentes.
 - Publicação: ainda não publicada.
 - Itens relacionados: [BL-0007](BL-0007-replicacao-externa-backups.md).
 
-### Impedimentos
+### Decisão de encerramento
 
-- Aprovação pós-versionamento pendente. Dados reais de capacidade, host e chave
-  pública serão fornecidos/conferidos na ativação pelo operador, sem alterar o ambiente.
+- Aborto explícito em 2026-11-10: manter o backup automático em dump e retenção
+  de pelo menos 30 dias; não criptografar nem automatizar cópia externa.
+- A configuração versionada existente tem BACKUP_ENABLED=true e retenção de
+  30 dias por padrão, cron 02h30 America/Sao_Paulo e volume persistente no host.
+  Não houve inspeção da configuração real ou execução do container.
+- Os commits da implementação permanecem nas branches como histórico; não foram
+  publicados ou integrados à release/develop/main. A worktree corrente volta ao
+  código de backup existente na base 1cedb61. O piso independente de 60% permanece.
+- Validações operacionais anteriores deixam de ser pendências dessas demandas.
+  Arquivamento em rejeitado não equivale a publicação ou aceite de produção.
 
 ## Histórico
 
@@ -97,5 +115,9 @@ restringir o acesso aos dados e backups.
 | `2026-08-05 22:28 -03` | Usuário/Codex | `recebido` -> `em_triagem` | Prioridade P1 e escopo de servidor e backups confirmados; política, configuração do banco, volume, dumps e persistência offline confrontados |
 | `2026-08-05 22:28 -03` | Codex | `em_triagem` -> `pronto_para_refinamento` | Classificação, riscos, dependências, duplicidades, responsável e próximo passo definidos |
 | `2026-10-28 20:40 -03` | Codex | Versão-alvo 1.5.0 associada | Roadmap aprovado para formalização; estado e prioridade preservados, sem autorizar implementação |
-
 | `2026-10-29` | Usuário/Codex | pronto_para_refinamento → em_refinamento → pronto_para_implementacao | Decisões da 1.5.0 documentadas: máquina local ligada, Caddy por SFTP, age com chave privada do usuário, RPO 24h/RTO 4h/30 dias; aprovação pós-versionamento pendente |
+| `2026-10-30` | Usuário/Codex | pronto_para_implementacao → em_implementacao | Pedido explícito “Implemente a BL-009 também” após refinamento 3660568; três subtarefas na mesma worktree, sem executar testes ou alterar ambiente/infraestrutura |
+| `2026-10-30` | Codex | em_implementacao → em_validacao | Três subtarefas implementadas; testes não executados; instruções de guarda/recuperação e ficha OCI entregues sem afirmar ativação; integração, volume, restauração e publicação pendentes |
+| `2026-10-30` | Usuário/Codex | Validação reportada e piso elevado a 60%; em_validacao mantido | Log do usuário: 329 passes/1 skip age real/2 xfail FL-08, 60,04% de app; pedido explícito do novo mínimo. Codex não repetiu testes; recuperação, volume, integração e publicação pendentes |
+| `2026-10-30` | Usuário/Codex | Teste age real aprovado; em_validacao mantido | Execução focal informada pelo usuário: 1 passed em 1,08s, com chaves efêmeras e PostgreSQL simulado; sem repetir suíte, alterar ambiente ou assumir aceite de produção |
+| `2026-11-10` | Usuário/Codex | em_validacao → rejeitado; abortada e arquivada | Usuário optou por dump diário existente, retenção de pelo menos 30 dias e cópia manual; sem criptografia, envio automático ou integração do código não publicado |

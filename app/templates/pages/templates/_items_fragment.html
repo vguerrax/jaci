@@ -55,6 +55,7 @@
                     </button>
                     <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/remove"
                         onsubmit="return confirm('Remover {{ item.name }}?')" class="d-inline">
+                        {% include "components/session_csrf.html" %}
                         <button type="submit" class="btn btn-outline-secondary btn-sm text-danger"
                             aria-label="Remover {{ item.name }}">
                             <i class="bi bi-trash" aria-hidden="true"></i>
@@ -68,6 +69,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form method="post" action="/templates/{{ template.id }}/items/{{ item.id }}/edit">
+                            {% include "components/session_csrf.html" %}
                             <div class="modal-header">
                                 <h3 class="modal-title h6" id="editItemLabel{{ item.id }}">Editar Item</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"

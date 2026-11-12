@@ -41,6 +41,7 @@
         </div>
         <form method="post" action="/categories/order/uncategorized"
             class="d-flex align-items-center gap-2">
+            {% include "components/session_csrf.html" %}
             <label for="uncategorized-position" class="form-label mb-0 text-nowrap">Sem categoria</label>
             <select class="form-select form-select-sm" id="uncategorized-position" name="position"
                 onchange="this.form.submit()">
@@ -67,6 +68,7 @@
             <span class="flex-grow-1">{{ cat.name }}</span>
             <div class="d-flex gap-1">
                 <form method="post" action="/categories/{{ cat.id }}/move">
+                    {% include "components/session_csrf.html" %}
                     <input type="hidden" name="direction" value="up">
                     <button type="submit" class="btn btn-outline-secondary btn-sm" aria-label="Mover {{ cat.name }} para cima"
                         {% if loop.first %}disabled{% endif %}>
@@ -74,6 +76,7 @@
                     </button>
                 </form>
                 <form method="post" action="/categories/{{ cat.id }}/move">
+                    {% include "components/session_csrf.html" %}
                     <input type="hidden" name="direction" value="down">
                     <button type="submit" class="btn btn-outline-secondary btn-sm" aria-label="Mover {{ cat.name }} para baixo"
                         {% if loop.last %}disabled{% endif %}>
@@ -132,6 +135,7 @@
                             <li>
                                 <form method="post" action="/categories/{{ cat.id }}/delete"
                                       onsubmit="return handleDelete(event, '{{ cat.name | e }}', {{ item.item_count }})">
+                                    {% include "components/session_csrf.html" %}
                                     <button type="submit" class="dropdown-item text-danger">
                                         Excluir
                                     </button>

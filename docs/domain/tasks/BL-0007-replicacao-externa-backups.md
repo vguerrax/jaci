@@ -1,10 +1,17 @@
 # Refinamento — BL-0007 — Cópia externa por SSH/SFTP — 1.5.0
 
+> **Abortada pelo usuário em 2026-11-10.** O estado terminal do processo é
+> `rejeitado`. As implementações e validações abaixo são histórico, sem entrega
+> em produção. Mantido o dump PostgreSQL diário existente, sem criptografia,
+> com retenção de 30 dias por padrão. Cópias externas são manuais, sob controle
+> do usuário. O código das tasks não deve ser integrado à release.
+
 ## Rastreabilidade e objetivo
 
 - Item: [BL-0007](../backlog/items/BL-0007-replicacao-externa-backups.md).
-- Estado: pronto_para_implementacao; responsável: Engenharia Jaci.
-- Branch: feature/BL-0007-replicacao-externa-backups; base develop 3377001.
+- Estado: rejeitado; responsável: Engenharia Jaci.
+- Branch: feature/BL-0007-replicacao-externa-backups; base de implementação release/v1.5.0 1cedb61.
+- Refinamento original versionado em 44842b1, sobre develop 3377001.
 - Replicar artefatos criptografados da BL-0009 na instância do Caddy e comprovar
   recuperação independente do HD local. Sequência da versão: BL-0009 → BL-0007.
 
@@ -145,14 +152,103 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Concluir somente após validação operacional, ativação e publicação registradas;
   registrar evidência sanitizada da infraestrutura e resultado da recuperação.
 
-## Progresso
+## Progresso histórico anterior ao aborto
 
-| Etapa/ticket | Concluídas | Restantes | Estado |
+| Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 0/3 | 3 | Aguarda aprovação do refinamento versionado |
+| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; testes, integração BL-0009 e aceite operacional pendentes |
 
 ## Fechamento documental
 
-Implementação e testes executáveis não iniciados. Validações desta etapa são
-links locais, escopo e diff documental. Commit e branch identificam a versão
-para aprovação. Nenhuma mudança de ambiente, infraestrutura ou dados reais.
+No fechamento do refinamento original, implementação e testes ainda não haviam
+começado; 44842b1 identifica essa versão. A execução autorizada posteriormente
+está registrada abaixo, preservando a ausência de alterações no ambiente real.
+
+
+## Base de release definida pelo usuário
+
+Após o versionamento deste refinamento, o usuário solicitou sua integração à
+develop e a criação de release/v1.5.0. A base de integração desta versão passa
+a ser release/v1.5.0. Atualizar a branch da task com essa base antes de código;
+subtarefas -nn retornam ao pai, que só retorna à release com liberação do usuário.
+Trabalhar somente na worktree atual e mantê-la na branch correspondente à etapa;
+não criar outras worktrees. A regra anterior de worktrees próprias foi substituída
+por essa instrução explícita. A autorização aqui é de integração documental e
+preparação de branches, não de testes/código.
+
+## Execução autorizada em 2026-10-29
+
+O usuário aprovou a implementação das três subtarefas após o refinamento 44842b1,
+com a restrição explícita **sem execução de testes**. Aplicadas vgx-development
+e vgx-doc-management. A branch pai foi avançada por fast-forward até a base
+release/v1.5.0 (1cedb61), somente na worktree atual. Não haverá ativação, acesso
+à infraestrutura, alteração de ambientes ou integração automática. Contratos
+automatizados serão escritos, mas sua execução e validações operacionais ficam pendentes.
+
+Subtarefa 01 implementada: configuração opt-in, contrato de manifesto schema 1
+e contratos automatizados do escopo. Conferência AST e diff sem executar testes;
+subtarefas 02 e 03 permanecem em andamento.
+
+Subtarefa 01: commit 66cae92. Subtarefa 02 implementa SFTP batch com readback,
+publicação do manifesto por último, retentativa limitada, trava, estado atômico
+e retenção remota independente em dry-run por padrão. Cron e Docker preparados,
+sem construir imagem ou executar jobs. AST, bash -n e git diff --check somente;
+nenhum teste executado. A documentação operacional final compõe a subtarefa 03.
+
+
+## Entrega das três subtarefas — 2026-10-29
+
+| Subtarefa | Implementação | Validação |
+| --- | --- | --- |
+| 01 | 66cae92 — flags opt-in, configuração SFTP e manifesto compartilhado | AST/diff; contratos escritos, não executados |
+| 02 | e4576c1 — coordenador, SFTP/readback, retentativa, estado e retenção | AST/bash -n/diff; sem conexão, build ou testes |
+| 03 | Verificador CLI, runbook de ativação/recuperação, exemplos e matriz de cobertura, neste registro | Conferência estática; restauração/RPO/RTO não ensaiados |
+
+A revisão final endurece a publicação remota para movimento sem substituição:
+OpenSSH pode negociar posix-rename com overwrite. O adaptador usa hardlink SFTP
+atômico para o nome definitivo e remove o temporário somente após sucesso,
+mantendo ciphertext primeiro e manifesto por último. Requer extensão hardlink
+no mesmo filesystem; ausência falha explicitamente. Essa escolha implementa o
+contrato de não sobrescrever silenciosamente, inclusive sob conflito na publicação.
+Referência primária e detalhes no runbook histórico (`git show feature/BL-0007-replicacao-externa-backups:docs/operations/backup-replication.md`).
+
+O status retorna JSON e códigos 0/1/2; retenção remota é script independente,
+dry-run por padrão e instalação manual. O runbook cobre recuperação SFTP e
+cópia rsync administrada pelo usuário, chave age fora dos servidores e PostgreSQL
+isolado, com inventário e medição de RTO. Nenhuma operação real foi executada.
+
+### Evidência e limites
+
+- Inspeção AST dos arquivos Python, sintaxe bash dos três scripts afetados,
+  diff sem erro de whitespace e atualização graphify AST.
+- Nenhum pytest, Node, Playwright, cobertura, smoke, container, migração, SSH,
+  geração de backup ou restauração executado, por restrição explícita do usuário.
+- Sem push/CI remoto, merge para release/develop/main ou nova worktree. Commits
+  locais com hooks desativados para não disparar testes por consequência.
+- BL-0009 permanece dependência funcional: publicar produtor CLI no contrato
+  descrito no runbook e validar conjuntamente antes da ativação.
+- Sem edição de .env.test/.env.production, volumes, bancos, chaves ou Caddy.
+- Estado em_validacao: implementação 3/3; validação funcional, ativação,
+  recuperação cronometrada e publicação pendentes. Não há xfail próprio criado.
+- Worktree mantida na branch pai feature/BL-0007-replicacao-externa-backups.
+
+
+## Aborto solicitado pelo usuário — 2026-11-10
+
+O usuário encerrou a demanda: backups sem criptografia e cópias externas manuais.
+As três subtarefas haviam sido implementadas, mas não foram publicadas; o código
+não deve ser integrado. Evidências anteriores permanecem históricas. As pendências
+de teste, integração, volume Oracle, recuperação e ativação deixam de ser trabalho
+ativo destas demandas. Estado terminal rejeitado, sem reutilizar identificador.
+
+Código atual de backup restaurado à base release/v1.5.0 1cedb61 na worktree
+corrente, sem reescrever commits, apagar branches ou modificar ambientes, banco,
+dumps e chaves. A alteração independente de cobertura mínima de 60% é mantida.
+Nenhum teste ou job de backup executado. Conferência estática do script, agenda,
+volume versionado e diff. A base já conserva dump customizado diário 02h30,
+retenção padrão de 30 dias e volume /opt/jaci/backups:/var/backups/jaci.
+
+A release 1.5.0 perde o escopo de criptografia/replicação. No pedido seguinte,
+o usuário solicitou o roadmap refeito: acesso à conta/sessão passa à 1.5.0,
+e versões seguintes são antecipadas uma posição. Não há autorização implícita
+de merge, deploy ou implementação das próximas tasks.

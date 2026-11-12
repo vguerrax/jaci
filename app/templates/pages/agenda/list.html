@@ -126,6 +126,7 @@
                         <div class="modal-dialog modal-dialog-centered modal-sm">
                             <div class="modal-content">
                                 <form method="post" action="/agenda/{{ exec_item.id }}/reschedule">
+                                    {% include "components/session_csrf.html" %}
                                     <div class="modal-header">
                                         <h3 class="modal-title h6" id="rescheduleLabel{{ exec_item.id }}">
                                             Reagendar

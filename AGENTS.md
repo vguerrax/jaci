@@ -445,14 +445,17 @@ do registro da publicação.
 O backlog ativo mantém o estado operacional das demandas. A sequência estratégica
 após a 1.3.0 está na [visão de releases](docs/domain/backlog/releases.md):
 
-1. 1.4.0 — ferramentas, AUTH_MOCK de teste, scripts, cobertura/CI e rastreabilidade offline.
-2. 1.5.0 — backups externos e proteção em repouso.
-3. 1.6.0 — acesso à conta e continuidade da sessão.
-4. 1.7.0 — exclusão e anonimização de conta.
-5. 1.8.0 — ordenação de compras, categorias e autocomplete.
-6. 1.9.0 — unidades de medida; 1.10.0 — histórico de preços.
-7. 1.11.0 — inteligência de compras; 1.12.0 — dashboard financeiro.
-8. 1.13.0 — API externa; 1.14.0 — calendário e compartilhamento.
+1. 1.4.0 — ferramentas, AUTH_MOCK de teste, scripts, cobertura/CI e rastreabilidade offline (publicada).
+2. 1.5.0 — acesso à conta e continuidade da sessão (BL-0010 e BL-0019).
+3. 1.6.0 — exclusão e anonimização de conta.
+4. 1.7.0 — ordenação de compras, categorias e autocomplete.
+5. 1.8.0 — unidades de medida; 1.9.0 — histórico de preços.
+6. 1.10.0 — inteligência de compras; 1.11.0 — dashboard financeiro.
+7. 1.12.0 — API externa; 1.13.0 — calendário e compartilhamento.
+
+Em 2026-11-10, o usuário abortou BL-0007/BL-0009 e solicitou o roadmap refeito.
+Manter dump diário sem criptografia, retenção padrão de 30 dias e cópia manual.
+Não retomar ou integrar o código das tasks abortadas por associação à 1.5.0.
 
 São versões-alvo sem datas fixadas. Preservar dependências técnicas e o gate de
 cada refinamento; não iniciar código por associação ao roadmap. A reorganização

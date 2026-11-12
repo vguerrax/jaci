@@ -1,4 +1,4 @@
-from pydantic import field_validator, model_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 import os
@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     backup_dir: str = "/var/backups/jaci"
     backup_retention_days: int = 30
 
+    # BL-0019: ativação explícita da sessão persistida, com Tupã 1.1.0+.
+    session_guard_enabled: bool = False
+    session_token_encryption_key: str = ""
+
     # Auth
     jwt_secret_key: str = "change-me-jwt-secret-key"
     jwt_algorithm: str = "HS256"
@@ -32,8 +36,14 @@ class Settings(BaseSettings):
     magic_link_resend_seconds: int = 60
     tupa_url: str = "http://localhost:8001"
     tupa_product_id: str = ""
+    tupa_jwt_issuer: str = "tupa"
     tupa_service_token: str | None = None
     tupa_timeout_seconds: float = 10.0
+
+    password_recovery_email_limit: int = Field(default=5, gt=0)
+    password_recovery_origin_limit: int = Field(default=20, gt=0)
+    password_recovery_window_seconds: int = Field(default=900, gt=0)
+    password_recovery_min_response_seconds: float = Field(default=0.5, ge=0)
 
     # Email
     smtp_mock: bool = True

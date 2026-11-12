@@ -1,5 +1,6 @@
 import json
 import logging
+from collections.abc import Awaitable, Callable
 from typing import Any
 from fastapi import WebSocket
 
@@ -15,10 +16,18 @@ class ConnectionManager:
     def __init__(self):
         # execution_id -> set de WebSockets
         self._rooms: dict[int, set[WebSocket]] = {}
+        self._checks: dict[WebSocket, Callable[[], Awaitable[bool]]] = {}
 
-    async def connect(self, websocket: WebSocket, execution_id: int) -> None:
+    async def connect(
+        self, websocket: WebSocket, execution_id: int, *, authorize=None, headers=(),
+    ) -> None:
         """Aceita a conexão e registra na sala."""
-        await websocket.accept()
+        if headers:
+            await websocket.accept(headers=headers)
+        else:
+            await websocket.accept()
+        if authorize:
+            self._checks[websocket] = authorize
         if execution_id not in self._rooms:
             self._rooms[execution_id] = set()
         self._rooms[execution_id].add(websocket)
@@ -29,6 +38,7 @@ class ConnectionManager:
 
     def disconnect(self, websocket: WebSocket, execution_id: int) -> None:
         """Remove a conexão da sala."""
+        self._checks.pop(websocket, None)
         if execution_id in self._rooms:
             self._rooms[execution_id].discard(websocket)
             if not self._rooms[execution_id]:
@@ -52,17 +62,27 @@ class ConnectionManager:
         message = json.dumps({"event": event, "data": data})
         disconnected = set()
 
-        for ws in self._rooms[execution_id]:
+        for ws in tuple(self._rooms[execution_id]):
             if ws == exclude:
                 continue
             try:
-                await ws.send_text(message)
+                if await self.authorized(ws):
+                    await ws.send_text(message)
+                else:
+                    disconnected.add(ws)
             except Exception:
                 disconnected.add(ws)
 
         # Limpa conexões mortas
         for ws in disconnected:
             self.disconnect(ws, execution_id)
+
+    async def authorized(self, websocket: WebSocket) -> bool:
+        check = self._checks.get(websocket)
+        if check is None or await check():
+            return True
+        await websocket.close(code=4001)
+        return False
 
     async def send_personal(
         self,

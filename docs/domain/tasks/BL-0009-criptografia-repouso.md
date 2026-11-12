@@ -1,10 +1,17 @@
 # Refinamento — BL-0009 — Criptografia em repouso — 1.5.0
 
+> **Abortada pelo usuário em 2026-11-10.** O estado terminal do processo é
+> `rejeitado`. As implementações e validações abaixo são histórico, sem entrega
+> em produção. Mantido o dump PostgreSQL diário existente, sem criptografia,
+> com retenção de 30 dias por padrão. Cópias externas são manuais, sob controle
+> do usuário. O código das tasks não deve ser integrado à release.
+
 ## Rastreabilidade e objetivo
 
 - Item: [BL-0009](../backlog/items/BL-0009-criptografia-repouso.md).
-- Estado: pronto_para_implementacao; responsável: Engenharia Jaci.
-- Branch: feature/BL-0009-criptografia-repouso; base develop 3377001.
+- Estado: rejeitado; responsável: Engenharia Jaci.
+- Branch: feature/BL-0009-criptografia-repouso; base de implementação release/v1.5.0 1cedb61.
+- Refinamento original versionado em 3660568, sobre develop 3377001.
 - Proteger novos backups antes da persistência e verificar a proteção do volume
   PostgreSQL. Preparar o artefato criptografado consumido pela BL-0007.
 
@@ -116,7 +123,7 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Focal por subtarefa: testes de comportamento do processo/artefatos, sintaxe shell
   e lint configurado; não instalar/usar serviços ou credenciais de produção.
 - Final da task: bash scripts/run_tests.sh --coverage, incluindo contratos Node;
-  piso 56,18% preservado. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
+  piso 60% aplicado por solicitação do usuário em 2026-10-30. Os dois FL-08 permanecem fora do escopo. Nenhum xfail
   próprio pode permanecer ao fechar a implementação.
 - PostgreSQL e SSH/SFTP reais somente em containers descartáveis, sem volumes
   do usuário. Gerar chaves efêmeras de teste e removê-las junto dos recursos próprios.
@@ -132,14 +139,154 @@ implementar o plano anterior não dispensa esse checkpoint do AGENTS.md.
 - Concluir somente após validação operacional, ativação e publicação registradas;
   registrar evidência sanitizada da infraestrutura e resultado da recuperação.
 
-## Progresso
+## Progresso histórico anterior ao aborto
 
-| Etapa/ticket | Concluídas | Restantes | Estado |
+| Etapa/ticket | Implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Implementação da task | 0/3 | 3 | Aguarda aprovação do refinamento versionado |
+| 1 — Implementação da task | 3/3 | 0 de implementação | em_validacao; suíte e age real informados aprovados; Oracle, recuperação PostgreSQL e publicação pendentes |
 
 ## Fechamento documental
 
-Implementação e testes executáveis não iniciados. Validações desta etapa são
-links locais, escopo e diff documental. Commit e branch identificam a versão
-para aprovação. Nenhuma mudança de ambiente, infraestrutura ou dados reais.
+No fechamento do refinamento original 3660568, implementação e testes ainda
+não haviam começado. A execução autorizada posteriormente está registrada abaixo.
+Nenhuma mudança de ambiente, infraestrutura ou dados reais foi efetuada.
+
+
+## Base de release definida pelo usuário
+
+Após o versionamento deste refinamento, o usuário solicitou sua integração à
+develop e a criação de release/v1.5.0. A base de integração desta versão passa
+a ser release/v1.5.0. Atualizar a branch da task com essa base antes de código;
+subtarefas -nn retornam ao pai, que só retorna à release com liberação do usuário.
+Trabalhar somente na worktree atual e mantê-la na branch correspondente à etapa;
+não criar outras worktrees. A regra anterior de worktrees próprias foi substituída
+por essa instrução explícita. A autorização aqui é de integração documental e
+preparação de branches, não de testes/código.
+
+
+## Execução autorizada — 2026-10-30
+
+Pedido pós-versionamento: “Implemente a BL-009 também”, interpretado como BL-0009
+pelo contexto da 1.5.0. Mantida a restrição da implementação anterior: sem executar
+testes. Contratos são escritos antes do pipeline, mas nenhum pytest, age,
+PostgreSQL, Docker ou migração será executado nesta entrega. A branch foi
+avançada por fast-forward até release/v1.5.0 1cedb61, na worktree atual.
+
+O contrato compartilhado scripts/backup_artifacts.py é a mesma versão entregue
+na BL-0007 (e820626). Reutilizado isoladamente como biblioteca de schema/hash,
+sem trazer replicador, agenda SFTP ou commits da outra task. O produtor não depende
+da BL-0007 e mantém a interface python -m scripts.backup_pipeline esperada por ela.
+Não há integração entre branches, release, develop ou main. Usuário mantém
+controle de .env.test/.env.production, banco, chaves e instâncias Oracle.
+
+Subtarefa 01: flags opt-in, destinatários públicos imutáveis, fingerprint do
+conjunto de destinatários e contratos de fluxo/falha/recuperação escritos.
+Conferência AST e diff somente; execução dos contratos permanece pendente.
+
+Subtarefa 01: 83a00d0. Subtarefa 02 implementa pg_dump customizado em stdout,
+tee não bloqueante para pg_restore --list e age, buffers limitados a 1 MiB por
+consumidor, supervisão de todos os códigos e cleanup em falha/sinal. Chave pública
+validada antes do banco, manifesto schema 1 por último, retenção exclusiva de
+pares completos preservando o mais recente. Script legado despacha por flag;
+Docker/cron recebem age e as duas variáveis permitidas. Nenhum backup executado.
+
+
+## Entrega das três subtarefas — 2026-10-30
+
+| Subtarefa | Implementação | Validação |
+| --- | --- | --- |
+| 01 | 83a00d0 — flags, destinatários públicos e contratos/schema compartilhado | AST/diff; testes escritos e não executados |
+| 02 | 00d11c7 — pipeline supervisionado, publicação, retenção, Docker e entrypoint | AST/bash -n/diff; sem executar processos de backup |
+| 03 | Verificação CLI, runbook de guarda/rotação/legados, política e ficha de ativação neste registro | Conferência estática; ensaios e evidência de volume pendentes |
+
+- O contrato sem argumentos python -m scripts.backup_pipeline atende ao produtor
+  esperado pelo coordenador BL-0007; --verify confere par local sem banco.
+- A política de privacidade distingue backups opcionais, legados abertos e
+  proteção do volume dependente de verificação, sem afirmar ativação inexistente.
+- Sem acesso à Oracle: identificar volume e confirmar controles OCI é passo
+  manual obrigatório, registrado como pendente na ficha de ativação. A referência
+  técnica pública não constitui evidência do ambiente específico.
+- Runbook cobre duas cópias privadas fora dos servidores, rotação/fingerprints,
+  recuperação isolada cronometrada e conversão manual de legados sem exclusão
+  automática. Backups históricos, chaves e dados do usuário não foram tocados.
+- Validação desta entrega: AST dos seis Python afetados, bash -n dos dois shell,
+  links locais, git diff --check e atualização graphify AST. Nenhum teste, age,
+  PostgreSQL, Docker, migração, SSH, restauração ou build executado.
+- Commits locais com hooks desativados para evitar testes indiretos; sem push/CI
+  ou merge de task/release/develop/main. Mesma worktree, mantida no pai BL-0009.
+- Sem xfail próprio. As 3/3 subtarefas de implementação estão entregues;
+  em_validacao até execução autorizada, integração BL-0007, evidência de volume,
+  recuperação, ativação e publicação. Nenhuma aprovação operacional foi presumida.
+
+Documentos operacionais: [runbook](../../operations/backup-encryption.md) e
+[ficha de ativação](../../operations/backup-encryption-activation.md).
+
+
+## Validação informada pelo usuário e ajuste de piso — 2026-10-30
+
+Após a entrega 0f3f0f7, o usuário forneceu o resultado de
+`./scripts/run_tests.sh --coverage`: 332 itens coletados, **329 passed, 1 skipped,
+2 xfailed e 19 warnings em 63,35s**; cobertura de `app` **60,04%**. O estado local
+conferido para este registro estava limpo no candidato 0f3f0f7. A execução foi do
+usuário; o Codex não repetiu a suíte nem instalou dependências.
+
+- Skip: test_real_age_decryption_rotation_wrong_key_and_corruption, requer age e
+  age-keygen reais. Os demais contratos de criptografia usam executáveis sintéticos.
+- Xfails esperados: dois FL-08, fora desta demanda. Avisos de depreciação de
+  datetime.utcnow são de python-jose; nenhuma falha de teste foi reportada.
+- Cobertura medida com --cov=app e branches; não cobre os scripts operacionais
+  nem representa execução UI. O teste de contratos Node passou via pytest.
+- Na sequência, o usuário pediu explicitamente “Ajuste o mínimo de cobertura para
+  60%”. Atualizados .coveragerc e orientação corrente; CI já consome esse arquivo.
+  A evidência 60,04% atende numericamente ao novo piso, margem de 0,04 p.p.; não
+  constitui uma nova execução após a mudança de configuração.
+- Conferência deste ajuste: leitura estática do INI e diff. Sem novos testes ou
+  alteração de ambiente. Os testes existentes do runner já exercitam aplicação
+  do piso e propagação de falhas, sem valor de 56,18% fixado nos contratos.
+
+Implementação permanece 3/3 e estado em_validacao. Integração BL-0007, ensaio age
+real, PostgreSQL/recuperação cronometrada, evidência do volume OCI, build, ativação
+e publicação continuam pendentes. Sem merge/push ou liberação operacional presumida.
+
+
+## Teste age real informado pelo usuário — 2026-10-30
+
+Comando fornecido:
+
+```bash
+./scripts/run_tests.sh tests/test_backup_encryption.py::test_real_age_decryption_rotation_wrong_key_and_corruption -v
+```
+
+Resultado: **1 passed em 1,08s**. O estado local conferido para este registro
+estava limpo em 008f9a0. Evidência fornecida pelo usuário, sem reexecução pelo
+Codex. O cenário anteriormente ignorado foi aprovado individualmente: age e
+age-keygen reais, criptografia/descriptografia com duas identidades efêmeras,
+rotação de destinatários, recusa de chave incorreta e detecção de corrupção.
+PostgreSQL permanece simulado neste contrato; não foram usadas identidades de
+recuperação do usuário ou dados de produção.
+
+A pendência do contrato age real está resolvida. Esta execução não mede cobertura
+e não comprova restauração PostgreSQL real, RPO/RTO, build, volume OCI,
+integração SFTP/BL-0007, ativação ou publicação. Implementação 3/3, estado em_validacao e branch pai
+preservados; sem merge ou mudança de ambiente pelo Codex.
+
+
+## Aborto solicitado pelo usuário — 2026-11-10
+
+O usuário encerrou a demanda: backups sem criptografia e cópias externas manuais.
+As três subtarefas haviam sido implementadas, mas não foram publicadas; o código
+não deve ser integrado. Evidências anteriores permanecem históricas. As pendências
+de teste, integração, volume Oracle, recuperação e ativação deixam de ser trabalho
+ativo destas demandas. Estado terminal rejeitado, sem reutilizar identificador.
+
+Código atual de backup restaurado à base release/v1.5.0 1cedb61 na worktree
+corrente, sem reescrever commits, apagar branches ou modificar ambientes, banco,
+dumps e chaves. A alteração independente de cobertura mínima de 60% é mantida.
+Nenhum teste ou job de backup executado. Conferência estática do script, agenda,
+volume versionado e diff. A base já conserva dump customizado diário 02h30,
+retenção padrão de 30 dias e volume /opt/jaci/backups:/var/backups/jaci.
+
+A release 1.5.0 perde o escopo de criptografia/replicação. No pedido seguinte,
+o usuário solicitou o roadmap refeito: acesso à conta/sessão passa à 1.5.0,
+e versões seguintes são antecipadas uma posição. Não há autorização implícita
+de merge, deploy ou implementação das próximas tasks.

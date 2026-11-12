@@ -9,6 +9,7 @@
     {% if unread_count > 0 %}
     <div class="col-auto align-self-center">
         <form method="post" action="/notifications/read-all">
+            {% include "components/session_csrf.html" %}
             <button type="submit" class="btn btn-outline-clay btn-sm">
                 Marcar todas como lidas
             </button>

@@ -4,5 +4,5 @@ source = app
 
 [report]
 precision = 2
-fail_under = 56.18
+fail_under = 60.00
 show_missing = True

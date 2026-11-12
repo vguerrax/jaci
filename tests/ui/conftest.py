@@ -23,7 +23,8 @@ def only_synthetic_environment():
     from app.config import get_settings
     from app.testing_environment import validate_database
     settings=get_settings()
-    assert settings.app_env=='test' and settings.auth_mock
+    assert settings.app_env=='test'
+    assert settings.auth_mock or os.environ.get('JACI_UI_PASSWORD_FLOWS') == '1'
     validate_database(settings.database_url)
 
 

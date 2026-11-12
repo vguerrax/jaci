@@ -133,3 +133,17 @@ Depois da restauração:
 
 Não há script de restauração automática. Essa decisão mantém explícita a escolha
 do destino e reduz o risco de sobrescrever dados de produção.
+
+
+## Política mantida pelo usuário — 2026-11-10
+
+Manter a rotina automática existente: dump customizado PostgreSQL diário às
+02h30 America/Sao_Paulo, validação do catálogo antes da publicação e retenção
+padrão de 30 dias. A limpeza usa find -mtime +30 e só é feita depois de novo
+backup válido, portanto não antecipa a exclusão antes de 30 dias. A execução
+depende de BACKUP_ENABLED, banco PostgreSQL e container servidor ativo; estes
+valores reais não foram inspecionados no cancelamento.
+
+As cópias externas são manuais, sob controle do usuário. BL-0007 e BL-0009 foram
+abortadas e arquivadas: sem criptografia age ou replicação automática na entrega.
+Nenhum backup, ambiente, chave ou serviço foi modificado por essa decisão documental.
