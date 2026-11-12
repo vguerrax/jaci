@@ -156,8 +156,6 @@ não muda de caminho nem é apagado.
 | [BL-0005](items/BL-0005-inteligencia-compras.md) | Evoluir inteligência de compras | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0006](items/BL-0006-integracoes-externas.md) | Exportar compras para calendário e compartilhar listas, compras e convites | `melhoria` | `N/A` | `P3` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0008](items/BL-0008-autoexclusao-anonimizacao-conta.md) | Disponibilizar autoexclusão e anonimização de conta | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
-| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-11-11` |
-| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `N/A` | `P1` | `em_validacao` | Engenharia Jaci | `2026-11-11` |
 | [BL-0021](items/BL-0021-api-integracoes-execucoes.md) | Expor API externa para criar e editar execuções | `melhoria` | `N/A` | `P2` | `pronto_para_implementacao` | Engenharia Jaci | `2026-11-10` |
 | [BL-0022](items/BL-0022-unificar-lista-categorias.md) | Unificar a gestão de categorias em uma única lista | `melhoria` | `N/A` | `P2` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
 | [BL-0023](items/BL-0023-priorizar-compras-status-data.md) | Priorizar compras abertas por status e data | `melhoria` | `N/A` | `P1` | `pronto_para_refinamento` | Engenharia Jaci | `2026-11-10` |
@@ -167,6 +165,8 @@ não muda de caminho nem é apagado.
 
 | ID | Título | Tipo | Severidade | Prioridade | Estado terminal | Encerrado em |
 | --- | --- | --- | --- | --- | --- | --- |
+| [BL-0010](items/BL-0010-reset-senha-login-area-logada.md) | Disponibilizar reset de senha via login e área logada | `melhoria` | `N/A` | `P1` | `concluido` | `2026-11-11` |
+| [BL-0019](items/BL-0019-sessao-autenticada-oito-horas-inatividade.md) | Manter sessão autenticada por oito horas de inatividade | `melhoria` | `N/A` | `P1` | `concluido` | `2026-11-11` |
 | [BL-0007](items/BL-0007-replicacao-externa-backups.md) | Replicar backups em armazenamento externo | `melhoria` | `N/A` | `P1` | `rejeitado` | `2026-11-10` |
 | [BL-0009](items/BL-0009-criptografia-repouso.md) | Implementar criptografia de dados em repouso | `melhoria` | `N/A` | `P1` | `rejeitado` | `2026-11-10` |
 | [BL-0001](items/BL-0001-operacao-offline-cobertura-rastreabilidade.md) | Completar cobertura e rastreabilidade da operação offline | `melhoria` | `N/A` | `P1` | `concluido` | `2026-10-29` |
@@ -250,3 +250,11 @@ com aceite manual aprovado. Notas e roteiro em docs/releases/; metadados 1.5.0
 na release, regressão de 382 aprovados/2 xfail, cobertura 67,07%, UI e imagem
 Docker candidatas validadas. Publicação, ativação guard/chave e integração dessa
 preparação pendentes; ambas as demandas continuam em_validacao.
+
+
+### Publicação 1.5.0 — 2026-11-11
+
+Publicação confirmada pelo usuário; BL-0010 e BL-0019 concluídas e movidas à
+visão arquivada, após aceite manual e validações aprovados. O roteiro distingue
+a tag observada do commit implantado, não informado. Próxima versão planejada:
+1.6.0, BL-0008, ainda pronto_para_refinamento; nenhum código novo iniciado.

@@ -4,7 +4,7 @@
 
 - Backlog: [BL-0019](../backlog/items/BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 - Coordenação: [versão 1.5.0](release-1.5.0-acesso-conta-sessao.md).
-- Estado: em_validacao; refinamento 75ac29e aprovado e aceite manual confirmado em 2026-11-11.
+- Estado: concluido; aceite manual aprovado e publicação da 1.5.0 confirmada em 2026-11-11.
 - Responsável: Engenharia Jaci. Triagem e refinamento em 2026-11-10.
 - Branch documental: docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch de implementação: feature/BL-0019-sessao-autenticada-oito-horas-inatividade,
@@ -263,9 +263,9 @@ cookies revogados. Documentar antes de publicar; não executar esse procedimento
 
 | Etapa/ticket | Fatias implementadas | Restantes | Estado |
 | --- | --- | --- | --- |
-| 1 — Guard/HTTP | 3/3 | Integração/publicação | Adaptador validado; aceite manual aprovado |
-| 2 — WS/fila/aceite | 3/3 | Integração/publicação | WebSocket, UI e aceite manual aprovados |
-| Total | 6/6 | Integração/publicação | Em validação; aceite manual aprovado |
+| 1 — Guard/HTTP | 3/3 | 0 | Concluído; aceite e publicação registrados |
+| 2 — WS/fila/aceite | 3/3 | 0 | Concluído; aceite e publicação registrados |
+| Total | 6/6 | 0 | Concluído; aceite e publicação registrados |
 
 Triagem concluída e refinamento versionado em docs/refinamento-1.5.0.
 D-01 não foi registrada/implementada no Tupã; seu ID real/publicação devem ser
@@ -392,3 +392,17 @@ O usuário confirmou a validação manual e aprovou o resultado da BL-0019,
 autorizando em seguida a implementação da BL-0010 na mesma worktree.
 O progresso acima reflete esse aceite. Permanecem liberação de integração e
 publicação do Jaci 1.5.0; a demanda segue em_validacao até o registro da publicação.
+
+
+## Publicação confirmada — 2026-11-11
+
+Usuário confirmou a publicação do Jaci 1.5.0. Aceite manual e validações da
+implementação já aprovados; demanda passa de em_validacao para concluido.
+Registro baseado no relato de publicação, sem executar novo deploy, migração,
+consulta à produção ou teste. Nenhuma configuração real foi alterada.
+
+Referências locais conferidas: main 903cb1b, develop 4315e76 e tag v1.5.0 em
+d959aff. A preparação 98ece73 está na main/develop, mas não está na tag atual.
+O commit efetivamente implantado não foi informado; não atribuir o relato do
+deploy ao hash da tag por inferência. Preservar a tag, sem movê-la ou recriá-la.
+A divergência de rastreabilidade fica registrada no roteiro da release.

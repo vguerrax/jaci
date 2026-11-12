@@ -5,7 +5,7 @@
 - Backlog: [BL-0010](../backlog/items/BL-0010-reset-senha-login-area-logada.md).
 - Coordenação: [1.5.0 — acesso e sessão](release-1.5.0-acesso-conta-sessao.md).
 - Relacionada: [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
-- Estado: em_validacao; implementação e aceite manual aprovados em 2026-11-11; publicação pendente.
+- Estado: concluido; aceite manual aprovado e publicação da 1.5.0 confirmada em 2026-11-11.
 - Responsável: Engenharia Jaci, 2026-11-10.
 - Branch documental docs/refinamento-1.5.0, base 9d6a18c, mesma worktree.
 - Branch pai feature/BL-0010-reset-senha-login-area-logada, avançada para
@@ -253,7 +253,7 @@ O histórico 60,04% não é validação desta implementação futura.
 | --- | --- | --- | --- |
 | 1 — Contrato/recuperação | 3/3 | 0 | Wrappers, recuperação pública e contexto seguro validados |
 | 2 — Perfil/sessão/aceite | 3/3 | 0 | Reset/perfil/UI/documentação e aceite manual aprovados |
-| Total | 6/6 | 0 | Implementação e aceite aprovados; integração/publicação pendentes |
+| Total | 6/6 | 0 | Concluído; aceite e publicação registrados |
 
 O refinamento original de 2026-11-10 foi exclusivamente documental, antes da
 aprovação. Os registros abaixo substituem o progresso anterior e descrevem a
@@ -395,3 +395,17 @@ operacionais da publicação permanecem com o operador. A versão 1.5.0 aguarda
 liberação de integração e publicação; manter a worktree na branch pai da BL-0010.
 Estado em_validacao preservado até registrar a publicação exigida pelo projeto.
 Somente documentação atualizada neste aceite; testes anteriores não foram repetidos.
+
+
+## Publicação confirmada — 2026-11-11
+
+Usuário confirmou a publicação do Jaci 1.5.0. Aceite manual e validações da
+implementação já aprovados; demanda passa de em_validacao para concluido.
+Registro baseado no relato de publicação, sem executar novo deploy, migração,
+consulta à produção ou teste. Nenhuma configuração real foi alterada.
+
+Referências locais conferidas: main 903cb1b, develop 4315e76 e tag v1.5.0 em
+d959aff. A preparação 98ece73 está na main/develop, mas não está na tag atual.
+O commit efetivamente implantado não foi informado; não atribuir o relato do
+deploy ao hash da tag por inferência. Preservar a tag, sem movê-la ou recriá-la.
+A divergência de rastreabilidade fica registrada no roteiro da release.

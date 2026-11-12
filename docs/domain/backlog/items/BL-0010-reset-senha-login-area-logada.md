@@ -8,7 +8,7 @@
 | Título | Disponibilizar reset de senha via login e área logada |
 | Versão-alvo | `1.5.0` |
 | Tipo | `melhoria` |
-| Estado | `em_validacao` |
+| Estado | `concluido` |
 | Severidade | `N/A` |
 | Prioridade | `P1` |
 | Data de entrada | `2026-07-24` |
@@ -75,7 +75,7 @@ diretamente esse acesso.
 | Dependências | Contratos Tupã forgot/reset/change-password; Product.base_url e e-mail; guard da [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md); D-01 publicada no Tupã 1.1.0 para revogação global, consulta de validade e reset vinculado à credencial do produto |
 | Duplicidades | Nenhuma identificada; a BL-0019 trata duração de sessão e revogação, mas não disponibiliza recuperação nem troca de senha |
 | Responsável pela próxima etapa | Engenharia Jaci |
-| Próximo passo | Código integrado e aceite aprovado; ativação operacional e publicação da 1.5.0, incluindo integração da preparação |
+| Próximo passo | Nenhum de implementação; 1.5.0 publicada e aceite aprovado. Divergência da tag registrada no roteiro |
 
 ## Acompanhamento até produção
 
@@ -87,7 +87,7 @@ diretamente esse acesso.
 - Validações: seis fatias implementadas e contratos automatizados aprovados;
   resultados finais e cenários rastreados no refinamento. Nenhum e-mail, serviço
   ou banco real foi usado para a regressão da BL-0010.
-- Publicação: ainda não publicada.
+- Publicação: Jaci 1.5.0, confirmada pelo usuário em 2026-11-11; commit implantado não informado. Tag local observada v1.5.0 em d959aff; divergência com a preparação registrada no roteiro.
 - Itens relacionados:
   [BL-0019](BL-0019-sessao-autenticada-oito-horas-inatividade.md).
 
@@ -150,3 +150,17 @@ publicação estão em docs/releases/1.5.0.md e docs/releases/1.5.0-publicacao.m
 Preparação com metadados 1.5.0 validada na release; sua integração, ativação do
 guard/chave em produção e publicação ainda estão pendentes. Aceite manual
 preservado e estado em_validacao até publicação; ambiente real intocado.
+
+
+## Publicação confirmada — 2026-11-11
+
+Usuário confirmou a publicação do Jaci 1.5.0. Aceite manual e validações da
+implementação já aprovados; demanda passa de em_validacao para concluido.
+Registro baseado no relato de publicação, sem executar novo deploy, migração,
+consulta à produção ou teste. Nenhuma configuração real foi alterada.
+
+Referências locais conferidas: main 903cb1b, develop 4315e76 e tag v1.5.0 em
+d959aff. A preparação 98ece73 está na main/develop, mas não está na tag atual.
+O commit efetivamente implantado não foi informado; não atribuir o relato do
+deploy ao hash da tag por inferência. Preservar a tag, sem movê-la ou recriá-la.
+A divergência de rastreabilidade fica registrada no roteiro da release.
